@@ -1,0 +1,449 @@
+version: '3'
+services:
+  redis:
+    image: redis:latest
+    container_name: redis
+    volumes:
+      - shared:/usr/share/redis/data
+    ports:
+      - "6379:6379"
+    networks:
+      - appx
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=hendrix3
+    volumes:
+      - shared:/usr/share/postgres/data
+    ports:
+      - "5432:5432"
+    networks:
+      - appx
+        
+#  citus:
+#    image: citusdata/citus:latest
+#    container_name: citus
+#    volumes:
+#      - shared:/usr/share/citus/data       
+#    ports: ["${MASTER_EXTERNAL_PORT:-5432}:5432"]
+#    labels: ['com.citusdata.role=Master']
+#    environment: &AUTH
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: hendrix3
+#      PGUSER: postgres
+#      PGPASSWORD: hendrix3
+#      #POSTGRES_HOST_AUTH_METHOD: "${POSTGRES_HOST_AUTH_METHOD:-trust}"
+#    networks:
+#      - appx
+#  citus-worker:
+#    image: citusdata/citus:latest
+#    labels: ['com.citusdata.role=Worker']
+#    depends_on: [ citus ]
+#    environment: *AUTH
+#    command: "/wait-for-manager.sh"
+#    volumes:
+#      - healthcheck-volume:/healthcheck
+#      - shared:/usr/share/citus/data
+#    networks:
+#      - appx
+#  citus-manager:
+#    container_name: citus-manager
+#    image: citusdata/membership-manager:latest
+#    volumes:
+#      - "${DOCKER_SOCK:-/var/run/docker.sock}:/var/run/docker.sock"
+#      - healthcheck-volume:/usr/share/citus/healthcheck
+#      - shared:/usr/share/citus/data
+#    depends_on: [ citus ]
+#    environment: *AUTH
+#    networks:
+#      - appx
+
+#  mssql:
+#    image: mcr.microsoft.com/mssql/server:2019-latest
+#    container_name: mssql
+#    environment:
+#      - ACCEPT_EULA=Y
+#      - CHECK_EXPIRATION=OFF
+#      - CHECK_POLICY=OFF
+#      - SA_PASSWORD=hendrix3
+#    volumes:
+#      - shared:/usr/share/mssql/data
+#    ports:
+#      - "1433:1433"
+#    networks:
+#      - appx
+  riak:
+    image: basho/riak-kv
+    ports:
+      - "8087:8087"
+      - "8098:8098"
+    environment:
+      - CLUSTER_NAME=riakkv
+    labels:
+      - "com.basho.riak.cluster.name=riakkv"
+    volumes:
+      - shared:/usr/share/riak/schemas
+  riak-member:
+    image: basho/riak-kv
+    ports:
+      - "8087"
+      - "8098"
+    labels:
+      - "com.basho.riak.cluster.name=riakkv"
+    links:
+      - riak
+    depends_on:
+      - riak
+    environment:
+      - CLUSTER_NAME=riakkv
+      - COORDINATOR_NODE=coordinator
+        
+  rethinkdb:
+    image: rethinkdb
+    container_name: rethinkdb
+    volumes:
+      - shared:/usr/share/rethinkdb/data
+    ports:
+      - "29015:29015"
+      - "28015:28015"
+      - "8050:8080"
+    networks:
+      - appx
+    
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
+    volumes:
+      - shared:/usr/share/cassandra/data
+    ports:
+      - "7000:7000"
+    networks:
+      - appx
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    container_name: zookeeper
+    volumes:
+      - shared:/usr/share/zookeeper/data
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - appx
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka-cluster
+    environment:
+      - KAFKA_ADVERTISED_LISTENERS=LISTENER_DOCKER_INTERNAL://kafka1:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=LISTENER_DOCKER_INTERNAL
+      - KAFKA_ZOOKEEPER_CONNECT="zookeeper:2181"
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LOG4J_LOGGERS="kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+      - ALLOW_PLAINTEXT_LISTENER="yes"
+      #
+      # - KAFKA_BROKER_ID=1
+      # - KAFKA_LISTENERS=PLAINTEXT://:9092
+      # - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
+      # - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      # - ALLOW_PLAINTEXT_LISTENER=yes
+      # - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CLIENT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      # - KAFKA_CFG_LISTENERS=CLIENT://:9092,EXTERNAL://:9093
+      # - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://kafka:9092,EXTERNAL://localhost:9093
+      # - KAFKA_INTER_BROKER_LISTENER_NAME=CLIENT
+    volumes:
+      - shared:/usr/share/kafka/data
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    depends_on:
+      - zookeeper 
+    networks:
+      - appx
+
+  vault:
+    image: vault:latest
+    hostname: vault
+    container_name: vault
+    #cap-add: 
+    #  - IPC_LOCK
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=myroot
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+    volumes:
+      - shared:/usr/share/vault/data
+    ports:
+      - "8200:8200"
+    networks:
+      - appx
+
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    volumes:
+      - shared:/usr/share/rabbitmq/data
+    ports:
+      - "3333:15672"
+    networks:
+      - appx
+
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - shared:/usr/share/seq/data
+    ports:
+      - "8888:80"
+      - "5341:5341"
+    networks:
+      - appx
+
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - appx
+
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es03
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data02:/usr/share/elasticsearch/data
+    ports:
+      - "9201:9201"
+    networks:
+      - appx
+
+  es03:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    container_name: es03
+    environment:
+      - node.name=es03
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01,es02
+      - cluster.initial_master_nodes=es01,es02,es03
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data03:/usr/share/elasticsearch/data
+    ports:
+      - "9202:9202"
+    networks:
+      - appx
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    container_name: kibana01
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: http://es01:9200
+    depends_on: 
+      - es01
+    networks:
+      - appx
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.10.0
+    container_name: logstash
+    networks: 
+      - appx
+    volumes:
+      - shared:/usr/share/logstash/data
+    depends_on: ['es01', 'es02', 'es03']
+    healthcheck:
+      test: bin/logstash -t
+      interval: 60s
+      timeout: 50s
+      retries: 5
+
+  auditbeat:
+    image: docker.elastic.co/beats/auditbeat:7.10.0
+    container_name: auditbeat
+    command: -e --strict.perms=false # -e flag to log to stderr and disable syslog/file output
+    cap_add: ['AUDIT_CONTROL', 'AUDIT_READ']
+    # Auditbeat must run in the main process namespace.
+    pid: host
+    volumes:
+      - shared:/usr/share/auditbeat/data
+    networks: 
+      - appx
+    depends_on: ['es01', 'es02', 'es03', 'kibana']
+    healthcheck:
+      test: auditbeat --strict.perms=false test config
+      interval: 30s
+      timeout: 15s
+      retries: 5
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.10.0
+    container_name: filebeat
+    command: --strict.perms=false -e  # -e flag to log to stderr and disable syslog/file output
+    # If the host system has logs at "/var/log", mount them at "/mnt/log"
+    # inside the container, where Filebeat can find them.
+    # volumes: ['/var/log:/mnt/log:ro']
+    volumes:
+      - shared:/usr/share/filebeat/data
+    networks: 
+      - appx
+    depends_on: ['es01', 'es02', 'es03', 'kibana']
+    healthcheck:
+      test: filebeat test config
+      interval: 30s
+      timeout: 15s
+      retries: 5
+
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:7.10.0
+    container_name: heartbeat
+    command: --strict.perms=false -e  # -e flag to log to stderr and disable syslog/file output
+    volumes:
+      - shared:/usr/share/heartbeat/data
+    networks: 
+      - appx
+    depends_on: ['es01', 'es02', 'es03', 'kibana']
+    healthcheck:
+      test: heartbeat test config
+      interval: 30s
+      timeout: 15s
+      retries: 5
+
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:7.10.0
+    container_name: metricbeat
+    # The commented sections below enable Metricbeat to monitor the Docker host,
+    # rather than the Metricbeat container. It's problematic with Docker for
+    # Windows, however, since "/proc", "/sys" etc. don't exist on Windows.
+    # The same likely applies to OSX (needs testing).
+    # volumes:
+    #   - /proc:/hostfs/proc:ro
+    #   - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+    #   - /:/hostfs:ro
+    command: --strict.perms=false -e  # -e flag to log to stderr and disable syslog/file output
+    volumes:
+      - shared:/usr/share/metricbeat/data
+    networks: 
+      - appx
+    depends_on: ['es01', 'es02', 'es03', 'kibana']
+    healthcheck:
+      test: metricbeat test config
+      interval: 30s
+      timeout: 15s
+      retries: 5
+
+  packetbeat:
+    image: docker.elastic.co/beats/packetbeat:7.10.0
+    container_name: packetbeat
+    # Packetbeat needs some elevated privileges to capture network traffic.
+    # We'll grant them with POSIX capabilities.
+    cap_add: ['NET_RAW', 'NET_ADMIN']
+    # Use "host mode" networking to allow Packetbeat to capture traffic from
+    # the real network interface on the host, rather than being isolated to the
+    # container's virtual interface.
+    network_mode: host
+    # Since we did that, Packetbeat is not part of the "stack" Docker network
+    # that the other containers are connected to, and thus can't resolve the
+    # hostname "elasticsearch". Instead, we'll tell it to find Elasticsearch
+    # on "localhost", which is the Docker host machine in this context.
+    command: -e -E 'output.elasticsearch.hosts=["localhost:9200"]'
+    command: -strict.perms=false -e -E output.elasticsearch.hosts="https://localhost:9200" # -e flag to log to stderr and disable syslog/file output
+    volumes:
+      - shared:/usr/share/packetbeat/data
+    depends_on: ['es01', 'es02', 'es03', 'kibana']
+    healthcheck:
+      test: packetbeat test config
+      interval: 30s
+      timeout: 15s
+      retries: 5
+
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.10.0
+    container_name: apm_server
+    ports: 
+      - "8201:8200"
+    networks: 
+      - appx
+    command: --strict.perms=false -e  # -e flag to log to stderr and disable syslog/file output
+    volumes:
+      - shared:/usr/share/apm-server/data
+    depends_on: ['es01', 'es02', 'es03', 'kibana']
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
+    networks:
+      - appx
+  hotrod:
+    image: jaegertracing/example-hotrod:latest
+    ports: 
+      - "8088:8080"
+    command: ["all"]
+    environment:
+      - JAEGER_AGENT_HOST=jaeger
+      # Note: if your application is using Node.js Jaeger Client, you need port 6832,
+      #       unless issue https://github.com/jaegertracing/jaeger/issues/1596 is resolved.
+      - JAEGER_AGENT_PORT=6831
+    networks:
+      - appx
+    depends_on:
+      - jaeger
+
+volumes:
+  data01:
+    driver: local
+  data02:
+    driver: local
+  data03:
+    driver: local
+  shared:
+    driver: local
+  healthcheck-volume:
+    driver: local
+
+networks:
+  appx:
+    driver: bridge

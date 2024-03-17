@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>AppX caching utils</Description>
+    <IsPackable>false</IsPackable>
+    <Title>AppX.Common.Caching</Title>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Automatonymous" Version="5.1.3" />
+    <PackageReference Include="Foundatio" Version="10.7.0" />
+    <PackageReference Include="Foundatio.Redis" Version="10.7.0" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.7.27" />
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
+    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microbians.Persistence\Microbians.Persistence.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="HybridRedisCacheClient.cs" />
+    <Compile Remove="ICacheClient.cs" />
+    <Compile Remove="CacheClientBase.cs" />
+    <Compile Remove="InMemoryCacheClient.cs" />
+    <Compile Remove="IInMemoryCacheClient.cs" />
+    <Compile Remove="IHybridCacheClient.cs" />
+  </ItemGroup>
+</Project>

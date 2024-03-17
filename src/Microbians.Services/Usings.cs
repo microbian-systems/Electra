@@ -1,0 +1,30 @@
+﻿// Global using directives
+
+global using System;
+global using System.Collections.Generic;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Linq;
+global using System.Net;
+global using System.Security.Claims;
+global using System.Text.Json.Serialization;
+global using System.Threading.Tasks;
+global using System.Web;
+global using FluentEmail.Core;
+global using JasperFx.Core;
+global using MassTransit;
+global using Microbians.Common;
+global using Microbians.Common.Extensions;
+global using Microbians.Core.Identity;
+global using Microbians.Models;
+global using Microbians.Models.Entities;
+global using Microbians.Models.ViewModels;
+global using Microbians.Persistence;
+global using Microbians.Persistence.Entities;
+global using Microbians.Services.Features;
+global using Microbians.Services.Geo;
+global using Microbians.Services.Models;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Options;
+global using Microsoft.IdentityModel.Tokens;

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Title>Core Package for the AppX Web Platform</Title>
+    <Authors>Microbian Systems</Authors>
+    <Description>Core components for the AppX web application platform</Description>
+    <Copyright>Microbian Systems 2021</Copyright>
+    <PackageProjectUrl>http://appx.pro</PackageProjectUrl>
+    <RepositoryUrl>http://github.com/appx</RepositoryUrl>
+    <PackageTags>appx, web, asp.net core, .net, microbians</PackageTags>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Polly" Version="8.3.1" />
+    <PackageReference Include="Proto.Actor" Version="1.6.0" />
+    <PackageReference Include="Proto.Actor.Extensions" Version="0.3.0" />
+    <PackageReference Include="Proto.Serialization.Json" Version="0.2.0.1" />
+    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
+    <ProjectReference Include="..\Microbians.Persistence\Microbians.Persistence.csproj" />
+  </ItemGroup>
+</Project>

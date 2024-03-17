@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Title>Commone services for the AppX Web Platform</Title>
+    <Description>Core components for the AppX web application platform</Description>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Microbians.Common.Caching\Microbians.Common.Caching.csproj" />
+    <ProjectReference Include="..\Microbians.Actors\Microbians.Actors.csproj" />
+    <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
+    <ProjectReference Include="..\Microbians.Persistence\Microbians.Persistence.csproj" />
+    <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.3.0" />
+    <PackageReference Include="Foundatio.AzureStorage" Version="10.7.0" />
+    <PackageReference Include="Foundatio.RabbitMQ" Version="10.7.0" />
+    <PackageReference Include="MassTransit" Version="8.1.3" />
+    <PackageReference Include="PasswordGenerator" Version="2.1.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.4.0" />
+    <PackageReference Include="Twilio" Version="7.0.0" />
+    <PackageReference Include="FluentEmail.Core" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.Handlebars" Version="0.1.3" />
+    <PackageReference Include="FluentEmail.Mailgun" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.MailKit" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.Razor" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.SendGrid" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
+    <PackageReference Include="Sendgrid" Version="9.29.2" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.2" />
+    <PackageReference Include="microsoft.extensions.configuration" Version="8.0.0" />
+  </ItemGroup>
+</Project>

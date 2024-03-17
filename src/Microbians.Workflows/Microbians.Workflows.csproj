@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <LangVersion>default</LangVersion>
+        <Title>Workflows for the AppX Web Platform</Title>
+        <PackageId>Microbians.Workflows</PackageId>
+        <Version>0.0.1</Version>
+        <Authors>Microbians</Authors>
+        <Description>This package contains the core workflows for the AppX web application platform</Description>
+        <Copyright>2021</Copyright>
+        <PackageProjectUrl>http://appx.pro</PackageProjectUrl>
+        <PackageLicenseUrl>http://appx.pro/app/license</PackageLicenseUrl>
+        <RepositoryUrl>http://github.com/appx</RepositoryUrl>
+        <PackageTags>appx, web, asp.net core</PackageTags>
+        <OutputType>Library</OutputType>
+        <IsPackable>true</IsPackable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>0.1.0</PackageVersion>
+        <PackageIcon>xamarui.png</PackageIcon>
+        
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Automapper" Version="13.0.1" />
+        <PackageReference Include="Elsa" Version="3.0.6" />
+        <PackageReference Include="Elsa.Abstractions" Version="2.14.1" />
+        <PackageReference Include="Elsa.Activities.Console" Version="2.14.1" />
+        <PackageReference Include="Elsa.Activities.ControlFlow" Version="1.5.5.1943" />
+        <PackageReference Include="Elsa.Activities.Email" Version="2.14.1" />
+        <PackageReference Include="Elsa.Activities.Http" Version="2.14.1" />
+        <PackageReference Include="Elsa.Activities.Timers" Version="1.5.5.1943" />
+        <PackageReference Include="Elsa.Activities.UserTask" Version="2.14.1" />
+        <PackageReference Include="Elsa.Activities.Workflows" Version="1.5.5.1943" />
+        <PackageReference Include="Elsa.Core" Version="2.14.1" />
+        <PackageReference Include="Elsa.Dashboard" Version="1.5.5.1943" />
+        <PackageReference Include="Elsa.Persistence.EntityFrameworkCore" Version="1.5.5.1943" />
+        <PackageReference Include="Elsa.Persistence.MongoDb" Version="2.14.1" />
+        <PackageReference Include="Elsa.Scripting.JavaScript" Version="2.14.1" />
+        <PackageReference Include="Elsa.Scripting.Liquid" Version="2.14.1" />
+        <PackageReference Include="Elsa.WorkflowDesigner" Version="1.5.5.1943" />
+        <PackageReference Include="MediatR" Version="12.2.0" />
+        <PackageReference Include="Stateless" Version="5.15.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Update="xamarui.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+</Project>
