@@ -1,5 +1,5 @@
-using System;
 using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace Microbians.Core.Algorithms;
 

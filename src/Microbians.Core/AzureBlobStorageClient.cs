@@ -1,15 +1,13 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Serilog;
-using System;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Microbians.Core.Extensions;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Globalization;
 using Microbians.Common;
 using Microbians.Common.Extensions;
 using Microbians.Core.Helpers;
+using ILogger = Serilog.ILogger;
 
 namespace Microbians.Core
 {

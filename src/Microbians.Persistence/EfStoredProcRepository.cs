@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace Microbians.Persistence

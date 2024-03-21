@@ -4,7 +4,6 @@ using Microbians.Persistence.Entities;
 using Microbians.Models;
 using Microbians.Common.Commands;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace Microbians.Common.Web.Commands

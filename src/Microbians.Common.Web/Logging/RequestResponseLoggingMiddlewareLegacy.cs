@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace Microbians.Common.Web.Logging
