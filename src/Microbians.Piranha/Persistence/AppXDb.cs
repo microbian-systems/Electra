@@ -1,8 +1,13 @@
-﻿namespace Microbians.Piranha.Persistence;
+﻿using Piranha.Data;
+using Piranha.Data.EF;
+using Db = Piranha.Data.EF;
+using Piranha.AspNetCore.Identity;
 
-public abstract class AppXDb<T>(DbContextOptions<T> options) 
-    : Db<T>(options)
-    where T : Db<T>
+namespace Microbians.Piranha.Persistence;
+
+/*public abstract class AppXDb<T>(DbContextOptions<T> options) 
+    : Piranha.AspNetCore.Identity.Db<T>(options)
+    where T : DbContext, Piranha.AspNetCore.Identity.Db<T>
 {
     /// <summary>
     ///     Creates and configures the data model.
@@ -20,4 +25,4 @@ public abstract class AppXDb<T>(DbContextOptions<T> options)
         mb.Entity<IdentityRoleClaim<Guid>>().ToTable("Piranha.RoleClaims");
         mb.Entity<IdentityUserToken<Guid>>().ToTable("Piranha.UserTokens");
     }
-}
+}*/

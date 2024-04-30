@@ -5,14 +5,19 @@
 
     <ItemGroup>
       <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.4" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+      <PackageReference Include="Piranha" Version="11.0.0" />
+      <PackageReference Include="Piranha.AspNetCore" Version="11.0.0" />
+      <PackageReference Include="Piranha.AspNetCore.Hosting" Version="11.0.0" />
+      <PackageReference Include="Piranha.AspNetCore.Identity" Version="11.0.0" />
+      <PackageReference Include="Piranha.AspNetCore.SimpleSecurity" Version="10.4.0" />
+      <PackageReference Include="Piranha.Data.EF" Version="11.0.0" />
+      <PackageReference Include="Piranha.Manager.LocalAuth" Version="11.0.0" />
+      <PackageReference Include="Piranha.WebApi" Version="11.0.0" />
       <PackageReference Include="Scrutor" Version="4.2.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\..\piranha.core\identity\Piranha.AspNetCore.Identity\Piranha.AspNetCore.Identity.csproj" />
     </ItemGroup>
 
 </Project>

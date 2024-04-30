@@ -2,6 +2,7 @@
 
 namespace Microbians.Piranha;
 
+/*
 public class AppXIdentityPostgreSQLDb : AppXDb<AppXIdentityPostgreSQLDb>
 {
     /// <summary>
@@ -10,4 +11,4 @@ public class AppXIdentityPostgreSQLDb : AppXDb<AppXIdentityPostgreSQLDb>
     /// <param name="options">Configuration options</param>
     public AppXIdentityPostgreSQLDb(DbContextOptions<AppXIdentityPostgreSQLDb> options) 
         : base(options) { }
-}
+}*/
