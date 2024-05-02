@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Identity;
 namespace Electra.Core.Identity
 {
     [Table("Roles")]
-    public class AppXRole : IdentityRole
+    public class ElectraRole : IdentityRole
     {
-        public AppXRole() { }
+        public ElectraRole() { }
 
-        public AppXRole(string roleName) : base(roleName) { }
+        public ElectraRole(string roleName) : base(roleName) { }
         
         public virtual ICollection<IdentityRoleClaim<string>> Claims { get; set; } = new List<IdentityRoleClaim<string>>();
     }

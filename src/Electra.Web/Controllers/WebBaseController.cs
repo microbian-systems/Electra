@@ -5,11 +5,11 @@ namespace Electra.Common.Web.Controllers
 {
     [Authenticate]
     [ValidateAntiForgeryToken]
-    public abstract class AppXWebBaseController : Controller
+    public abstract class ElectraWebBaseController : Controller
     {
         protected readonly ILogger log;
 
-        protected AppXWebBaseController(ILogger log)
+        protected ElectraWebBaseController(ILogger log)
         {
             this.log = log;
         }

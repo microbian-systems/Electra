@@ -9,7 +9,7 @@ namespace Electra.Models
     // todo - later denormalize if join performance costs too much (cache first, then denormalize)
     // todo - add foreign key to the Users (AspNetUsers) table
     // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
-    public record AppXUserProfile : Entity<string>
+    public record ElectraUserProfile : Entity<string>
     {
         // [JsonPropertyName("user_id")]
         // public string UserId { get; set; }

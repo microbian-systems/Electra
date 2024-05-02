@@ -14,9 +14,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Electra.Persistence;
 
 [Table("Roles")]
-public class RoleConfiguration : IEntityTypeConfiguration<AppXRole>
+public class RoleConfiguration : IEntityTypeConfiguration<ElectraRole>
 {
-    public void Configure(EntityTypeBuilder<AppXRole> builder)
+    public void Configure(EntityTypeBuilder<ElectraRole> builder)
     {
         builder.HasMany(r => r.Claims)
             .WithOne()
@@ -25,27 +25,27 @@ public class RoleConfiguration : IEntityTypeConfiguration<AppXRole>
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.HasData(
-            new AppXRole
+            new ElectraRole
             {
                 Name = "Admin",
                 NormalizedName = "ADMIN"
             },
-            new AppXRole
+            new ElectraRole
             {
                 Name = "PiranhaAdmin",
                 NormalizedName = "PIRANHAADMIN"
             },
-            new AppXRole
+            new ElectraRole
             {
                 Name = "Basic",
                 NormalizedName = "BASIC"
             },
-            new AppXRole
+            new ElectraRole
             {
                 Name = "Provider",
                 NormalizedName = "PROVIDER"
             },
-            new AppXRole
+            new ElectraRole
             {
                 Name = "Standard",
                 NormalizedName = "STANDARD"
@@ -55,7 +55,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<AppXRole>
 }
 
 // todo - consider inheriting from Piranha.Data.IDb to enable identity features w/ piranha
-public class AppXIdentityContext : IdentityDbContext<AppXUser, AppXRole, string>, IPersistedGrantDbContext
+public class ElectraIdentityContext : IdentityDbContext<ElectraUser, ElectraRole, string>, IPersistedGrantDbContext
 {
     private const string schema = "Users";  // todo - change default schema to app from "Users"
     private readonly OperationalStoreOptions operationalStoreOptions;
@@ -74,7 +74,7 @@ public class AppXIdentityContext : IdentityDbContext<AppXUser, AppXRole, string>
     public DbSet<ServerSideSession> ServerSideSessions { get; set; }
     public DbSet<PushedAuthorizationRequest> PushedAuthorizationRequests { get; set; }
 
-    public AppXIdentityContext(DbContextOptions<AppXIdentityContext> options) 
+    public ElectraIdentityContext(DbContextOptions<ElectraIdentityContext> options) 
         : base(options)
     //IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
     {
@@ -98,11 +98,11 @@ public class AppXIdentityContext : IdentityDbContext<AppXUser, AppXRole, string>
             property.SetColumnType("decimal(18,2)");
         }
 
-        builder.Entity<AppXUser>(entity =>
+        builder.Entity<ElectraUser>(entity =>
         {
             entity.ToTable(name: "Users");
-            // todo - was specific to AppXUser
-            //entity.HasBaseType<AppXUser>();
+            // todo - was specific to ElectraUser
+            //entity.HasBaseType<ElectraUser>();
             entity.Property(x => x.CreatedOn)
                 .IsRequired()
                 .HasDefaultValue(DateTimeOffset.UtcNow);
@@ -122,21 +122,21 @@ public class AppXIdentityContext : IdentityDbContext<AppXUser, AppXRole, string>
             entity.HasIndex(x => x.NormalizedUserName);
         });
 
-        builder.Entity<AppXUser>()
+        builder.Entity<ElectraUser>()
             .HasMany(p => p.Roles)
             .WithOne()
             .HasForeignKey(p => p.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
             
-        builder.Entity<AppXUser>()
+        builder.Entity<ElectraUser>()
             .HasMany(e => e.Claims)
             .WithOne()
             .HasForeignKey(e => e.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
             
-        builder.Entity<AppXRole>()
+        builder.Entity<ElectraRole>()
             .HasBaseType<IdentityRole>()
             .ToTable("Roles")
             .HasMany(r => r.Claims)
@@ -145,27 +145,27 @@ public class AppXIdentityContext : IdentityDbContext<AppXUser, AppXRole, string>
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
         
-        builder.Entity<AppXUser>()
+        builder.Entity<ElectraUser>()
             .HasMany(r => r.Logins)
             .WithOne()
             .HasForeignKey(r => r.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
         
-        builder.Entity<AppXUser>()
+        builder.Entity<ElectraUser>()
             .HasMany(r => r.Tokens)
             .WithOne()
             .HasForeignKey(r => r.UserId)
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
 
-        // builder.Entity<AppXUser>()
+        // builder.Entity<ElectraUser>()
         //     .HasOne<bldProfile>(x => x.Profile)
         //     .WithOne()
         //     .HasForeignKey<bldProfile>(x => x.UserId);
         // builder.Entity<bldProfile>()
         //     .ToTable("Profiles")
-        //     .HasOne<AppXUser>()
+        //     .HasOne<ElectraUser>()
         //     .WithOne()
         //     .HasForeignKey<bldProfile>(x => x.UserId)
         //     .OnDelete(DeleteBehavior.Cascade)
@@ -212,21 +212,21 @@ protected virtual void AddIdentityModelConfigs(ModelBuilder builder)
         });
     }
 }
-// todo - fix appx IdentityServerRegistrations in Electra persistence library
+// todo - fix Electra IdentityServerRegistrations in Electra persistence library
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
-public class AppXIdentityServerContext : AppXIdentityServerContext<AppXUser>, IPersistedGrantDbContext
+public class ElectraIdentityServerContext : ElectraIdentityServerContext<ElectraUser>, IPersistedGrantDbContext
 {
-    public AppXIdentityServerContext(DbContextOptions options) 
+    public ElectraIdentityServerContext(DbContextOptions options) 
         : base(options)
     {
     }
 }
 
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
-public class AppXIdentityServerContext<T> : AppXIdentityServerContext<T, AppXRole>, IPersistedGrantDbContext
-    where T : AppXUser
+public class ElectraIdentityServerContext<T> : ElectraIdentityServerContext<T, ElectraRole>, IPersistedGrantDbContext
+    where T : ElectraUser
 {
-    public AppXIdentityServerContext(DbContextOptions options) 
+    public ElectraIdentityServerContext(DbContextOptions options) 
         : base(options)
     {
     }
@@ -274,7 +274,7 @@ public class AppXIdentityServerContext<T> : AppXIdentityServerContext<T, AppXRol
             .IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
             
-        builder.Entity<AppXRole>()
+        builder.Entity<ElectraRole>()
             .HasMany(r => r.Claims)
             .WithOne()
             .HasForeignKey(r => r.RoleId)
@@ -296,31 +296,31 @@ public class AppXIdentityServerContext<T> : AppXIdentityServerContext<T, AppXRol
             .OnDelete(DeleteBehavior.Cascade);
         
         builder.Entity<T>()
-            .HasOne<AppXUserProfile>(x => x.Profile)
+            .HasOne<ElectraUserProfile>(x => x.Profile)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
         
-        // builder.Entity<AppXUserProfile>()
-        //     .HasOne<AppXUser>(x => x.User)
+        // builder.Entity<ElectraUserProfile>()
+        //     .HasOne<ElectraUser>(x => x.User)
         //     .WithOne()
-        //     .HasForeignKey<AppXUserProfile>(x => x.UserId)
+        //     .HasForeignKey<ElectraUserProfile>(x => x.UserId)
         //     .OnDelete(DeleteBehavior.Cascade)
         //     ;
     }
 }
     
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
-public class AppXIdentityServerContext<T, TRole> : AppXIdentityServerContext<T, TRole, string>, IPersistedGrantDbContext
+public class ElectraIdentityServerContext<T, TRole> : ElectraIdentityServerContext<T, TRole, string>, IPersistedGrantDbContext
     where TRole : IdentityRole<string> 
     where T : IdentityUser<string>
 {
-    public AppXIdentityServerContext(DbContextOptions options) : base(options)
+    public ElectraIdentityServerContext(DbContextOptions options) : base(options)
     {
     }
 }
     
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
-public abstract class AppXIdentityServerContext<T, TRole, TKey> : IdentityDbContext<T, TRole, TKey>, IPersistedGrantDbContext 
+public abstract class ElectraIdentityServerContext<T, TRole, TKey> : IdentityDbContext<T, TRole, TKey>, IPersistedGrantDbContext 
     where T : IdentityUser<TKey> 
     where TRole : IdentityRole<TKey> 
     where TKey : IEquatable<TKey>
@@ -333,14 +333,14 @@ public abstract class AppXIdentityServerContext<T, TRole, TKey> : IdentityDbCont
     // todo - later denormalize if join performance costs too much (cache first, then denormalize)
     // todo - add foreign key to the Users (AspNetUsers) table
     // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
-    public DbSet<AppXUserProfile> UserProfileModels { get; set; }
+    public DbSet<ElectraUserProfile> UserProfileModels { get; set; }
     public DbSet<PersistedGrant> PersistedGrants { get; set; }
     public DbSet<DeviceFlowCodes> DeviceFlowCodes { get; set; }
     public DbSet<Key> Keys { get; set; }
     public DbSet<ServerSideSession> ServerSideSessions { get; set; }
     public DbSet<PushedAuthorizationRequest> PushedAuthorizationRequests { get; set; }
 
-    protected AppXIdentityServerContext(DbContextOptions options) : base(options)
+    protected ElectraIdentityServerContext(DbContextOptions options) : base(options)
     {
         //operationalStoreOptions.Value.DefaultSchema = schema;
         operationalStoreOptions = new OperationalStoreOptions {DefaultSchema = schema};

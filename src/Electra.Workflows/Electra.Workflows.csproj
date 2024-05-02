@@ -1,23 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
-        <LangVersion>default</LangVersion>
-        <Title>Workflows for the AppX Web Platform</Title>
-        <PackageId>Microbians.Workflows</PackageId>
-        <Version>0.0.1</Version>
-        <Authors>Microbians</Authors>
-        <Description>This package contains the core workflows for the AppX web application platform</Description>
-        <Copyright>2021</Copyright>
-        <PackageProjectUrl>http://appx.pro</PackageProjectUrl>
-        <PackageLicenseUrl>http://appx.pro/app/license</PackageLicenseUrl>
-        <RepositoryUrl>http://github.com/appx</RepositoryUrl>
-        <PackageTags>appx, web, asp.net core</PackageTags>
+        
+        <Title>Workflows for the Electra Web Platform</Title>
+        <PackageId>Electra.Workflows</PackageId>
+        <Description>This package contains the core workflows for the Electra web application platform</Description>
         <OutputType>Library</OutputType>
         <IsPackable>true</IsPackable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>0.1.0</PackageVersion>
-        <PackageIcon>xamarui.png</PackageIcon>
+        <RootNamespace>Electra.Workflows</RootNamespace>
         
     </PropertyGroup>
     <ItemGroup>
@@ -42,7 +33,7 @@
         <PackageReference Include="Stateless" Version="5.15.0" />
     </ItemGroup>
     <ItemGroup>
-      <None Update="xamarui.png">
+      <None Update="microbians.png">
         <Pack>True</Pack>
         <PackagePath></PackagePath>
       </None>

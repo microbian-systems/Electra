@@ -19,7 +19,7 @@ namespace Electra.Core.Configuration
             return new ConfigurationBuilder()
                 .SetBasePath(outputPath)
                 .AddJsonFile("appsettings.json", optional: true)
-                .AddUserSecrets("appx") // todo  - figure out how to parameterize this
+                .AddUserSecrets("Electra") // todo  - figure out how to parameterize this
                 .AddEnvironmentVariables()
                 .Build();
         }

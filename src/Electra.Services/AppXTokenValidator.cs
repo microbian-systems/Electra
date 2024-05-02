@@ -4,12 +4,12 @@ using System.Text;
 namespace Electra.Services
 {
     // todo - rename TokenValidationService to JwtTokenService
-    public class AppXTokenValidationService : ITokenValidationService
+    public class ElectraTokenValidationService : ITokenValidationService
     {
         public readonly AppSettings settings;
-        private readonly ILogger<AppXTokenValidationService> log;
+        private readonly ILogger<ElectraTokenValidationService> log;
 
-        public AppXTokenValidationService(IOptions<AppSettings> settings, ILogger<AppXTokenValidationService> log)
+        public ElectraTokenValidationService(IOptions<AppSettings> settings, ILogger<ElectraTokenValidationService> log)
         {
             this.settings = settings.Value;
             this.log = log;
@@ -121,7 +121,7 @@ namespace Electra.Services
 
         public string GetRefreshToken(string id)
         {
-            return "";  // todo - implement AppXTokenValidator.GetRefreshToken() method
+            return "";  // todo - implement ElectraTokenValidator.GetRefreshToken() method
         }
 
         public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)

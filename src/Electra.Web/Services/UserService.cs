@@ -10,25 +10,25 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Common.Web.Services;
 
-public interface IAppXUserService : IAppXUserService<AppXUser>{}
+public interface IElectraUserService : IElectraUserService<ElectraUser>{}
 
-public class AppXUserService : AppXUserServiceBase<AppXUser>, IAppXUserService
+public class ElectraUserService : ElectraUserServiceBase<ElectraUser>, IElectraUserService
 {
-    public AppXUserService(
-        SignInManager<AppXUser> signinManager, 
-        UserManager<AppXUser> userManager, 
-        RoleManager<AppXRole> roleManager, 
+    public ElectraUserService(
+        SignInManager<ElectraUser> signinManager, 
+        UserManager<ElectraUser> userManager, 
+        RoleManager<ElectraRole> roleManager, 
         IPasswordService passwordService, 
         IHttpContextAccessor contextAccessor, 
         IFluentEmail fluentEmail, 
         IZipApiService zipService, 
-        ILogger<AppXUserService> log) 
+        ILogger<ElectraUserService> log) 
         : base(signinManager, userManager, roleManager, passwordService, contextAccessor, fluentEmail, zipService, log)
     {
     }
 }
 
-public interface IAppXUserService<T> : IAppXIdentityService<T>
+public interface IElectraUserService<T> : IElectraIdentityService<T>
 {
     string GetCurrentUserId();
 
@@ -41,19 +41,19 @@ public interface IAppXUserService<T> : IAppXIdentityService<T>
     Task<bool> VerifyPassword(string password, T user);
 }
 
-public class AppXUserServiceBase<T> : AppXIdentityService<T> where T : AppXUser, new()
+public class ElectraUserServiceBase<T> : ElectraIdentityService<T> where T : ElectraUser, new()
 {
     protected readonly HttpContext context;
 
-    protected AppXUserServiceBase(
+    protected ElectraUserServiceBase(
         SignInManager<T> signinManager, 
         UserManager<T> userManager, 
-        RoleManager<AppXRole> roleManager, 
+        RoleManager<ElectraRole> roleManager, 
         IPasswordService passwordService, 
         IHttpContextAccessor contextAccessor, 
         IFluentEmail fluentEmail, 
         IZipApiService zipService, 
-        ILogger<AppXUserServiceBase<T>> log) 
+        ILogger<ElectraUserServiceBase<T>> log) 
         : base(signinManager, userManager, roleManager, passwordService, contextAccessor, fluentEmail, zipService, log)
     {
         context = contextAccessor.HttpContext;

@@ -19,7 +19,7 @@ namespace Electra.Validators
             guid == null || (guid.HasValue && guid.Value != Guid.Empty ? true : false);
     }
     
-    public class UserProfileValidator : BaseModelValidator<AppXUserProfile>
+    public class UserProfileValidator : BaseModelValidator<ElectraUserProfile>
     {
         public UserProfileValidator(IMemoryCache cache,
             ILogger<UserProfileValidator> log)

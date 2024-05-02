@@ -10,7 +10,7 @@ namespace Electra.Common.Web.Middleware
             services.Configure<AntiforgeryOptions>(opts =>
             {
                 opts.Cookie.Expiration = TimeSpan.FromDays(180);
-                opts.Cookie.Name = "Appx.Crsf";
+                opts.Cookie.Name = "Electra.Crsf";
                 opts.Cookie.HttpOnly = true;
                 opts.Cookie.IsEssential = true;
             });

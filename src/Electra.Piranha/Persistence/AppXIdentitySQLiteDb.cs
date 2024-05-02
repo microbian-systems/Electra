@@ -1,11 +1,11 @@
 ﻿namespace Electra.Piranha;
 
 /*
-public class AppXIdentitySQLiteDb : Db<AppXIdentitySQLiteDb>
+public class ElectraIdentitySQLiteDb : Db<ElectraIdentitySQLiteDb>
 {
     /// <summary>
     /// Default constructor.
     /// </summary>
     /// <param name="options">Configuration options</param>
-    public AppXIdentitySQLiteDb(DbContextOptions<AppXIdentitySQLiteDb> options) : base(options) { }
+    public ElectraIdentitySQLiteDb(DbContextOptions<ElectraIdentitySQLiteDb> options) : base(options) { }
 }*/

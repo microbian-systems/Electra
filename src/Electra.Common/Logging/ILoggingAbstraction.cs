@@ -2,7 +2,7 @@ using System;
 
 namespace Electra.Common.Logging
 {
-    public interface IAppXLog
+    public interface IElectraLog
     {
         void Error(string message);
         void Error(Exception ex, string message);

@@ -2,7 +2,7 @@ using ServiceStack;
 
 namespace Electra.Services
 {
-    public interface IRoleService<T> where T : AppXRole
+    public interface IRoleService<T> where T : ElectraRole
     {
         Task<T> GetById(string id);
         Task<T> GetByName(string roleName);
@@ -15,7 +15,7 @@ namespace Electra.Services
         Task Delete(T role);
     }
 
-    public class RoleService<T> : IRoleService<T> where T : AppXRole
+    public class RoleService<T> : IRoleService<T> where T : ElectraRole
     {
         private readonly ILogger<RoleService<T>> log;
         private readonly RoleManager<T> roleManager;

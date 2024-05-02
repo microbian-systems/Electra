@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>AppX caching utils</Description>
+    <Description>Electra caching utils</Description>
     <IsPackable>false</IsPackable>
-    <Title>AppX.Common.Caching</Title>
+    <Title>Electra.Common.Caching</Title>
     <RootNamespace>Electra.Common.Caching</RootNamespace>
   </PropertyGroup>
   <ItemGroup>

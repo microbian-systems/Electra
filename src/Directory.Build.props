@@ -19,9 +19,8 @@
         <Authors>Electra, Troy Robinson</Authors>
         <Company>Electra</Company>
         <Copyright>Copyright (c) 2023 Microbian Systems</Copyright>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageTags>asp.net efcore Electra</PackageTags>
-        <PackageIcon>Electra.png</PackageIcon>
+        <PackageIcon>microbians.png</PackageIcon>
         <PackageProjectUrl>https://github.com/microbian-systems</PackageProjectUrl>
         <RepositoryUrl>https://dev.azure.com/DealerManagement/_git/DealerManagement</RepositoryUrl>
         <RepositoryType>git</RepositoryType>

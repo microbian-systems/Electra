@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Title>Common models for the AppX Web Platform</Title>
-    <Description>Core components for the AppX web application platform</Description>
+    <Title>Common models for the Electra Web Platform</Title>
+    <Description>Core components for the Electra web application platform</Description>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>

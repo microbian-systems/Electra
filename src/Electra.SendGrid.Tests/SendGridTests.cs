@@ -1,10 +1,10 @@
-using Microbians.Core.Configuration;
+using Electra.Core.Configuration;
 using FakeItEasy;
 using Xunit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.SendGrid.Tests
+namespace Electra.SendGrid.Tests
 {
 
     public class SendGridTests

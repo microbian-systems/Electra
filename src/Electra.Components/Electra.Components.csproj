@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <Description>AppX common blazor components</Description>
+    <Description>Electra common blazor components</Description>
     <IsPackable>false</IsPackable>
     <Title>Electra.Blazor.Components</Title>
     <RootNamespace>Electra.Blazor.Components</RootNamespace>

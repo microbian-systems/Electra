@@ -11,13 +11,13 @@ namespace Electra.Common.Web.Extensions;
 public static class IdentityServerExtensions
 {
     /// <summary>
-    /// Register the appx generic identity server values
+    /// Register the Electra generic identity server values
     /// </summary>
     /// <param name="services">service collection</param>
     /// <param name="connString">the connection string that points to the identity enabled database</param>
     /// <returns></returns>
-    public static IServiceCollection AddAppXIdentityDefaults(this IServiceCollection services, string connString)
-        => AddAppXIdentityDefaults<AppXUser>(services, connString);
+    public static IServiceCollection AddElectraIdentityDefaults(this IServiceCollection services, string connString)
+        => AddElectraIdentityDefaults<ElectraUser>(services, connString);
     
     /// <summary>
     /// 
@@ -26,13 +26,13 @@ public static class IdentityServerExtensions
     /// <param name="connString">the connection string that points to the identity enabled database</param>
     /// <typeparam name="T">the type of Identity User</typeparam>
     /// <returns></returns>
-    public static IServiceCollection AddAppXIdentityDefaults<T>(this IServiceCollection services, string connString) where T : class 
-        => AddAppXIdentityDefaults<T, AppXIdentityContext>(services, connString);
+    public static IServiceCollection AddElectraIdentityDefaults<T>(this IServiceCollection services, string connString) where T : class 
+        => AddElectraIdentityDefaults<T, ElectraIdentityContext>(services, connString);
     
     
-    // todo - for AddAppXDefaultIdentityDefaults config method add a param of type IdentityOptions to allow user to configure the identity options
+    // todo - for AddElectraDefaultIdentityDefaults config method add a param of type IdentityOptions to allow user to configure the identity options
     /// <summary>
-    /// Register the appx generic identity server values
+    /// Register the Electra generic identity server values
     /// </summary>
     /// <param name="services">service collection</param>
     /// <param name="connString">the connection string that points to the identity enabled database</param>
@@ -40,14 +40,14 @@ public static class IdentityServerExtensions
     /// <typeparam name="TContext">the Identity spedcific DbContext</typeparam>
     /// <returns>return service collection</returns>
     /// <exception cref="ArgumentNullException"></exception>
-    public static IServiceCollection AddAppXIdentityDefaults<T, TContext>(this IServiceCollection services, string connString) where T : class where TContext : DbContext, IPersistedGrantDbContext
+    public static IServiceCollection AddElectraIdentityDefaults<T, TContext>(this IServiceCollection services, string connString) where T : class where TContext : DbContext, IPersistedGrantDbContext
     {
         if (string.IsNullOrEmpty(connString))
-            throw new ArgumentNullException($"connstring cannot be null in {nameof(AddAppXIdentityDefaults)} configuraiton method");
+            throw new ArgumentNullException($"connstring cannot be null in {nameof(AddElectraIdentityDefaults)} configuraiton method");
         
-        // todo - later once email conf is working switch to the AddDefaultIdentity<T, AppXRole>()
+        // todo - later once email conf is working switch to the AddDefaultIdentity<T, ElectraRole>()
         services.AddDefaultIdentity<T>(options => options.SignIn.RequireConfirmedAccount = false)
-            .AddRoles<AppXRole>()
+            .AddRoles<ElectraRole>()
             .AddEntityFrameworkStores<TContext>()
             ;
 

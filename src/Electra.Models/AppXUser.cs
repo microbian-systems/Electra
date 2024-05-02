@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Models
 {
-    public class AppXUser : IdentityUser, IEntity<string> //, IAuditableEntity
+    public class ElectraUser : IdentityUser, IEntity<string> //, IAuditableEntity
     {
         [PersonalData]
         public DateTime? Birthday { get; set; }
@@ -31,7 +31,7 @@ namespace Electra.Models
         // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
         //[Column(TypeName = "jsonb")]
         [JsonPropertyName("profile")]
-        public virtual AppXUserProfile Profile { get; } = new();
+        public virtual ElectraUserProfile Profile { get; } = new();
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; } = new List<IdentityUserClaim<string>>();
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; } = new List<IdentityUserLogin<string>>();

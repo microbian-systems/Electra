@@ -5,7 +5,7 @@ using Piranha.AspNetCore.Identity;
 
 namespace Electra.Piranha.Persistence;
 
-/*public abstract class AppXDb<T>(DbContextOptions<T> options) 
+/*public abstract class ElectraDb<T>(DbContextOptions<T> options)
     : Piranha.AspNetCore.Identity.Db<T>(options)
     where T : DbContext, Piranha.AspNetCore.Identity.Db<T>
 {
@@ -17,7 +17,7 @@ namespace Electra.Piranha.Persistence;
     {
         base.OnModelCreating(mb);
 
-        mb.Entity<User>().ToTable("AppX.Users");
+        mb.Entity<User>().ToTable("Electra.Users");
         mb.Entity<Role>().ToTable("Piranha.Roles");
         mb.Entity<IdentityUserClaim<Guid>>().ToTable("Piranha.UserClaims");
         mb.Entity<IdentityUserRole<Guid>>().ToTable("Piranha.UserRoles");

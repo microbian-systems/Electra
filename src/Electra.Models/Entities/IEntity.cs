@@ -24,7 +24,7 @@ namespace Electra.Models.Entities
     }
 
     /// <summary>
-    /// Represents a persisted entity for AppX
+    /// Represents a persisted entity for Electra
     /// </summary>
     public abstract record Entity : Entity<Guid>
     {
@@ -32,7 +32,7 @@ namespace Electra.Models.Entities
     }
 
     /// <summary>
-    /// Represents a persisted entity for AppX
+    /// Represents a persisted entity for Electra
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     public abstract record Entity<TKey> : EntityBase<TKey> where TKey : IEquatable<TKey>

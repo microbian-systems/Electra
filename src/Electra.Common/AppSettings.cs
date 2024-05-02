@@ -27,11 +27,11 @@ namespace Electra.Common
         public string Default { get; set; } = string.Empty;
     }
 
-    public class AppxIdentityOptions : BaseOptions
+    public class ElectraIdentityOptions : BaseOptions
     {
-        public AppxIdentityOptions()
+        public ElectraIdentityOptions()
         {
-            SectionName = nameof(AppxIdentityOptions);
+            SectionName = nameof(ElectraIdentityOptions);
         }
         public bool RequireConfirmedAccount {get; set;}
         public bool RequireDigit {get; set;}

@@ -34,82 +34,82 @@ namespace Electra.Common.Web.Extensions;
 
 public static class WebExtensions
 {
-    public static IServiceCollection AddAppXDefaultServices(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString)
+    public static IServiceCollection AddElectraDefaultServices(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString)
     {
-        services.AddAppXCoreServices<AppXUser, AppXRole>(config, host);
-        services.AddAppXIdentityDefaults<AppXUser, AppXIdentityContext>(connString);
+        services.AddElectraCoreServices<ElectraUser, ElectraRole>(config, host);
+        services.AddElectraIdentityDefaults<ElectraUser, ElectraIdentityContext>(connString);
         
         return services;
     }
     
-    public static IServiceCollection AddAppXDefaultServices<TUser, TRole>(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString)
-        where TUser : AppXUser, new() where TRole : AppXRole
+    public static IServiceCollection AddElectraDefaultServices<TUser, TRole>(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString)
+        where TUser : ElectraUser, new() where TRole : ElectraRole
     {
-        services.AddAppXCoreServices<TUser, TRole>(config, host);
-        services.AddAppXIdentityDefaults<TUser, AppXIdentityContext>(connString);
+        services.AddElectraCoreServices<TUser, TRole>(config, host);
+        services.AddElectraIdentityDefaults<TUser, ElectraIdentityContext>(connString);
         
         return services;
     }
     
-    public static IServiceCollection AddAppXDefaultServices<TUser, TRole, TContext>(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString)
-        where TUser : AppXUser, new() where TRole : AppXRole where TContext : DbContext, IPersistedGrantDbContext
+    public static IServiceCollection AddElectraDefaultServices<TUser, TRole, TContext>(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString)
+        where TUser : ElectraUser, new() where TRole : ElectraRole where TContext : DbContext, IPersistedGrantDbContext
     {
-        services.AddAppXCoreServices<TUser, TRole>(config, host);
-        services.AddAppXIdentityDefaults<TUser, TContext>(connString);
+        services.AddElectraCoreServices<TUser, TRole>(config, host);
+        services.AddElectraIdentityDefaults<TUser, TContext>(connString);
         
         return services;
     }
     
-    public static IServiceCollection AddAppXCoreServices<TUser, TRole>(
+    public static IServiceCollection AddElectraCoreServices<TUser, TRole>(
         this IServiceCollection services, 
         IConfiguration config, 
         IWebHostEnvironment host, 
-        bool enableAntiForgeryProtection = false) where TUser : AppXUser, new() where TRole : AppXRole
+        bool enableAntiForgeryProtection = false) where TUser : ElectraUser, new() where TRole : ElectraRole
     {
         services.AddMapster();
         if(enableAntiForgeryProtection)
             services.ConfigureAntiForgeryOptions();
         
-        services.AddScoped<ITokenValidationService, AppXTokenValidationService>();
+        services.AddScoped<ITokenValidationService, ElectraTokenValidationService>();
         services.AddScoped<IRoleService<TRole>, RoleService<TRole>>();
         services.AddScoped<UserManager<TUser>>();
         services.AddScoped<SignInManager<TUser>>();
-        services.AddScoped<IAppXIdentityService, AppXIdentityService>();
-        services.AddScoped<IAppXUserProfileService, AppXUserProfileService>();
-        services.AddScoped<IAppXUserProfileServiceRepository, AppXUserProfileServiceRepository>();
-        services.AddScoped<SignInManager<AppXUser>>(); // for some reason the DI container expecting this - probably registered the generic appx user service - fix later
-        services.AddScoped<UserManager<AppXUser>>();  // for some reason the DI container expecting this - probably registered the generic appx user service - fix later
-        services.AddScoped<UserStore<AppXUser>>(); // for some reason the DI container expecting this - probably registered the generic appx user service - fix later
-        services.AddDbContext<AppXDbContext>();
-        services.AddScoped<DbContext, AppXDbContext>();
+        services.AddScoped<IElectraIdentityService, ElectraIdentityService>();
+        services.AddScoped<IElectraUserProfileService, ElectraUserProfileService>();
+        services.AddScoped<IElectraUserProfileServiceRepository, ElectraUserProfileServiceRepository>();
+        services.AddScoped<SignInManager<ElectraUser>>(); // for some reason the DI container expecting this - probably registered the generic Electra user service - fix later
+        services.AddScoped<UserManager<ElectraUser>>();  // for some reason the DI container expecting this - probably registered the generic Electra user service - fix later
+        services.AddScoped<UserStore<ElectraUser>>(); // for some reason the DI container expecting this - probably registered the generic Electra user service - fix later
+        services.AddDbContext<ElectraDbContext>();
+        services.AddScoped<DbContext, ElectraDbContext>();
         services.AddScoped<RoleManager<TRole>>();
         services.ConfigureEmail(config, host);
         services.AddMiniProfilerEx();
         services.ConfigureAppSettings(config, host);
-        services.AddAppXCaching();
-        services.AddAppXMiddleware();
+        services.AddElectraCaching();
+        services.AddElectraMiddleware();
         //services.AddDataLayerPersistence(config, host);
-        //services.AddAppXAuthentication();
+        //services.AddElectraAuthentication();
         var apiKey = config["AppSettings:SendGrid:Key"];
         var replyEmail = config["AppSettings:SendGrid:From"];
         services
             .AddFluentEmail(replyEmail)
             .AddRazorRenderer()
             .AddSendGridSender(apiKey);
-        services.AddScoped<IAppXUserService, AppXUserService>();
+        services.AddScoped<IElectraUserService, ElectraUserService>();
         services.AddScoped<ISmsService, TwilioSmsService>();
         services.AddTransient<IEmailSender, SendGridMailer>();
         services.AddTransient<IPasswordService, PasswordService>();
         services.AddScoped<IZipApiService, ZipApiService>();
-        services.AddScoped(typeof(IAppXUserService<>), typeof(AppXUserServiceBase<>));
-        services.AddScoped<IAppXUserProfileService, AppXUserProfileService>();
+        services.AddScoped(typeof(IElectraUserService<>), typeof(ElectraUserServiceBase<>));
+        services.AddScoped<IElectraUserProfileService, ElectraUserProfileService>();
         services.AddScoped(typeof(IUserProfileService<>), typeof(UserProfileService<>));
 
         return services;
     }
     
     
-    public static IServiceCollection AddAppXAuthentication(this IServiceCollection services)
+    public static IServiceCollection AddElectraAuthentication(this IServiceCollection services)
     {
         var sp = services.BuildServiceProvider();
         var config = sp.GetRequiredService<IConfiguration>();
@@ -144,7 +144,7 @@ public static class WebExtensions
         return services;
     }
     
-    public static IApplicationBuilder UseAppXMiddleware(this IApplicationBuilder app)
+    public static IApplicationBuilder UseElectraMiddleware(this IApplicationBuilder app)
     {
         app.UseMiniProfiler();
         app.ConfigureExceptionMiddleware();
@@ -184,7 +184,7 @@ public static class WebExtensions
     }
 
     public static IServiceCollection AddDataLayerPersistence(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment host)
-        => AddDataLayerPersistence<AppXDbContext>(services, configuration, host);
+        => AddDataLayerPersistence<ElectraDbContext>(services, configuration, host);
 
     public static IServiceCollection ConfigureElasticsearch(this IServiceCollection services)
     {
@@ -270,22 +270,22 @@ public static class WebExtensions
         return services;
     }
 
-    public static IServiceCollection AddAppXMiddleware(this IServiceCollection services)
+    public static IServiceCollection AddElectraMiddleware(this IServiceCollection services)
     {
         services.AddScoped<PerfLoggingMiddleware>(); // todo - verify why this is need (think its because constructor injection instead of method)
         return services;
     }
 
-    public static IServiceCollection AddAppXCaching(this IServiceCollection services)
+    public static IServiceCollection AddElectraCaching(this IServiceCollection services)
     {
-        // todo - implement method to add Caching for AppxX
+        // todo - implement method to add Caching for ElectraX
         
         return services;
     }
 
     public static IServiceCollection AddMessageQueing(this IServiceCollection services)
     {
-        //todo - implement method to add MessageQueuing to AppX
+        //todo - implement method to add MessageQueuing to Electra
 
         return services;
     }

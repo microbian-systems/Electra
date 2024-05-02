@@ -1,7 +1,7 @@
 namespace Electra.Services;
 
 // todo - implement logging for IdentityService<T>
-public interface IAppXIdentityService<T>
+public interface IElectraIdentityService<T>
 {
     Task<UserViewModel> LoginAsync(UserLoginRequest model);
     Task<UserViewModel> LoginAsync(UserLoginRequest model, string password);
@@ -39,42 +39,42 @@ public interface IAppXIdentityService<T>
     Task<bool> VerifyPassword(string username, string password);
 }
 
-public interface IAppXIdentityService : IAppXIdentityService<AppXUser>{}
-public abstract class AppXIdentityService : AppXIdentityService<AppXUser>, IAppXIdentityService
+public interface IElectraIdentityService : IElectraIdentityService<ElectraUser>{}
+public abstract class ElectraIdentityService : ElectraIdentityService<ElectraUser>, IElectraIdentityService
 {
-    protected AppXIdentityService(
-        SignInManager<AppXUser> signinManager, 
-        UserManager<AppXUser> userManager, 
-        RoleManager<AppXRole> roleManager, 
+    protected ElectraIdentityService(
+        SignInManager<ElectraUser> signinManager, 
+        UserManager<ElectraUser> userManager, 
+        RoleManager<ElectraRole> roleManager, 
         IPasswordService passwordService, 
         IHttpContextAccessor contextAccessor, 
         IFluentEmail fluentEmail, 
         IZipApiService zipService, 
-        ILogger<AppXIdentityService> log) 
+        ILogger<ElectraIdentityService> log) 
         : base(signinManager, userManager, roleManager, passwordService, contextAccessor, fluentEmail, zipService, log)
     {
     }
 }
 
-public abstract class AppXIdentityService<T> : IAppXIdentityService<T> where T : AppXUser, new()
+public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> where T : ElectraUser, new()
 {
     protected readonly UserManager<T> userManager;
     protected readonly SignInManager<T> signinManager;
-    protected readonly RoleManager<AppXRole> rman;
-    protected readonly ILogger<AppXIdentityService<T>> log;
+    protected readonly RoleManager<ElectraRole> rman;
+    protected readonly ILogger<ElectraIdentityService<T>> log;
     protected readonly IPasswordService passwordService;
     protected readonly IFluentEmail fluentEmail;
     protected readonly IZipApiService zipService;
 
-    protected AppXIdentityService(
+    protected ElectraIdentityService(
         SignInManager<T> signinManager, 
         UserManager<T> userManager,
-        RoleManager<AppXRole> roleManager,
+        RoleManager<ElectraRole> roleManager,
         IPasswordService passwordService,
         IHttpContextAccessor contextAccessor,
         IFluentEmail fluentEmail,
         IZipApiService zipService,
-        ILogger<AppXIdentityService<T>> log)
+        ILogger<ElectraIdentityService<T>> log)
     {
         this.log = log;
         this.userManager = userManager;

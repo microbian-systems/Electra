@@ -59,7 +59,7 @@ public interface IGenericRepository<T, TKey> : IReadOnlyRepository<T, TKey>, IWr
 /// DI registration for the specific interface & concrete implementation.
 /// </summary>
 /// <typeparam name="T">The type of data model to be operated upon <see cref="IEntity{TKey}"/></typeparam>
-/// <remarks>Guid is the default type for the primary key due to the AppX nature of using document stores</remarks>
+/// <remarks>Guid is the default type for the primary key due to the Electra nature of using document stores</remarks>
 public interface IGenericRepository<T> : IGenericRepository<T, Guid> where T : IEntity<Guid>, new()
 {
 }

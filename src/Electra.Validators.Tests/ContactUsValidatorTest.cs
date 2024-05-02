@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Microbians.Models;
+using Electra.Models;
 using FakeItEasy;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
-namespace Microbians.Validators.Tests
+namespace Electra.Validators.Tests
 {
     public class ContactUsValidatorTest
     {

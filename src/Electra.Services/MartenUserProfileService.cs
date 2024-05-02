@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 
 namespace Electra.Services
 {
-    public sealed class MartenUserProfileService<T> : IUserProfileService<T> where T : AppXUserProfile, IEntity<string>, new()
+    public sealed class MartenUserProfileService<T> : IUserProfileService<T> where T : ElectraUserProfile, IEntity<string>, new()
     {
         private readonly ILogger<MartenUserProfileService<T>> log;
         private readonly IGenericMartenRepository<T, string> db;

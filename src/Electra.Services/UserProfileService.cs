@@ -2,23 +2,23 @@ using System.Linq.Expressions;
 
 namespace Electra.Services
 {
-    public interface IAppXUserProfileService : IUserProfileService<AppXUserProfile>{}
+    public interface IElectraUserProfileService : IUserProfileService<ElectraUserProfile>{}
 
-    public interface IAppXUserProfileServiceRepository : IGenericEntityFrameworkRepository<AppXUserProfile, string>{}
-    public class AppXUserProfileServiceRepository : GenericEntityFrameworkRepository<AppXUserProfile, string>, IAppXUserProfileServiceRepository
+    public interface IElectraUserProfileServiceRepository : IGenericEntityFrameworkRepository<ElectraUserProfile, string>{}
+    public class ElectraUserProfileServiceRepository : GenericEntityFrameworkRepository<ElectraUserProfile, string>, IElectraUserProfileServiceRepository
     {
-        public AppXUserProfileServiceRepository(AppXDbContext context, ILogger<AppXUserProfileServiceRepository> log) : base(context, log)
+        public ElectraUserProfileServiceRepository(ElectraDbContext context, ILogger<ElectraUserProfileServiceRepository> log) : base(context, log)
         {
         }
     }
-    public class AppXUserProfileService : UserProfileService<AppXUserProfile>, IAppXUserProfileService
+    public class ElectraUserProfileService : UserProfileService<ElectraUserProfile>, IElectraUserProfileService
     {
-        public AppXUserProfileService(IAppXUserProfileServiceRepository db, ILogger<AppXUserProfileService> log) : base(db, log)
+        public ElectraUserProfileService(IElectraUserProfileServiceRepository db, ILogger<ElectraUserProfileService> log) : base(db, log)
         {
         }
     }
 
-    public interface IUserProfileService<T> where T : AppXUserProfile, IEntity<string>
+    public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity<string>
     {
         Task<T> GetById(string id);
         Task<T> GetByEmail(string email);
@@ -30,7 +30,7 @@ namespace Electra.Services
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
     }
     
-    public class UserProfileService<T> : IUserProfileService<T> where T : AppXUserProfile, new()
+    public class UserProfileService<T> : IUserProfileService<T> where T : ElectraUserProfile, new()
     {
         private readonly IGenericRepository<T, string> db;
         private readonly ILogger<UserProfileService<T>> log;

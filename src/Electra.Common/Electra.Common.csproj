@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Title>AppX Common Utilities</Title>
+    <Title>Electra Common Utilities</Title>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Microbians.Common</RootNamespace>
+    <RootNamespace>Electra.Common</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.9.2" />

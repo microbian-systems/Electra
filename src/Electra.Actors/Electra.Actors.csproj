@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Title>Core Package for the AppX Web Platform</Title>
+    <Title>Core Package for the Electra Web Platform</Title>
     <Authors>Microbian Systems</Authors>
-    <Description>Core components for the AppX web application platform</Description>
+    <Description>Core components for the Electra web application platform</Description>
     <Copyright>Microbian Systems 2021</Copyright>
-    <PackageProjectUrl>http://appx.pro</PackageProjectUrl>
-    <RepositoryUrl>http://github.com/appx</RepositoryUrl>
-    <PackageTags>appx, web, asp.net core, .net, Electra</PackageTags>
+    <PackageProjectUrl>http://Electra.pro</PackageProjectUrl>
+    <RepositoryUrl>http://github.com/Electra</RepositoryUrl>
+    <PackageTags>Electra, web, asp.net core, .net, Electra</PackageTags>
     <IsPackable>false</IsPackable>
     <RootNamespace>Electra.Actors</RootNamespace>
   </PropertyGroup>

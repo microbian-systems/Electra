@@ -7,32 +7,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Persistence
 {
-    public class AppXDbContext : AppXDbContext<AppXUser>
+    public class ElectraDbContext : ElectraDbContext<ElectraUser>
     {
-        public AppXDbContext(DbContextOptions<AppXDbContext<AppXUser, AppXRole>> options) 
+        public ElectraDbContext(DbContextOptions<ElectraDbContext<ElectraUser, ElectraRole>> options) 
             : base(options)
         {
         }
     }
     
-    public class AppXDbContext<T> : AppXDbContext<T, AppXRole> 
-        where T : AppXUser
+    public class ElectraDbContext<T> : ElectraDbContext<T, ElectraRole> 
+        where T : ElectraUser
     {
-        public AppXDbContext(DbContextOptions<AppXDbContext<T, AppXRole>> options) 
+        public ElectraDbContext(DbContextOptions<ElectraDbContext<T, ElectraRole>> options) 
             : base(options)
         {
         }
     }
     
-    public class AppXDbContext<T, TRole> : IdentityDbContext<T, TRole, string> 
-        where T : AppXUser 
+    public class ElectraDbContext<T, TRole> : IdentityDbContext<T, TRole, string> 
+        where T : ElectraUser 
         where TRole : IdentityRole<string>
     {
         protected const string schema = "Users";
         
-        public DbSet<AppXUserProfile> UserProfile { get; set; }
+        public DbSet<ElectraUserProfile> UserProfile { get; set; }
         
-        public AppXDbContext(DbContextOptions<AppXDbContext<T, TRole>> options) 
+        public ElectraDbContext(DbContextOptions<ElectraDbContext<T, TRole>> options) 
             : base(options)
         {
         }
@@ -107,7 +107,7 @@ namespace Electra.Persistence
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
                 
-            builder.Entity<AppXRole>()
+            builder.Entity<ElectraRole>()
                 .HasMany(r => r.Claims)
                 .WithOne()
                 .HasForeignKey(r => r.RoleId)
@@ -129,14 +129,14 @@ namespace Electra.Persistence
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<T>()
-                .HasOne<AppXUserProfile>(x => x.Profile)
+                .HasOne<ElectraUserProfile>(x => x.Profile)
                 .WithOne()
                 .OnDelete(DeleteBehavior.Cascade);
             
-            // builder.Entity<AppXUserProfile>()
-            //     .HasOne<AppXUser>(x => x.User)
+            // builder.Entity<ElectraUserProfile>()
+            //     .HasOne<ElectraUser>(x => x.User)
             //     .WithOne()
-            //     .HasForeignKey<AppXUserProfile>(x => x.UserId)
+            //     .HasForeignKey<ElectraUserProfile>(x => x.UserId)
             //     .OnDelete(DeleteBehavior.Cascade);
         }
     }

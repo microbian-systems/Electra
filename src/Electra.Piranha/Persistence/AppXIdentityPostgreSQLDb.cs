@@ -3,12 +3,12 @@
 namespace Electra.Piranha;
 
 /*
-public class AppXIdentityPostgreSQLDb : AppXDb<AppXIdentityPostgreSQLDb>
+public class ElectraIdentityPostgreSQLDb : ElectraDb<ElectraIdentityPostgreSQLDb>
 {
     /// <summary>
     /// Default constructor.
     /// </summary>
     /// <param name="options">Configuration options</param>
-    public AppXIdentityPostgreSQLDb(DbContextOptions<AppXIdentityPostgreSQLDb> options) 
+    public ElectraIdentityPostgreSQLDb(DbContextOptions<ElectraIdentityPostgreSQLDb> options) 
         : base(options) { }
 }*/

@@ -2,10 +2,12 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
+    <UserSecretsId>rsp</UserSecretsId>
+    <OutputType>Library</OutputType>
     <LangVersion>default</LangVersion>
+    <RootNamespace>Electra.SendGrid.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="35.5.1" />
     <PackageReference Include="FakeItEasy" Version="8.2.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.NET.Test.sdk" Version="17.9.0" />
@@ -14,15 +16,22 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Sendgrid" Version="9.29.3" />
     <PackageReference Include="xunit" Version="2.8.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.0">
-      <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
-    <ProjectReference Include="..\Microbians.Validators\Microbians.Validators.csproj" />
+    <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
   </ItemGroup>
 </Project>

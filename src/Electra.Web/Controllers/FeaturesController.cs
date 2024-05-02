@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Electra.Common.Web.Controllers
 {
     [ApiController]
-    public abstract class FeaturesController : AppXApiBaseController
+    public abstract class FeaturesController : ElectraApiBaseController
     {
         private readonly IFeaturesService service;
         private readonly HttpContext ctx;
