@@ -4,6 +4,7 @@
     <IsPackable>false</IsPackable>
     <OutputType>Library</OutputType>
     <LangVersion>default</LangVersion>
+    <RootNamespace>Electra.Core.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.2.0" />
@@ -12,6 +13,6 @@
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
   </ItemGroup>
 </Project>

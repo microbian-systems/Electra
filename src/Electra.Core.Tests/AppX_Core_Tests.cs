@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Microbians.Core.Tests
+namespace Electra.Core.Tests
 {
     public class AppX_Core_Tests
     {

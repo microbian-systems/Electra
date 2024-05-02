@@ -35,6 +35,37 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Validators.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.SendGrid.Tests", "Electra.SendGrid.Tests\Electra.SendGrid.Tests.csproj", "{493C3A32-8E53-47F2-846E-5B9D5C327326}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Core.Tests", "Electra.Core.Tests\Electra.Core.Tests.csproj", "{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Misc__", "__Misc__", "{5CA74167-2E23-4B0D-B323-A5FDFF5CA644}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
+		appx.conf = appx.conf
+		appx.service = appx.service
+		appx-deploy.sh = appx-deploy.sh
+		appx-ubuntu-install.sh = appx-ubuntu-install.sh
+		clean.ps1 = clean.ps1
+		DB_Init.sql = DB_Init.sql
+		Directory.Build.props = Directory.Build.props
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		mime.types = mime.types
+		nginx.conf = nginx.conf
+		NuGet.Config = NuGet.Config
+		nuget-publish.sh = nuget-publish.sh
+		nuget-update.sh = nuget-update.sh
+		pack.sh = pack.sh
+		rm-bin-obj.sh = rm-bin-obj.sh
+		rm-vscode.sh = rm-vscode.sh
+		run-migrations.ps1 = run-migrations.ps1
+		update-database.ps1 = update-database.ps1
+		upgrade.ps1 = upgrade.ps1
+		upgrade-packages.ps1 = upgrade-packages.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09F2C056-7069-4502-B195-CB6AB74AE86D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,5 +139,14 @@ Global
 		{493C3A32-8E53-47F2-846E-5B9D5C327326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{493C3A32-8E53-47F2-846E-5B9D5C327326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{493C3A32-8E53-47F2-846E-5B9D5C327326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
+		{BBC4614F-9008-4A7D-8925-A8BE5C7773AB} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
+		{493C3A32-8E53-47F2-846E-5B9D5C327326} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
 	EndGlobalSection
 EndGlobal
