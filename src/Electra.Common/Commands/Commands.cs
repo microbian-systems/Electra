@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Microbians.Common.Commands
+namespace Electra.Common.Commands
 {
     /// <summary>
     /// Command pattern to be used as a base interface for specific ICommandX interfaces (see remarks)

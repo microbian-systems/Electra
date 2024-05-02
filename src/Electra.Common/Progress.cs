@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace Microbians.Common
+namespace Electra.Common
 {
     public class Progress
     {

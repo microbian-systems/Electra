@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Microbians.Common.Commands;
+using Electra.Common.Commands;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Common.Decorators
+namespace Electra.Common.Decorators
 {
     public class LoggingCommandDecorator : IAsyncCommand
     {

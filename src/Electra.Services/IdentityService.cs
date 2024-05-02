@@ -1,4 +1,4 @@
-namespace Microbians.Services;
+namespace Electra.Services;
 
 // todo - implement logging for IdentityService<T>
 public interface IAppXIdentityService<T>
@@ -429,4 +429,3 @@ public class SaveRefreshTokenRequest
     public string Username { get; set; }
     public string Token { get; set; }
 }
-

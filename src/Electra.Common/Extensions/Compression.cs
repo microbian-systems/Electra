@@ -1,9 +1,9 @@
 ﻿using System.IO;
 using System.IO.Compression;
 
-namespace Microbians.Common.Extensions
+namespace Electra.Common.Extensions
 {
-    // todo - create unit tests for Microbians.Core.CompressionHelpers
+    // todo - create unit tests for Electra.Core.CompressionHelpers
     public static class Compression
     {
         public static byte[] Compress(byte[] data)

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
-namespace Microbians.Blazor.Components
+namespace Electra.Blazor.Components
 {
     // This class provides an example of how JavaScript functionality can be wrapped
     // in a .NET class for easy consumption. The associated JavaScript module is
@@ -18,7 +18,7 @@ namespace Microbians.Blazor.Components
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             var task = new Func<Task<IJSObjectReference>>(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/Electra.Blazor.Components/exampleJsInterop.js").AsTask());
+                "import", "./_content/Electra.Components/exampleJsInterop.js").AsTask());
             moduleTask = new Lazy<Task<IJSObjectReference>>(task);
         }
 

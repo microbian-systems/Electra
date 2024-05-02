@@ -1,7 +1,7 @@
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 
-namespace Microbians.Services
+namespace Electra.Services
 {
     public class TwilioSmsService : ISmsService
     {

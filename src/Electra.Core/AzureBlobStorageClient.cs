@@ -1,15 +1,15 @@
 ﻿using Microsoft.WindowsAzure.Storage;
 using Serilog;
 using System.Linq;
-using Microbians.Core.Extensions;
+using Electra.Core.Extensions;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Globalization;
-using Microbians.Common;
-using Microbians.Common.Extensions;
-using Microbians.Core.Helpers;
+using Electra.Common;
+using Electra.Common.Extensions;
+using Electra.Core.Helpers;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Core
+namespace Electra.Core
 {
 
     public class AzureBlobStorageClient : IBlobStorageClient

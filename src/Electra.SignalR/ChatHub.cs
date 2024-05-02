@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Microbians.SignalR;
+namespace Electra.SignalR;
 
 public class ChatHub : Hub
 {

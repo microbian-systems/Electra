@@ -1,7 +1,7 @@
 using System.Linq;
 using LiteDB;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public class LiteDbRepository<T> : GenericRepository<T, string> where T : Entity<string>, new()
     {

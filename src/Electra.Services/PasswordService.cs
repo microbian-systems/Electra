@@ -1,6 +1,6 @@
 using PasswordGenerator;
 
-namespace Microbians.Services
+namespace Electra.Services
 {
     public interface IPasswordService
     {

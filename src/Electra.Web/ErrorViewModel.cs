@@ -1,4 +1,4 @@
-namespace Microbians.Common.Web
+namespace Electra.Common.Web
 {
     public class ErrorViewModel
     {

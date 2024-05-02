@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace Microbians.Services.Mail
+namespace Electra.Services.Mail
 {
 
     public class SendGridMailer : IEmailSender

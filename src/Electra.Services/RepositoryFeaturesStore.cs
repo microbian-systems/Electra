@@ -1,4 +1,4 @@
-namespace Microbians.Services;
+namespace Electra.Services;
 
 public class RepositoryFeaturesStore : FeatureStoreBase
 {

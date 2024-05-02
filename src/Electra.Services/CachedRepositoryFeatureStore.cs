@@ -1,6 +1,6 @@
-using Microbians.Common.Caching.Decorators;
+using Electra.Common.Caching.Decorators;
 
-namespace Microbians.Services
+namespace Electra.Services
 {
     public class CachedRepositoryFeatureStore : RepositoryFeaturesStore
     {

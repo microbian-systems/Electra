@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Microbians.Common.Web.Filters
+namespace Electra.Common.Web.Filters
 {
     /// <summary>
     /// Introduces Model state auto validation to reduce code duplication

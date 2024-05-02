@@ -8,7 +8,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
-namespace Microbians.Common.Xml
+namespace Electra.Common.Xml
 {
 
     public class XsdSchemaValidator

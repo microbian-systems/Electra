@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
 using Marten;
-using Microbians.Models.Entities;
+using Electra.Models.Entities;
 using Serilog;
 
-namespace Microbians.Persistence.Marten
+namespace Electra.Persistence.Marten
 {
     public class SaveToDbCommand<T> : ISaveToDbCommand<T> where T : Entity<string>, IEntity<string>
     {

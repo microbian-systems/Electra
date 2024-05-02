@@ -1,5 +1,5 @@
 
-namespace Microbians.Actors
+namespace Electra.Actors
 {
     public interface IActorMessage {
         

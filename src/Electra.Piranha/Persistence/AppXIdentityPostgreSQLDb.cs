@@ -1,6 +1,6 @@
-﻿using Microbians.Piranha.Persistence;
+﻿using Electra.Piranha.Persistence;
 
-namespace Microbians.Piranha;
+namespace Electra.Piranha;
 
 /*
 public class AppXIdentityPostgreSQLDb : AppXDb<AppXIdentityPostgreSQLDb>

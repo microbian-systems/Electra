@@ -1,4 +1,4 @@
-﻿namespace Microbians.Services.Features
+﻿namespace Electra.Services.Features
 {
     public interface IFeaturesService
     {

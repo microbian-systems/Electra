@@ -4,7 +4,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Microbians.Common.Web.Exceptions
+namespace Electra.Common.Web.Exceptions
 {
     public static class ExceptionMiddlewareExtensions
     {

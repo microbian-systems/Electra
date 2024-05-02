@@ -4,12 +4,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Foundatio.Caching;
-using Microbians.Common.Caching.Extensions;
-using Microbians.Persistence;
-using Microbians.Models.Entities;
+using Electra.Common.Caching.Extensions;
+using Electra.Persistence;
+using Electra.Models.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Common.Caching.Decorators;
+namespace Electra.Common.Caching.Decorators;
 
 public abstract record DbCacheResult<T, TKey> where T : IEntity<TKey>, new() where TKey : IEquatable<TKey>
 {

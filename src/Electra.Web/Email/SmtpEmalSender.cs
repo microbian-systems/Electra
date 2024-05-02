@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 
-namespace Microbians.Common.Web.Email
+namespace Electra.Common.Web.Email
 {
     public class SmtpEmailSender : IEmailSender
     {

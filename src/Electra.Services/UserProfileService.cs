@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace Microbians.Services
+namespace Electra.Services
 {
     public interface IAppXUserProfileService : IUserProfileService<AppXUserProfile>{}
 

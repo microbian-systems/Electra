@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Duende.IdentityServer.EntityFramework.Entities;
 
 
-namespace Microbians.Common.Web.Identity
+namespace Electra.Common.Web.Identity
 {
     public record IdentityServerSettings
     {

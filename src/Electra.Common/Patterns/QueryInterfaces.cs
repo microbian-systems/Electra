@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Microbians.Common.Patterns
+namespace Electra.Common.Patterns
 {
     /// <summary>
     /// Represents a Query Request in a CQS model

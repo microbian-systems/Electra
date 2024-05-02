@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using Microbians.Common.Commands;
-using Microbians.Common.Extensions;
-using Microbians.Models;
+using Electra.Common.Commands;
+using Electra.Common.Extensions;
+using Electra.Models;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Persistence.Marten
+namespace Electra.Persistence.Marten
 {
     public class UpdateUserProfileCommand : IAsyncCommand<AppXUserProfile, AppXUserProfile>
     {

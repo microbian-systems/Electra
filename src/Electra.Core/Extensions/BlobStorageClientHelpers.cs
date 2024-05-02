@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.WindowsAzure.Storage.Blob;
 
-namespace Microbians.Core.Extensions
+namespace Electra.Core.Extensions
 {
     public static class BlobStorageClientHelpers
     {

@@ -1,4 +1,4 @@
-namespace Microbians.Services
+namespace Electra.Services
 {
     // todo - add some more properties
     public sealed class JwtToken

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Foundatio.Caching;
-using Microbians.Models.Entities;
+using Electra.Models.Entities;
 using Serilog;
 
-namespace Microbians.Persistence.Marten
+namespace Electra.Persistence.Marten
 {
     public class DynamicDatabaseCachedQuery<T> : IDynamicDatabaseCachedQuery<T> where T : class, IEntity<Guid>
     {

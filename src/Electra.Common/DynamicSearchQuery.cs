@@ -1,9 +1,9 @@
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microbians.Common.Patterns;
+using Electra.Common.Patterns;
 
-namespace Microbians.Common
+namespace Electra.Common
 {
     /// <summary>
     /// A type that represents a search parameter for IDynamicSearchParam
@@ -37,7 +37,7 @@ namespace Microbians.Common
         public Expression<Func<bool, TParam>> Filter { get; }
     }
 
-    // todo - complete documentation for Microbians.Core.DynamicSearchQueryBase
+    // todo - complete documentation for Electra.Core.DynamicSearchQueryBase
     /// <inheritdoc />
     /// <summary>
     /// </summary>

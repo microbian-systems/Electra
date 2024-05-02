@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microbians.Validators;
+using Electra.Validators;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
-namespace Microbians.Common.Web
+namespace Electra.Common.Web
 {
     public static class AppSettingsMiddleware
     {

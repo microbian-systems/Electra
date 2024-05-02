@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <RootNamespace>Microbians.Piranha</RootNamespace>
+      <RootNamespace>Electra.Piranha</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

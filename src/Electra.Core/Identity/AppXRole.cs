@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace Microbians.Core.Identity
+namespace Electra.Core.Identity
 {
     [Table("Roles")]
     public class AppXRole : IdentityRole

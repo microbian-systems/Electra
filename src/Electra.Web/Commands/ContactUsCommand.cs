@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
-using Microbians.Persistence;
-using Microbians.Persistence.Entities;
-using Microbians.Models;
-using Microbians.Common.Commands;
+using Electra.Persistence;
+using Electra.Persistence.Entities;
+using Electra.Models;
+using Electra.Common.Commands;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Common.Web.Commands
+namespace Electra.Common.Web.Commands
 {
     public class ContactUsCommand : IAsyncCommand<ContactUsModel, WebResponse>
     {

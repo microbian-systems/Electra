@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Microbians.Models.ViewModels
+namespace Electra.Models.ViewModels
 {
     public abstract record ServiceRequestResult<T>
     {

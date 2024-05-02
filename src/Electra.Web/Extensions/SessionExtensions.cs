@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 
-namespace Microbians.Common.Web.Extensions
+namespace Electra.Common.Web.Extensions
 {
     public static class SessionExtensions
     {

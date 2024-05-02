@@ -1,4 +1,4 @@
-﻿namespace Microbians.Persistence
+﻿namespace Electra.Persistence
 {
     public interface IRepository<T, Tkey> : IReadOnlyRepository<T, Tkey> where T : IEntity<Tkey> where Tkey : IEquatable<Tkey>
     {

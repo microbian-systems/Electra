@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Common.Web.Errors
+namespace Electra.Common.Web.Errors
 {
     /// <summary>
     /// Middleware to handle 404 page not found errors

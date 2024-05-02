@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Microbians.Common.Commands
+namespace Electra.Common.Commands
 {
     // todo - replace these commands with MediatR
     // public interface ICommand

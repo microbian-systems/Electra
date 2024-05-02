@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Microbians.Common.Extensions
+namespace Electra.Common.Extensions
 {
     public static class ExceptionExtensions
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microbians.Services.Features;
+using Electra.Services.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microbians.Common.Web.Controllers
+namespace Electra.Common.Web.Controllers
 {
     [ApiController]
     public abstract class FeaturesController : AppXApiBaseController

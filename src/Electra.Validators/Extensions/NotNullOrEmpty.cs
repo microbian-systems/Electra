@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Microbians.Validators.Extensions
+namespace Electra.Validators.Extensions
 {
     public class NotNullOrEmpty<T, TProperty> : AsyncPropertyValidator<T, TProperty>, INotNullOrEmpty
     {

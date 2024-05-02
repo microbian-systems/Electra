@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Microbians.Models.Entities;
+using Electra.Models.Entities;
 
-namespace Microbians.Models
+namespace Electra.Models
 {
     // todo - determine what format to store the profile
     // todo - later denormalize if join performance costs too much (cache first, then denormalize)

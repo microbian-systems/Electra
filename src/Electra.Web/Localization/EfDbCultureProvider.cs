@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Localization;
 
-namespace Microbians.Common.Web.Localization
+namespace Electra.Common.Web.Localization
 {
     public class EfDbCultureProvider : CookieRequestCultureProvider
     {

@@ -1,4 +1,4 @@
-﻿namespace Microbians.Persistence
+﻿namespace Electra.Persistence
 {
     /// <summary>
     /// Represents a table-name for a DynamoDB table. We have to do this

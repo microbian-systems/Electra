@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Core.Helpers
+namespace Electra.Core.Helpers
 {
     public static class Config
     {

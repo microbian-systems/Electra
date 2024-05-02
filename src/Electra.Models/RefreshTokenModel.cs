@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Microbians.Models
+namespace Electra.Models
 {
     public class RefreshTokenModel
     {

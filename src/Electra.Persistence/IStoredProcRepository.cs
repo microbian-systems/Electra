@@ -1,4 +1,4 @@
-﻿namespace Microbians.Persistence;
+﻿namespace Electra.Persistence;
 
 public interface IStoredProcRepository
 {

@@ -1,6 +1,6 @@
-using Microbians.Common.Commands;
+using Electra.Common.Commands;
 
-namespace Microbians.Common.Patterns
+namespace Electra.Common.Patterns
 {
     public interface IDecorator : ICommand{}
     public interface IDecorator<T> : ICommand<T>{}

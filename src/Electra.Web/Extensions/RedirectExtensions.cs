@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Microbians.Common.Web.Extensions;
+namespace Electra.Common.Web.Extensions;
 
 using Microsoft.AspNetCore.Routing;
 

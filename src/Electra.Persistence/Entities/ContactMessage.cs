@@ -1,4 +1,4 @@
-namespace Microbians.Persistence.Entities
+namespace Electra.Persistence.Entities
 {
     public record ContactMessage : EntityBase<Guid>
     {

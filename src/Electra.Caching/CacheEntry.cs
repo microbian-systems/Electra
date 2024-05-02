@@ -1,4 +1,4 @@
-﻿namespace Microbians.Common.Caching;
+﻿namespace Electra.Common.Caching;
 
     public record CacheEntry<T>
     {

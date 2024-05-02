@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 
-namespace Microbians.Common
+namespace Electra.Common
 {
     public static class DataHelper
     {

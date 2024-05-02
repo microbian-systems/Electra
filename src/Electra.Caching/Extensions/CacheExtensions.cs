@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Foundatio.Caching;
 
-namespace Microbians.Common.Caching.Extensions
+namespace Electra.Common.Caching.Extensions
 {
     public static class CacheClientExtensions
     {

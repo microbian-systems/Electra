@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Microbians.Models
+namespace Electra.Models
 {
     public class UserProfileUpdateRequest
     {

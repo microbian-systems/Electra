@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Proto;
 
-namespace Microbians.Actors
+namespace Electra.Actors
 {
     public interface IActorManager<T> where T : IActor
     {

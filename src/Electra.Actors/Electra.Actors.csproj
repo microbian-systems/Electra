@@ -6,9 +6,9 @@
     <Copyright>Microbian Systems 2021</Copyright>
     <PackageProjectUrl>http://appx.pro</PackageProjectUrl>
     <RepositoryUrl>http://github.com/appx</RepositoryUrl>
-    <PackageTags>appx, web, asp.net core, .net, microbians</PackageTags>
+    <PackageTags>appx, web, asp.net core, .net, Electra</PackageTags>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Microbians.Actors</RootNamespace>
+    <RootNamespace>Electra.Actors</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Polly" Version="8.3.1" />

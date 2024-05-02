@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace Microbians.Services
+namespace Electra.Services
 {
     public sealed class MartenUserProfileService<T> : IUserProfileService<T> where T : AppXUserProfile, IEntity<string>, new()
     {

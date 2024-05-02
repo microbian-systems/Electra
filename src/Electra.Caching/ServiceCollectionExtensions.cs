@@ -1,4 +1,4 @@
-﻿namespace Microbians.Common.Caching
+﻿namespace Electra.Common.Caching
 {
     public static class ServiceCollectionExtensions
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Microbians.Piranha;
+namespace Electra.Piranha;
 
 public static class PiranhaCmsExtensions
 {

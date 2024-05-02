@@ -1,4 +1,4 @@
-namespace Microbians.Validators
+namespace Electra.Validators
 {
     // todo - fix fluent validation IValidatorInterceptor impl
 //     public class DefaultFluentValidatorInterceptor : IValidatorInterceptor

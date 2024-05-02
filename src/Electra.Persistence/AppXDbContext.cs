@@ -1,11 +1,11 @@
 using System.Linq;
-using Microbians.Core.Identity;
-using Microbians.Models;
+using Electra.Core.Identity;
+using Electra.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public class AppXDbContext : AppXDbContext<AppXUser>
     {

@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using FluentValidation;
-using Microbians.Common.Commands;
+using Electra.Common.Commands;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Validators
+namespace Electra.Validators
 {
     public class ValidationCommandHandlerDecorator<TCommand> : IAsyncCommand<TCommand>
     {

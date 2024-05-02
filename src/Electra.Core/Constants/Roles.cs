@@ -1,4 +1,4 @@
-namespace Microbians.Core.Constants;
+namespace Electra.Core.Constants;
 
 public static class UserRoles
 {

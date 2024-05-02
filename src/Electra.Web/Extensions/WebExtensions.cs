@@ -1,23 +1,23 @@
 using System;
 using System.Linq;
 using Duende.IdentityServer.EntityFramework.Interfaces;
-using Microbians.Common.Web.Exceptions;
-using Microbians.Common.Web.Middleware;
-using Microbians.Models;
-using Microbians.Services;
+using Electra.Common.Web.Exceptions;
+using Electra.Common.Web.Middleware;
+using Electra.Models;
+using Electra.Services;
 using Elasticsearch.Net;
 using Mapster;
 using Marten;
-using Microbians.Common.Caching.Decorators;
-using Microbians.Common.Extensions;
-using Microbians.Common.Web.Logging.Microbians.AspNetCore.Middleware.Logging;
-using Microbians.Common.Web.Options;
-using Microbians.Common.Web.Performance;
-using Microbians.Common.Web.Services;
-using Microbians.Core.Identity;
-using Microbians.Persistence;
-using Microbians.Services.Geo;
-using Microbians.Services.Mail;
+using Electra.Common.Caching.Decorators;
+using Electra.Common.Extensions;
+using Electra.Common.Web.Logging.Electra.AspNetCore.Middleware.Logging;
+using Electra.Common.Web.Options;
+using Electra.Common.Web.Performance;
+using Electra.Common.Web.Services;
+using Electra.Core.Identity;
+using Electra.Persistence;
+using Electra.Services.Geo;
+using Electra.Services.Mail;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -30,7 +30,7 @@ using Microsoft.OpenApi.Models;
 using Nest;
 using Weasel.Core;
 
-namespace Microbians.Common.Web.Extensions;
+namespace Electra.Common.Web.Extensions;
 
 public static class WebExtensions
 {

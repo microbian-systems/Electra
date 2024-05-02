@@ -1,4 +1,4 @@
-﻿namespace Microbians.Core.Http;
+﻿namespace Electra.Core.Http;
 
 
 public abstract class HttpClientBase

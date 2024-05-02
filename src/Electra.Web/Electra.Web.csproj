@@ -3,7 +3,7 @@
     <Description>AppX common utils</Description>
     <IsPackable>false</IsPackable>
     <Title>AppX.Common.Web</Title>
-    <RootNamespace>Microbians.Common.Web</RootNamespace>
+    <RootNamespace>Electra.Common.Web</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Boxed.AspNetCore" Version="9.0.1" />
@@ -51,8 +51,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Electra.Common.Caching\Electra.Common.Caching.csproj" />
-    <ProjectReference Include="..\Electra.Blazor.Components\Electra.Blazor.Components.csproj" />
+    <ProjectReference Include="..\Electra.Caching\Electra.Caching.csproj" />
+    <ProjectReference Include="..\Electra.Components\Electra.Components.csproj" />
     <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />

@@ -1,4 +1,4 @@
-namespace Microbians.Common.Web.Options
+namespace Electra.Common.Web.Options
 {
     public class SwaggerOptions
     {

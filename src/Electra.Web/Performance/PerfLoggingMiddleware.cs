@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Microbians.Common.Web.Performance
+namespace Electra.Common.Web.Performance
 {
     public class PerfLoggingMiddleware : IMiddleware
     {

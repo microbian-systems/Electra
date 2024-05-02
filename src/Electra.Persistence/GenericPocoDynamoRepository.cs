@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Amazon.DynamoDBv2;
-using Microbians.Common.Extensions;
+using Electra.Common.Extensions;
 using ServiceStack.Aws.DynamoDb;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public interface IGenericPocoDynamoRepository<T> where T : Entity
     {

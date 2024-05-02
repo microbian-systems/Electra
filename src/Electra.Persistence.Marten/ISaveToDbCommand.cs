@@ -1,8 +1,8 @@
 using System;
-using Microbians.Common.Commands;
-using Microbians.Models.Entities;
+using Electra.Common.Commands;
+using Electra.Models.Entities;
 
-namespace Microbians.Persistence.Marten
+namespace Electra.Persistence.Marten
 {
     public interface ISaveToDbCommand<T> : IAsyncCommand<T, T>
     {

@@ -1,4 +1,4 @@
-﻿namespace Microbians.Common.Decorators
+﻿namespace Electra.Common.Decorators
 {
     // public sealed class TimingCommandDecorator<T, TReturn> : DecoratorBaseAsync<T>, ICommandAsync<T>
     // {

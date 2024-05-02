@@ -1,7 +1,7 @@
 
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Common.Patterns
+namespace Electra.Common.Patterns
 {
     public abstract class AbstractDecorator : IDecorator
     {

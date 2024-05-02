@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Microbians.Persistence;
-using Microbians.Persistence.Entities;
-using Microbians.Common.Commands;
+using Electra.Persistence;
+using Electra.Persistence.Entities;
+using Electra.Common.Commands;
 
-namespace Microbians.Common.Web.Commands
+namespace Electra.Common.Web.Commands
 {
     public class DeleteRefreshTokenRequest
     {

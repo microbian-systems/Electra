@@ -1,7 +1,7 @@
-using Microbians.Models.Entities;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Microbians.Models
+namespace Electra.Models
 {
     public record AddressModel : Entity
     {

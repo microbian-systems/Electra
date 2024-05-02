@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using FluentEmail.Core;
-using Microbians.Common.Web.Extensions;
-using Microbians.Core.Identity;
-using Microbians.Models;
-using Microbians.Services;
-using Microbians.Services.Geo;
+using Electra.Common.Web.Extensions;
+using Electra.Core.Identity;
+using Electra.Models;
+using Electra.Services;
+using Electra.Services.Geo;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
-namespace Microbians.Common.Web.Services;
+namespace Electra.Common.Web.Services;
 
 public interface IAppXUserService : IAppXUserService<AppXUser>{}
 

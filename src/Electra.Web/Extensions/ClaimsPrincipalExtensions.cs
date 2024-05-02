@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 
-namespace Microbians.Common.Web.Extensions
+namespace Electra.Common.Web.Extensions
 {
     public static class ClaimsPrincipalExtensions
     {

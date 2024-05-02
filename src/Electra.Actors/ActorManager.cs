@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Proto;
 using Serilog;
 
-namespace Microbians.Actors
+namespace Electra.Actors
 {
     // https://github.com/AsynkronIT/protoactor-dotnet/tree/dev/examples/DependencyInjection
     // todo - consider refactoring ActorManager to use three generic parameters so it can be injected

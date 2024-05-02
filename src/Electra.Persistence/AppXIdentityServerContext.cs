@@ -4,14 +4,14 @@ using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.EntityFramework.Extensions;
 using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Options;
-using Microbians.Core.Identity;
-using Microbians.Models;
+using Electra.Core.Identity;
+using Electra.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Microbians.Persistence;
+namespace Electra.Persistence;
 
 [Table("Roles")]
 public class RoleConfiguration : IEntityTypeConfiguration<AppXRole>
@@ -179,7 +179,7 @@ public class AppXIdentityContext : IdentityDbContext<AppXUser, AppXRole, string>
 
     private void IgnoreTables(ModelBuilder builder)
     {
-        builder.Ignore<Microbians.Models.AddressModel>();
+        builder.Ignore<Electra.Models.AddressModel>();
     }
 
 
@@ -212,7 +212,7 @@ protected virtual void AddIdentityModelConfigs(ModelBuilder builder)
         });
     }
 }
-// todo - fix appx IdentityServerRegistrations in Microbians persistence library
+// todo - fix appx IdentityServerRegistrations in Electra persistence library
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
 public class AppXIdentityServerContext : AppXIdentityServerContext<AppXUser>, IPersistedGrantDbContext
 {

@@ -1,4 +1,4 @@
-﻿namespace Microbians.Persistence
+﻿namespace Electra.Persistence
 {
     public abstract class RepositoryBase<T, TKey> : IRepository<T, TKey> where T : EntityBase<TKey>, new() where TKey : IEquatable<TKey>
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using Marten;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public class DynamicMartinRepository : IDynamicMartenRepository
     {

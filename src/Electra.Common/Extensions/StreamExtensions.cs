@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 
-namespace Microbians.Common.Extensions
+namespace Electra.Common.Extensions
 {
     public static class StreamExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     // todo - impl complete logging
     public class EfStoredProcRepository : IStoredProcRepository

@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Validators
+namespace Electra.Validators
 {
     public abstract class BaseModelValidator<T> : AbstractValidator<T>
     {

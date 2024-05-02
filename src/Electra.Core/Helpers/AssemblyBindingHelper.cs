@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text.RegularExpressions;
 
-namespace Microbians.Core.Helpers
+namespace Electra.Core.Helpers
 {
 
     public static class AzureFuncsBindingHelper

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Microbians.Common.Web.Controllers;
+namespace Electra.Common.Web.Controllers;
 
 [Authorize]
 [ApiController]

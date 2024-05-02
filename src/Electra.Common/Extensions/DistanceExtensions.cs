@@ -1,4 +1,4 @@
-﻿namespace Microbians.Common.Extensions
+﻿namespace Electra.Common.Extensions
 {
     public static class DistanceExtensions
     {

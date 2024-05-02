@@ -1,4 +1,4 @@
-namespace Microbians.Common
+namespace Electra.Common
 {
     public class SmtpEmailOptions : BaseOptions
     {

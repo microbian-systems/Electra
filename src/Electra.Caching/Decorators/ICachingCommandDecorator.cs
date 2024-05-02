@@ -1,6 +1,6 @@
-﻿using Microbians.Common.Commands;
+﻿using Electra.Common.Commands;
 
-namespace Microbians.Common.Caching.Decorators
+namespace Electra.Common.Caching.Decorators
 {
     public interface ICachingCommandDecoratorAsync<T> : ICommandAsync<T>{}
     public interface ICachingCommandDecoratorSync<T> : ICommand<T>{}

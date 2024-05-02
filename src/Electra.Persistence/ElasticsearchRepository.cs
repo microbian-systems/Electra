@@ -1,10 +1,10 @@
 using System.ComponentModel;
 using System.Linq;
-using Microbians.Common.Extensions;
-using Microbians.Persistence.Entities;
+using Electra.Common.Extensions;
+using Electra.Persistence.Entities;
 using Nest;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public interface IElasticsearchRepository<T> where T : ElasticEntity
     {

@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using Microbians.Models.Entities;
+using Electra.Models.Entities;
 
-namespace Microbians.Models.Geo
+namespace Electra.Models.Geo
 {
     public record CountryModel : Entity<int>
     {

@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Microbians.Services
+namespace Electra.Services
 {
     // todo - rename TokenValidationService to JwtTokenService
     public class AppXTokenValidationService : ITokenValidationService

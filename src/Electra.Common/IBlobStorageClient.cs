@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 
-namespace Microbians.Common
+namespace Electra.Common
 {
     public interface IBlobStorageClient
     {

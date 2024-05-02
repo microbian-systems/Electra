@@ -1,4 +1,4 @@
-namespace Microbians.Services.Models
+namespace Electra.Services.Models
 {
     public record UserRegistrationRequest : RegistrationRequestModel
     {

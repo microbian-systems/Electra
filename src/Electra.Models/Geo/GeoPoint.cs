@@ -1,4 +1,4 @@
-namespace Microbians.Models.Geo
+namespace Electra.Models.Geo
 {
     public record GeoPoint(double Latitude, double Longitude)
     {

@@ -1,9 +1,9 @@
-using Microbians.Validators.Extensions;
-using Microbians.Common;
+using Electra.Validators.Extensions;
+using Electra.Common;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Validators
+namespace Electra.Validators
 {
     public class SmtpEmailOptionsValidator : BaseModelValidator<SmtpEmailOptions>
     {

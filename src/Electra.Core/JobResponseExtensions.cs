@@ -1,4 +1,4 @@
-﻿namespace Microbians.Core
+﻿namespace Electra.Core
 {
     public static class JobResponseExtensions
     {

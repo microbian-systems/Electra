@@ -1,10 +1,10 @@
 using System;
-using Microbians.Models;
-using Microbians.Validators.Extensions;
+using Electra.Models;
+using Electra.Validators.Extensions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Validators
+namespace Electra.Validators
 {
     public class UserProfileUpdateRequestValidator : BaseModelValidator<UserProfileUpdateRequest>
     {

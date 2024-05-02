@@ -1,4 +1,4 @@
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     // todo - consider placing a constraint on type TKey for the marten repositories
     public interface IDynamicMartenRepository : IDynamicRepositoryAsync<string>

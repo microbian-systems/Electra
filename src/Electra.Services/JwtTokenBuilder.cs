@@ -1,4 +1,4 @@
-namespace Microbians.Services
+namespace Electra.Services
 {
     // todo - use JwtTokenBuilder
     public sealed class JwtTokenBuilder
@@ -92,4 +92,3 @@ namespace Microbians.Services
         }
     }
 }
-

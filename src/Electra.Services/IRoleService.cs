@@ -1,6 +1,6 @@
 using ServiceStack;
 
-namespace Microbians.Services
+namespace Electra.Services
 {
     public interface IRoleService<T> where T : AppXRole
     {

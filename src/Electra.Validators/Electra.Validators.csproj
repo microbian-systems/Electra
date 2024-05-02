@@ -3,7 +3,7 @@
     <Title>Validators for the AppX Web Platform</Title>
     <Description>Core components for the AppX web application platform</Description>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Microbians.Validators</RootNamespace>
+    <RootNamespace>Electra.Validators</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="fluentassertions" Version="6.12.0" />

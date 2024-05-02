@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public interface IOptions
     {

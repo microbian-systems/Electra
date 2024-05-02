@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace Microbians.Core.Configuration
+namespace Electra.Core.Configuration
 {
     /// <summary>
     /// Configuration Helpers

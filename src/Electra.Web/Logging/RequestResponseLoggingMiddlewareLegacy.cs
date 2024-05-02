@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Common.Web.Logging
+namespace Electra.Common.Web.Logging
 {
     public sealed class RequestResponseLoggingMiddlewareLegacy
     {

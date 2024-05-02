@@ -1,6 +1,6 @@
 using System;
 
-namespace Microbians.Common.Logging
+namespace Electra.Common.Logging
 {
     public interface IAppXLog
     {

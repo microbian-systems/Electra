@@ -1,4 +1,4 @@
-namespace Microbians.Common.Web.SignalR;
+namespace Electra.Common.Web.SignalR;
 
 public static class SignalRConfigExtensions
 {

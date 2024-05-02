@@ -1,6 +1,6 @@
 using FluentValidation.Validators;
 
-namespace Microbians.Validators.Extensions
+namespace Electra.Validators.Extensions
 {
     public interface INotEmptyGuidValidator : IPropertyValidator { }
 }

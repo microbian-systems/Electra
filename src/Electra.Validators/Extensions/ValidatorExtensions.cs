@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Microbians.Validators.Extensions;
+namespace Electra.Validators.Extensions;
 
 // todo - fix empty guid validator
 

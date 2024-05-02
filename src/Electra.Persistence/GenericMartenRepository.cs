@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Threading;
 using Marten;
-using Microbians.Common.Extensions;
+using Electra.Common.Extensions;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public interface IGenericMartenRepository<T, TKey> : IGenericRepository<T, TKey>
         where T : IEntity<TKey>, new() where TKey : IEquatable<TKey>

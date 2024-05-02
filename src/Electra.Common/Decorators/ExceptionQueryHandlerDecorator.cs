@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
-using Microbians.Common.Patterns;
+using Electra.Common.Patterns;
 using Microsoft.Extensions.Logging;
 
-namespace Microbians.Common.Decorators
+namespace Electra.Common.Decorators
 {
     public class ExceptionQueryHandlerDecorator<TReturn> : IAsyncQueryHandler<TReturn>
     {

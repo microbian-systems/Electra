@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Microbians.Models
+namespace Electra.Models
 {
     // todo - rename BaseErrorResponse -> Just Error or AppError
     public class BaseErrorResponse

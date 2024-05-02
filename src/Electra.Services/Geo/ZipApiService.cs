@@ -1,7 +1,7 @@
 using System.Net.Http;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Microbians.Services.Geo
+namespace Electra.Services.Geo
 {
     public interface IZipApiService
     {

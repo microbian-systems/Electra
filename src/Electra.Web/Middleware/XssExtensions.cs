@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Antiforgery;
 
-namespace Microbians.Common.Web.Middleware
+namespace Electra.Common.Web.Middleware
 {
     public static class XssExtensions
     {

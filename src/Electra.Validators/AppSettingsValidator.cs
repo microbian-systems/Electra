@@ -1,8 +1,8 @@
-using Microbians.Validators.Extensions;
+using Electra.Validators.Extensions;
 using FluentValidation;
-using Microbians.Common;
+using Electra.Common;
 
-namespace Microbians.Validators
+namespace Electra.Validators
 {
     public class AppSettingsValidator : AbstractValidator<AppSettings>
     {

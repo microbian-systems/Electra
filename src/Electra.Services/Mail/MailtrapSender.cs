@@ -6,7 +6,7 @@ using FluentEmail.Smtp;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Microbians.Services.Mail
+namespace Electra.Services.Mail
 {
     
     public static class FluentEmailMailtrapBuilderExtensions

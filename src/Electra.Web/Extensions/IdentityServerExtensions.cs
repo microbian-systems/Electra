@@ -1,12 +1,12 @@
 using System;
 using System.Reflection;
 using Duende.IdentityServer.EntityFramework.Interfaces;
-using Microbians.Core.Identity;
-using Microbians.Models;
-using Microbians.Persistence;
+using Electra.Core.Identity;
+using Electra.Models;
+using Electra.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microbians.Common.Web.Extensions;
+namespace Electra.Common.Web.Extensions;
 
 public static class IdentityServerExtensions
 {

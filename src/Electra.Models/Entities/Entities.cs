@@ -1,6 +1,6 @@
 using System;
 
-namespace Microbians.Models.Entities
+namespace Electra.Models.Entities
 {
     public interface IEntityInt : IEntity<int> { }
     

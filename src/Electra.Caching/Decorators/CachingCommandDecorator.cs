@@ -1,4 +1,4 @@
-﻿namespace Microbians.Common.Caching.Decorators
+﻿namespace Electra.Common.Caching.Decorators
 {
     // public sealed class CachingCommandDecorator<T> : DecoratorBaseAsync<T>, ICachingCommandDecorator<T>
     // {

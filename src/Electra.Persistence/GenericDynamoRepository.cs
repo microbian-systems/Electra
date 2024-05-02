@@ -4,7 +4,7 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public interface IGenericDynamoRepository<T> where T : Entity
     {

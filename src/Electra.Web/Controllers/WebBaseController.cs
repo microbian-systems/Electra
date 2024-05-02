@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ServiceStack;
 
-namespace Microbians.Common.Web.Controllers
+namespace Electra.Common.Web.Controllers
 {
     [Authenticate]
     [ValidateAntiForgeryToken]

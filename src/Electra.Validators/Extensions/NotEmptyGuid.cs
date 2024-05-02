@@ -5,7 +5,7 @@ using FluentValidation;
 using FluentValidation.Validators;
 using IPropertyValidator = FluentValidation.Validators.IPropertyValidator;
 
-namespace Microbians.Validators.Extensions
+namespace Electra.Validators.Extensions
 {
     public interface INotNullOrEmpty : IPropertyValidator{}
     public class NotEmptyGuid<T, TProperty> : AsyncPropertyValidator<T, TProperty>, INotEmptyGuidValidator 

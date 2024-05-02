@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Microbians.Persistence.ActiveRecord;
+namespace Electra.Persistence.ActiveRecord;
 
 public static class ActiveRecordExtensions
 {

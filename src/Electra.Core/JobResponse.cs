@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Microbians.Core;
+namespace Electra.Core;
 
     public class JobResponse
     {

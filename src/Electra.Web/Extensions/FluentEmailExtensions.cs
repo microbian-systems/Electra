@@ -1,13 +1,13 @@
 using Boxed.AspNetCore;
-using Microbians.Common.Web.Email;
-using Microbians.Services.Mail;
+using Electra.Common.Web.Email;
+using Electra.Services.Mail;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
-namespace Microbians.Common.Web.Extensions
+namespace Electra.Common.Web.Extensions
 {
     // FluentEmail - https://github.com/lukencode/FluentEmail
     public static class FluentEmailExtensions

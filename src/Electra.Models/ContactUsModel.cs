@@ -1,4 +1,4 @@
-﻿namespace Microbians.Models
+﻿namespace Electra.Models
 {
     public class ContactUsModel
     {

@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using Microbians.Common.Commands;
+using Electra.Common.Commands;
 using Microsoft.Extensions.Logging;
 using Proto;
 
-namespace Microbians.Actors
+namespace Electra.Actors
 {
     public class ActorCommandHandlerDecorator<TCommand> : IAsyncCommand<TCommand> where TCommand : IActorMessage
     {

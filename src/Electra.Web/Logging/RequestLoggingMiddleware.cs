@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Http.Features;
 using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Common.Web.Logging
+namespace Electra.Common.Web.Logging
 {
-    namespace Microbians.AspNetCore.Middleware.Logging
+    namespace Electra.AspNetCore.Middleware.Logging
     {
         public class RequestLoggingMiddleware : IMiddleware
         {

@@ -1,4 +1,4 @@
-﻿namespace Microbians.Common.Patterns
+﻿namespace Electra.Common.Patterns
 {
     public interface IVisitable
     {

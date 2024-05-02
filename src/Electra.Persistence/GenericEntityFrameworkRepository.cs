@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using Microbians.Common.Extensions;
+using Electra.Common.Extensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public interface IGenericEntityFrameworkRepository<T, TKey> : IGenericRepository<T, TKey>
         where T : IEntity<TKey>, new() where TKey : IEquatable<TKey>

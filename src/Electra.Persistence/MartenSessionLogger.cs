@@ -4,7 +4,7 @@ using Npgsql;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public class MartenSessionLogger : IMartenSessionLogger
     {

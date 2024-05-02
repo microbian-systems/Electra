@@ -3,7 +3,7 @@
     <Title>SignalR hubs for the AppX Web Platform</Title>
     <Description>Core components for the AppX web application platform</Description>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Microbians.SignalR</RootNamespace>
+    <RootNamespace>Electra.SignalR</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client.Core" Version="8.0.4" />

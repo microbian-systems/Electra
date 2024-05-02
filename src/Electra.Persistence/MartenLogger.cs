@@ -2,7 +2,7 @@ using Marten;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
-namespace Microbians.Persistence
+namespace Electra.Persistence
 {
     public class MartenLogger : IMartenLogger
     {

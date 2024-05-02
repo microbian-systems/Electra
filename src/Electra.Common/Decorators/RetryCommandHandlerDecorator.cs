@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Microbians.Common.Commands;
+using Electra.Common.Commands;
 using Microsoft.Extensions.Logging;
 using Polly;
 
-namespace Microbians.Common.Decorators
+namespace Electra.Common.Decorators
 {
     public class RetryCommandHandlerDecorator<TCommand> : IAsyncCommand<TCommand>
     {

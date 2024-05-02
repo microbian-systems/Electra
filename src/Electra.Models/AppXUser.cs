@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Microbians.Models.Entities;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Microbians.Models
+namespace Electra.Models
 {
     public class AppXUser : IdentityUser, IEntity<string> //, IAuditableEntity
     {

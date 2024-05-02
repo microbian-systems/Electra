@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Microbians.Common.Constants;
+using Electra.Common.Constants;
 
-namespace Microbians.Common.Extensions
+namespace Electra.Common.Extensions
 {
     public static class StringExtensions
     {

@@ -1,4 +1,4 @@
-namespace Microbians.Common.Constants
+namespace Electra.Common.Constants
 {
     public static class RegExConstants
     {

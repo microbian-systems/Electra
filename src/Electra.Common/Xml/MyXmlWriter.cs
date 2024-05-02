@@ -2,7 +2,7 @@
 using System.Text;
 using System.Xml;
 
-namespace Microbians.Common.Xml
+namespace Electra.Common.Xml
 {
     public class MyXmlWriter : XmlTextWriter
     {

@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using FluentEmail.Core;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
-namespace Microbians.Common.Web.Email
+namespace Electra.Common.Web.Email
 {
     public class FluentEmailSender : IEmailSender
     {

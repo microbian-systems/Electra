@@ -3,7 +3,7 @@ using Piranha.Data.EF;
 using Db = Piranha.Data.EF;
 using Piranha.AspNetCore.Identity;
 
-namespace Microbians.Piranha.Persistence;
+namespace Electra.Piranha.Persistence;
 
 /*public abstract class AppXDb<T>(DbContextOptions<T> options) 
     : Piranha.AspNetCore.Identity.Db<T>(options)

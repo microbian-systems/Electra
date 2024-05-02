@@ -1,4 +1,4 @@
-namespace Microbians.Persistence.Entities
+namespace Electra.Persistence.Entities
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
     public class IndexNameAttribute : Attribute

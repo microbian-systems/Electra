@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Microbians.Models.Entities
+namespace Electra.Models.Entities
 {
     public interface IEntity<TKey> where TKey : IEquatable<TKey>
     {

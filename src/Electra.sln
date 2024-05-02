@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Actors", "Electra.Actors\Electra.Actors.csproj", "{B139FDFB-1F5C-4805-80A0-3679FD20671A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Blazor.Components", "Electra.Blazor.Components\Electra.Blazor.Components.csproj", "{098B729F-3305-42BA-B838-DD0718CD1155}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Components", "Electra.Components\Electra.Components.csproj", "{098B729F-3305-42BA-B838-DD0718CD1155}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Common", "Electra.Common\Electra.Common.csproj", "{10FF7197-7DD5-4F12-A64D-A36129C540A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Common.Caching", "Electra.Common.Caching\Electra.Common.Caching.csproj", "{BF8FC3E5-6FAE-43DC-B748-4366ECC8B0D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Caching", "Electra.Caching\Electra.Caching.csproj", "{BF8FC3E5-6FAE-43DC-B748-4366ECC8B0D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Core", "Electra.Core\Electra.Core.csproj", "{AD9D9B85-E310-4813-B6A8-663F8F7E6676}"
 EndProject

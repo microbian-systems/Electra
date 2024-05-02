@@ -3,7 +3,7 @@
     <Description>AppX caching utils</Description>
     <IsPackable>false</IsPackable>
     <Title>AppX.Common.Caching</Title>
-    <RootNamespace>Microbians.Common.Caching</RootNamespace>
+    <RootNamespace>Electra.Common.Caching</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Automatonymous" Version="5.1.3" />

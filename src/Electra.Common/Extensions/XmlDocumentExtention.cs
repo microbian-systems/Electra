@@ -3,9 +3,9 @@ using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using Microbians.Common.Xml;
+using Electra.Common.Xml;
 
-namespace Microbians.Common.Extensions
+namespace Electra.Common.Extensions
 {
     public static class XmlDocumentExtension
     {

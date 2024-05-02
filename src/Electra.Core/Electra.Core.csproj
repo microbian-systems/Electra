@@ -3,7 +3,7 @@
     <Title>Core Package for the AppX Web Platform</Title>
     <Description>Core components for the AppX web application platform</Description>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Microbians.Core</RootNamespace>
+    <RootNamespace>Electra.Core</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Serilog" Version="3.1.1" />
