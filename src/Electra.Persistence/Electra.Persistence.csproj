@@ -3,6 +3,7 @@
     <Title>Data access patterns for the AppX Web Platform</Title>
     <Description>Core components for the AppX web application platform</Description>
     <IsPackable>false</IsPackable>
+    <RootNamespace>Microbians.Persistence</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="MultipleResultSetHelper.cs" />
@@ -58,7 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
-    <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
+    <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
     <ProjectReference Include="..\Microbians.Common\Microbians.Common.csproj" />
   </ItemGroup>
 </Project>

@@ -165,7 +165,7 @@ public static class WebExtensions
         // services.AddDbContext<T>(options =>   // todo - create db specific registration services for postgres, sqlserver, etc...
         //     options.UseNpgsql(configuration.GetConnectionString("DefaultConnectionString"), x =>
         //     {
-        //         x.MigrationsAssembly("Microbians.Persistence");
+        //         x.MigrationsAssembly("Electra.Persistence");
         //     }));
         
         if(enableMarten)

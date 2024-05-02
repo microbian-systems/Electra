@@ -18,7 +18,7 @@ namespace Microbians.Blazor.Components
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             var task = new Func<Task<IJSObjectReference>>(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/Microbians.Blazor.Components/exampleJsInterop.js").AsTask());
+                "import", "./_content/Electra.Blazor.Components/exampleJsInterop.js").AsTask());
             moduleTask = new Lazy<Task<IJSObjectReference>>(task);
         }
 

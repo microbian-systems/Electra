@@ -3,6 +3,7 @@
     <Title>Marten Persistence for the AppX Web Platform</Title>
     <Description>Core components for the AppX web application platform</Description>
     <IsPackable>false</IsPackable>
+    <RootNamespace>Microbians.Persistence.Marten</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="marten" Version="7.10.0" />
@@ -15,7 +16,7 @@
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Common.Caching\Microbians.Common.Caching.csproj" />
+    <ProjectReference Include="..\Electra.Common.Caching\Electra.Common.Caching.csproj" />
     <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
   </ItemGroup>
   <ItemGroup>

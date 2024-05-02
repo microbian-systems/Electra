@@ -8,6 +8,7 @@
     <RepositoryUrl>http://github.com/appx</RepositoryUrl>
     <PackageTags>appx, web, asp.net core, .net, microbians</PackageTags>
     <IsPackable>false</IsPackable>
+    <RootNamespace>Microbians.Actors</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Polly" Version="8.3.1" />
@@ -18,6 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
-    <ProjectReference Include="..\Microbians.Persistence\Microbians.Persistence.csproj" />
+    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
   </ItemGroup>
 </Project>

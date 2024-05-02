@@ -3,12 +3,13 @@
     <Title>Commone services for the AppX Web Platform</Title>
     <Description>Core components for the AppX web application platform</Description>
     <IsPackable>false</IsPackable>
+    <RootNamespace>Microbians.Services</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Common.Caching\Microbians.Common.Caching.csproj" />
-    <ProjectReference Include="..\Microbians.Actors\Microbians.Actors.csproj" />
+    <ProjectReference Include="..\Electra.Common.Caching\Electra.Common.Caching.csproj" />
+    <ProjectReference Include="..\Electra.Actors\Electra.Actors.csproj" />
     <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
-    <ProjectReference Include="..\Microbians.Persistence\Microbians.Persistence.csproj" />
+    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
     <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
   </ItemGroup>
   <ItemGroup>

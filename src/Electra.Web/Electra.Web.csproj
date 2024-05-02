@@ -3,6 +3,7 @@
     <Description>AppX common utils</Description>
     <IsPackable>false</IsPackable>
     <Title>AppX.Common.Web</Title>
+    <RootNamespace>Microbians.Common.Web</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Boxed.AspNetCore" Version="9.0.1" />
@@ -50,13 +51,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Common.Caching\Microbians.Common.Caching.csproj" />
-    <ProjectReference Include="..\Microbians.Blazor.Components\Microbians.Blazor.Components.csproj" />
+    <ProjectReference Include="..\Electra.Common.Caching\Electra.Common.Caching.csproj" />
+    <ProjectReference Include="..\Electra.Blazor.Components\Electra.Blazor.Components.csproj" />
     <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
-    <ProjectReference Include="..\Microbians.Persistence\Microbians.Persistence.csproj" />
-    <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
-    <ProjectReference Include="..\Microbians.Services\Microbians.Services.csproj" />
-    <ProjectReference Include="..\Microbians.SignalR\Microbians.SignalR.csproj" />
-    <ProjectReference Include="..\Microbians.Validators\Microbians.Validators.csproj" />
+    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
+    <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
+    <ProjectReference Include="..\Electra.Services\Electra.Services.csproj" />
+    <ProjectReference Include="..\Electra.SignalR\Electra.SignalR.csproj" />
+    <ProjectReference Include="..\Electra.Validators\Electra.Validators.csproj" />
   </ItemGroup>
 </Project>
