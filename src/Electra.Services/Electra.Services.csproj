@@ -8,9 +8,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Electra.Common.Caching\Electra.Common.Caching.csproj" />
     <ProjectReference Include="..\Electra.Actors\Electra.Actors.csproj" />
-    <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
-    <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />

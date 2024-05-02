@@ -13,9 +13,8 @@
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
-    <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
-    <ProjectReference Include="..\Microbians.Common\Microbians.Common.csproj" />
+    <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
   </ItemGroup>
 </Project>

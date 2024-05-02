@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Electra.Common.Caching\Electra.Common.Caching.csproj" />
-    <ProjectReference Include="..\Microbians.Models\Microbians.Models.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="microbians.png">

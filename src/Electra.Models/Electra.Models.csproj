@@ -14,6 +14,6 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
   </ItemGroup>
 </Project>

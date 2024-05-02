@@ -58,8 +58,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microbians.Core\Microbians.Core.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
-    <ProjectReference Include="..\Microbians.Common\Microbians.Common.csproj" />
+    <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
   </ItemGroup>
 </Project>
