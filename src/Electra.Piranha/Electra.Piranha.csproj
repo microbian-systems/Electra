@@ -2,6 +2,7 @@
 
     <PropertyGroup>
       <RootNamespace>Electra.Piranha</RootNamespace>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     </PropertyGroup>
 
     <ItemGroup>

@@ -9,6 +9,7 @@
     <PackageTags>Electra, web, asp.net core, .net, Electra</PackageTags>
     <IsPackable>false</IsPackable>
     <RootNamespace>Electra.Actors</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Polly" Version="8.3.1" />

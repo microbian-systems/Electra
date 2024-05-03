@@ -4,6 +4,7 @@
     <Description>Core components for the Electra web application platform</Description>
     <IsPackable>false</IsPackable>
     <RootNamespace>Electra.Services</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Electra.Caching\Electra.Caching.csproj" />

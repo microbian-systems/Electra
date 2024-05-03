@@ -4,6 +4,7 @@
     <IsPackable>false</IsPackable>
     <Title>Electra.Common.Caching</Title>
     <RootNamespace>Electra.Common.Caching</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Automatonymous" Version="5.1.3" />

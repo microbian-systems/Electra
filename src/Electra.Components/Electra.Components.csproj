@@ -4,6 +4,7 @@
     <IsPackable>false</IsPackable>
     <Title>Electra.Blazor.Components</Title>
     <RootNamespace>Electra.Blazor.Components</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <SupportedPlatform Include="browser" />

@@ -4,6 +4,7 @@
     <Description>Core components for the Electra web application platform</Description>
     <IsPackable>false</IsPackable>
     <RootNamespace>Electra.Validators</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="fluentassertions" Version="6.12.0" />

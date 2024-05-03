@@ -4,6 +4,7 @@
     <IsPackable>false</IsPackable>
     <Title>Electra.Common.Web</Title>
     <RootNamespace>Electra.Common.Web</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Boxed.AspNetCore" Version="9.0.1" />

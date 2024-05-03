@@ -3,6 +3,7 @@
     <Title>Common models for the Electra Web Platform</Title>
     <Description>Core components for the Electra web application platform</Description>
     <IsPackable>false</IsPackable>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Content Include=".gitignore" />

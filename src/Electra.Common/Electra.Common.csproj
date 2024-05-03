@@ -3,6 +3,7 @@
     <Title>Electra Common Utilities</Title>
     <IsPackable>false</IsPackable>
     <RootNamespace>Electra.Common</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.9.2" />

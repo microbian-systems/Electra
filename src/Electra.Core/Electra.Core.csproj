@@ -4,6 +4,7 @@
     <Description>Core components for the Electra web application platform</Description>
     <IsPackable>false</IsPackable>
     <RootNamespace>Electra.Core</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Serilog" Version="3.1.1" />
