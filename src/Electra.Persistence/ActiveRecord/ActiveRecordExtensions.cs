@@ -13,7 +13,9 @@ public static class ActiveRecordExtensions
 }
 
 
-public interface IActiveRecord<T, in TKey> where T: IEntity<TKey> where TKey : IComparable, IEquatable<TKey>
+public interface IActiveRecord<T, in TKey> 
+    where T: IEntity<TKey> 
+    where TKey : IComparable, IEquatable<TKey>
 {
     Task<T> Get(TKey key);
     Task Insert(T record);
@@ -24,7 +26,8 @@ public interface IActiveRecord<T, in TKey> where T: IEntity<TKey> where TKey : I
 }
 
 public class ActiveRecord<T>(DbContext db, ILogger<ActiveRecord<T, Guid>> log) 
-    : ActiveRecord<T, Guid>(db, log) where T : IEntity<Guid>
+    : ActiveRecord<T, Guid>(db, log) 
+    where T : IEntity<Guid>
 {
     public override async Task<T> Get(Guid key)
     {

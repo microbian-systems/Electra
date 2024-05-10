@@ -1,6 +1,5 @@
 ﻿using System.Configuration;
 using System.Text.RegularExpressions;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace Electra.Core.Helpers

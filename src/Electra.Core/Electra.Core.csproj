@@ -26,4 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataStructures\Trees\" />
+  </ItemGroup>
 </Project>

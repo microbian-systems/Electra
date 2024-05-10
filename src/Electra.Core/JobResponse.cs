@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Electra.Core;
+﻿namespace Electra.Core;
 
     public class JobResponse
     {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
 using System.Text.RegularExpressions;

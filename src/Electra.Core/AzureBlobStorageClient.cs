@@ -1,6 +1,4 @@
 ﻿using Microsoft.WindowsAzure.Storage;
-using Serilog;
-using System.Linq;
 using Electra.Core.Extensions;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Globalization;

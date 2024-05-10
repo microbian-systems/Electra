@@ -1,15 +1,24 @@
-﻿namespace Electra.Persistence
+﻿namespace Electra.Persistence;
+
+
+
+public interface IWriteRepository<T, TKey>
+    where T : IEntity<TKey> 
+    where TKey : IEquatable<TKey>
 {
-    public interface IRepository<T, Tkey> : IReadOnlyRepository<T, Tkey> where T : IEntity<Tkey> where Tkey : IEquatable<Tkey>
-    {
-        Task<T> AddAsync(T entity);
-        Task AddAsync(IEnumerable<T> entities);
-        Task<long> RemoveAllAsync();
-        Task RemoveAsync(IEnumerable<Tkey> ids);
-        Task RemoveAsync(Tkey id);
-        Task RemoveAsync(T entity);
-        Task RemoveAsync(IEnumerable<T> entities);
-        Task SaveAsync(IEnumerable<T> entities);
-        Task<T> SaveAsync(T entity);
-    }
+    Task<T> AddAsync(T entity);
+    Task AddAsync(IEnumerable<T> entities);
+    Task<long> RemoveAllAsync();
+    Task RemoveAsync(IEnumerable<TKey> ids);
+    Task RemoveAsync(TKey id);
+    Task RemoveAsync(T entity);
+    Task RemoveAsync(IEnumerable<T> entities);
+    Task SaveAsync(IEnumerable<T> entities);
+    Task<T> SaveAsync(T entity);
+}
+
+public interface IRepository<T, TKey> : IReadOnlyRepository<T, TKey>, IWriteRepository<T, TKey>
+    where T : IEntity<TKey>
+    where TKey : IEquatable<TKey>
+{
 }

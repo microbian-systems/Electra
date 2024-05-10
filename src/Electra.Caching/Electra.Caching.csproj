@@ -24,7 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="HybridRedisCacheClient.cs" />
-    <Compile Remove="ICacheClient.cs" />
     <Compile Remove="CacheClientBase.cs" />
     <Compile Remove="InMemoryCacheClient.cs" />
     <Compile Remove="IInMemoryCacheClient.cs" />
