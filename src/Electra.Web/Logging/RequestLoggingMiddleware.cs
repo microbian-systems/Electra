@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Serilog.Events;
 using ILogger = Serilog.ILogger;
@@ -16,7 +12,7 @@ namespace Electra.Common.Web.Logging
         {
             const string MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
             static readonly ILogger Log = Serilog.Log.ForContext<RequestLoggingMiddleware>();
-            static readonly HashSet<string> HeaderWhitelist = new HashSet<string> { "Content-Type", "Content-Length", "User-Agent" };
+            static readonly HashSet<string> HeaderWhitelist = new() { "Content-Type", "Content-Length", "User-Agent" };
             readonly RequestDelegate _next;
 
             public RequestLoggingMiddleware(RequestDelegate next)

@@ -364,8 +364,8 @@ public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> whe
         return res;
     }
 
-    protected virtual T RegistrationModelToUser(RegistrationRequestModel model, string createdBy = "User") => new T
-        {
+    protected virtual T RegistrationModelToUser(RegistrationRequestModel model, string createdBy = "User") => new()
+    {
             Id = NewId.NextGuid().ToString(),
             Email = model.Email,
             FirstName = model.Firstname,

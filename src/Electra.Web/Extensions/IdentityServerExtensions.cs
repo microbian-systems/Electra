@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using Duende.IdentityServer.EntityFramework.Interfaces;
 using Electra.Core.Identity;

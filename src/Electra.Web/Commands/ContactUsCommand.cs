@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
 using Electra.Persistence;
 using Electra.Persistence.Entities;
 using Electra.Models;
 using Electra.Common.Commands;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ILogger = Serilog.ILogger;
+using WebResponse = Electra.Models.WebResponse;
 
 namespace Electra.Common.Web.Commands
 {

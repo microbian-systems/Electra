@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using ILogger = Serilog.ILogger;
 
 namespace Electra.Common.Web.Errors

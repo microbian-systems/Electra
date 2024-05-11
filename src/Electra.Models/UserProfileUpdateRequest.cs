@@ -16,7 +16,7 @@ namespace Electra.Models
         public string Website { get; set; }
 
         [JsonPropertyName("social_media")] 
-        public Dictionary<string, string> SocialMedia { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> SocialMedia { get; set; } = new();
 
 //        [JsonPropertyName("firstname")] 
 //        public string Firstname { get; set; }

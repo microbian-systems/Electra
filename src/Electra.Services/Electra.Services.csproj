@@ -11,6 +11,7 @@
     <ProjectReference Include="..\Electra.Actors\Electra.Actors.csproj" />
     <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
+    <ProjectReference Include="..\Electra.Persistence.Marten\Electra.Persistence.Marten.csproj" />
     <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
   </ItemGroup>
   <ItemGroup>

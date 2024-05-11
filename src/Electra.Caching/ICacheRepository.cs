@@ -1,6 +1,4 @@
 ﻿using Electra.Models.Entities;
-using System;
-using System.Collections.Generic;
 
 namespace Electra.Common.Caching;
 

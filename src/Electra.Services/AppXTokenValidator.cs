@@ -30,9 +30,9 @@ namespace Electra.Services
         {
             var claims = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, user.UserName),
-                new Claim("id", user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email)
+                new(ClaimTypes.Name, user.UserName),
+                new("id", user.Id.ToString()),
+                new(ClaimTypes.Email, user.Email)
             });
             
             //foreach(var role in roles)

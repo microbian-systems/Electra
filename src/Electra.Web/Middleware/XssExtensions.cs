@@ -1,4 +1,3 @@
-using System;
 using Microsoft.AspNetCore.Antiforgery;
 
 namespace Electra.Common.Web.Middleware
@@ -16,6 +15,7 @@ namespace Electra.Common.Web.Middleware
             });
             return services;
         }
+
         public static void UseXssMiddleware(this IApplicationBuilder app, bool allowFrames = true,
             bool enableContentSecurityPolity = true)
         {

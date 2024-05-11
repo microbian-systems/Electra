@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Electra.Services.Features;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Electra.Common.Web.Controllers
 {
@@ -32,14 +29,14 @@ namespace Electra.Common.Web.Controllers
             return Ok(result);
         }
 
-        [HttpGet("get_features")]
+        [HttpGet("get-features")]
         public async Task<ActionResult<Features>> GetAceFeatureToggles()
         {
             var features = await service.GetAllFeaturesAsync();
             return Ok(features);
         }
         
-        [HttpGet("get_all_features")]
+        [HttpGet("get-all-features")]
         public async Task<ActionResult<List<Features>>> GetAceFeatureTogglesList()
         {
             var features = await service.GetAllFeaturesAsync();
@@ -60,7 +57,7 @@ namespace Electra.Common.Web.Controllers
             return Ok();
         }        
         
-        [HttpPut("update_list")]
+        [HttpPut("update-list")]
         public async Task<IActionResult> UpdateFeatures([FromBody] List<Features> model)
         {
             var features = new Features()
@@ -79,7 +76,7 @@ namespace Electra.Common.Web.Controllers
             return Ok();
         }
         
-        [HttpDelete("delete_feature_toggle")]
+        [HttpDelete("delete-feature-toggle")]
         public async Task<IActionResult> DeleteFeature()
         {
             await service.DeleteAllFeaturesAsync();

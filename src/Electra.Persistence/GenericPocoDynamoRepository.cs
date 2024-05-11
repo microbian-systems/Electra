@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Amazon.DynamoDBv2;
+﻿using Amazon.DynamoDBv2;
 using Electra.Common.Extensions;
 using ServiceStack.Aws.DynamoDb;
 

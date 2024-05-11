@@ -1,4 +1,6 @@
-﻿namespace Electra.Auth;
+﻿using DotNext;
+
+namespace Electra.Auth;
 
 public static class JwtExtensions
 {
@@ -48,7 +50,7 @@ public static class JwtExtensions
     }
 
     // Method to decode JWT payload from HttpRequest
-    public static JwtPayload DecodeJwtPayload(this HttpRequest request, string secret)
+    public static Result<JwtPayload> DecodeJwtPayload(this HttpRequest request, string secret)
     {
         var token = request.Headers["Authorization"]
             .ToString()?
@@ -57,7 +59,7 @@ public static class JwtExtensions
     }
 
     // Method to decode JWT payload from a token string
-    public static JwtPayload DecodeJwtPayload(this string token, string secret)
+    public static Result<JwtPayload> DecodeJwtPayload(this string token, string secret)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
@@ -71,9 +73,17 @@ public static class JwtExtensions
             ValidateLifetime = false // Since we are only decoding, not validating
         };
 
-        var principal = tokenHandler.ValidateToken(token, validationParameters, out var securityToken);
-        var jwtSecurityToken = securityToken as JwtSecurityToken;
+        try
+        {
+            var principal = tokenHandler.ValidateToken(token, validationParameters, out var securityToken);
+            var jwtSecurityToken = securityToken as JwtSecurityToken;
 
-        return jwtSecurityToken?.Payload;
+            return jwtSecurityToken?.Payload;
+        }
+        catch (SecurityTokenMalformedException ex)
+        {
+            var result = new Result<JwtPayload>(ex);
+            return result;
+        }
     }
 }

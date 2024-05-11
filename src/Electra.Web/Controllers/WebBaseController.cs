@@ -1,17 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using ServiceStack;
+namespace Electra.Common.Web.Controllers;
 
-namespace Electra.Common.Web.Controllers
+[Authorize]
+[ValidateAntiForgeryToken]
+public abstract class ElectraWebBaseController(ILogger<ElectraWebBaseController> log)
+    : Controller
 {
-    [Authenticate]
-    [ValidateAntiForgeryToken]
-    public abstract class ElectraWebBaseController : Controller
-    {
-        protected readonly ILogger log;
-
-        protected ElectraWebBaseController(ILogger log)
-        {
-            this.log = log;
-        }
-    }
+    protected readonly ILogger<ElectraWebBaseController> log = log;
 }

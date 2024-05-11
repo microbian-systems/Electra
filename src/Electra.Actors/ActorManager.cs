@@ -10,7 +10,7 @@ namespace Electra.Actors
     // todo - consider creating a non-generic version of ActorManager (examples demonstrate using casting to check messages)
     public class ActorManager<T> : IActorManager<T> where T : IActor
     {
-        readonly RootContext context = new RootContext(new ActorSystem());
+        readonly RootContext context = new(new ActorSystem());
         readonly IActorFactory factory;  // todo - proto var is never used - figure out if we need this
         readonly ILogger log;
         readonly PID pid;

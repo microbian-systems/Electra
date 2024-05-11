@@ -171,7 +171,7 @@ public abstract class HttpClientBase
     }
 
     protected virtual JsonSerializerOptions GetDefaultSerializerOptions() => 
-        new JsonSerializerOptions()
+        new()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             AllowTrailingCommas = true,

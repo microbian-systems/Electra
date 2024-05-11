@@ -1,8 +1,5 @@
-using System;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using ILogger = Serilog.ILogger;
 
 namespace Electra.Common.Web.Logging

@@ -9,7 +9,7 @@ namespace Electra.Core.Helpers
     public static class AzureFuncsBindingHelper
     {
         private static bool IsStarted = false;
-        private static object _syncLock = new object();
+        private static object _syncLock = new();
         ///<summary>
         /// Sets up the app before running any other code
         /// </summary>

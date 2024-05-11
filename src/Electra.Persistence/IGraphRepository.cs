@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Electra.Persistence;
+﻿namespace Electra.Persistence;
 
 public interface IGraphRepository<TEntity, TKey> : IWriteRepository<TEntity, TKey> 
     where TEntity : class , IEntity<TKey> 

@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Duende.IdentityServer.EntityFramework.Interfaces;
 using Electra.Common.Web.Exceptions;
 using Electra.Common.Web.Middleware;
@@ -16,6 +14,7 @@ using Electra.Common.Web.Performance;
 using Electra.Common.Web.Services;
 using Electra.Core.Identity;
 using Electra.Persistence;
+using Electra.Persistence.Marten;
 using Electra.Services.Geo;
 using Electra.Services.Mail;
 using Microsoft.AspNetCore.Hosting;

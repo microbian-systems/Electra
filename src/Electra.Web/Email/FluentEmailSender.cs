@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using FluentEmail.Core;
 using Microsoft.AspNetCore.Identity.UI.Services;
 

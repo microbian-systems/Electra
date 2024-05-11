@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Electra.Common.Web.Performance
 {

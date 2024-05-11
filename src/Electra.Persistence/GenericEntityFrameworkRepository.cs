@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Electra.Common.Extensions;
-using Microsoft.EntityFrameworkCore;
+﻿using Electra.Common.Extensions;
 
 namespace Electra.Persistence
 {

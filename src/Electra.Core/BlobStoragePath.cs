@@ -3,6 +3,6 @@
     public class BlobStoragePath
     {
         public string Container { get; set; } = "";
-        public List<string> FoldersList { get; protected set; } = new List<string>();
+        public List<string> FoldersList { get; protected set; } = new();
     }
 }

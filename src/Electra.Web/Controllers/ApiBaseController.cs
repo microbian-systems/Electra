@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Mime;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Net.Mime;
 
 namespace Electra.Common.Web.Controllers;
 

@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Localization;
 
-namespace Electra.Common.Web.Localization
+namespace Electra.Common.Web.Localization;
+
+public class EfDbCultureProvider : CookieRequestCultureProvider
 {
-    public class EfDbCultureProvider : CookieRequestCultureProvider
-    {
-        
-    }
 }

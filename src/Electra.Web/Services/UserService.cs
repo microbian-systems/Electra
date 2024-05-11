@@ -1,11 +1,9 @@
-using System.Threading.Tasks;
 using FluentEmail.Core;
 using Electra.Common.Web.Extensions;
 using Electra.Core.Identity;
 using Electra.Models;
 using Electra.Services;
 using Electra.Services.Geo;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Common.Web.Services;
