@@ -1,33 +1,27 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Electra.Common.Web.Filters
+namespace Electra.Common.Web.Filters;
+
+/// <summary>
+/// Introduces Model state auto validation to reduce code duplication
+/// </summary>
+public class ValidateModelFilterAttribute : ActionFilterAttribute
 {
-    /// <summary>
-    /// Introduces Model state auto validation to reduce code duplication
-    /// </summary>
-    public class ValidateModelFilterAttribute : ActionFilterAttribute
+    private ILogger<ValidateModelFilterAttribute> log;
+
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
-        private ILogger<ValidateModelFilterAttribute> log;
+        log = context.HttpContext.RequestServices.GetRequiredService<ILogger<ValidateModelFilterAttribute>>();
+        log.LogInformation($"validating model");
 
-        public ValidateModelFilterAttribute()
+        if (!context.ModelState.IsValid)
         {
-            //this.log = log;
+            context.Result = new BadRequestObjectResult(context.ModelState);
         }
-        
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
-            log = context.HttpContext.RequestServices.GetRequiredService<ILogger<ValidateModelFilterAttribute>>();
-            log.LogInformation($"validating model");
-            
-            if (!context.ModelState.IsValid)
-            {
-                context.Result = new BadRequestObjectResult(context.ModelState);
-            }
-        }
+    }
 
-        public override void OnActionExecuted(ActionExecutedContext context)
-        {
-            log.LogInformation($"model validated");
-        }
+    public override void OnActionExecuted(ActionExecutedContext context)
+    {
+        log.LogInformation($"model validated");
     }
 }

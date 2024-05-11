@@ -1,7 +1,7 @@
 using System;
-using System.Threading.Tasks;
 using Proto;
 using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace Electra.Actors
 {
