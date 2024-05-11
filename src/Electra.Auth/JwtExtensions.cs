@@ -7,17 +7,17 @@ public static class JwtExtensions
     public static readonly DateTime UnixEpoch = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
 
     public static string ToJwtToken<TKey>(this IdentityUser<TKey> user, string secret, string issuer, string audience,
-        DateTime? expires = null) where TKey : IEquatable<TKey>
+        TimeSpan? expires = null, List<Claim>? claims = null) where TKey : IEquatable<TKey>
     {
-        expires ??= DateTime.UtcNow.AddMinutes(15);
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+        expires ??= TimeSpan.FromMinutes(15);
+        claims ??=
+        [
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email!),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        };
+        ];
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var token = new JwtSecurityToken(issuer, audience, claims, expires: expires, signingCredentials: creds);
+        var token = new JwtSecurityToken(issuer, audience, claims, expires: new DateTime(expires.Value.Ticks), signingCredentials: creds);
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
@@ -78,7 +78,7 @@ public static class JwtExtensions
             var principal = tokenHandler.ValidateToken(token, validationParameters, out var securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
 
-            return jwtSecurityToken?.Payload;
+            return jwtSecurityToken?.Payload!;
         }
         catch (SecurityTokenMalformedException ex)
         {

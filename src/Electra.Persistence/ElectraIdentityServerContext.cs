@@ -49,10 +49,11 @@ public class RoleConfiguration : IEntityTypeConfiguration<ElectraRole>
 }
 
 // todo - consider inheriting from Piranha.Data.IDb to enable identity features w/ piranha
-public class ElectraIdentityContext : IdentityDbContext<ElectraUser, ElectraRole, string>, IPersistedGrantDbContext
+public class ElectraIdentityContext(DbContextOptions<ElectraIdentityContext> options)
+    : IdentityDbContext<ElectraUser, ElectraRole, string>(options), IPersistedGrantDbContext
 {
     private const string schema = "Users";  // todo - change default schema to app from "Users"
-    private readonly OperationalStoreOptions operationalStoreOptions;
+    private readonly OperationalStoreOptions operationalStoreOptions = new() {DefaultSchema = schema};
     
     //public DbSet<T> Users { get; set; }
     // todo - determine what format to store the profile
@@ -68,13 +69,8 @@ public class ElectraIdentityContext : IdentityDbContext<ElectraUser, ElectraRole
     public DbSet<ServerSideSession> ServerSideSessions { get; set; }
     public DbSet<PushedAuthorizationRequest> PushedAuthorizationRequests { get; set; }
 
-    public ElectraIdentityContext(DbContextOptions<ElectraIdentityContext> options) 
-        : base(options)
     //IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
-    {
-        //operationalStoreOptions.Value.DefaultSchema = schema;
-        operationalStoreOptions = new OperationalStoreOptions {DefaultSchema = schema};
-    }
+    //operationalStoreOptions.Value.DefaultSchema = schema;
 
     Task<int> IPersistedGrantDbContext.SaveChangesAsync() => base.SaveChangesAsync();
 
@@ -208,23 +204,14 @@ protected virtual void AddIdentityModelConfigs(ModelBuilder builder)
 }
 // todo - fix Electra IdentityServerRegistrations in Electra persistence library
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
-public class ElectraIdentityServerContext : ElectraIdentityServerContext<ElectraUser>, IPersistedGrantDbContext
-{
-    public ElectraIdentityServerContext(DbContextOptions options) 
-        : base(options)
-    {
-    }
-}
+public class ElectraIdentityServerContext(DbContextOptions options)
+    : ElectraIdentityServerContext<ElectraUser>(options), IPersistedGrantDbContext;
 
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
-public class ElectraIdentityServerContext<T> : ElectraIdentityServerContext<T, ElectraRole>, IPersistedGrantDbContext
+public class ElectraIdentityServerContext<T>(DbContextOptions options)
+    : ElectraIdentityServerContext<T, ElectraRole>(options), IPersistedGrantDbContext
     where T : ElectraUser
 {
-    public ElectraIdentityServerContext(DbContextOptions options) 
-        : base(options)
-    {
-    }
-    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.HasDefaultSchema(schema);
@@ -304,14 +291,10 @@ public class ElectraIdentityServerContext<T> : ElectraIdentityServerContext<T, E
 }
     
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
-public class ElectraIdentityServerContext<T, TRole> : ElectraIdentityServerContext<T, TRole, string>, IPersistedGrantDbContext
-    where TRole : IdentityRole<string> 
-    where T : IdentityUser<string>
-{
-    public ElectraIdentityServerContext(DbContextOptions options) : base(options)
-    {
-    }
-}
+public class ElectraIdentityServerContext<T, TRole>(DbContextOptions options)
+    : ElectraIdentityServerContext<T, TRole, string>(options), IPersistedGrantDbContext
+    where TRole : IdentityRole<string>
+    where T : IdentityUser<string>;
     
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
 public abstract class ElectraIdentityServerContext<T, TRole, TKey> : IdentityDbContext<T, TRole, TKey>, IPersistedGrantDbContext 

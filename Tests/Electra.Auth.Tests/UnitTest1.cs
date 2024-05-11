@@ -38,7 +38,7 @@ public class JwtExtensionsTests
     {
         // Arrange
         var userId = faker.Random.Guid().ToString();
-        var user = new IdentityUser<string> { Email = $"{userId}@example.com", Id = userId };
+        var user = new IdentityUser<string> { Email = faker.Person.Email, Id = userId };
         var token = CreateJwtTokenForUser(user, validSecret);
 
         // Act
@@ -85,22 +85,26 @@ public class JwtExtensionsTests
 
     private string CreateJwtTokenForUser(IdentityUser<string> user, string secret)
     {
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+        var token = user.ToJwtToken(validSecret,
+            "test_issuer",
+            "test_audience",
+            TimeSpan.FromMinutes(10),
+            [
+            new Claim(JwtRegisteredClaimNames.Sub, user.Email!),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
+        ]);
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var token = new JwtSecurityToken(
-            issuer: "test_issuer",
-            audience: "test_audience",
-            claims: claims,
-            expires: DateTime.UtcNow.AddHours(1),
-            signingCredentials: creds);
-
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        // var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+        // var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        // var token = new JwtSecurityToken(
+        //     issuer: "test_issuer",
+        //     audience: "test_audience",
+        //     claims: claims,
+        //     expires: DateTime.UtcNow.AddHours(1),
+        //     signingCredentials: creds);
+        //
+        // return new JwtSecurityTokenHandler().WriteToken(token);
+        return token;
     }
 
     private string GenerateRandomSecretKey()

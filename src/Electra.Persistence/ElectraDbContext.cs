@@ -1,34 +1,20 @@
 namespace Electra.Persistence;
 
-public class ElectraDbContext : ElectraDbContext<ElectraUser>
-{
-    public ElectraDbContext(DbContextOptions<ElectraDbContext<ElectraUser, ElectraRole>> options)
-        : base(options)
-    {
-    }
-}
+public class ElectraDbContext(DbContextOptions<ElectraDbContext<ElectraUser, ElectraRole>> options)
+    : ElectraDbContext<ElectraUser>(options);
 
-public class ElectraDbContext<T> : ElectraDbContext<T, ElectraRole>
-    where T : ElectraUser
-{
-    public ElectraDbContext(DbContextOptions<ElectraDbContext<T, ElectraRole>> options)
-        : base(options)
-    {
-    }
-}
+public class ElectraDbContext<T>(DbContextOptions<ElectraDbContext<T, ElectraRole>> options)
+    : ElectraDbContext<T, ElectraRole>(options)
+    where T : ElectraUser;
 
-public class ElectraDbContext<T, TRole> : IdentityDbContext<T, TRole, string>
+public class ElectraDbContext<T, TRole>(DbContextOptions<ElectraDbContext<T, TRole>> options)
+    : IdentityDbContext<T, TRole, string>(options)
     where T : ElectraUser
     where TRole : IdentityRole<string>
 {
     protected const string schema = "Users";
 
     public DbSet<ElectraUserProfile> UserProfile { get; set; }
-
-    public ElectraDbContext(DbContextOptions<ElectraDbContext<T, TRole>> options)
-        : base(options)
-    {
-    }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

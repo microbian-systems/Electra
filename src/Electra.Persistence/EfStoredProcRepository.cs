@@ -3,16 +3,9 @@
 namespace Electra.Persistence
 {
     // todo - impl complete logging
-    public class EfStoredProcRepository : IStoredProcRepository
+    public class EfStoredProcRepository(DbContext ctx, ILogger log) : IStoredProcRepository
     {
-        protected DbContext db;
-        ILogger log;
-
-        public EfStoredProcRepository(DbContext ctx, ILogger log)
-        {
-            this.log = log;
-            db = ctx ?? throw new ArgumentNullException($"Database Context parameter was null inside {nameof(EfStoredProcRepository)}");
-        }
+        protected DbContext db = ctx ?? throw new ArgumentNullException($"Database Context parameter was null inside {nameof(EfStoredProcRepository)}");
 
         public void ExecStoredProc(string name, params object[] parameters)
         {
