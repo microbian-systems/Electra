@@ -1,5 +1,5 @@
 
-![Electra Logo](./assets/electra2.png)
+<img src="./assets/electra2.png" alt="electra Logo" width="200" height="200" />
 
 # Electra .NET Utilities Framework 
 
