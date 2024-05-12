@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
+using Electra.Core.Entities;
 using Marten;
-using Electra.Models.Entities;
 using Serilog;
 
 namespace Electra.Persistence.Marten

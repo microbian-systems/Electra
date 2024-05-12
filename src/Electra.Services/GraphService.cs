@@ -1,11 +1,8 @@
-﻿using Electra.Core.DataStructures.Graphs;
-using Electra.Persistence.ActiveRecord;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
+using Electra.Core.DataStructures.Graphs;
+using Electra.Core.Entities;
+
+namespace Electra.Services;
 
 public class GraphService<TEntity, TKey> : IGraphService<TEntity, TKey> 
     where TEntity : class, IEntity<TKey>

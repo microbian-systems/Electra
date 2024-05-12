@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using Electra.Models.Entities;
+using Electra.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Models

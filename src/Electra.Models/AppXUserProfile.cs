@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Electra.Models.Entities;
+using Electra.Core.Entities;
 
 namespace Electra.Models
 {

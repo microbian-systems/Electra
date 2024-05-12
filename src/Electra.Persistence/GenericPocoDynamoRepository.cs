@@ -1,5 +1,6 @@
 ﻿using Amazon.DynamoDBv2;
 using Electra.Common.Extensions;
+using Electra.Core.Entities;
 using ServiceStack.Aws.DynamoDb;
 
 namespace Electra.Persistence

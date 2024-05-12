@@ -1,6 +1,4 @@
-﻿using Electra.Models.Entities;
-
-namespace Electra.Common.Caching;
+﻿namespace Electra.Common.Caching;
 
 public interface ICacheService<T> where T : class
 {

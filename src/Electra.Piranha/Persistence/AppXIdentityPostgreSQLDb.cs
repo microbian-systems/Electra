@@ -1,6 +1,4 @@
-﻿using Electra.Piranha.Persistence;
-
-namespace Electra.Piranha;
+﻿namespace Electra.Piranha.Persistence;
 
 /*
 public class ElectraIdentityPostgreSQLDb : ElectraDb<ElectraIdentityPostgreSQLDb>

@@ -1,8 +1,6 @@
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace Electra.Models.Entities
+namespace Electra.Core.Entities
 {
     public interface IEntity<TKey> where TKey : IEquatable<TKey>
     {

@@ -1,4 +1,6 @@
-﻿namespace Electra.Services.Features;
+﻿using Electra.Core.Entities;
+
+namespace Electra.Services.Features;
 
 public record Features : Entity<Guid>, IEntity<Guid>
 {

@@ -1,8 +1,7 @@
 using Proto;
-using Serilog;
 using ILogger = Serilog.ILogger;
 
-namespace Electra.Actors
+namespace Electra.Actors.Proto.Actor
 {
     // https://github.com/AsynkronIT/protoactor-dotnet/tree/dev/examples/DependencyInjection
     // todo - consider refactoring ActorManager to use three generic parameters so it can be injected

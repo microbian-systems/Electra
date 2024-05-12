@@ -1,6 +1,6 @@
 using System;
 using Electra.Common.Commands;
-using Electra.Models.Entities;
+using Electra.Core.Entities;
 
 namespace Electra.Persistence.Marten
 {

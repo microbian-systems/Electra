@@ -1,3 +1,5 @@
+using Electra.Core.Entities;
+
 namespace Electra.Persistence.Entities
 {
     public record ContactMessage : EntityBase<Guid>

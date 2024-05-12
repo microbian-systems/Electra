@@ -1,4 +1,4 @@
-﻿namespace Electra.Piranha;
+﻿namespace Electra.Piranha.Persistence;
 
 /*
 public class ElectraIdentitySQLiteDb : Db<ElectraIdentitySQLiteDb>

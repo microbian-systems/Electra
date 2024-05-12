@@ -16,7 +16,6 @@ global using Electra.Common;
 global using Electra.Common.Extensions;
 global using Electra.Core.Identity;
 global using Electra.Models;
-global using Electra.Models.Entities;
 global using Electra.Models.ViewModels;
 global using Electra.Persistence;
 global using Electra.Persistence.Entities;

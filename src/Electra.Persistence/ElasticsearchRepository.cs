@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using Electra.Common.Extensions;
+using Electra.Core.Entities;
 using Electra.Persistence.Entities;
 using Nest;
 

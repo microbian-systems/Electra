@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Electra.Core.Entities;
 
 namespace Electra.Services
 {
