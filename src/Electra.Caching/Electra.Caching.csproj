@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Electra caching utils</Description>
+    <IsPackable>false</IsPackable>
+    <Title>Electra.Common.Caching</Title>
+    <RootNamespace>Electra.Common.Caching</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Automatonymous" Version="5.1.3" />
+    <PackageReference Include="DotNext" Version="5.3.1" />
+    <PackageReference Include="EasyCaching.Bus.Redis" Version="1.9.2" />
+    <PackageReference Include="EasyCaching.Core" Version="1.9.2" />
+    <PackageReference Include="EasyCaching.HybridCache" Version="1.9.2" />
+    <PackageReference Include="EasyCaching.InMemory" Version="1.9.2" />
+    <PackageReference Include="EasyCaching.Redis" Version="1.9.2" />
+    <PackageReference Include="EasyCaching.Serialization.SystemTextJson" Version="1.9.2" />
+    <PackageReference Include="Foundatio" Version="10.7.1" />
+    <PackageReference Include="Foundatio.Redis" Version="10.7.1" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="StackExchange.Redis" Version="2.7.33" />
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
+    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <PackageReference Include="System.Text.Json" Version="8.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="HybridRedisCacheClient.cs" />
+    <Compile Remove="CacheClientBase.cs" />
+    <Compile Remove="InMemoryCacheClient.cs" />
+    <Compile Remove="IInMemoryCacheClient.cs" />
+    <Compile Remove="IHybridCacheClient.cs" />
+  </ItemGroup>
+</Project>

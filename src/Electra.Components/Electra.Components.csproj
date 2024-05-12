@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <Description>Electra common blazor components</Description>
+    <IsPackable>false</IsPackable>
+    <Title>Electra.Blazor.Components</Title>
+    <RootNamespace>Electra.Blazor.Components</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Identity" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Title>Validators for the Electra Web Platform</Title>
+    <Description>Core components for the Electra web application platform</Description>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>Electra.Validators</RootNamespace>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="fluentassertions" Version="6.12.0" />
+    <PackageReference Include="FluentValidation" Version="11.9.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.1" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
+    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
+    <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
+  </ItemGroup>
+</Project>

@@ -16,14 +16,13 @@
 
     <PropertyGroup Label="Package information">
         <Version>1.0.0-alpha</Version>
-        <Authors>Microbians, Troy Robinson</Authors>
+        <Authors>Electra, Microbians, bbqchickenrobot</Authors>
         <Company>Microbians</Company>
-        <Copyright>Copyright (c) 2023 Microbian Systems</Copyright>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageTags>asp.net efcore microbians</PackageTags>
-        <PackageIcon>microbians.png</PackageIcon>
-        <!--        <PackageProjectUrl>https://github.com/</PackageProjectUrl>-->
-        <RepositoryUrl>https://dev.azure.com/DealerManagement/_git/DealerManagement</RepositoryUrl>
+        <Copyright>Copyright (c) 2023 Microbians</Copyright>
+        <PackageTags>asp.net efcore Electra</PackageTags>
+        <PackageIcon>../../assets/electra2.png</PackageIcon>
+        <PackageProjectUrl>https://github.com/microbian-systems/Electra</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/microbian-systems/Electra</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
