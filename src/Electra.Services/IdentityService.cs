@@ -366,7 +366,7 @@ public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> whe
 
     protected virtual T RegistrationModelToUser(RegistrationRequestModel model, string createdBy = "User") => new()
     {
-            Id = NewId.NextGuid().ToString(),
+            Id = MassTransit.NewId.NextGuid().ToString(),
             Email = model.Email,
             FirstName = model.Firstname,
             LastName = model.Lastname,

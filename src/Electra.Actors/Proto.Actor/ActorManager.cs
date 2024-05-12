@@ -1,4 +1,3 @@
-using System;
 using Proto;
 using Serilog;
 using ILogger = Serilog.ILogger;
