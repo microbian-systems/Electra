@@ -1,6 +1,6 @@
-using FluentAssertions;
+using Electra.Auth;
 
-namespace Electra.Auth.Tests;
+namespace Electra.Core.Tests;
 
 public class JwtExtensionsTests
 {
