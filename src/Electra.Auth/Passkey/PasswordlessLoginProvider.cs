@@ -1,5 +1,6 @@
-﻿namespace Electra.Auth;
+﻿namespace Electra.Auth.Passkey;
 
+// https://community.abp.io/posts/implementing-passwordless-authentication-with-asp.net-core-identity-c25l8koj
 public class PasswordlessLoginProvider<TUser> : TotpSecurityStampBasedTokenProvider<TUser>
     where TUser : class
 {
