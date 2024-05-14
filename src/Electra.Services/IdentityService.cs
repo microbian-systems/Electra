@@ -40,6 +40,7 @@ public interface IElectraIdentityService<T>
 }
 
 public interface IElectraIdentityService : IElectraIdentityService<ElectraUser>{}
+
 public abstract class ElectraIdentityService : ElectraIdentityService<ElectraUser>, IElectraIdentityService
 {
     protected ElectraIdentityService(

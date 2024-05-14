@@ -1,7 +1,5 @@
 ﻿using Foundatio.Utility;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -9,10 +7,16 @@ namespace Electra.Common.Web.Extensions;
 
 public static class LoggingExtensions
 {
+    public static ILogger GetReloadableLogger(this IServiceCollection builder, IConfiguration config)
+        => GetReloadableLogger(config);
+
     public static ILogger GetReloadableLogger(this WebApplicationBuilder builder)
+        => GetReloadableLogger(builder.Configuration);
+
+    public static ILogger GetReloadableLogger(IConfiguration config)
     {
         var log = new LoggerConfiguration()
-            .ReadFrom.Configuration(builder.Configuration)
+            .ReadFrom.Configuration(config)
             .Enrich.FromLogContext()
             .CreateBootstrapLogger()
             .GetLogger();

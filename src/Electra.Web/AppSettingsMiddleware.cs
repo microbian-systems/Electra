@@ -1,60 +1,69 @@
 using System.Collections.Generic;
+using Electra.Common.Extensions;
+using Electra.Common.Web.Extensions;
 using Electra.Validators;
+using MassTransit;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
-namespace Electra.Common.Web
+namespace Electra.Common.Web;
+
+public static class AppSettingsExtensions
 {
-    public static class AppSettingsMiddleware
+    public static AppSettings ConfigureAppSettings(this IServiceCollection services, IConfiguration config,
+        IWebHostEnvironment env)
     {
-        public static AppSettings ConfigureAppSettings(this IServiceCollection service, IConfiguration config, IWebHostEnvironment env)
+        var log = LoggingExtensions.GetReloadableLogger(config);
+
+        services.AddOptions();
+        var appSettingsSection = config.GetSection("AppSettings");
+        services.Configure<AppSettings>(appSettingsSection);
+        var settings = appSettingsSection.Get<AppSettings>();
+
+        // Register IOptionsMonitor<AppSettings> for dynamic reloading
+        services.AddSingleton<IOptionsMonitor<AppSettings>, OptionsMonitor<AppSettings>>();
+
+        if (settings is null)
+            throw new ConfigurationException("AppSettings section is missing from configuration file");
+
+        log.LogInformation($"retrieving AppSettings section");
+
+        if (string.IsNullOrEmpty(settings.AzureStorage.StorageKey))
+            settings.AzureStorage.StorageKey = config.GetValue<string>("AppSettings:AzureStorage:AzureStorageKey");
+
+        var validator = new AppSettingsValidator();
+        var result = validator.ValidateAsync(settings)
+            .GetAwaiter()
+            .GetResult();
+
+        log.LogInformation($"AppSettings validator result: IsValid={result.IsValid}");
+        if (!result.IsValid)
         {
-            var appSettingsSection = config.GetSection("AppSettings");
-            
-            var settings = appSettingsSection.Get<AppSettings>();
+            var errors = new List<string>();
+            //if (System.Diagnostics.Debugger.IsAttached)
+            //log.LogError($"You are running in debug mode/configuration.  make sure you've logged in with the cli command 'az login' (azure command line tools needs to be installed)");
 
-            // todo - move AppSettings configuration to middleware module
-            // configure strongly typed settings objects
-            //log.Information($"retrieving AppSettings section");
-
-            if (string.IsNullOrEmpty(settings.AzureStorage.StorageKey))
-                settings.AzureStorage.StorageKey = config.GetValue<string>("AppSettings:AzureStorage:AzureStorageKey");
-
-            if (string.IsNullOrEmpty(settings.ConnStrings.Default))
-                settings.ConnStrings.Default = config.GetValue<string>("ConnectionStrings:Default");
-
-            var validator = new AppSettingsValidator();
-            var result = validator.Validate(settings);
-
-            //log.Information($"AppSettings validator result: IsValid={result.IsValid}");
-            if (!result.IsValid)
+            foreach (var error in result.Errors)
             {
-                var errors = new List<string>();
-                //if (System.Diagnostics.Debugger.IsAttached)
-                    //log.Error($"You are running in debug mode/configuration.  make sure you've logged in with the cli command 'az login' (azure command line tools needs to be installed)");
-                
-                foreach (var error in result.Errors)
-                {
-                    var err = $"{error.PropertyName}: {error.ErrorMessage}";
-                    //log.Error(err);
-                    errors.Add(err);
-                }
-
-                var message = $"AppSettings config could not be validated {errors.Aggregate((a, b) => $"{a} {Environment.NewLine} {b}")}";
-                var ex = new ArgumentException(message);
-                //log.Error($"{ex.ToJson()}");
-            }
-            else
-            {
-                //log.Information($"AppSettings were successfully loaded");
-                //log.Information($"{settings.ToJson()}");
+                var err = $"{error.PropertyName}: {error.ErrorMessage}";
+                log.LogError(err);
+                errors.Add(err);
             }
 
-            service.AddOptions();
-            service.Configure<AppSettings>(appSettingsSection);
-            service.AddSingleton(settings);
-            //log.Information($"finished retrieving AppSettings sections");
-            return settings;
+            var message =
+                $"AppSettings config could not be validated {errors.Aggregate((a, b) => $"{a} {Environment.NewLine} {b}")}";
+            var ex = new ArgumentException(message);
+            log.LogError(ex, $"error validating appsettings config");
         }
+        else
+        {
+            log.LogInformation($"AppSettings were successfully loaded");
+            log.LogInformation($"{settings.ToJson()}");
+        }
+
+        services.AddSingleton(settings);
+        log.LogInformation($"finished retrieving AppSettings sections");
+        return settings;
     }
 }

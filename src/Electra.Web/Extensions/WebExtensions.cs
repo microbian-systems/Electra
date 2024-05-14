@@ -33,8 +33,10 @@ namespace Electra.Common.Web.Extensions;
 
 public static class WebExtensions
 {
-    public static IServiceCollection AddElectraDefaultServices(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString)
+    public static IServiceCollection AddElectraDefaultServices(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host, string connString = "")
     {
+        if(string.IsNullOrEmpty(connString))
+            connString = config.GetConnectionString("DefaultConnection");
         services.AddElectraCoreServices<ElectraUser, ElectraRole>(config, host);
         services.AddElectraIdentityDefaults<ElectraUser, ElectraIdentityContext>(connString);
         
