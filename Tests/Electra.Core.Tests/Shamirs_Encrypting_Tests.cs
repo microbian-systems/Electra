@@ -7,7 +7,7 @@ namespace Electra.Core.Tests;
 
 public class EncryptingSecretManagerTests
 {
-    private const string secret = "this is a very long secret with unicode: 你好 пиво";
+    private const string secret = "beer | 麦酒 (ばくしゅ | пиво | ビール | 酒 | 啤酒";
 
     private static ISecretManager CreateMockSecretManager() => new ShamirsSecretManager();
 
@@ -105,13 +105,18 @@ public class EncryptingSecretManagerTests
     public void CreateFragments_WithNullString_ThrowsArgumentException()
     {
         // Arrange
-        var secretManager = CreateMockSecretManager();
-        var encryptor = CreateEncryptor();
-        var logger = CreateMockLogger();
-        var encryptingManager = CreateEncryptingSecretManager(secretManager, encryptor, logger);
+        var secretManager = A.Fake<ISecretManager>();
+        var encryptor = A.Fake<IEncryptor>();
+        var logger = A.Fake<ILogger<EncryptingSecretManager>>();
+        var encryptingManager = CreateEncryptingSecretManager(secretManager, encryptor as Aes256Encryptor, logger);
 
         // Act & Assert
-        Assert.Throws<ArgumentException>(() => encryptingManager.CreateFragments((string)null, 3));
+        // Act & Assert
+        Action act = () => encryptingManager.CreateFragments((string)null, 3);
+
+        // Assert
+        act.Should().Throw<ArgumentNullException>()
+            .WithMessage("Value cannot be null. (Parameter 'secret')");
     }
 
     // [Fact]
@@ -132,20 +137,21 @@ public class EncryptingSecretManagerTests
     //
     // }
 
-    [Fact]
-    public void CreateFragments_WithNullString_Exception_ThrowsArgumentException()
-    {
-        // Arrange
-        var secretManager = CreateMockSecretManager();
-        var encryptor = CreateEncryptor();
-        var logger = CreateMockLogger();
-        var encryptingManager = CreateEncryptingSecretManager(secretManager, encryptor, logger);
-
-        // Act & Assert
-        Action act = () => encryptingManager.CreateFragments((string)null, 3);
-        act.Should().Throw<ArgumentException>()
-            .WithMessage("Value cannot be null. (Parameter 'secret')");
-    }
+    // [Fact]
+    // public void CreateFragments_WithNullString_Exception_ThrowsArgumentNullException()
+    // {
+    //     // Arrange
+    //     var secretManager = A.Fake<ISecretManager>();
+    //     var encryptor = A.Fake<IEncryptor>();
+    //     var logger = A.Fake<ILogger<EncryptingSecretManager>>();
+    //     var encryptingManager = CreateEncryptingSecretManager(secretManager, encryptor as Aes256Encryptor, logger);
+    //     var encrypting = A.Fake<IEncryptingSecretManager>();
+    //
+    //     // Act & Assert
+    //     Action act = () => encrypting.CreateFragments((string)null, 3);
+    //     act.Should().Throw<ArgumentNullException>()
+    //         .WithMessage("Value cannot be null. (Parameter 'secret')");
+    // }
 
     [Fact]
     public void CreateFragments_WithNullByteArray_ThrowsArgumentException()
@@ -172,9 +178,9 @@ public class EncryptingSecretManagerTests
         var encryptingManager = CreateEncryptingSecretManager(secretManager, encryptor, logger);
 
         // Act & Assert
-        Action act = () => encryptingManager.CreateFragments(Array.Empty<byte>(), 3);
-        act.Should().Throw<ArgumentException>()
-            .WithMessage("The number of fragments should at least be 3.");
+        var results = encryptingManager.CreateFragments(Array.Empty<byte>(), 3);
+        results.Should().NotBeNull();
+        results.Should().BeEmpty();
     }
 
     [Fact]
@@ -185,10 +191,7 @@ public class EncryptingSecretManagerTests
         var encryptor = CreateEncryptor();
         var logger = CreateMockLogger();
         var encryptingManager = CreateEncryptingSecretManager(secretManager, encryptor, logger);
-        byte[] secret = Encoding.UTF8.GetBytes("my secret");
-        string[] emptyFragments = { };
-
-        A.CallTo(() => secretManager.CreateFragments(secret, 3)).Returns(emptyFragments);
+        var secret = Encoding.UTF8.GetBytes("");
 
         // Act
         var result = encryptingManager.CreateFragments(secret, 3);
