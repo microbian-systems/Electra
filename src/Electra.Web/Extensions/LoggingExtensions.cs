@@ -1,5 +1,4 @@
 ﻿using Foundatio.Utility;
-using Microsoft.Extensions.Configuration;
 using Serilog;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -22,6 +21,21 @@ public static class LoggingExtensions
             .GetLogger();
 
         return log;
+    }
+
+    public static IServiceCollection AddSerilogLogging(this IServiceCollection services, IConfiguration config)
+    {
+        services.AddLogging(lb =>
+        {
+            lb.ClearProviders();
+            var log = new LoggerConfiguration()
+                .ReadFrom.Configuration(config)
+                .Enrich.FromLogContext()
+                .CreateLogger();
+            lb.AddSerilog(log);
+        });
+
+        return services;
     }
 
     public static WebApplicationBuilder AddSerilogLogging(this WebApplicationBuilder builder)

@@ -1,3 +1,4 @@
+using System;
 using Electra.Auth;
 
 namespace Electra.Core.Tests;

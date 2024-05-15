@@ -7,12 +7,15 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Extensions\IdentityServerExtensions.cs" />
+    <Compile Remove="Identity\IdentityServerSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Extensions\IdentityServerExtensions.cs" />
+    <None Include="Identity\IdentityServerSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Boxed.AspNetCore" Version="9.0.1" />
-    <PackageReference Include="Duende.IdentityServer" Version="7.0.4" />
-    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.4" />
-    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.4" />
-    <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.4" />
-    <PackageReference Include="Duende.IdentityServer.Storage" Version="7.0.4" />
     <PackageReference Include="Foundatio.AzureStorage" Version="10.7.1" />
     <PackageReference Include="IPAddressRange" Version="6.0.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
@@ -30,7 +33,9 @@
     <PackageReference Include="MassTransit.Kafka" Version="8.2.2" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.2" />
     <PackageReference Include="MassTransit.Redis" Version="8.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
@@ -43,18 +48,18 @@
     <PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.3.8" />
     <PackageReference Include="MiniProfiler.Providers.PostgreSql" Version="4.3.8" />
     <PackageReference Include="MiniProfiler.Providers.Redis" Version="4.3.8" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.Enrichers.MassTransitMessage" Version="2.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.6.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.6.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.6.1" />
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
     <PackageReference Include="Serilog" Version="3.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="Serilog.Enrichers.Context" Version="4.6.5" />

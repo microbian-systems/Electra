@@ -1,35 +1,43 @@
-namespace Electra.Services.Models
+using Electra.Core.Entities;
+
+namespace Electra.Services.Models;
+
+public record UserViewModel<TKey> : IEntity<TKey>
+    where TKey : IEquatable<TKey> , IComparable<TKey>
 {
-    public record UserViewModel
-    {
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
-        
-        [JsonPropertyName("firstname")]
-        public string FirstName { get; set; }
-        
-        [JsonPropertyName("lastname")]
-        public string LastName { get; set; }
-        
-        [JsonPropertyName("username")]
-        public string Username { get; set; }
-        
-        [JsonPropertyName("email")]
-        public string Email { get; set; }
+    // [JsonPropertyName("id")]
+    // public TKey Id { get; set; }
 
-        // [JsonPropertyName("password")] 
-        // public string Password { get; set; } = null;
-        
-        [JsonPropertyName("token")]
-        public string Token { get; set; }
+    [JsonPropertyName("firstname")]
+    public string FirstName { get; set; }
 
-        [JsonPropertyName("refresh_token")]
-        public string RefreshToken { get; set; }
+    [JsonPropertyName("lastname")]
+    public string LastName { get; set; }
 
-        [JsonPropertyName("roles")] 
-        public List<string> Roles { get; } = new();
+    [JsonPropertyName("username")]
+    public string Username { get; set; }
 
-        [JsonPropertyName("claims")]
-        public List<Claim> Claims { get; } = new();
-    }
+    [JsonPropertyName("email")]
+    public string Email { get; set; }
+
+    // [JsonPropertyName("password")]
+    // public string Password { get; set; } = null;
+
+    [JsonPropertyName("token")]
+    public string Token { get; set; }
+
+    [JsonPropertyName("refresh_token")]
+    public string RefreshToken { get; set; }
+
+    [JsonPropertyName("roles")]
+    public List<string> Roles { get; } = [];
+
+    [JsonPropertyName("claims")]
+    public List<Claim> Claims { get; } = [];
+
+    public TKey Id { get; set; }
+    public DateTimeOffset CreatedOn { get; set; }
+    public DateTimeOffset? ModifiedOn { get; set; } = DateTime.UtcNow;
+    public string CreatedBy { get; set; }
+    public string ModifiedBy { get; set; }
 }

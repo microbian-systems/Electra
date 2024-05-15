@@ -1,5 +1,3 @@
-using System.Text;
-
 namespace Electra.Services;
 
 public interface IJwtTokenBuilder

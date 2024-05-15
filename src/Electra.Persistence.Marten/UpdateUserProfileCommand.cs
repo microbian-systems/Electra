@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Electra.Common.Commands;
 using Electra.Common.Extensions;
@@ -9,9 +10,9 @@ namespace Electra.Persistence.Marten
     public class UpdateUserProfileCommand : IAsyncCommand<ElectraUserProfile, ElectraUserProfile>
     {
         private readonly ILogger<UpdateUserProfileCommand> log;
-        private readonly IGenericRepository<ElectraUserProfile, string> db;
+        private readonly IGenericRepository<ElectraUserProfile, Guid> db;
 
-        public UpdateUserProfileCommand(IGenericRepository<ElectraUserProfile, string> db, ILogger<UpdateUserProfileCommand> log)
+        public UpdateUserProfileCommand(IGenericRepository<ElectraUserProfile, Guid> db, ILogger<UpdateUserProfileCommand> log)
         {
             this.db = db;
             this.log = log;

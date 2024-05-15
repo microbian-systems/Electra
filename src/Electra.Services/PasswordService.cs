@@ -1,31 +1,30 @@
 using PasswordGenerator;
 
-namespace Electra.Services
+namespace Electra.Services;
+
+public interface IPasswordService
 {
-    public interface IPasswordService
+    string GeneratePassword(int length = 12);
+    string GenerateOneTimePass(int length = 5);
+}
+
+public class PasswordService : IPasswordService
+{
+    public string GeneratePassword(int length = 12)
     {
-        string GeneratePassword(int length = 12);
-        string GenerateOneTimePass(int length = 5);
+        var password = new Password(length)
+            .IncludeNumeric()
+            .IncludeLowercase()
+            .IncludeUppercase()
+            .IncludeSpecial()
+            .LengthRequired(length);
+
+        return password.Next();
     }
 
-    public class PasswordService : IPasswordService
+    public string GenerateOneTimePass(int length = 5)
     {
-        public string GeneratePassword(int length = 12)
-        {
-            var password = new Password(length)
-                .IncludeNumeric()
-                .IncludeLowercase()
-                .IncludeUppercase()
-                .IncludeSpecial()
-                .LengthRequired(length);
-            
-            return password.Next();
-        }
-
-        public string GenerateOneTimePass(int length = 5)
-        {
-            var password = new Password(length).IncludeNumeric();
-            return password.Next();
-        }
+        var password = new Password(length).IncludeNumeric();
+        return password.Next();
     }
 }

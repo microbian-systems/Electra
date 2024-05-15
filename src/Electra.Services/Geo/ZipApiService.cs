@@ -6,7 +6,6 @@ namespace Electra.Services.Geo;
 public interface IZipApiService
 {
     Task<(bool success, string city, string state, string state_fullname)> GetCityAndState(string zip);
-
     /// <summary>
     ///
     /// </summary>
@@ -14,7 +13,6 @@ public interface IZipApiService
     /// <param name="state">full state name, no abbreviations</param>
     /// <returns></returns>
     Task<(bool status, string[] data)> GetZipCodesByCityAndState(string city, string state);
-
     Task<(bool status, List<(string zipCode, string distance)>)> GetRadius(string zip, int radius);
     Task<(bool status, (string distance, string unit) data)> GetDistance(string zip1, string zip2, string unit = "mi");
     Task<(bool status, (string zipcode, string[] county) data)> GetCounty(string zip);
@@ -29,13 +27,13 @@ public class ZipApiService : IZipApiService
     private readonly string apiKey;
     private const string param = "X-API-KEY=";
 
-    public ZipApiService(ZipApiSettings zipApiSettings, AppSettings appSettings, ILogger<ZipApiService> log)
+    public ZipApiService(IOptionsMonitor<AppSettings> appSettings, ILogger<ZipApiService> log)
     {
         this.log = log;
-        this.settings = zipApiSettings;
+        settings = appSettings.CurrentValue.ZipApi;
 
-        this.apiKey = settings.ApiKey;
-        var url = new Uri(this.settings.Url);
+        apiKey = settings.ApiKey;
+        var url = new Uri(settings.Url);
         var credentials = new NetworkCredential(settings.Username, settings.Password);
         var httpClientHandler = new HttpClientHandler()
         {

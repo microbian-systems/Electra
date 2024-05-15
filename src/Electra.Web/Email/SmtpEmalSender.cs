@@ -1,6 +1,5 @@
 using System.Net.Mail;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Options;
 
 namespace Electra.Common.Web.Email
 {

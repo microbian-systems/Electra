@@ -3,9 +3,6 @@ using Electra.Common.Extensions;
 using Electra.Common.Web.Extensions;
 using Electra.Validators;
 using MassTransit;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 
 namespace Electra.Common.Web;
 
@@ -20,8 +17,6 @@ public static class AppSettingsExtensions
         var appSettingsSection = config.GetSection("AppSettings");
         services.Configure<AppSettings>(appSettingsSection);
         var settings = appSettingsSection.Get<AppSettings>();
-
-        // Register IOptionsMonitor<AppSettings> for dynamic reloading
         services.AddSingleton<IOptionsMonitor<AppSettings>, OptionsMonitor<AppSettings>>();
 
         if (settings is null)

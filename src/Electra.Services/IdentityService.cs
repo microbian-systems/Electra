@@ -1,12 +1,20 @@
+using Electra.Services;
+
 namespace Electra.Services;
 
-// todo - implement logging for IdentityService<T>
-public interface IElectraIdentityService<T>
+public interface IElectraIdentityService : IElectraIdentityService<ElectraUser>{}
+
+public interface IElectraIdentityService<T> : IElectraIdentityService<T, Guid>
+    where T : ElectraUser, new()
+{ }
+
+public interface IElectraIdentityService<T, TKey>
+    where TKey : IEquatable<TKey>, IComparable<TKey>
 {
-    Task<UserViewModel> LoginAsync(UserLoginRequest model);
-    Task<UserViewModel> LoginAsync(UserLoginRequest model, string password);
-    Task<UserViewModel> LoginAsync(string username, string password);
-    Task LogoutAsync(UserViewModel model);
+    Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model);
+    Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model, string password);
+    Task<UserViewModel<TKey>> LoginAsync(string username, string password);
+    Task LogoutAsync(UserViewModel<TKey> model);
     Task LogoutAsync(string username);
     Task<(T user, IdentityResult identityReuslt)> AddUserAsync(T model, string password = "");
     Task<(T user,  IdentityResult identityReuslt)> UpdateUserAsync(T model);
@@ -39,30 +47,81 @@ public interface IElectraIdentityService<T>
     Task<bool> VerifyPassword(string username, string password);
 }
 
-public interface IElectraIdentityService : IElectraIdentityService<ElectraUser>{}
-
-public abstract class ElectraIdentityService : ElectraIdentityService<ElectraUser>, IElectraIdentityService
+public class ElectraIdentityService : ElectraIdentityService<ElectraUser, Guid>, IElectraIdentityService
 {
-    protected ElectraIdentityService(
-        SignInManager<ElectraUser> signinManager, 
-        UserManager<ElectraUser> userManager, 
-        RoleManager<ElectraRole> roleManager, 
-        IPasswordService passwordService, 
-        IHttpContextAccessor contextAccessor, 
-        IFluentEmail fluentEmail, 
-        IZipApiService zipService, 
-        ILogger<ElectraIdentityService> log) 
-        : base(signinManager, userManager, roleManager, passwordService, contextAccessor, fluentEmail, zipService, log)
+    public ElectraIdentityService(
+        // SignInManager<ElectraUser> signinManager,
+        // UserManager<ElectraUser> userManager,
+        // RoleManager<ElectraRole> roleManager,
+        // IPasswordService passwordService,
+        // IHttpContextAccessor contextAccessor,
+        // IFluentEmail fluentEmail,
+        // IZipApiService zipService,
+        ILogger<ElectraIdentityService> log)
+        : base(default, default, default, default, default, default, default, log)
     {
+    }
+
+    public override async Task<UserViewModel<Guid>> LoginAsync(string username, string password)
+    {
+        var result = await signinManager
+            .PasswordSignInAsync(username, password, false, true);
+
+        // return null if user not found
+        if (!result.Succeeded)
+            return null;
+
+        var identity = userManager.Users.FindFirst(u => string.Equals(u.UserName,
+            username, StringComparison.InvariantCultureIgnoreCase));
+
+        var roles = await userManager.GetRolesAsync(identity);
+        var claims = await userManager.GetClaimsAsync(identity);
+
+        // var jwt = tokenService.GenerateToken(account,
+        //     roles?.Select(role => new Claim(ClaimTypes.Role, role)));
+        //
+        // var refresh = tokenService.GenerateRefreshToken();
+        //var res = await SaveRefreshTokenAsync(account.UserName, refresh);
+
+        var user = new UserViewModel<Guid>()
+        {
+            Id = identity.Id,
+            FirstName = identity.FirstName,
+            LastName = identity.LastName,
+            Username = identity.UserName,
+            Email = identity.Email
+            // Token = jwt,
+            // RefreshToken = refresh
+        };
+
+        user.Roles.AddRange(roles ?? new List<string>());
+        user.Claims.AddRange(claims);
+
+        return user;
     }
 }
 
-public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> where T : ElectraUser, new()
+public abstract class ElectraIdentityService<T>(
+    SignInManager<T> signinManager,
+    UserManager<T> userManager,
+    RoleManager<ElectraRole> roleManager,
+    IPasswordService passwordService,
+    IHttpContextAccessor contextAccessor,
+    IFluentEmail fluentEmail,
+    IZipApiService zipService,
+    ILogger<ElectraIdentityService<T, Guid>> log)
+    : ElectraIdentityService<T, Guid>(signinManager, userManager, roleManager, passwordService, contextAccessor,
+        fluentEmail, zipService, log)
+    where T : ElectraUser, new();
+
+public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<T, TKey>
+    where T : ElectraUser, new()
+    where TKey : IEquatable<TKey>, IComparable<TKey>
 {
     protected readonly UserManager<T> userManager;
     protected readonly SignInManager<T> signinManager;
-    protected readonly RoleManager<ElectraRole> rman;
-    protected readonly ILogger<ElectraIdentityService<T>> log;
+    protected readonly RoleManager<ElectraRole> roleManager;
+    protected readonly ILogger<ElectraIdentityService<T, TKey>> log;
     protected readonly IPasswordService passwordService;
     protected readonly IFluentEmail fluentEmail;
     protected readonly IZipApiService zipService;
@@ -75,25 +134,30 @@ public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> whe
         IHttpContextAccessor contextAccessor,
         IFluentEmail fluentEmail,
         IZipApiService zipService,
-        ILogger<ElectraIdentityService<T>> log)
+        ILogger<ElectraIdentityService<T, TKey>> log)
     {
         this.log = log;
         this.userManager = userManager;
         this.signinManager = signinManager;
-        this.rman = roleManager;
+        this.roleManager = roleManager;
         this.passwordService = passwordService;
         this.zipService = zipService;
         this.fluentEmail = fluentEmail;
     }
     
-    public async Task<UserViewModel> LoginAsync(UserLoginRequest model)
+    public async Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model)
         => await LoginAsync(model.Username, model.Password);
 
     // todo - add external auth here as well
-    public async Task<UserViewModel> LoginAsync(UserLoginRequest model, string password) =>
+    async Task<UserViewModel<TKey>> IElectraIdentityService<T, TKey>.LoginAsync(UserLoginRequest model)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model, string password) =>
         await LoginAsync(model.Username, password);
     
-    public async Task LogoutAsync(UserViewModel model) 
+    public async Task LogoutAsync(UserViewModel<TKey> model)
         => await LogoutAsync(model.Username);
     
     public async Task LogoutAsync(string username)
@@ -102,42 +166,7 @@ public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> whe
         await signinManager.SignOutAsync();
     }
 
-    public async Task<UserViewModel> LoginAsync(string username, string password)
-    {
-        var result = await signinManager.PasswordSignInAsync(username, password, false, true);
-        
-        // return null if user not found    
-        if (!result.Succeeded)
-            return null;
-
-        var identity = userManager.Users.FindFirst(u => string.Equals(u.UserName, 
-            username, StringComparison.InvariantCultureIgnoreCase));
-        
-        var roles = await userManager.GetRolesAsync(identity);
-        var claims = await userManager.GetClaimsAsync(identity);
-
-        // var jwt = tokenService.GenerateToken(account, 
-        //     roles?.Select(role => new Claim(ClaimTypes.Role, role)));
-        //
-        // var refresh = tokenService.GenerateRefreshToken();
-        //var res = await SaveRefreshTokenAsync(account.UserName, refresh);
-
-        var user = new UserViewModel()
-        {
-            Id = identity.Id,
-            FirstName = identity.FirstName,
-            LastName = identity.LastName,
-            Username = identity.UserName,
-            Email = identity.Email
-            // Token = jwt,
-            // RefreshToken = refresh
-        };
-        
-        user.Roles.AddRange(roles ?? new List<string>());
-        user.Claims.AddRange(claims);
-        
-        return user;
-    }
+    public abstract Task<UserViewModel<TKey>> LoginAsync(string username, string password);
 
     public async Task<(T user, IdentityResult identityReuslt)> AddUserAsync(T model, string password = "")
     {
@@ -367,7 +396,7 @@ public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> whe
 
     protected virtual T RegistrationModelToUser(RegistrationRequestModel model, string createdBy = "User") => new()
     {
-            Id = MassTransit.NewId.NextGuid().ToString(),
+            Id = MassTransit.NewId.NextGuid(),
             Email = model.Email,
             FirstName = model.Firstname,
             LastName = model.Lastname,
@@ -379,11 +408,7 @@ public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> whe
     public async Task<bool> SaveRefreshTokenAsync(string username, string token)
     {
         //throw new NotImplementedException();
-        var request = new SaveRefreshTokenRequest()
-        {
-            Username = username,
-            Token = token
-        };
+        var request = new SaveRefreshTokenRequest(username, token);
         //var success = await saveHandler.ExecuteAsync(request);
         var entity = new RefreshTokens
         {
@@ -425,8 +450,4 @@ public abstract class ElectraIdentityService<T> : IElectraIdentityService<T> whe
     }
 }
 
-public class SaveRefreshTokenRequest
-{
-    public string Username { get; set; }
-    public string Token { get; set; }
-}
+public record SaveRefreshTokenRequest(string username, string token);

@@ -2,6 +2,22 @@
 
 namespace Electra.Core.Encryption;
 
+public interface IEncryptor
+{
+    /// <summary>
+    /// Encrypts a string
+    /// </summary>
+    /// <param name="text">the string to be encrypted</param>
+    /// <returns></returns>
+    string EncryptString(string text);
+
+    /// <summary>
+    /// Decrypts an already encrypted string
+    /// </summary>
+    /// <param name="encrypted">the string to be decrypted</param>
+    /// <returns></returns>
+    string DecryptString(string encrypted);
+}
 
 /// <summary>
 /// The Aes256Encryptor class provides methods for encrypting and decrypting strings using the
@@ -13,9 +29,14 @@ namespace Electra.Core.Encryption;
 /// </summary>
 /// <param name="key">AES-256 requires a 32-byte key (256 bits)</param>
 /// <param name="iv">AES uses a 16-byte initialization vector (IV)</param>
-public class Aes256Encryptor(byte[] key, byte[] iv)
+public class Aes256Encryptor(byte[] key, byte[] iv) : IEncryptor
 {
-    public string EncryptString(string plainText)
+    /// <summary>
+    /// Encrypts a string
+    /// </summary>
+    /// <param name="text">the string to be encrypted</param>
+    /// <returns></returns>
+    public string EncryptString(string text)
     {
         using var aesAlg = Aes.Create();
         aesAlg.Key = key;
@@ -23,7 +44,7 @@ public class Aes256Encryptor(byte[] key, byte[] iv)
 
         // Create an encryptor to perform the stream transform.
         var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-        var inputBytes = Encoding.UTF8.GetBytes(plainText);
+        var inputBytes = Encoding.UTF8.GetBytes(text);
         using var msEncrypt = new MemoryStream();
         using var csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write);
 
@@ -38,6 +59,11 @@ public class Aes256Encryptor(byte[] key, byte[] iv)
         return encryptedBase64;
     }
 
+    /// <summary>
+    /// Decrypts an already encrypted string
+    /// </summary>
+    /// <param name="encrypted">the string to be decrypted</param>
+    /// <returns></returns>
     public string DecryptString(string encrypted)
     {
         using var aesAlg = Aes.Create();
@@ -56,8 +82,8 @@ public class Aes256Encryptor(byte[] key, byte[] iv)
 
         // Read the decrypted bytes from the CryptoStream and convert them to a string.
         using var srDecrypt = new StreamReader(csDecrypt);
-        var plaintext = srDecrypt.ReadToEnd();
+        var secret = srDecrypt.ReadToEnd();
 
-        return plaintext;
+        return secret;
     }
 }

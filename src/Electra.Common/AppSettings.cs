@@ -3,6 +3,41 @@ using System.Text.Json.Serialization;
 
 namespace Electra.Common;
 
+public record AppSettings
+{
+    public string AppName { get; init; } = string.Empty;
+    public string DomainName { get; init; } = string.Empty;
+    public string OrganizationName { get; init; } = string.Empty;
+    public string AdminEmail { get; init; } = string.Empty;
+    public string ReplyToEmail { get; init; } = string.Empty;
+    public bool UseProxy { get; init; }
+    public bool CloudFlareOnlyConnections { get; init; }
+    public ElectraIdentityOptions IdentityOptions { get; init; } = new();
+    public List<string> ElasticsearchUrls { get; init; } = [];
+    public string AppInsightsKey { get; init; } = string.Empty;
+    public bool UseAzureKeyVault { get; init; }
+    public string KeyVaultEndPoint { get; init; } = string.Empty;
+    public bool EnableHangfire { get; init; }
+    public AzureStorageEntry AzureStorage { get; init; } = new();
+    public string Secret { get; init; } = string.Empty;
+    public AesEncryptionSettings AesEncryptionSettings { get; init; } = new();
+    public SendGridSettings SendGrid { get; init; } = new();
+    public TwilioSettings Twilio { get; init; } = new();
+    public StripeSettings Stripe { get; init; } = new();
+    public ZipApiSettings ZipApi { get; init; } = new();
+    public bool UseAzureStorage { get; init; }
+    public bool UseBlobStorage { get; init; }
+    public bool EnableMiniProfiler { get; init; }
+    public List<string> ValidIssuers { get; protected init; } = [];
+    public bool EnableStaticFileCaching { get; init; }
+}
+
+public record AesEncryptionSettings
+{
+    public string Key { get; set; } = string.Empty;
+    public string IV { get; set; } = string.Empty;
+}
+
 public record AzureStorageEntry
 {
     public string ContainerName { get; set; } = string.Empty;
@@ -76,31 +111,4 @@ public record ZipApiSettings
 
     [JsonPropertyName("JsApiKey")]
     public string JsApiKey { get; set; }
-}
-
-public record AppSettings
-{
-    public string AppName { get; init; } = string.Empty;
-    public string DomainName { get; init; } = string.Empty;
-    public string OrganizationName { get; init; } = string.Empty;
-    public string AdminEmail { get; init; } = string.Empty;
-    public bool UseProxy { get; init; }
-    public bool CloudFlareOnlyConnections { get; init; }
-    public ElectraIdentityOptions IdentityOptions { get; init; } = new();
-    public List<string> ElasticsearchUrls { get; init; } = [];
-    public string AppInsightsKey { get; init; } = string.Empty;
-    public bool UseAzureKeyVault { get; init; }
-    public string KeyVaultEndPoint { get; init; } = string.Empty;
-    public bool EnableHangfire { get; init; }
-    public AzureStorageEntry AzureStorage { get; init; } = new();
-    public string Secret { get; init; } = string.Empty;
-    public SendGridSettings SendGrid { get; init; } = new();
-    public TwilioSettings Twilio { get; init; } = new();
-    public StripeSettings Stripe { get; init; } = new();
-    public ZipApiSettings ZipApi { get; init; } = new();
-    public bool UseAzureStorage { get; init; }
-    public bool UseBlobStorage { get; init; }
-    public bool EnableMiniProfiler { get; init; }
-    public List<string> ValidIssuers { get; protected init; } = [];
-    public bool EnableStaticFileCaching { get; init; }
 }

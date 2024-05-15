@@ -2,7 +2,7 @@
 
 namespace Electra.Common.Caching;
 
-public class EasyCachingClient<T>(
+public class EasyCachingService<T>(
     IEasyCachingProvider cache,
     ILogger<CacheServiceBase<T>> log)
     : CacheServiceBase<T>(log) where T : class

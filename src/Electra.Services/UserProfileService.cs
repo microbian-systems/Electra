@@ -5,8 +5,8 @@ namespace Electra.Services
 {
     public interface IElectraUserProfileService : IUserProfileService<ElectraUserProfile>{}
 
-    public interface IElectraUserProfileServiceRepository : IGenericEntityFrameworkRepository<ElectraUserProfile, string>{}
-    public class ElectraUserProfileServiceRepository : GenericEntityFrameworkRepository<ElectraUserProfile, string>, IElectraUserProfileServiceRepository
+    public interface IElectraUserProfileServiceRepository : IGenericEntityFrameworkRepository<ElectraUserProfile, Guid>{}
+    public class ElectraUserProfileServiceRepository : GenericEntityFrameworkRepository<ElectraUserProfile, Guid>, IElectraUserProfileServiceRepository
     {
         public ElectraUserProfileServiceRepository(ElectraDbContext context, ILogger<ElectraUserProfileServiceRepository> log) : base(context, log)
         {
@@ -19,30 +19,31 @@ namespace Electra.Services
         }
     }
 
-    public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity<string>
+    public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity<Guid>
     {
-        Task<T> GetById(string id);
+        Task<T> GetById(Guid id);
         Task<T> GetByEmail(string email);
         Task InsertAsync(T model);
         Task UpdateAsync(T model);
         Task UpsertAsync(T model);
         Task DeleteAsync(T model);
-        Task DeleteAsync(string id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
     }
     
-    public class UserProfileService<T> : IUserProfileService<T> where T : ElectraUserProfile, new()
+    public class UserProfileService<T> : IUserProfileService<T>
+        where T : ElectraUserProfile, new()
     {
-        private readonly IGenericRepository<T, string> db;
+        private readonly IGenericRepository<T, Guid> db;
         private readonly ILogger<UserProfileService<T>> log;
 
-        public UserProfileService(IGenericRepository<T, string> db, ILogger<UserProfileService<T>> log)
+        public UserProfileService(IGenericRepository<T, Guid> db, ILogger<UserProfileService<T>> log)
         {
             this.db = db;
             this.log = log;
         }
         
-        public async Task<T> GetById(string id)
+        public async Task<T> GetById(Guid id)
         {
             var results = await db.FindByIdAsync(id);
             return results;
@@ -74,7 +75,7 @@ namespace Electra.Services
             await DeleteAsync(model.Id);
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(Guid id)
         {
             await db.DeleteAsync(id);
         }
