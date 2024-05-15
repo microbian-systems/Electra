@@ -1,6 +1,8 @@
 ﻿// Global using directives
 
+global using System;
 global using System.Security.Claims;
+global using System.Text;
 global using Bogus;
 global using FakeItEasy;
 global using FluentAssertions;

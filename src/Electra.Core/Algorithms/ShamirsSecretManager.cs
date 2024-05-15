@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Electra.Auth.Secrets;
+namespace Electra.Core.Algorithms;
 
 public class ShamirsSecretManager : SecretManager
 {

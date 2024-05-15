@@ -1,6 +1,6 @@
 ﻿using Electra.Core.Encryption;
 
-namespace Electra.Auth.Secrets;
+namespace Electra.Core.Algorithms;
 
 public sealed class EncryptingSecretManager(
     ISecretManager manager,
@@ -10,7 +10,11 @@ public sealed class EncryptingSecretManager(
     public string[]? CreateFragments(string? secret, ushort numFragments = 3)
     {
         ArgumentException.ThrowIfNullOrEmpty(secret);
-        return manager.CreateFragments(Encoding.UTF8.GetBytes(secret), numFragments);
+        var frags = manager.CreateFragments(Encoding.UTF8.GetBytes(secret), numFragments);
+        var encrypted = frags.Select(encryptor.EncryptString)
+            .ToArray();
+
+        return encrypted;
     }
 
     public string[]? CreateFragments(byte[]? secret, ushort nbFragments = 3)

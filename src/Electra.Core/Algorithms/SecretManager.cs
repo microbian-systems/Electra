@@ -1,4 +1,4 @@
-﻿namespace Electra.Auth.Secrets;
+﻿namespace Electra.Core.Algorithms;
 
 public abstract class SecretManager : ISecretManager
 {
