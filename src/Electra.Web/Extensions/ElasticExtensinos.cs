@@ -1,5 +1,4 @@
 ﻿using Elasticsearch.Net;
-using Electra.Common.Extensions;
 using Electra.Persistence;
 using Nest;
 

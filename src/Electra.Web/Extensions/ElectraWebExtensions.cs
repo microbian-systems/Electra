@@ -1,7 +1,7 @@
 using Electra.Common.Web.Exceptions;
+using Electra.Common.Web.Logging.Electra.AspNetCore.Middleware.Logging;
 using Electra.Common.Web.Middleware;
 using Electra.Services;
-using Electra.Common.Web.Logging.Electra.AspNetCore.Middleware.Logging;
 using Electra.Common.Web.Performance;
 using Electra.Common.Web.Services;
 using Electra.Services.Geo;

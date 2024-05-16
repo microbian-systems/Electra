@@ -1,13 +1,10 @@
-using System.Text.Json.Serialization;
+namespace Electra.Models;
 
-namespace Electra.Models
+public record RefreshTokenRequest
 {
-    public class RefreshTokenRequest
-    {
-        [JsonPropertyName("token")]
-        public string Token { get; set; }
-        
-        [JsonPropertyName("refresh_token")]
-        public string RefreshToken { get; set; }
-    }
+    [JsonPropertyName("token")]
+    public string AccessToken { get; init; }
+
+    [JsonPropertyName("refresh_token")]
+    public string RefreshToken { get; init; }
 }

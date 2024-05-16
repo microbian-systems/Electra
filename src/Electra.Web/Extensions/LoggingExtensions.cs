@@ -6,6 +6,13 @@ namespace Electra.Common.Web.Extensions;
 
 public static class LoggingExtensions
 {
+    public static WebApplicationBuilder AddDefaultLogging(this WebApplicationBuilder builder)
+    {
+        builder.AddSerilogLogging();
+
+        return builder;
+    }
+
     public static ILogger GetReloadableLogger(this IServiceCollection builder, IConfiguration config)
         => GetReloadableLogger(config);
 
@@ -47,7 +54,7 @@ public static class LoggingExtensions
                 .ReadFrom.Configuration(builder.Configuration)
                 .Enrich.FromLogContext()
                 .CreateLogger();
-            lb.AddSerilog(log);
+            lb.AddSerilog(log, dispose:true);
         });
 
         return builder;

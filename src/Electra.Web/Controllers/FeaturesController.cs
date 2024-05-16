@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Electra.Services.Features;
+﻿using Electra.Services.Features;
 
 namespace Electra.Common.Web.Controllers
 {

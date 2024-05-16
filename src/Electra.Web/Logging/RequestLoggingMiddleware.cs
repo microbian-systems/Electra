@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
 using Serilog.Events;
 using ILogger = Serilog.ILogger;

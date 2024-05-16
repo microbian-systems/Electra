@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using Electra.Common.Extensions;
+using System.Configuration;
 using Electra.Common.Web.Extensions;
 using Electra.Validators;
-using MassTransit;
+using ObjectExtensions = Electra.Common.Extensions.ObjectExtensions;
 
 namespace Electra.Common.Web;
 
@@ -20,12 +19,12 @@ public static class AppSettingsExtensions
         services.AddSingleton<IOptionsMonitor<AppSettings>, OptionsMonitor<AppSettings>>();
 
         if (settings is null)
-            throw new ConfigurationException("AppSettings section is missing from configuration file");
+            throw new ConfigurationErrorsException("AppSettings section is missing from configuration file");
 
         log.LogInformation($"retrieving AppSettings section");
 
         if (string.IsNullOrEmpty(settings.AzureStorage.StorageKey))
-            settings.AzureStorage.StorageKey = config.GetValue<string>("AppSettings:AzureStorage:AzureStorageKey");
+            settings.AzureStorage.StorageKey = config?.GetValue<string>("AppSettings:AzureStorage:AzureStorageKey");
 
         var validator = new AppSettingsValidator();
         var result = validator.ValidateAsync(settings)
@@ -54,7 +53,7 @@ public static class AppSettingsExtensions
         else
         {
             log.LogInformation($"AppSettings were successfully loaded");
-            log.LogInformation($"{settings.ToJson()}");
+            log.LogInformation("{o}", ObjectExtensions.ToJson(settings));
         }
 
         services.AddSingleton(settings);
