@@ -17,7 +17,6 @@ public static class ElectraWebExtensions
         if(string.IsNullOrEmpty(connString))
             connString = config.GetConnectionString("DefaultConnection")
                          ?? throw new ArgumentNullException(nameof(connString), "Connection string is required for Electra services");
-        services.AddDataLayerPersistence(config, host);
         services.AddAspNetIdentityEx(config, host);
         //services.AddElectraIdentity<ElectraUser, ElectraRole>();
         services.AddElectraCoreServices(config, host);
@@ -60,6 +59,7 @@ public static class ElectraWebExtensions
         services.AddTransient<IPasswordService, PasswordService>();
         services.AddTransient<IZipApiService, ZipApiService>();
         services.AddEmailServies(config, host);
+        services.AddAuthorization();
 
         return services;
     }

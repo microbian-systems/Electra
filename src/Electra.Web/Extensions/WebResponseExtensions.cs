@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-using System.Text.Json;
 using Electra.Models;
 
 namespace Electra.Common.Web.Extensions;

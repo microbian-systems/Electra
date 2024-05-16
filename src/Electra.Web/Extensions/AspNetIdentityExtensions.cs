@@ -12,7 +12,14 @@ public static class AspNetIdentityExtensions
         IConfiguration config, IWebHostEnvironment env)
     {
         services.AddDataLayerPersistence(config, env);
-        services.AddIdentity<ElectraUser, ElectraRole>()
+        //services.AddIdentity<ElectraUser, ElectraRole>()
+        //     .AddEntityFrameworkStores<ElectraDbContext>()
+        //     .AddDefaultTokenProviders();
+        services.AddIdentityCore<ElectraUser>()
+            .AddRoles<ElectraRole>()
+            .AddUserManager<UserManager<ElectraUser>>()
+            .AddRoleManager<RoleManager<ElectraRole>>()
+            .AddSignInManager<SignInManager<ElectraUser>>()
             .AddEntityFrameworkStores<ElectraDbContext>()
             .AddDefaultTokenProviders();
 

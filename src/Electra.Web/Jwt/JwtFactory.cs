@@ -1,6 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using Electra.Core.Extensions;
 using Microsoft.IdentityModel.Tokens;
 

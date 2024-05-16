@@ -1,5 +1,4 @@
 using System.IO;
-using System.Text;
 using ILogger = Serilog.ILogger;
 
 namespace Electra.Common.Web.Logging

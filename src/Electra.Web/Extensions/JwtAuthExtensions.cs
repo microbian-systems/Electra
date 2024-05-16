@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
-using Electra.Common.Web.Controllers;
+﻿using Electra.Common.Web.Controllers;
 using Electra.Common.Web.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 using Electra.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 
