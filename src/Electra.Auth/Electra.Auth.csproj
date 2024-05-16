@@ -25,6 +25,7 @@
     <PackageReference Include="SecretSharing.Core.dll" Version="1.0.6" />
     <PackageReference Include="SecretSharingDotNet" Version="0.11.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.2" />
+    <PackageReference Include="ThrowGuard" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,6 +20,7 @@
       <PackageReference Include="Piranha.Manager.LocalAuth" Version="11.0.0" />
       <PackageReference Include="Piranha.WebApi" Version="11.0.0" />
       <PackageReference Include="Scrutor" Version="4.2.2" />
+      <PackageReference Include="ThrowGuard" Version="1.0.6" />
     </ItemGroup>
 
 </Project>
