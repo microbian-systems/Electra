@@ -35,7 +35,6 @@
     <ProjectReference Include="..\..\src\Electra.Auth\Electra.Auth.csproj" />
     <ProjectReference Include="..\..\src\Electra.Caching\Electra.Caching.csproj" />
     <ProjectReference Include="..\..\src\Electra.Common\Electra.Common.csproj" />
-    <ProjectReference Include="..\..\src\Electra.Components\Electra.Components.csproj" />
     <ProjectReference Include="..\..\src\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\..\src\Electra.Models\Electra.Models.csproj" />
     <ProjectReference Include="..\..\src\Electra.Persistence.Marten\Electra.Persistence.Marten.csproj" />

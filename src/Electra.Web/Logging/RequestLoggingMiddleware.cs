@@ -1,88 +1,98 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
+using Serilog;
 using Serilog.Events;
 using ILogger = Serilog.ILogger;
 
-namespace Electra.Common.Web.Logging
+namespace Electra.Common.Web.Logging;
+
+public static class RequestLoggingMiddlewareExtensions
 {
-    namespace Electra.AspNetCore.Middleware.Logging
-    {
-        public class RequestLoggingMiddleware : IMiddleware
+    public static void UseSerilogRequestLogging(this IApplicationBuilder app) =>
+        app.UseMiddleware<RequestLoggingMiddleware>();
+}
+
+
+public class RequestLoggingMiddleware(ILogger<RequestLoggingMiddleware> logger) : IMiddleware
+{
+        private const string MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+        private static readonly HashSet<string> HeaderWhitelist = new() { "Content-Type", "Content-Length", "User-Agent" };
+        private readonly ILogger<RequestLoggingMiddleware> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+        public async Task InvokeAsync(HttpContext context, RequestDelegate _next)
         {
-            const string MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
-            static readonly ILogger Log = Serilog.Log.ForContext<RequestLoggingMiddleware>();
-            static readonly HashSet<string> HeaderWhitelist = new() { "Content-Type", "Content-Length", "User-Agent" };
-            readonly RequestDelegate _next;
+            if (context == null) throw new ArgumentNullException(nameof(context));
 
-            public RequestLoggingMiddleware(RequestDelegate next)
+            var start = Stopwatch.GetTimestamp();
+            try
             {
-                _next = next ?? throw new ArgumentNullException(nameof(next));
-            }
+                await _next(context);
+                var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
 
-            // ReSharper disable once UnusedMember.Global
-            //public async Task Invoke(HttpContext httpContext)
-            //{
-            //}
+                var statusCode = context.Response?.StatusCode;
+                var level = statusCode > 499 ? LogLevel.Error : LogLevel.Information;
 
-            static bool LogException(HttpContext httpContext, double elapsedMs, Exception ex)
-            {
-                LogForErrorContext(httpContext)
-                    .Error(ex, MessageTemplate, httpContext.Request.Method, GetPath(httpContext), 500, elapsedMs);
-
-                return false;
-            }
-
-            static ILogger LogForErrorContext(HttpContext httpContext)
-            {
-                var request = httpContext.Request;
-
-                var loggedHeaders = request.Headers
-                    .Where(h => HeaderWhitelist.Contains(h.Key))
-                    .ToDictionary(h => h.Key, h => h.Value.ToString());
-
-                var result = Log
-                    .ForContext("RequestHeaders", loggedHeaders, destructureObjects: true)
-                    .ForContext("RequestHost", request.Host)
-                    .ForContext("RequestProtocol", request.Protocol);
-
-                return result;
-            }
-
-            static double GetElapsedMilliseconds(long start, long stop)
-            {
-                return (stop - start) * 1000 / (double)Stopwatch.Frequency;
-            }
-
-            static string GetPath(HttpContext httpContext)
-            {
-                return httpContext.Features.Get<IHttpRequestFeature>()?.RawTarget ?? httpContext.Request.Path.ToString();
-            }
-
-            public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next)
-            {
-                if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
-
-                var start = Stopwatch.GetTimestamp();
-                try
+                var logMessage = string.Format(MessageTemplate, context.Request.Method, GetPath(context), statusCode, elapsedMs);
+                if (level == LogLevel.Error)
                 {
-                    await _next(httpContext);
-                    var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
-
-                    var statusCode = httpContext.Response?.StatusCode;
-                    var level = statusCode > 499 ? LogEventLevel.Error : LogEventLevel.Information;
-
-                    var log = level == LogEventLevel.Error ? LogForErrorContext(httpContext) : Log;
-                    log.Write(level, MessageTemplate, httpContext.Request.Method, GetPath(httpContext), statusCode, elapsedMs);
+                    var ex = new Exception(logMessage);
+                    //LogForErrorContext(context).Log(level, logMessage);
+                    logger.LogError(ex, logMessage);
                 }
-                // Never caught, because `LogException()` returns false.
-                catch (Exception ex) when (LogException(httpContext, GetElapsedMilliseconds(start, Stopwatch.GetTimestamp()), ex)) { }
+                else
+                {
+                    _logger.Log(level, logMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                var elapsedMs = GetElapsedMilliseconds(start, Stopwatch.GetTimestamp());
+                if (LogException(context, elapsedMs, ex))
+                {
+                    throw;
+                }
             }
         }
 
-        public static class RequestLoggingMiddlewareExtensions
+        private bool LogException(HttpContext context, double elapsedMs, Exception ex)
         {
-            public static void UseSerilogRequestLogging(this IApplicationBuilder app) =>
-                app.UseMiddleware<RequestLoggingMiddleware>();
+            logger.LogError(ex, "error in request logging middleware");
+            // LogForErrorContext(context)
+            //     .LogError(ex, MessageTemplate, context.Request.Method, GetPath(context), 500, elapsedMs);
+
+            return false;
+        }
+
+        // private ILogger LogForErrorContext(HttpContext context)
+        // {
+        //     var request = context.Request;
+        //
+        //     var loggedHeaders = request.Headers
+        //         .Where(h => HeaderWhitelist.Contains(h.Key))
+        //         .ToDictionary(h => h.Key, h => h.Value.ToString());
+        //
+        //     var loggerFactory = context.RequestServices.GetService<ILoggerFactory>();
+        //     var logger = loggerFactory.CreateLogger("RequestLoggingMiddlewareErrorContext");
+        //
+        //     foreach (var header in loggedHeaders)
+        //     {
+        //         logger = logger.ForContext(header.Key, header.Value, true);
+        //     }
+        //
+        //     logger = logger
+        //         .ForContext("RequestHost", request.Host)
+        //         .ForContext("RequestProtocol", request.Protocol);
+        //
+        //     return logger;
+        // }
+
+        private static double GetElapsedMilliseconds(long start, long stop)
+        {
+            return (stop - start) * 1000 / (double)Stopwatch.Frequency;
+        }
+
+        private static string GetPath(HttpContext context)
+        {
+            return context.Features.Get<IHttpRequestFeature>()?.RawTarget ?? context.Request.Path.ToString();
         }
     }
-}

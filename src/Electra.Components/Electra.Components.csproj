@@ -1,21 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
+
   <PropertyGroup>
-    <Description>Electra common blazor components</Description>
-    <IsPackable>false</IsPackable>
-    <Title>Electra.Blazor.Components</Title>
-    <RootNamespace>Electra.Blazor.Components</RootNamespace>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="RazorViewComponent" Version="1.2.0" />
-    <PackageReference Include="ThrowGuard" Version="1.0.6" />
-    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Identity" />
-  </ItemGroup>
+
 </Project>

@@ -1,5 +1,5 @@
 using Electra.Common.Web.Exceptions;
-using Electra.Common.Web.Logging.Electra.AspNetCore.Middleware.Logging;
+using Electra.Common.Web.Logging;
 using Electra.Common.Web.Middleware;
 using Electra.Services;
 using Electra.Common.Web.Performance;
@@ -33,8 +33,11 @@ public static class ElectraWebExtensions
         bool enableAntiForgeryProtection = false)
     {
         services.AddMapster();
-        if (enableAntiForgeryProtection)
-            services.ConfigureAntiForgeryOptions();
+        // if (enableAntiForgeryProtection)
+        //     services.ConfigureAntiForgeryOptions();
+        services.AddAuthentication();
+        services.AddAntiforgery();
+        services.AddAuthorization();
         services.AddHttpContextAccessor();
         services.AddSerilogLogging(config);
         services.AddScoped<ITokenValidationService, ElectraJwtValidationService>();
@@ -66,7 +69,11 @@ public static class ElectraWebExtensions
 
     public static IServiceCollection AddElectraMiddleware(this IServiceCollection services)
     {
-        services.AddScoped<PerfLoggingMiddleware>(); // todo - verify why this is need (think its because constructor injection instead of method)
+        // todo - verify why registering middleware w/ services is needed
+        // (think its because constructor injection instead of method)
+        services.AddScoped<PerfLoggingMiddleware>();
+        services.AddScoped<RequestLoggingMiddleware>();
+
         return services;
     }
 

@@ -2,15 +2,9 @@ using System.Diagnostics;
 
 namespace Electra.Common.Web.Performance;
 
-public class PerfLoggingMiddleware : IMiddleware
+public class PerfLoggingMiddleware(ILogger<PerfLoggingMiddleware> log) : IMiddleware
 {
-    readonly ILogger<PerfLoggingMiddleware> log;
     //readonly RequestDelegate _next;
-
-    public PerfLoggingMiddleware(ILogger<PerfLoggingMiddleware> log)
-    {
-        this.log = log;
-    }
 
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {

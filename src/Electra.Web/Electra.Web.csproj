@@ -81,7 +81,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Electra.Caching\Electra.Caching.csproj" />
-    <ProjectReference Include="..\Electra.Components\Electra.Components.csproj" />
     <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
