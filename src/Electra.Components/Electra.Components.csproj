@@ -10,68 +10,68 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blazor-ApexCharts" Version="3.3.0"/>
-    <PackageReference Include="Blazored.FluentValidation" Version="2.1.0"/>
-    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0"/>
-    <PackageReference Include="Blazored.Menu" Version="2.2.0"/>
-    <PackageReference Include="Blazored.Modal" Version="7.3.1"/>
-    <PackageReference Include="Blazored.SessionStorage" Version="2.4.0"/>
-    <PackageReference Include="Blazored.TextEditor" Version="1.1.0"/>
-    <PackageReference Include="Blazored.Toast" Version="4.2.1"/>
-    <PackageReference Include="Blazored.Video" Version="1.0.1"/>
-    <PackageReference Include="Blazorise" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Animate" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.AntDesign" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Bootstrap" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Bootstrap5" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Bulma" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Captcha" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Captcha.ReCaptcha" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Charts" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Charts.Annotation" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Charts.DataLabels" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Charts.Streaming" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Charts.Trendline" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Components" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Cropper" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.DataGrid" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.FluentValidation" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Generator.Features" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Icons.Bootstrap" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Icons.Material" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.LoadingIndicator" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.LottieAnimation" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Markdown" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Material" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.QRCode" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.RichTextEdit" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Sidebar" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.SignaturePad" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Snackbar" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.SpinKit" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Splitter" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Tailwind" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.TreeView" Version="1.5.2"/>
-    <PackageReference Include="Blazorise.Video" Version="1.5.2"/>
-    <PackageReference Include="LightweightCharts.Blazor" Version="4.1.2.1"/>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.5"/>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.5"/>
-    <PackageReference Include="Syncfusion.Blazor" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.Cards" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.Data" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.PdfViewer" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.Popups" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="25.2.4"/>
-    <PackageReference Include="Syncfusion.Blazor.StockChart" Version="25.2.4"/>
-    <PackageReference Include="ThrowGuard" Version="1.0.6"/>
+    <PackageReference Include="Blazor-ApexCharts" Version="3.3.0" />
+    <PackageReference Include="Blazored.FluentValidation" Version="2.1.0" />
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+    <PackageReference Include="Blazored.Menu" Version="2.2.0" />
+    <PackageReference Include="Blazored.Modal" Version="7.3.1" />
+    <PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
+    <PackageReference Include="Blazored.TextEditor" Version="1.1.0" />
+    <PackageReference Include="Blazored.Toast" Version="4.2.1" />
+    <PackageReference Include="Blazored.Video" Version="1.0.1" />
+    <PackageReference Include="Blazorise" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Animate" Version="1.5.2" />
+    <PackageReference Include="Blazorise.AntDesign" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Bootstrap5" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Bulma" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Captcha" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Captcha.ReCaptcha" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Charts" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Charts.Annotation" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Charts.DataLabels" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Charts.Streaming" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Charts.Trendline" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Components" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Cropper" Version="1.5.2" />
+    <PackageReference Include="Blazorise.DataGrid" Version="1.5.2" />
+    <PackageReference Include="Blazorise.FluentValidation" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Generator.Features" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Icons.Bootstrap" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Icons.FluentUI" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Icons.Material" Version="1.5.2" />
+    <PackageReference Include="Blazorise.LoadingIndicator" Version="1.5.2" />
+    <PackageReference Include="Blazorise.LottieAnimation" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Markdown" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Material" Version="1.5.2" />
+    <PackageReference Include="Blazorise.QRCode" Version="1.5.2" />
+    <PackageReference Include="Blazorise.RichTextEdit" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Sidebar" Version="1.5.2" />
+    <PackageReference Include="Blazorise.SignaturePad" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Snackbar" Version="1.5.2" />
+    <PackageReference Include="Blazorise.SpinKit" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Splitter" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Tailwind" Version="1.5.2" />
+    <PackageReference Include="Blazorise.TreeView" Version="1.5.2" />
+    <PackageReference Include="Blazorise.Video" Version="1.5.2" />
+    <PackageReference Include="LightweightCharts.Blazor" Version="4.1.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="8.0.5" />
+    <PackageReference Include="Syncfusion.Blazor" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Cards" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Data" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.PdfViewer" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Popups" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="25.2.5" />
+    <PackageReference Include="Syncfusion.Blazor.StockChart" Version="25.2.5" />
+    <PackageReference Include="ThrowGuard" Version="1.0.6" />
   </ItemGroup>
 
 </Project>
