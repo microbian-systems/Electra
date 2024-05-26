@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Antiforgery;
 namespace Electra.Common.Web.Middleware;
 
 // todo - verify the XssExtensions are obsoleted by asp.net core antiforgery options
-public static class XssExtensions
+public static class WebSecurityExtensions
 {
     public static IServiceCollection ConfigureAntiForgeryOptions(this IServiceCollection services)
     {
@@ -17,6 +17,13 @@ public static class XssExtensions
         return services;
     }
 
+    public static IApplicationBuilder UseServerHardening(this IApplicationBuilder app)
+    {
+        // todo - add
+        return app;
+    }
+
+    [Obsolete("Use ConfigureAntiForgeryOptions instead", true)]
     public static void UseXssMiddleware(this IApplicationBuilder app, bool allowFrames = true,
         bool enableContentSecurityPolity = true)
     {
