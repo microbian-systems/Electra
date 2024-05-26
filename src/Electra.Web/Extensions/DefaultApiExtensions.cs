@@ -3,13 +3,14 @@ using Serilog.Events;
 
 namespace Electra.Common.Web.Extensions;
 
+
+// todo - consolidate the default api extensions w/ the electra extensions
 public static class DefaultApiExtensions
 {
     public static WebApplicationBuilder ConfigureDefaultApi(this WebApplicationBuilder builder)
     {
         builder.AddDefaultLogging();
         builder.RemoveHeaders();
-        builder.AddSwaggerEndpoint();
         builder.AddDefaultApiServices();
         builder.Services.AddHealthChecks();
         builder.AddApiKeyGenerator();
@@ -18,6 +19,7 @@ public static class DefaultApiExtensions
 
         return builder;
     }
+
     
     /// <inheritdoc cref="UseDefaultApi(Microsoft.AspNetCore.Builder.WebApplicationBuilder,System.Action{Microsoft.AspNetCore.Builder.WebApplication},bool)"/>
     /// <param name="builder"></param>

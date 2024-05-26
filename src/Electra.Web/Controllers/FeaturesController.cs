@@ -3,17 +3,14 @@
 namespace Electra.Common.Web.Controllers
 {
     [ApiController]
-    public abstract class FeaturesController : ElectraApiBaseController
+    public abstract class FeaturesController(
+        IFeaturesService service,
+        IHttpContextAccessor accessor,
+        ILogger<FeaturesController> log)
+        : ElectraApiBaseController(log)
     {
-        private readonly IFeaturesService service;
-        private readonly HttpContext ctx;
+        private readonly HttpContext ctx = accessor.HttpContext;
 
-        protected FeaturesController(IFeaturesService service, IHttpContextAccessor accessor, ILogger<FeaturesController> log) : base(log)
-        {
-            this.service = service;
-            this.ctx = accessor.HttpContext;
-        }
-        
         [HttpGet("get/{feature}")]
         public async Task<ActionResult<Features>> SetFeature([FromRoute] string feature)
         {

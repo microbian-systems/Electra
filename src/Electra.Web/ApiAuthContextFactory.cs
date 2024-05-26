@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Microsoft.EntityFrameworkCore.Design;
+﻿using Microsoft.EntityFrameworkCore.Design;
 
 namespace Electra.Common.Web;
 

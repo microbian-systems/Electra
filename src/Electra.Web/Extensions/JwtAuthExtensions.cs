@@ -2,6 +2,7 @@
 using Electra.Common.Web.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ThrowGuard;
 
 namespace Electra.Common.Web.Extensions;
 
@@ -15,6 +16,9 @@ public static class JwtAuthExtensions
         var jwtOptions = new JwtOptions();
         config.GetSection("jwt").Bind(jwtOptions);
         services.Configure<JwtOptions>(config.GetSection("jwt"));
+
+        if(string.IsNullOrEmpty(jwtOptions.Key))
+            Throw.AppException("JwtOptions is null or JwtOptions.Key is null or empty");
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key));
         var issuer = jwtOptions.Issuer;
@@ -60,8 +64,6 @@ public static class JwtAuthExtensions
                 ValidateIssuerSigningKey = true
             };
         });
-
-        services.AddAuthorization();
 
         return services;
     }

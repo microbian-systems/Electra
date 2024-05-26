@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OwaspHeaders.Core" Version="8.0.0" />
     <PackageReference Include="ThrowGuard" Version="1.0.6" />
   </ItemGroup>
 

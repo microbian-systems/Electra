@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Electra.Models;
+﻿using Electra.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Electra.Common.Web.Extensions;

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Antiforgery;
 
 namespace Electra.Common.Web.Middleware;
 
+// todo - verify the XssExtensions are obsoleted by asp.net core antiforgery options
 public static class XssExtensions
 {
     public static IServiceCollection ConfigureAntiForgeryOptions(this IServiceCollection services)

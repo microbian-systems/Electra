@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Reflection;
+﻿using System.Reflection;
 using Microsoft.OpenApi.Models;
 
 namespace Electra.Common.Web.Extensions;
@@ -16,8 +15,10 @@ public static class SwaggerExtensions
         return services;
     }
 
-    public static IApplicationBuilder UseSwaggerEx(this IApplicationBuilder app, IWebHostEnvironment env)
+    public static IApplicationBuilder UseSwaggerEx(this IApplicationBuilder app)
     {
+        var env = app.ApplicationServices
+            .GetRequiredService<IWebHostEnvironment>();
         if (env.IsProduction()) return app;
 
         app.UseSwagger();
@@ -46,7 +47,7 @@ public static class SwaggerExtensions
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Version = "v1",
-                Title = "Cherry Cars API",
+                Title = "API",
                 Description = "Allowing interactions with the Dealer Back End",
             });
             //options.SchemaFilter<EnumSchemaFilter>();
