@@ -1,3 +1,5 @@
+using Electra.Core.Entities;
+
 namespace Electra.Persistence
 {
     // todo - consider placing a constraint on type TKey for the marten repositories

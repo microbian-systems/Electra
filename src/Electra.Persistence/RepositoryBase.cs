@@ -1,4 +1,6 @@
-﻿namespace Electra.Persistence
+﻿using Electra.Core.Entities;
+
+namespace Electra.Persistence
 {
     public abstract class RepositoryBase<T, TKey> : IWriteRepository<T, TKey> where T : EntityBase<TKey>, new() where TKey : IEquatable<TKey>
     {

@@ -1,61 +1,58 @@
 ﻿using System.Security.Claims;
 
-namespace Electra.Common.Web.Extensions
+namespace Electra.Common.Web.Extensions;
+
+public static class ClaimsPrincipalExtensions
 {
-    public static class ClaimsPrincipalExtensions
+    public static string GetFirstName(this ClaimsPrincipal claimsPrincipal)
+        => claimsPrincipal.FindFirstValue(ClaimTypes.Name);
+
+    public static string GetLastName(this ClaimsPrincipal claimsPrincipal)
+        => claimsPrincipal.FindFirstValue(ClaimTypes.Surname);
+
+    public static string GetPhoneNumber(this ClaimsPrincipal claimsPrincipal)
+        => claimsPrincipal.FindFirstValue(ClaimTypes.MobilePhone);
+
+    // public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
+    //    => claimsPrincipal.FindFirstValue("id");
+    public static string GetUserId(this ClaimsPrincipal principal)
+        => GetUserId<string>(principal);
+
+    public static T GetUserId<T>(this ClaimsPrincipal principal)
     {
-        public static string GetFirstName(this ClaimsPrincipal claimsPrincipal)
-            => claimsPrincipal.FindFirstValue(ClaimTypes.Name);
+        ArgumentNullException.ThrowIfNull(principal);
 
-        public static string GetLastName(this ClaimsPrincipal claimsPrincipal)
-            => claimsPrincipal.FindFirstValue(ClaimTypes.Surname);
+        var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        public static string GetPhoneNumber(this ClaimsPrincipal claimsPrincipal)
-            => claimsPrincipal.FindFirstValue(ClaimTypes.MobilePhone);
-
-        // public static string GetUserId(this ClaimsPrincipal claimsPrincipal)
-        //    => claimsPrincipal.FindFirstValue("id");
-        public static string GetUserId(this ClaimsPrincipal principal) => GetUserId<string>(principal);
-    
-        public static T GetUserId<T>(this ClaimsPrincipal principal)
+        if (typeof(T) == typeof(string))
         {
-            if (principal == null)
-                throw new ArgumentNullException(nameof(principal));
-
-            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (typeof(T) == typeof(string))
-            {
-                return (T)Convert.ChangeType(userId, typeof(T));
-            }
-            else if (typeof(T) == typeof(int) || typeof(T) == typeof(long))
-            {
-                return userId != null ? (T)Convert.ChangeType(userId, typeof(T)) : (T)Convert.ChangeType(0, typeof(T));
-            }
-            else if (typeof(T) == typeof(Guid))
-            {
-                return userId != null ? (T)Convert.ChangeType(userId, typeof(T)) : (T)Convert.ChangeType(0, typeof(T));
-            }
-            else
-            {
-                throw new Exception("Invalid type provided");
-            }
+            return (T)Convert.ChangeType(userId, typeof(T));
         }
-
-        public static string GetUserName(this ClaimsPrincipal principal)
+        else if (typeof(T) == typeof(int) || typeof(T) == typeof(long))
         {
-            if (principal == null)
-                throw new ArgumentNullException(nameof(principal));
-
-            return principal.FindFirstValue(ClaimTypes.Name);
+            return userId != null ? (T)Convert.ChangeType(userId, typeof(T)) : (T)Convert.ChangeType(0, typeof(T));
         }
-
-        public static string GetUserEmail(this ClaimsPrincipal principal)
+        else if (typeof(T) == typeof(Guid))
         {
-            if (principal == null)
-                throw new ArgumentNullException(nameof(principal));
-
-            return principal.FindFirstValue(ClaimTypes.Email);
+            return userId != null ? (T)Convert.ChangeType(userId, typeof(T)) : (T)Convert.ChangeType(0, typeof(T));
         }
+        else
+        {
+            throw new Exception("Invalid type provided");
+        }
+    }
+
+    public static string GetUserName(this ClaimsPrincipal principal)
+    {
+        ArgumentNullException.ThrowIfNull(principal);
+
+        return principal.FindFirstValue(ClaimTypes.Name);
+    }
+
+    public static string GetUserEmail(this ClaimsPrincipal principal)
+    {
+        ArgumentNullException.ThrowIfNull(principal);
+
+        return principal.FindFirstValue(ClaimTypes.Email);
     }
 }

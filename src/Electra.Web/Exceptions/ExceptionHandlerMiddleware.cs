@@ -8,17 +8,8 @@ namespace Electra.Common.Web.Exceptions
             => app.UseMiddleware<ExceptionMiddleware>();
     }
     
-    public class ExceptionMiddleware
+    public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> log)
     {
-        private readonly RequestDelegate next;
-        private readonly ILogger<ExceptionMiddleware> log;
-
-        public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> log)
-        {
-            this.log = log;
-            this.next = next;
-        }
-
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
@@ -27,8 +18,12 @@ namespace Electra.Common.Web.Exceptions
             }
             catch (Exception ex)
             {
-                log.LogError($"an unhandled exception occurred: {ex.Message}", ex);
-                await HandleExceptionAsync(httpContext, ex);
+                log.LogError(ex, "an unhandled exception occurred: {msg}", ex.Message);
+                var path = httpContext.Request.Path.Value;
+                if(!string.IsNullOrEmpty(path) && path.Contains("/api"))
+                    await HandleExceptionAsync(httpContext, ex);
+                else
+                    httpContext.Response.Redirect("/error");
             }
         }
 

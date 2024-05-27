@@ -4,6 +4,7 @@ namespace Electra.Common.Web.Controllers;
 
 [Authorize]
 [ApiController]
+[ValidateAntiForgeryToken]
 [Produces(MediaTypeNames.Application.Json)]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status201Created)]

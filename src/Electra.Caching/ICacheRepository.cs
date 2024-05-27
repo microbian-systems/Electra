@@ -1,6 +1,4 @@
-﻿using Electra.Models.Entities;
-
-namespace Electra.Common.Caching;
+﻿namespace Electra.Common.Caching;
 
 public interface ICacheRepository<TEntity, TKey> where TEntity : class where TKey : IEquatable<TKey>
 {

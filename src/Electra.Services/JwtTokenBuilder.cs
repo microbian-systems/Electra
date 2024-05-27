@@ -1,14 +1,44 @@
 namespace Electra.Services;
 
-// todo - use JwtTokenBuilder
-public sealed class JwtTokenBuilder
+public interface IJwtTokenBuilder
 {
-    private SecurityKey securityKey = null;
+    JwtTokenBuilder AddSecurityKey();
+    JwtTokenBuilder AddSecurityKey(string secret);
+    JwtTokenBuilder AddSecurityKey(SecurityKey securityKey);
+    JwtTokenBuilder AddSubject(string subject);
+    JwtTokenBuilder AddIssuer(string issuer);
+    JwtTokenBuilder AddAudience(string audience);
+    JwtTokenBuilder AddClaim(string type, string value);
+    JwtTokenBuilder AddClaims(Dictionary<string, string> claims);
+    JwtTokenBuilder AddExpiry(int expiryInMinutes);
+    JwtTokenBuilder AddExpiry(TimeSpan expiry);
+    JwtToken Build();
+}
+
+public sealed class JwtTokenBuilder(IOptions<AppSettings> settings) : IJwtTokenBuilder
+{
+    private SecurityKey securityKey = default;
     private string subject = "";
-    private string issuer = "";
+    private string issuer = string.IsNullOrEmpty(settings.Value.ValidIssuers[0]) switch
+    {
+        true => throw new ArgumentNullException(nameof(AppSettings.ValidIssuers)),
+        false => settings.Value.ValidIssuers[0]
+    };
     private string audience = "";
-    private Dictionary<string, string> claims = new();
-    private int expiryInMinutes = 5;
+    private Dictionary<string, string> claims = [];
+    private TimeSpan expiry = TimeSpan.FromMinutes(15);
+
+    public JwtTokenBuilder AddSecurityKey() => AddSecurityKey(settings.Value.Secret);
+
+    public JwtTokenBuilder AddSecurityKey(string secret)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(secret);
+        if(secret.Length < 32)
+            throw new ArgumentOutOfRangeException(nameof(secret), "Secret must be at least 32 characters long.");
+        securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+
+        return this;
+    }
 
     public JwtTokenBuilder AddSecurityKey(SecurityKey securityKey)
     {
@@ -18,37 +48,47 @@ public sealed class JwtTokenBuilder
 
     public JwtTokenBuilder AddSubject(string subject)
     {
+        ArgumentException.ThrowIfNullOrEmpty(subject);
         this.subject = subject;
         return this;
     }
 
     public JwtTokenBuilder AddIssuer(string issuer)
     {
+        ArgumentException.ThrowIfNullOrEmpty(issuer);
         this.issuer = issuer;
         return this;
     }
 
     public JwtTokenBuilder AddAudience(string audience)
     {
+        ArgumentException.ThrowIfNullOrEmpty(audience);
         this.audience = audience;
         return this;
     }
 
     public JwtTokenBuilder AddClaim(string type, string value)
     {
-        this.claims.Add(type, value);
+        ArgumentException.ThrowIfNullOrEmpty(type);
+        ArgumentException.ThrowIfNullOrEmpty(value);
+        claims.Add(type, value);
         return this;
     }
 
     public JwtTokenBuilder AddClaims(Dictionary<string, string> claims)
     {
+        ArgumentNullException.ThrowIfNull(claims);
         this.claims = this.claims.Union(claims).ToDictionary();
         return this;
     }
 
-    public JwtTokenBuilder AddExpiry(int expiryInMinutes)
+    public JwtTokenBuilder AddExpiry(TimeSpan expiry) => AddExpiry((int)expiry.TotalMinutes);
+
+    public JwtTokenBuilder AddExpiry(int expiry)
     {
-        this.expiryInMinutes = expiryInMinutes;
+        ArgumentOutOfRangeException
+            .ThrowIfLessThan(expiry, 1, nameof(expiry));
+        this.expiry = TimeSpan.FromMinutes(expiry);
         return this;
     }
 
@@ -58,36 +98,28 @@ public sealed class JwtTokenBuilder
 
         var claims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Sub, this.subject),
+                new(JwtRegisteredClaimNames.Sub, subject),
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }
             .Union(this.claims.Select(item => new Claim(item.Key, item.Value)));
 
         var token = new JwtSecurityToken(
-            issuer: this.issuer,
-            audience: this.audience,
+            issuer: issuer,
+            audience: audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(expiryInMinutes),
+            expires: DateTime.UtcNow.AddMinutes(expiry.TotalMinutes),
             signingCredentials: new SigningCredentials(
-                this.securityKey,
-                SecurityAlgorithms.HmacSha256));
+                securityKey, SecurityAlgorithms.HmacSha256));
 
-        return new JwtToken(token);
+        var jwt = new JwtToken(token);
+        return jwt;
     }
 
-
-    private void EnsureArguments() // todo - use fluent validation
+    private void EnsureArguments()
     {
-        if (this.securityKey == null)
-            throw new ArgumentNullException("Security Key");
-
-        if (string.IsNullOrEmpty(this.subject))
-            throw new ArgumentNullException("Subject");
-
-        if (string.IsNullOrEmpty(this.issuer))
-            throw new ArgumentNullException("Issuer");
-
-        if (string.IsNullOrEmpty(this.audience))
-            throw new ArgumentNullException("Audience");
+        ArgumentNullException.ThrowIfNull(securityKey);
+        ArgumentException.ThrowIfNullOrEmpty(subject);
+        ArgumentException.ThrowIfNullOrEmpty(issuer);
+        ArgumentException.ThrowIfNullOrEmpty(audience);
     }
 }

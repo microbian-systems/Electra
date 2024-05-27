@@ -1,4 +1,5 @@
 ﻿using Electra.Common.Extensions;
+using Electra.Core.Entities;
 
 namespace Electra.Persistence
 {

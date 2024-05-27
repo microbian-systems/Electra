@@ -1,6 +1,6 @@
 using Proto;
 
-namespace Electra.Actors
+namespace Electra.Actors.Proto.Actor
 {
     public interface IActorManager<T> where T : IActor
     {

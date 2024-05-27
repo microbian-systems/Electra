@@ -1,5 +1,4 @@
-using System.Text.Json.Serialization;
-using Electra.Models.Entities;
+using Electra.Core.Entities;
 
 namespace Electra.Models.Geo
 {

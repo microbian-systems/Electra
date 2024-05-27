@@ -1,7 +1,7 @@
 using Electra.Persistence;
 using Electra.Persistence.Entities;
-using Electra.Models.Entities;
 using Electra.Common.Commands;
+using Electra.Core.Entities;
 
 namespace Electra.Common.Web.Commands
 {

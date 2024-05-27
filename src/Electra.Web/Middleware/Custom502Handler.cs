@@ -20,3 +20,11 @@ public class Custom502Handler(RequestDelegate next)
         }
     }
 }
+
+public static class Custom502HandlerExtensions
+{
+    public static IApplicationBuilder UseCustom502Handler(this IApplicationBuilder builder)
+    {
+        return builder.UseMiddleware<Custom502Handler>();
+    }
+}

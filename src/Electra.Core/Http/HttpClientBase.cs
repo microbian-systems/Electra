@@ -1,17 +1,10 @@
 ﻿namespace Electra.Core.Http;
 
-
-public abstract class HttpClientBase
+public abstract class HttpClientBase(HttpClient httpClient, ILogger<HttpClientBase> log)
 {
-    protected readonly ILogger<HttpClientBase> log;
-    protected readonly HttpClient httpClient;
+    protected readonly ILogger<HttpClientBase> log = log;
+    protected readonly HttpClient httpClient = httpClient;
     protected readonly string jsonMediaType = "application/json";
-    
-    protected HttpClientBase(HttpClient httpClient, ILogger<HttpClientBase> log)
-    {
-        this.log = log;
-        this.httpClient = httpClient;
-    }
 
     protected virtual async Task<HttpResponseMessage> GetAsync(string url)
     {

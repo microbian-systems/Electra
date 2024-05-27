@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Electra.Models.Entities;
+using Electra.Core.Entities;
 
 namespace Electra.Core.DataStructures.Graphs;
 

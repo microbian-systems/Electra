@@ -1,5 +1,7 @@
 namespace Electra.Services;
 
+
+// todo - finish implementing feature store
 public class RepositoryFeaturesStore : FeatureStoreBase
 {
     private readonly string appName;

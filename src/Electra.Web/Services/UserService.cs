@@ -4,6 +4,7 @@ using Electra.Core.Identity;
 using Electra.Models;
 using Electra.Services;
 using Electra.Services.Geo;
+using Electra.Services.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Common.Web.Services;
@@ -27,6 +28,7 @@ public class ElectraUserService : ElectraUserServiceBase<ElectraUser>, IElectraU
 }
 
 public interface IElectraUserService<T> : IElectraIdentityService<T>
+    where T : ElectraUser, new()
 {
     string GetCurrentUserId();
 
@@ -39,12 +41,13 @@ public interface IElectraUserService<T> : IElectraIdentityService<T>
     Task<bool> VerifyPassword(string password, T user);
 }
 
-public class ElectraUserServiceBase<T> : ElectraIdentityService<T> where T : ElectraUser, new()
+public class ElectraUserServiceBase<T> : ElectraIdentityService<T>
+    where T : ElectraUser, new()
 {
     protected readonly HttpContext context;
 
     protected ElectraUserServiceBase(
-        SignInManager<T> signinManager, 
+        SignInManager<T> signinManager,
         UserManager<T> userManager, 
         RoleManager<ElectraRole> roleManager, 
         IPasswordService passwordService, 
@@ -76,7 +79,12 @@ public class ElectraUserServiceBase<T> : ElectraIdentityService<T> where T : Ele
         
         return res;
     }
-    
+
+    public override async Task<UserViewModel<Guid>> LoginAsync(string username, string password)
+    {
+        throw new NotImplementedException();
+    }
+
     public override async Task<bool> VerifyPassword(string password, T user = null)
     {
         user ??= await GetCurrentUser();

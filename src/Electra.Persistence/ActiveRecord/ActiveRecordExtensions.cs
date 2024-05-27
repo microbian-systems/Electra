@@ -1,3 +1,5 @@
+using Electra.Core.Entities;
+
 namespace Electra.Persistence.ActiveRecord;
 
 public static class ActiveRecordExtensions

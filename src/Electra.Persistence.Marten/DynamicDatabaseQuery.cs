@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Electra.Core.Entities;
 using Marten;
-using Electra.Models.Entities;
 using Serilog;
 
 namespace Electra.Persistence.Marten

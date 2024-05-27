@@ -1,3 +1,5 @@
+using Electra.Core.Entities;
+
 namespace Electra.Persistence.Entities
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]

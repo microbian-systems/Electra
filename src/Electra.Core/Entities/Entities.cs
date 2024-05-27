@@ -1,7 +1,4 @@
-using System;
-using Electra.Models.Entities;
-
-namespace Electra.Models.Entities;
+namespace Electra.Core.Entities;
 
     public interface IEntityInt : IEntity<int> { }
     

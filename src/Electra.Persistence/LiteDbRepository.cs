@@ -1,3 +1,4 @@
+using Electra.Core.Entities;
 using LiteDB;
 
 namespace Electra.Persistence

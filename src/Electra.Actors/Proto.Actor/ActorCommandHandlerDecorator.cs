@@ -1,7 +1,7 @@
 using Electra.Common.Commands;
 using Proto;
 
-namespace Electra.Actors;
+namespace Electra.Actors.Proto.Actor;
 
 public class ActorCommandHandlerDecorator<TCommand>(IActorManager<IActor> actorManager, ILogger log)
     : IAsyncCommand<TCommand>

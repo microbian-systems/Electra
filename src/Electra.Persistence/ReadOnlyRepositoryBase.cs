@@ -1,4 +1,6 @@
-﻿namespace Electra.Persistence
+﻿using Electra.Core.Entities;
+
+namespace Electra.Persistence
 {
     public abstract class ReadOnlyRepositoryBase<T, Tkey> : IReadOnlyRepository<T, Tkey> where T : IEntity<Tkey> where Tkey : IEquatable<Tkey>
     {

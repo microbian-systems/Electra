@@ -10,7 +10,7 @@ namespace Electra.Validators
         public RefreshTokenRequestValidator(IMemoryCache cache, ILogger<BaseModelValidator<RefreshTokenRequest>> log) 
             : base(cache, log)
         {
-            RuleFor(x => x.Token).NotNullOrEmpty();
+            RuleFor(x => x.AccessToken).NotNullOrEmpty();
             RuleFor(x => x.RefreshToken).NotNullOrEmpty();
         }
     }

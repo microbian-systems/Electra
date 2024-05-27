@@ -2,8 +2,8 @@
 using System.Linq.Expressions;
 using Foundatio.Caching;
 using Electra.Common.Caching.Extensions;
+using Electra.Core.Entities;
 using Electra.Persistence;
-using Electra.Models.Entities;
 
 namespace Electra.Common.Caching.Decorators;
 

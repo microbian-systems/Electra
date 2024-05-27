@@ -1,4 +1,6 @@
-﻿namespace Electra.Persistence;
+﻿using Electra.Core.Entities;
+
+namespace Electra.Persistence;
 
 
 

@@ -5,6 +5,7 @@ using Duende.IdentityServer.EntityFramework.Interfaces;
 using Duende.IdentityServer.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+// todo - move this to its own nuget package
 namespace Electra.Persistence;
 
 [Table("Roles")]
@@ -50,7 +51,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<ElectraRole>
 
 // todo - consider inheriting from Piranha.Data.IDb to enable identity features w/ piranha
 public class ElectraIdentityContext(DbContextOptions<ElectraIdentityContext> options)
-    : IdentityDbContext<ElectraUser, ElectraRole, string>(options), IPersistedGrantDbContext
+    : IdentityDbContext<ElectraUser, ElectraRole, Guid>(options), IPersistedGrantDbContext
 {
     private const string schema = "Users";  // todo - change default schema to app from "Users"
     private readonly OperationalStoreOptions operationalStoreOptions = new() {DefaultSchema = schema};
@@ -292,9 +293,9 @@ public class ElectraIdentityServerContext<T>(DbContextOptions options)
     
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
 public class ElectraIdentityServerContext<T, TRole>(DbContextOptions options)
-    : ElectraIdentityServerContext<T, TRole, string>(options), IPersistedGrantDbContext
-    where TRole : IdentityRole<string>
-    where T : IdentityUser<string>;
+    : ElectraIdentityServerContext<T, TRole, Guid>(options), IPersistedGrantDbContext
+    where TRole : IdentityRole<Guid>
+    where T : IdentityUser<Guid>;
     
 [Obsolete("marking obsolete until randon EF error is fixed", true)]
 public abstract class ElectraIdentityServerContext<T, TRole, TKey> : IdentityDbContext<T, TRole, TKey>, IPersistedGrantDbContext 

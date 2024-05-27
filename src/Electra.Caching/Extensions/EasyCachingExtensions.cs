@@ -20,7 +20,7 @@ public static class EasyCachingExtensions
             sp => sp.GetRequiredService<IEasyCachingProviderFactory>()
                 .GetCachingProvider("hybrid"));
 
-        services.AddSingleton(typeof(ICacheService<>), typeof(EasyCachingClient<>));
+        services.AddSingleton(typeof(ICacheService<>), typeof(EasyCachingService<>));
 
         return services;
     }

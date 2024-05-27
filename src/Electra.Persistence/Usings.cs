@@ -9,7 +9,6 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using Electra.Core.Identity;
 global using Electra.Models;
-global using Electra.Models.Entities;
 global using Microsoft.AspNetCore.Identity;
 global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore;

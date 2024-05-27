@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace Electra.Models
 {
     public class TriviaResult
