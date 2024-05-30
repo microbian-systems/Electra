@@ -19,6 +19,8 @@ Mobile Browsers:
 
 Please note that these are just examples and the actual User-Agent string can vary depending on the specific version of the browser and operating system.
  */
+
+// todo - finish implementing the browser compatibility middleware
 public partial class BrowserCompatibilityVersionMiddleware(
     RequestDelegate next,
     ILogger<BrowserCompatibilityVersionMiddleware> log)

@@ -3,9 +3,16 @@ using Microsoft.AspNetCore.RateLimiting;
 
 namespace Electra.Common.Web.Middleware;
 
+public enum RateLimitType
+{
+    Fixed,
+    None,
+    Sliding
+}
 public record RateLimitOptions
 {
-    public const string MyRateLimit = "MyRateLimit";
+    public const string SectionName = "RateLimitOptions";
+    public RateLimitType LimitType { get; init; } = RateLimitType.Fixed;
     public int PermitLimit { get; init; } = 100;
     public int Window { get; init; } = 10;
     public int ReplenishmentPeriod { get; init; } = 2;
@@ -21,30 +28,37 @@ public record RateLimitOptions
 // https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-8.0
 public static class RateLimiterMiddleware
 {
-    public static WebApplicationBuilder UseRateLimiter(this WebApplicationBuilder app)
-    {
-        //app.UseRateLimiter();
-        var _ = AddRateLimiter(app.Services, app.Configuration);
-        return app;
-    }
-
-    public static IServiceCollection AddRateLimiter(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddElectraRateLimiter(this IServiceCollection services, IConfiguration config)
     {
         services.Configure<RateLimitOptions>(
-            config.GetSection(RateLimitOptions.MyRateLimit));
+            config.GetSection(RateLimitOptions.SectionName));
 
-        var myOptions = new RateLimitOptions();
-        config.GetSection(RateLimitOptions.MyRateLimit).Bind(myOptions);
-        var fixedPolicy = "fixed";
+        var opts = new RateLimitOptions();
+        config.GetSection(RateLimitOptions.SectionName).Bind(opts);
 
-        services.AddRateLimiter(_ => _
-            .AddFixedWindowLimiter(policyName: fixedPolicy, options =>
-            {
-                options.PermitLimit = myOptions.PermitLimit;
-                options.Window = TimeSpan.FromSeconds(myOptions.Window);
-                options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                options.QueueLimit = myOptions.QueueLimit;
-            }));
+        services = opts.LimitType switch
+        {
+            RateLimitType.Sliding =>
+                services.AddRateLimiter(_ => _
+                    .AddFixedWindowLimiter(policyName: nameof(opts.LimitType), options =>
+                    {
+                        options.PermitLimit = opts.PermitLimit;
+                        options.Window = TimeSpan.FromSeconds(opts.Window);
+                        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                        options.QueueLimit = opts.QueueLimit;
+                    })),
+            RateLimitType.Fixed =>
+                services.AddRateLimiter(_ => _
+                    .AddSlidingWindowLimiter(policyName: nameof(opts.LimitType), options =>
+                    {
+                        options.PermitLimit = opts.PermitLimit;
+                        options.Window = TimeSpan.FromSeconds(opts.Window);
+                        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                        options.QueueLimit = opts.QueueLimit;
+                    })),
+            _ => services
+        };
+
         return services;
     }
 }

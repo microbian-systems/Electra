@@ -86,6 +86,7 @@ public static class ElectraWebExtensions
                 .Build();
         });
         //services.AddAntiforgery();
+        services.AddElectraRateLimiter(config);
         services.AddHttpContextAccessor();
         services.AddScoped<ITokenValidationService, ElectraJwtValidationService>();
         services.AddEmailServies(config, host);
@@ -122,6 +123,7 @@ public static class ElectraWebExtensions
     {
         app.ConfigureExceptionMiddleware();
         app.UseDefaultLogging();
+        app.UseRateLimiter();
         app.UseRequestCultureMiddleware();
         app.UsePerfLogging();
         app.UseSerilogRequestLogging();
