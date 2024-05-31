@@ -15,10 +15,10 @@ namespace Electra.Persistence
         Task<T> UpsertAsync(T entity); 
         Task DeleteAsync(string id);
         Task DeleteAsync(T entity);
-        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> strategy);
+        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> strategy, uint page = 1, uint rows = 10);
         IEnumerable<T> GetAll();
         T FindById(string id);
-        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+        IEnumerable<T> Find(Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10);
         T Insert(T entity);
         T Update(T entity);
         T Upsert(T entity);
@@ -90,7 +90,8 @@ namespace Electra.Persistence
         /// <param name="strategy">a tuple representing the following structure (QueryRequest request, string hash, string range)"/></param>
         /// <typeparam name="S">(QueryRequest, string, string)</typeparam>
         /// <returns>a return type of generic type R (actually IEnumerable until changed)</returns>
-        public override async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> strategy) // todo - change this to have another generic return type 'R'
+        public override async Task<IEnumerable<T>> FindAsync(
+            Expression<Func<T, bool>> strategy, uint page = 1, uint rows = 10) // todo - change this to have another generic return type 'R'
         {
             throw new NotImplementedException();
             

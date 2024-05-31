@@ -110,9 +110,11 @@ public class CachingRepository<T, TKey>(
         return results;
     }
 
-    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => FindAsync(predicate).GetAwaiter().GetResult();
+    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10)
+        => FindAsync(predicate).GetAwaiter().GetResult();
 
-    public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+    public async Task<IEnumerable<T>> FindAsync(
+        Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10)
     {
         var key = $"{prefix}_find";
         var success = await cache.TryGetItemAsync(key, out IEnumerable<T> results);

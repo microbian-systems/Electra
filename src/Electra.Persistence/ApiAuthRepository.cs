@@ -58,7 +58,8 @@ public sealed class ApiAuthRepository(ApiAuthContext context, ILogger<ApiAuthRep
         await DeleteAsync(account!);
     }
 
-    public override Task<IEnumerable<ApiAccountModel>> FindAsync(Expression<Func<ApiAccountModel, bool>> predicate)
+    public override Task<IEnumerable<ApiAccountModel>> FindAsync(
+        Expression<Func<ApiAccountModel, bool>> predicate, uint page = 1, uint rows = 10)
     {
         var accounts = apiAccountsDb.Where(predicate)
             .Include(x => x.Claims)

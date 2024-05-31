@@ -1,12 +1,41 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Electra.Core.Entities;
+using Electra.Core.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Models;
 
-public class ElectraUser : ElectraUser<Guid>
+public class ElectraUser : ElectraUser<Guid>, IEquatable<ElectraUser>
 {
+    public bool Equals(ElectraUser? other)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((ElectraUser)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        var hash = this.GetMd5Hash();
+        return hash.GetHashCode();
+    }
+
+    public static bool operator ==(ElectraUser? left, ElectraUser? right)
+    {
+        return Equals(left, right);
+    }
+
+    public static bool operator !=(ElectraUser? left, ElectraUser? right)
+    {
+        return !Equals(left, right);
+    }
 }
 
 public class ElectraUser<TKey> : IdentityUser<TKey>, IEntity<TKey>

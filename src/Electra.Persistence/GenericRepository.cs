@@ -2,11 +2,13 @@
 
 namespace Electra.Persistence;
 
-public interface IReadonlyRepositorySync<T, TKey> where T : IEntity<TKey> where TKey : IEquatable<TKey>
+public interface IReadonlyRepositorySync<T, TKey> where T
+    : IEntity<TKey> where TKey
+    : IEquatable<TKey>
 {
     public IEnumerable<T> GetAll();
     public T FindById(TKey id);
-    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+    public IEnumerable<T> Find(Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10);
 }
 
 public interface IReadonlyRepositoryAsync<T, TKey> where T : IEntity<TKey> where TKey : IEquatable<TKey>
@@ -16,7 +18,7 @@ public interface IReadonlyRepositoryAsync<T, TKey> where T : IEntity<TKey> where
     public Task<T> FindByIdAsync(TKey id);
 
     // read here: https://stackoverflow.com/questions/793571/why-would-you-use-expressionfunct-rather-than-funct
-    public Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+    public Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10);
 }
 
 public interface IReadOnlyRepository<T, TKey> : IReadonlyRepositorySync<T, TKey>, IReadonlyRepositoryAsync<T, TKey>
@@ -96,10 +98,12 @@ public abstract class GenericRepository<T, TKey> : IGenericRepository<T, TKey>
 
     public virtual T FindById(TKey id) => FindByIdAsync(id).GetAwaiter().GetResult();
 
-    public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate) =>
-        FindAsync(predicate).GetAwaiter().GetResult();
+    public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate,
+        uint page = 1, uint rows = 20) =>
+        FindAsync(predicate, page, rows).GetAwaiter().GetResult();
 
-    public abstract Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
+    public abstract Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate,
+        uint page = 1, uint rows = 10);
 
     public abstract Task<T> FindByIdAsync(TKey id);
 

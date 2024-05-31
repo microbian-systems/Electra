@@ -67,10 +67,10 @@ public class GenericMartenRepository<T, TKey> : GenericRepository<T, TKey>, IGen
         throw new NotImplementedException();
     }
 
-    public override IEnumerable<T> Find(Expression<Func<T, bool>> strategy) =>
+    public override IEnumerable<T> Find(Expression<Func<T, bool>> strategy, uint page = 1, uint rows = 10) =>
         FindAsync(strategy).GetAwaiter().GetResult();
 
-    public override async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+    public override async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10)
     {
         log.LogInformation($"querying marten store...");
         var results = await session.Query<T>()

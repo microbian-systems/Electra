@@ -88,7 +88,8 @@ namespace Electra.Persistence
             db.Delete(entity.Id);
         }
 
-        public override async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+        public override async Task<IEnumerable<T>> FindAsync(
+            Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10)
         {
             var results = db.Find(predicate);
             return await Task.FromResult(results);

@@ -197,7 +197,7 @@ public class ElasticsearchRepository<T> : GenericRepository<T, string>, IElastic
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     //[Obsolete("this method isn't applicable for Elasticsearch", true)]
-    public override Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
+    public override Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10)
     {
         throw new NotImplementedException();
     }

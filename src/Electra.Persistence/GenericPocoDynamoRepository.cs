@@ -8,7 +8,7 @@ namespace Electra.Persistence
     public interface IGenericPocoDynamoRepository<T> where T : Entity
     {
         Task<IEnumerable<T>> GetAllAsync();
-        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> strategy);
+        Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> strategy, uint page = 1, uint rows = 10);
         Task<T> FindByIdAsync(string id);
         Task<T> InsertAsync(T entity);
         Task<T> UpdateAsync(T entity);
@@ -17,7 +17,7 @@ namespace Electra.Persistence
         Task DeleteAsync(T entity);
         IEnumerable<T> GetAll();
         T FindById(String id);
-        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
+        IEnumerable<T> Find(Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10);
         T Insert(T entity);
         T Update(T entity);
         T Upsert(T entity);
@@ -70,7 +70,8 @@ namespace Electra.Persistence
             throw new NotImplementedException();
         }
 
-        public override async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate) 
+        public override async Task<IEnumerable<T>> FindAsync(
+            Expression<Func<T, bool>> predicate, uint page = 1, uint rows = 10)
         {
             // todo - can pass in a tuple that will accept three Func<T, bool> for use with main query, KeyCondition and Filter
             log.LogInformation($"searching w/ the following data: {predicate.Dump()}");
