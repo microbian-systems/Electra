@@ -1,6 +1,4 @@
 
-using Microsoft.Extensions.Logging;
-
 namespace Electra.Common.Patterns
 {
     public abstract class AbstractDecorator : IDecorator

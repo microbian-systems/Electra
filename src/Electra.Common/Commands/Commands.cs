@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace Electra.Common.Commands
 {
     /// <summary>

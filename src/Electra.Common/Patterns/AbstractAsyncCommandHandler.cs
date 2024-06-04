@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Electra.Common.Commands;
-using Microsoft.Extensions.Logging;
 
 namespace Electra.Common.Patterns
 {

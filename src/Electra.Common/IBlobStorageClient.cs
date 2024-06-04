@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-
-namespace Electra.Common
+﻿namespace Electra.Common
 {
     public interface IBlobStorageClient
     {

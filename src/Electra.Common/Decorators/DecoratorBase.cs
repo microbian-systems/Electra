@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Electra.Common.Commands;
-using Microsoft.Extensions.Logging;
+﻿using Electra.Common.Commands;
 
 namespace Electra.Common.Decorators
 {

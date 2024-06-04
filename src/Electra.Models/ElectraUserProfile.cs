@@ -9,8 +9,8 @@ namespace Electra.Models;
 // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
 public record ElectraUserProfile : Entity<Guid>
 {
-    // [JsonPropertyName("user_id")]
-    // public string UserId { get; set; }
+    [JsonPropertyName("user_id")]
+    public Guid UserId { get; set; }
 
     [MinLength(4)] // todo - remove data annotations and use FluentValidation
     [MaxLength(256)]

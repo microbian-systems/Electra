@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Electra.Common.Extensions
+﻿namespace Electra.Common.Extensions
 {
     public static class RoundingExtensions
     {

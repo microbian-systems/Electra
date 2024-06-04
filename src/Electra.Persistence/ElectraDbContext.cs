@@ -1,6 +1,6 @@
 namespace Electra.Persistence;
 
-public class ElectraDbContext(DbContextOptions<ElectraDbContext<ElectraUser, ElectraRole>> options)
+public class ElectraDbContext(DbContextOptions<ElectraDbContext> options)
     : ElectraDbContext<ElectraUser>(options);
 
 public class ElectraDbContext<T>(DbContextOptions options)
@@ -45,16 +45,40 @@ public class ElectraDbContext<T, TRole>(DbContextOptions options)
             entity.HasIndex(x => x.ModifiedBy);
         });
 
-        builder.Entity<TRole>(entity => { entity.ToTable(name: "Roles"); });
-        builder.Entity<IdentityUserRole<string>>(entity => { entity.ToTable("UserRoles"); });
+        builder.Entity<TRole>(entity =>
+        {
+            entity.ToTable(name: "Roles");
+            entity.HasKey(x => x.Id);
+        });
+        builder.Entity<IdentityUserRole<Guid>>(entity =>
+        {
+            entity.ToTable("UserRoles");
+            entity.HasKey(x => new { x.UserId, x.RoleId });
+        });
 
-        builder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable("UserClaims"); });
+        builder.Entity<IdentityUserClaim<Guid>>(entity =>
+        {
+            entity.ToTable("UserClaims");
+            entity.HasKey(x => x.Id);
+        });
 
-        builder.Entity<IdentityUserLogin<string>>(entity => { entity.ToTable("UserLogins"); });
+        builder.Entity<IdentityUserLogin<Guid>>(entity =>
+        {
+            entity.ToTable("UserLogins");
+            entity.HasKey(x => x.UserId);
+        });
 
-        builder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable("RoleClaims"); });
+        builder.Entity<IdentityUserClaim<Guid>>(entity =>
+        {
+            entity.ToTable("RoleClaims");
+            entity.HasKey(x => x.Id);
+        });
 
-        builder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable("UserTokens"); });
+        builder.Entity<IdentityUserToken<Guid>>(entity =>
+        {
+            entity.ToTable("UserTokens");
+            entity.HasKey(x => new { x.UserId, x.LoginProvider, x.Name });
+        });
 
         builder.Entity<T>()
             .HasMany(p => p.Roles)
@@ -94,12 +118,7 @@ public class ElectraDbContext<T, TRole>(DbContextOptions options)
         builder.Entity<T>()
             .HasOne<ElectraUserProfile>(x => x.Profile)
             .WithOne()
+            .HasForeignKey<ElectraUserProfile>(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
-
-        // builder.Entity<ElectraUserProfile>()
-        //     .HasOne<ElectraUser>(x => x.User)
-        //     .WithOne()
-        //     .HasForeignKey<ElectraUserProfile>(x => x.UserId)
-        //     .OnDelete(DeleteBehavior.Cascade);
     }
 }

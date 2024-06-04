@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace Electra.Common.Patterns
 {
     /// <summary>

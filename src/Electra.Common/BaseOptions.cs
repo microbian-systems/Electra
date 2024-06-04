@@ -1,7 +1,6 @@
-namespace Electra.Common
+namespace Electra.Common;
+
+public abstract class BaseOptions
 {
-    public abstract class BaseOptions
-    {
-        public string SectionName { get; protected set; } = string.Empty;
-    }
+    public string SectionName { get; protected set; } = string.Empty;
 }
