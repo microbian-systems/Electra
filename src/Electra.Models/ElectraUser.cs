@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Electra.Core.Entities;
 using Electra.Core.Extensions;
@@ -41,29 +42,31 @@ public class ElectraUser : ElectraUser<Guid>, IEquatable<ElectraUser>
 public class ElectraUser<TKey> : IdentityUser<TKey>, IEntity<TKey>
     where TKey : IEquatable<TKey>
 {
-    [PersonalData] public DateTime? Birthday { get; set; }
-    public string FirstName { get; set; }
-    public string MiddleName { get; set; }
-    public string LastName { get; set; }
-    public string CreatedBy { get; set; }
+    [PersonalData]
+    public DateTime? Birthday { get; set; }
+    public string? FirstName { get; set; }
+    public string? MiddleName { get; set; }
+    public string? LastName { get; set; }
+    public string? CreatedBy { get; set; }
 
     [Column(TypeName = "text")] // todo - remove data attribute -> ModelBuilding (EF)
-    public string ProfilePictureDataUrl { get; set; }
-
-    public DateTimeOffset CreatedOn { get; set; }
-    public string ModifiedBy { get; set; }
+    public string? ProfilePictureDataUrl { get; set; }
+    [Required]
+    public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
+    public string ModifiedBy { get; set; } = string.Empty;
+    [Required]
     public DateTimeOffset? ModifiedOn { get; set; }
-    public bool IsDeleted { get; set; }
     public DateTimeOffset? DeletedOn { get; set; }
-    public bool IsActive { get; set; }
-    public string RefreshToken { get; set; }
-    public DateTime RefreshTokenExpiryTime { get; set; }
+    public bool IsActive { get; set; } = true;
+    public string? RefreshToken { get; set; }
+    public DateTimeOffset RefreshTokenExpiryTime { get; set; }
 
     // todo - consider converting the user profile property to a JsonB field vs a Foreign related table
     // Documentation on JsonB columns:
     // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
     //[Column(TypeName = "jsonb")]
-    [JsonPropertyName("profile")] public virtual ElectraUserProfile Profile { get; } = new();
+    [JsonPropertyName("profile")]
+    public virtual ElectraUserProfile Profile { get; } = new();
 
     public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; } = new List<IdentityUserClaim<string>>();
     public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; } = new List<IdentityUserLogin<string>>();

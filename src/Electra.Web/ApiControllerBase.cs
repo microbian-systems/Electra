@@ -24,7 +24,11 @@ public abstract class ApiControllerBase(ILogger<ApiControllerBase> log)
     }
 
 
-    protected virtual InternalErrorResult InternalError() => new();
+    protected virtual InternalErrorResult InternalError(string msg = "")
+    {
+        log.LogError(msg);
+        return new();
+    }
 }
 
 /// <summary>
