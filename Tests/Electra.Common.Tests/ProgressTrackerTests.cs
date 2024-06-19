@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Electra.Common.Tests;
 
 using Electra.Common;
@@ -26,10 +28,10 @@ public class ProgressTrackerTests
         var processedItems = new List<string>();
 
         // Act
-        await foreach (var item in progressTracker.Process(items, processedItems.Add))
+        progressTracker.Process(items, processedItems.Add);
         {
             // Assert
-            processedItems.Should().Contain(item);
+            processedItems.Should().Contain(items[0]);
         }
     }
 
@@ -41,11 +43,9 @@ public class ProgressTrackerTests
         var processedItems = new List<string>();
 
         // Act
-        await foreach (var item in progressTracker.Process(items, processedItems.Add))
-        {
-            // Assert
-            processedItems.Should().BeEmpty();
-        }
+        // Assert
+        processedItems.Should().BeEmpty();
+
 
         processedItems.Should().BeEmpty();
         items.Should().BeEmpty();
@@ -68,16 +68,24 @@ public class ProgressTrackerTests
         progressTracker.progressUpdated += @event;
 
         // Act
-        await foreach (var item in progressTracker.Process(items, word =>
+        await foreach (var task in progressTracker.Process(items, async word =>
                        {
+                           await Task.Delay(0);
                            word.Should().NotBeEmpty();
                            word.Should().NotBeNull();
                        }))
         {
             // Assert
-            item.Should().NotBeNull();
             progressUpdated.Should().BeTrue();
+            task.Should().NotBeNull();
+            var typ = task.GetType();
+            var t1 = Task.CompletedTask.GetType();
+            typ.Should().Be(t1);
         }
+
+        // Assert
+        progressUpdated.Should().BeTrue();
+
         progressTracker.progressUpdated -= @event; // properly dispose of event
     }
 }

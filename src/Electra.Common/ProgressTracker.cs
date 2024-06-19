@@ -6,7 +6,7 @@ public class ProgressTracker(Action<double> updater, ILogger<ProgressTracker> lo
 {
     public event Action<double> progressUpdated = updater;
 
-    public async Task Process<T>(IList<T> items, Action<T> processItem)
+    public void Process<T>(IList<T> items, Action<T> processItem)
     {
         if(items is null || items.Count == 0)
         {

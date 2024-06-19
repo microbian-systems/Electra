@@ -5,10 +5,13 @@ namespace Electra.Common.Web.Middleware;
 
 public enum RateLimitType
 {
+    Concurrency,
     Fixed,
     None,
-    Sliding
+    Sliding,
+    TokenBucket,
 }
+
 public record RateLimitOptions
 {
     public const string SectionName = "RateLimitOptions";
@@ -24,7 +27,7 @@ public record RateLimitOptions
     public bool AutoReplenishment { get; init; } = false;
 }
 
-// todo - implement sliding window rate limiter
+// todo - research if we can implement muliple rate limiters
 // https://learn.microsoft.com/en-us/aspnet/core/performance/rate-limit?view=aspnetcore-8.0
 public static class RateLimiterMiddleware
 {
@@ -36,9 +39,9 @@ public static class RateLimiterMiddleware
         var opts = new RateLimitOptions();
         config.GetSection(RateLimitOptions.SectionName).Bind(opts);
 
-        services = opts.LimitType switch
+        _ = opts.LimitType switch
         {
-            RateLimitType.Sliding =>
+            RateLimitType.Fixed =>
                 services.AddRateLimiter(_ => _
                     .AddFixedWindowLimiter(policyName: nameof(opts.LimitType), options =>
                     {
@@ -47,14 +50,34 @@ public static class RateLimiterMiddleware
                         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                         options.QueueLimit = opts.QueueLimit;
                     })),
-            RateLimitType.Fixed =>
+            RateLimitType.Sliding =>
                 services.AddRateLimiter(_ => _
                     .AddSlidingWindowLimiter(policyName: nameof(opts.LimitType), options =>
                     {
                         options.PermitLimit = opts.PermitLimit;
                         options.Window = TimeSpan.FromSeconds(opts.Window);
+                        options.SegmentsPerWindow = opts.SegmentsPerWindow;
                         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                         options.QueueLimit = opts.QueueLimit;
+                    })),
+            RateLimitType.Concurrency =>
+                services.AddRateLimiter(_ => _
+                    .AddConcurrencyLimiter(policyName: nameof(opts.LimitType), options =>
+                    {
+                        options.PermitLimit = opts.PermitLimit;
+                        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                        options.QueueLimit = opts.QueueLimit;
+                    })),
+            RateLimitType.TokenBucket =>
+                services.AddRateLimiter(_ => _
+                    .AddTokenBucketLimiter(policyName: nameof(opts.LimitType), options =>
+                    {
+                        options.TokenLimit = opts.TokenLimit;
+                        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                        options.QueueLimit = opts.QueueLimit;
+                        options.ReplenishmentPeriod = TimeSpan.FromSeconds(opts.ReplenishmentPeriod);
+                        options.TokensPerPeriod = opts.TokensPerPeriod;
+                        options.AutoReplenishment = opts.AutoReplenishment;
                     })),
             _ => services
         };
