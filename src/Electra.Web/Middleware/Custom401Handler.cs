@@ -20,7 +20,7 @@ public class Custom401Handler
     {
         await next(context);
 
-        // Check if the response status code is 404 (Not Found)
+        // Check if the response status code is 401
         if (context.Response.StatusCode == StatusCodes.Status401Unauthorized)
         {
             // Check if the request path matches an API pattern

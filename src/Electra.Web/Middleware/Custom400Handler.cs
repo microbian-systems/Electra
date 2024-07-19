@@ -20,7 +20,7 @@ public class Custom400Handler
     {
         await next(context);
 
-        // Check if the response status code is 404 (Not Found)
+        // Check if the response status code is 409
         if (context.Response.StatusCode == StatusCodes.Status400BadRequest)
         {
             // Check if the request path matches an API pattern

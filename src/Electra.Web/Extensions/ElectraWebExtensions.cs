@@ -132,9 +132,9 @@ public static class ElectraWebExtensions
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseAntiforgery();
-        app.UseCustom404Handler();
-        app.UseCustom401Handler();
-        app.UseCustom400Handler();
+        //app.UseCustom404Handler(); // fails for static assets if not found returns 200
+        // app.UseCustom401Handler();
+        // app.UseCustom400Handler();
         //app.UseRequestResponseLogging();
         //app.UseXssMiddleware();
         // https://github.com/GaProgMan/OwaspHeaders.Core
