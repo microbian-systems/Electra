@@ -132,6 +132,7 @@ public static class ElectraWebExtensions
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseAntiforgery();
+        // todo - impl custom status handlers properly
         //app.UseCustom404Handler(); // fails for static assets if not found returns 200
         // app.UseCustom401Handler();
         // app.UseCustom400Handler();
