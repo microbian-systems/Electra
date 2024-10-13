@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="OwaspHeaders.Core" Version="8.1.0" />
-    <PackageReference Include="ThrowGuard" Version="1.0.6" />
+    <PackageReference Include="ThrowGuard" Version="1.0.7" />
   </ItemGroup>
 
 </Project>

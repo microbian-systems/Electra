@@ -7,24 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNext" Version="5.7.0" />
+    <PackageReference Include="DotNext" Version="5.14.0" />
     <PackageReference Include="Fido2" Version="3.0.1" />
     <PackageReference Include="Fido2.AspNet" Version="3.0.1" />
     <PackageReference Include="Fido2.Models" Version="3.0.1" />
-    <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="FluentAssertions.Analyzers" Version="0.33.0">
+    <PackageReference Include="FluentAssertions" Version="6.12.1" />
+    <PackageReference Include="FluentAssertions.Analyzers" Version="0.34.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FluentResults" Version="3.16.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="8.0.10" />
     <PackageReference Include="SecretSharingDotNet" Version="0.11.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.0.0" />
-    <PackageReference Include="ThrowGuard" Version="1.0.6" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.2" />
+    <PackageReference Include="ThrowGuard" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
