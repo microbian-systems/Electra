@@ -1,4 +1,5 @@
 ﻿using Electra.Core.Algorithms;
+using Xunit;
 
 namespace Electra.Core.Tests;
 

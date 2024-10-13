@@ -1,5 +1,6 @@
 using FakeItEasy;
 using Microsoft.Extensions.Logging;
+using Xunit;
 
 namespace Electra.Persistence.Tests;
 

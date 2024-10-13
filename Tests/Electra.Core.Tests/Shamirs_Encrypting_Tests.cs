@@ -2,6 +2,7 @@
 using Electra.Core.Encryption;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Logging;
+using Xunit;
 
 namespace Electra.Core.Tests;
 

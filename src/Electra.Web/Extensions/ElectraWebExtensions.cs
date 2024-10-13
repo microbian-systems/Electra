@@ -8,7 +8,9 @@ using Electra.Services.Mail;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using OwaspHeaders.Core.Enums;
 using OwaspHeaders.Core.Extensions;
+using OwaspHeaders.Core.Models;
 using Serilog;
 
 namespace Electra.Common.Web.Extensions;
@@ -138,8 +140,16 @@ public static class ElectraWebExtensions
         // app.UseCustom400Handler();
         //app.UseRequestResponseLogging();
         //app.UseXssMiddleware();
+        // todo - asked a question on how to permit certain domains - reenable once answered
         // https://github.com/GaProgMan/OwaspHeaders.Core
-        app.UseSecureHeadersMiddleware();
+        //app.UseSecureHeadersMiddleware();
+        //var domain = XPermittedCrossDomainOptionValue.
+        var csp = SecureHeadersMiddlewareBuilder
+                .CreateBuilder()
+                .UseHsts(1200, true)
+                .UseContentDefaultSecurityPolicy()
+                .UsePermittedCrossDomainPolicies()
+            ;
         
         return app;
     }

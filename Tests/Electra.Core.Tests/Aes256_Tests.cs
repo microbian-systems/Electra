@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using Electra.Core.Encryption;
+using Xunit;
 
 namespace Electra.Core.Tests;
 

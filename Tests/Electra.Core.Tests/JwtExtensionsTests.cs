@@ -1,4 +1,5 @@
 using Electra.Auth;
+using Xunit;
 
 namespace Electra.Core.Tests;
 
