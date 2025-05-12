@@ -13,7 +13,6 @@ global using System.Threading.Tasks;
 global using System.Web;
 global using FluentEmail.Core;
 global using JasperFx.Core;
-global using MassTransit;
 global using Electra.Common;
 global using Electra.Common.Extensions;
 global using Electra.Core.Identity;

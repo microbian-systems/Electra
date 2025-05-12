@@ -1,4 +1,5 @@
 using Electra.Services;
+using MassTransit;
 
 namespace Electra.Services;
 
@@ -396,7 +397,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
 
     protected virtual T RegistrationModelToUser(RegistrationRequestModel model, string createdBy = "User") => new()
     {
-            Id = MassTransit.NewId.NextGuid(),
+            Id = NewId.NextGuid(),
             Email = model.Email,
             FirstName = model.Firstname,
             LastName = model.Lastname,

@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
         <LangVersion>default</LangVersion>
         <Nullable>enable</Nullable>
         <ImplicitUsings>false</ImplicitUsings>
@@ -20,7 +20,7 @@
         <Company>Microbians</Company>
         <Copyright>Copyright (c) 2023 Microbians</Copyright>
         <PackageTags>asp.net efcore Electra</PackageTags>
-        <PackageIcon>../../assets/electra2.png</PackageIcon>
+<!--        <PackageIcon>../../assets/electra2.png</PackageIcon>-->
         <PackageProjectUrl>https://github.com/microbian-systems/Electra</PackageProjectUrl>
         <RepositoryUrl>https://github.com/microbian-systems/Electra</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
