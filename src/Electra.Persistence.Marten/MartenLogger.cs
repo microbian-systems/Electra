@@ -4,7 +4,7 @@ using ILogger = Serilog.ILogger;
 
 namespace Electra.Persistence.Marten;
 
-public class MartenLogger(IMartenSessionLogger sessionLog) : IMartenLogger
+public class MartenLogger(IMartenSessionLogger? sessionLog) : IMartenLogger
 {
     private readonly ILogger log = Log.Logger;
     public IMartenSessionLogger SessionLog { get; } = sessionLog ?? new MartenSessionLogger();
