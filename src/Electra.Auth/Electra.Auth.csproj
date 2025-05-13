@@ -20,10 +20,20 @@
     </PackageReference>
     <PackageReference Include="FluentResults" Version="3.16.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.4" />
+    <PackageReference Include="OpenIddict" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.Abstractions" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.AspNetCore" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.EntityFramework.Models" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.Server" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="6.2.1" />
+    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="6.2.1" />
     <PackageReference Include="SecretSharing.Core.dll" Version="1.0.6" />
     <PackageReference Include="SecretSharingDotNet" Version="0.12.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.9.0" />
@@ -32,6 +42,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="OpenIdDict\" />
   </ItemGroup>
 
 </Project>
