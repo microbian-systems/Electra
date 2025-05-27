@@ -3,15 +3,14 @@ using Electra.Validators.Extensions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Validators
+namespace Electra.Validators;
+
+public class RefreshTokenRequestValidator : BaseModelValidator<RefreshTokenRequest>
 {
-    public class RefreshTokenRequestValidator : BaseModelValidator<RefreshTokenRequest>
+    public RefreshTokenRequestValidator(IMemoryCache cache, ILogger<BaseModelValidator<RefreshTokenRequest>> log) 
+        : base(cache, log)
     {
-        public RefreshTokenRequestValidator(IMemoryCache cache, ILogger<BaseModelValidator<RefreshTokenRequest>> log) 
-            : base(cache, log)
-        {
-            RuleFor(x => x.AccessToken).NotNullOrEmpty();
-            RuleFor(x => x.RefreshToken).NotNullOrEmpty();
-        }
+        RuleFor(x => x.AccessToken).NotNullOrEmpty();
+        RuleFor(x => x.RefreshToken).NotNullOrEmpty();
     }
 }

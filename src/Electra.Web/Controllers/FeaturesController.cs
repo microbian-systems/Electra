@@ -1,82 +1,81 @@
 ﻿using Electra.Services.Features;
 
-namespace Electra.Common.Web.Controllers
+namespace Electra.Common.Web.Controllers;
+
+[ApiController]
+public abstract class FeaturesController(
+    IFeaturesService service,
+    IHttpContextAccessor accessor,
+    ILogger<FeaturesController> log)
+    : ElectraApiBaseController(log)
 {
-    [ApiController]
-    public abstract class FeaturesController(
-        IFeaturesService service,
-        IHttpContextAccessor accessor,
-        ILogger<FeaturesController> log)
-        : ElectraApiBaseController(log)
+    private readonly HttpContext ctx = accessor.HttpContext;
+
+    [HttpGet("get/{feature}")]
+    public async Task<ActionResult<Features>> SetFeature([FromRoute] string feature)
     {
-        private readonly HttpContext ctx = accessor.HttpContext;
-
-        [HttpGet("get/{feature}")]
-        public async Task<ActionResult<Features>> SetFeature([FromRoute] string feature)
-        {
-            if (string.IsNullOrEmpty(feature))
-                return BadRequest();
+        if (string.IsNullOrEmpty(feature))
+            return BadRequest();
             
-            var result = await service.GetFeatureAsync(feature);
+        var result = await service.GetFeatureAsync(feature);
 
-            if (result == null)
-                return NoContent();
+        if (result == null)
+            return NoContent();
             
-            return Ok(result);
-        }
+        return Ok(result);
+    }
 
-        [HttpGet("get-features")]
-        public async Task<ActionResult<Features>> GetAceFeatureToggles()
-        {
-            var features = await service.GetAllFeaturesAsync();
-            return Ok(features);
-        }
+    [HttpGet("get-features")]
+    public async Task<ActionResult<Features>> GetAceFeatureToggles()
+    {
+        var features = await service.GetAllFeaturesAsync();
+        return Ok(features);
+    }
         
-        [HttpGet("get-all-features")]
-        public async Task<ActionResult<List<Features>>> GetAceFeatureTogglesList()
-        {
-            var features = await service.GetAllFeaturesAsync();
-            return Ok(features);
-        }
+    [HttpGet("get-all-features")]
+    public async Task<ActionResult<List<Features>>> GetAceFeatureTogglesList()
+    {
+        var features = await service.GetAllFeaturesAsync();
+        return Ok(features);
+    }
         
-        [HttpPost("set")]
-        public async Task<IActionResult> SetFeature([FromBody] Features feature)
-        {
-            await service.SetFeatureAsync(feature);
-            return Ok();
-        }
+    [HttpPost("set")]
+    public async Task<IActionResult> SetFeature([FromBody] Features feature)
+    {
+        await service.SetFeatureAsync(feature);
+        return Ok();
+    }
 
-        [HttpPut("update")]
-        public async Task<ActionResult> UpdateFeature([FromBody] Features feature)
-        {
-            await service.SetFeatureAsync(feature);
-            return Ok();
-        }        
+    [HttpPut("update")]
+    public async Task<ActionResult> UpdateFeature([FromBody] Features feature)
+    {
+        await service.SetFeatureAsync(feature);
+        return Ok();
+    }        
         
-        [HttpPut("update-list")]
-        public async Task<IActionResult> UpdateFeatures([FromBody] List<Features> model)
+    [HttpPut("update-list")]
+    public async Task<IActionResult> UpdateFeatures([FromBody] List<Features> model)
+    {
+        var features = new Features()
         {
-            var features = new Features()
-            {
-                ModifiedBy = ctx?.User?.Identity?.Name,
-            };
+            ModifiedBy = ctx?.User?.Identity?.Name,
+        };
             
-            await service.SetFeaturesAsync(features);
-            return Ok();
-        }
+        await service.SetFeaturesAsync(features);
+        return Ok();
+    }
         
-        [HttpDelete("delete/{feature}")]
-        public async Task<IActionResult> DeleteFeature([FromRoute] string feature)
-        {
-            await service.DeleteFeatureAsync(feature);
-            return Ok();
-        }
+    [HttpDelete("delete/{feature}")]
+    public async Task<IActionResult> DeleteFeature([FromRoute] string feature)
+    {
+        await service.DeleteFeatureAsync(feature);
+        return Ok();
+    }
         
-        [HttpDelete("delete-feature-toggle")]
-        public async Task<IActionResult> DeleteFeature()
-        {
-            await service.DeleteAllFeaturesAsync();
-            return Ok();
-        }
+    [HttpDelete("delete-feature-toggle")]
+    public async Task<IActionResult> DeleteFeature()
+    {
+        await service.DeleteAllFeaturesAsync();
+        return Ok();
     }
 }

@@ -1,16 +1,15 @@
-namespace Electra.Common
+namespace Electra.Common;
+
+public class SmtpEmailOptions : BaseOptions
 {
-    public class SmtpEmailOptions : BaseOptions
+    public SmtpEmailOptions()
     {
-        public SmtpEmailOptions()
-        {
-            SectionName = "SmtpEmailOptions";
-        }
-        public string Host {get; set;}
-        public int Port {get; set;}
-        public bool EnableSSL {get; set;}
-        public string Username {get; set;}
-        public string Password {get; set;}
-        public string SenderEmail { get; set; }
+        SectionName = "SmtpEmailOptions";
     }
+    public string Host {get; set;}
+    public int Port {get; set;}
+    public bool EnableSSL {get; set;}
+    public string Username {get; set;}
+    public string Password {get; set;}
+    public string SenderEmail { get; set; }
 }

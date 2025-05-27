@@ -1,38 +1,37 @@
 ﻿using System.IO;
 using System.IO.Compression;
 
-namespace Electra.Common.Extensions
+namespace Electra.Common.Extensions;
+
+// todo - create unit tests for Electra.Core.CompressionHelpers
+public static class Compression
 {
-    // todo - create unit tests for Electra.Core.CompressionHelpers
-    public static class Compression
+    public static byte[] Compress(byte[] data)
     {
-        public static byte[] Compress(byte[] data)
+        byte[] compressArray = null;
+
+        using (var memoryStream = new MemoryStream())
+        using (var deflateStream = new DeflateStream(memoryStream, CompressionMode.Compress))
         {
-            byte[] compressArray = null;
-
-            using (var memoryStream = new MemoryStream())
-            using (var deflateStream = new DeflateStream(memoryStream, CompressionMode.Compress))
-            {
-                deflateStream.Write(data, 0, data.Length);
-                compressArray = memoryStream.ToArray();
-            }
-
-            return compressArray;
+            deflateStream.Write(data, 0, data.Length);
+            compressArray = memoryStream.ToArray();
         }
 
-        public static byte[] Decompress(byte[] data)
+        return compressArray;
+    }
+
+    public static byte[] Decompress(byte[] data)
+    {
+        byte[] decompressedArray = null;
+
+        using (var decompressedStream = new MemoryStream())
+        using (var compressStream = new MemoryStream(data))
+        using (var deflateStream = new DeflateStream(compressStream, CompressionMode.Decompress))
         {
-            byte[] decompressedArray = null;
-
-            using (var decompressedStream = new MemoryStream())
-            using (var compressStream = new MemoryStream(data))
-            using (var deflateStream = new DeflateStream(compressStream, CompressionMode.Decompress))
-            {
-                deflateStream.CopyTo(decompressedStream);
-                decompressedArray = decompressedStream.ToArray();
-            }
-
-            return decompressedArray;
+            deflateStream.CopyTo(decompressedStream);
+            decompressedArray = decompressedStream.ToArray();
         }
+
+        return decompressedArray;
     }
 }

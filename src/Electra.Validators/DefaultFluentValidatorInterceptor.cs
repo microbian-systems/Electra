@@ -1,6 +1,6 @@
-namespace Electra.Validators
-{
-    // todo - fix fluent validation IValidatorInterceptor impl
+namespace Electra.Validators;
+
+// todo - fix fluent validation IValidatorInterceptor impl
 //     public class DefaultFluentValidatorInterceptor : IValidatorInterceptor
 //     {
 //         private readonly IMemoryCache cache; // todo - consider using cacheManager or Foundatio cache
@@ -25,4 +25,3 @@ namespace Electra.Validators
 //             return result;
 //         }
 //     }
-}

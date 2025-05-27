@@ -1,7 +1,6 @@
-namespace Electra.Services
+namespace Electra.Services;
+
+public interface ISmsService
 {
-    public interface ISmsService
-    {
-        Task SendSms(string from, string to, string body);
-    }
+    Task SendSms(string from, string to, string body);
 }
