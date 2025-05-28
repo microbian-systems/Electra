@@ -49,12 +49,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Solnova\src\Electra\src\Electra.Caching\Electra.Caching.csproj" />
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Solnova\src\Electra\src\Electra.Core\Electra.Core.csproj" />
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Solnova\src\Electra\src\Electra.Events\Electra.Events.csproj" />
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Solnova\src\Electra\src\Electra.Persistence.Marten\Electra.Persistence.Marten.csproj" />
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Solnova\src\Electra\src\Electra.Persistence\Electra.Persistence.csproj" />
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Solnova\src\Electra\src\Electra.Web\Electra.Web.csproj" />
+    <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
+    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
+    <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
   </ItemGroup>
 
 </Project>
