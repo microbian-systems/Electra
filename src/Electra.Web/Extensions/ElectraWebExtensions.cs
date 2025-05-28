@@ -89,6 +89,7 @@ public static class ElectraWebExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<ITokenValidationService, ElectraJwtValidationService>();
         services.AddEmailServies(config, host);
+        services.AddOpenApi();
         services.AddMiniProfilerEx();
         services.ConfigureAppSettings(config, host);
         services.AddElectraCaching(config);
@@ -134,9 +135,11 @@ public static class ElectraWebExtensions
         app.UseCustom401Handler();
         app.UseCustom400Handler();
         //app.UseRequestResponseLogging();
+        // todo - fix CORS/OWasp and Xss later
         //app.UseXssMiddleware();
         // https://github.com/GaProgMan/OwaspHeaders.Core
-        app.UseSecureHeadersMiddleware();
+        // app.UseSecureHeadersMiddleware();
+        
         
         return app;
     }
