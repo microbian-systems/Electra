@@ -13,7 +13,7 @@
     <PackageReference Include="Fido2" Version="3.0.1" />
     <PackageReference Include="Fido2.AspNet" Version="3.0.1" />
     <PackageReference Include="Fido2.Models" Version="3.0.1" />
-    <PackageReference Include="FluentAssertions" Version="8.2.0" />
+    <PackageReference Include="FluentAssertions" Version="8.3.0" />
     <PackageReference Include="FluentAssertions.Analyzers" Version="0.34.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,28 +23,28 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="9.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.4" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.4" />
-    <PackageReference Include="OpenIddict" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.Abstractions" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.EntityFramework.Models" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.Server" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="6.2.1" />
-    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="6.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.5" />
+    <PackageReference Include="OpenIddict" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.Abstractions" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.EntityFramework.Models" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.Server" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="6.3.0" />
     <PackageReference Include="Passkeys" Version="1.0.0" />
     <PackageReference Include="SecretSharing.Core.dll" Version="1.0.6" />
     <PackageReference Include="SecretSharingDotNet" Version="0.12.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.9.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.11.0" />
     <PackageReference Include="ThrowGuard" Version="1.0.7" />
   </ItemGroup>
 
