@@ -124,16 +124,16 @@ public static class ElectraWebExtensions
         app.ConfigureExceptionMiddleware();
         app.UseDefaultLogging();
         app.UseRequestCultureMiddleware();
-        app.UsePerfLogging();
-        app.UseSerilogRequestLogging();
-        app.UseRequestResponseLogging();
+        //app.UsePerfLogging();
+        // app.UseSerilogRequestLogging();
+        // app.UseRequestResponseLogging();
         app.UseMiniProfiler();
         app.UseAuthentication();
         app.UseAuthorization();
         app.UseAntiforgery();
-        app.UseCustom404Handler();
-        app.UseCustom401Handler();
-        app.UseCustom400Handler();
+        // app.UseCustom404Handler();
+        // app.UseCustom401Handler();
+        // app.UseCustom400Handler();
         //app.UseRequestResponseLogging();
         // todo - fix CORS/OWasp and Xss later
         //app.UseXssMiddleware();
