@@ -6,6 +6,7 @@ using Electra.Services;
 using Electra.Services.Geo;
 using Electra.Services.Models;
 using Microsoft.AspNetCore.Identity;
+using ThrowGuard;
 
 namespace Electra.Common.Web.Services;
 
@@ -57,7 +58,8 @@ public class ElectraUserServiceBase<T> : ElectraIdentityService<T>
         ILogger<ElectraUserServiceBase<T>> log) 
         : base(signinManager, userManager, roleManager, passwordService, contextAccessor, fluentEmail, zipService, log)
     {
-        context = contextAccessor.HttpContext;
+        Throw.IfNull(contextAccessor?.HttpContext, nameof(contextAccessor));
+        context = contextAccessor?.HttpContext!;
     }
     
     public string GetCurrentUserId() => context.User.GetUserId();
@@ -80,8 +82,9 @@ public class ElectraUserServiceBase<T> : ElectraIdentityService<T>
         return res;
     }
 
-    public override async Task<UserViewModel<Guid>> LoginAsync(string username, string password)
+    public override async Task<UserViewModel> LoginAsync(string username, string password)
     {
+        // todo - implement Login in UserService
         throw new NotImplementedException();
     }
 

@@ -5,7 +5,7 @@ namespace Electra.Core.Identity;
 
 
 [Table("Roles")]
-public class ElectraRole : ElectraRole<Guid>{}
+public class ElectraRole : ElectraRole<long>{}
 
 
 [Table("Roles")]

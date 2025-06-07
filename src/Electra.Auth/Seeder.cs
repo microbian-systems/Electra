@@ -1,5 +1,6 @@
 using Electra.Auth.Context;
 using Electra.Auth.Models;
+using Electra.Models;
 
 namespace Electra.Auth;
 
@@ -9,20 +10,20 @@ public class Seeder
     {
         using var scope = serviceProvider.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<ElectraAuthDbContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraApplicationUser>>();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ElectraIdentityRole>>();
         var applicationManager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
 
         // Create database and apply migrations
         await context.Database.MigrateAsync();
 
         // Seed roles
-        string[] roles = ["Admin", "User"];
+        string[] roles = ["Admin", "User", "Editor"];
         foreach (var role in roles)
         {
             if (!await roleManager.RoleExistsAsync(role))
             {
-                await roleManager.CreateAsync(new IdentityRole(role));
+                await roleManager.CreateAsync(new ElectraIdentityRole(role));
             }
         }
 
@@ -35,7 +36,7 @@ public class Seeder
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
             if (adminUser == null)
             {
-                adminUser = new ElectraApplicationUser
+                adminUser = new ElectraUser
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
