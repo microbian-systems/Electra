@@ -29,8 +29,6 @@ public static class SerilogExtensions
         if (string.IsNullOrEmpty(environment))
             Throw.BadArg(nameof(environment), "environment cannot be null or empty");
         
-        Console.WriteLine($"environment: {environment}");
-        
         var log = GetLogger(configuration, serviceName, serviceVersion, environment);
 
         return builder.UseSerilog(log);

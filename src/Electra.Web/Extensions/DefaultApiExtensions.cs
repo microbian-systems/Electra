@@ -104,8 +104,6 @@ public static class DefaultApiExtensions
                 // diagnosticContext.Set("RequestBody", body);
             };
         });
-        app.UseSwagger();
-        app.UseSwaggerUI();
 
         app.UseHttpsRedirection();
         

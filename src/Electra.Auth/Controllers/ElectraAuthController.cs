@@ -1,6 +1,8 @@
 using System.Linq;
 using Electra.Auth.Models;
 using Electra.Common.Web;
+using Electra.Common.Web.Controllers;
+using Electra.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
@@ -10,13 +12,13 @@ namespace Electra.Auth.Controllers;
 
 [Route("api/auth")]
 public class AuthorizationController(
-    SignInManager<ElectraApplicationUser> signInManager,
-    UserManager<ElectraApplicationUser> userManager,
+    SignInManager<ElectraUser> signInManager,
+    UserManager<ElectraUser> userManager,
     IOpenIddictApplicationManager applicationManager,
     IOpenIddictAuthorizationManager authorizationManager,
     IOpenIddictScopeManager scopeManager,
     ILogger<AuthorizationController> log)
-    : ApiControllerBase(log)
+    : ElectraApiBaseController(log)
 {
     private readonly IOpenIddictApplicationManager applicationManager = applicationManager;
     private readonly IOpenIddictAuthorizationManager authorizationManager = authorizationManager;

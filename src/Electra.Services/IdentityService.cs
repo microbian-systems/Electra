@@ -1,3 +1,4 @@
+using Electra.Core;
 using Electra.Services;
 using MassTransit;
 
@@ -12,10 +13,10 @@ public interface IElectraIdentityService<T> : IElectraIdentityService<T, Guid>
 public interface IElectraIdentityService<T, TKey>
     where TKey : IEquatable<TKey>, IComparable<TKey>
 {
-    Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model);
-    Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model, string password);
-    Task<UserViewModel<TKey>> LoginAsync(string username, string password);
-    Task LogoutAsync(UserViewModel<TKey> model);
+    Task<UserViewModel> LoginAsync(UserLoginRequest model);
+    Task<UserViewModel> LoginAsync(UserLoginRequest model, string password);
+    Task<UserViewModel> LoginAsync(string username, string password);
+    Task LogoutAsync(UserViewModel model);
     Task LogoutAsync(string username);
     Task<(T user, IdentityResult identityReuslt)> AddUserAsync(T model, string password = "");
     Task<(T user,  IdentityResult identityReuslt)> UpdateUserAsync(T model);
@@ -63,7 +64,7 @@ public class ElectraIdentityService : ElectraIdentityService<ElectraUser, Guid>,
     {
     }
 
-    public override async Task<UserViewModel<Guid>> LoginAsync(string username, string password)
+    public override async Task<UserViewModel> LoginAsync(string username, string password)
     {
         var result = await signinManager
             .PasswordSignInAsync(username, password, false, true);
@@ -84,13 +85,13 @@ public class ElectraIdentityService : ElectraIdentityService<ElectraUser, Guid>,
         // var refresh = tokenService.GenerateRefreshToken();
         //var res = await SaveRefreshTokenAsync(account.UserName, refresh);
 
-        var user = new UserViewModel<Guid>()
+        var user = new UserViewModel()
         {
             Id = identity.Id,
             FirstName = identity.FirstName,
             LastName = identity.LastName,
-            Username = identity.UserName,
-            Email = identity.Email
+            Username = identity.UserName ??= string.Empty,
+            Email = identity.Email ??= string.Empty
             // Token = jwt,
             // RefreshToken = refresh
         };
@@ -146,19 +147,19 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         this.fluentEmail = fluentEmail;
     }
     
-    public async Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model)
+    public async Task<UserViewModel> LoginAsync(UserLoginRequest model)
         => await LoginAsync(model.Username, model.Password);
 
     // todo - add external auth here as well
-    async Task<UserViewModel<TKey>> IElectraIdentityService<T, TKey>.LoginAsync(UserLoginRequest model)
+    async Task<UserViewModel> IElectraIdentityService<T, TKey>.LoginAsync(UserLoginRequest model)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<UserViewModel<TKey>> LoginAsync(UserLoginRequest model, string password) =>
+    public async Task<UserViewModel> LoginAsync(UserLoginRequest model, string password) =>
         await LoginAsync(model.Username, password);
     
-    public async Task LogoutAsync(UserViewModel<TKey> model)
+    public async Task LogoutAsync(UserViewModel model)
         => await LogoutAsync(model.Username);
     
     public async Task LogoutAsync(string username)
@@ -167,7 +168,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         await signinManager.SignOutAsync();
     }
 
-    public abstract Task<UserViewModel<TKey>> LoginAsync(string username, string password);
+    public abstract Task<UserViewModel> LoginAsync(string username, string password);
 
     public async Task<(T user, IdentityResult identityReuslt)> AddUserAsync(T model, string password = "")
     {
@@ -397,7 +398,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
 
     protected virtual T RegistrationModelToUser(RegistrationRequestModel model, string createdBy = "User") => new()
     {
-            Id = NewId.NextGuid(),
+            Id = Snowflake.NewId(),
             Email = model.Email,
             FirstName = model.Firstname,
             LastName = model.Lastname,

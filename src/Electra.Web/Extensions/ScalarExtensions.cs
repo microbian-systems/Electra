@@ -8,10 +8,6 @@ public static class ScalarUIExtensions
     {
         if (!app.Environment.IsProduction())
         {
-            app.UseSwagger(options =>
-            {
-                options.RouteTemplate = "/openapi/{documentName}.json";
-            });
             app.MapScalarApiReference(options =>
             {
                 options

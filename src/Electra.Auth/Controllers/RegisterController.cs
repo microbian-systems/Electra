@@ -1,12 +1,13 @@
 using Electra.Auth.Models;
 using Electra.Common.Web;
+using Electra.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electra.Auth.Controllers;
 
 [Route("api/auth/[action]")]
 public class RegisterController(
-    UserManager<ElectraApplicationUser> userManager,
+    UserManager<ElectraUser> userManager,
     ILogger<RegisterController> logger)
     : ApiControllerBase(logger)
 {
@@ -18,7 +19,7 @@ public class RegisterController(
             return BadRequest(ModelState);
         }
 
-        var user = new ElectraApplicationUser
+        var user = new ElectraUser
         {
             UserName = model.Email,
             Email = model.Email,

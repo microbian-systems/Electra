@@ -8,9 +8,9 @@ public class ElectraDbContext<T>(DbContextOptions<ElectraDbContext<T, ElectraRol
     where T : ElectraUser;
 
 public class ElectraDbContext<T, TRole>(DbContextOptions<ElectraDbContext<T, TRole>> options)
-    : IdentityDbContext<T, TRole, Guid>(options)
+    : IdentityDbContext<T, TRole, long>(options)
     where T : ElectraUser
-    where TRole : IdentityRole<Guid>
+    where TRole : IdentityRole<long>
 {
     protected const string schema = "Users";
 
