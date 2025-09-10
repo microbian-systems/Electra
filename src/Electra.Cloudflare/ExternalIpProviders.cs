@@ -10,8 +10,8 @@ public static class ExternalIpProviders
     {
         Providers = new List<string>
         {
-            "https://ipecho.net/plain",
             "https://icanhazip.com/",
+            "https://ipecho.net/plain",
             "https://whatismyip.akamai.com",
             "https://tnx.nl/ip"
         };

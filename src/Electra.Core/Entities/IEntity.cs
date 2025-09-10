@@ -23,13 +23,13 @@ public interface IEntity<TKey> where TKey : IEquatable<TKey>
 /// <summary>
 /// Represents a persisted entity for Electra
 /// </summary>
-public abstract record Entity : Entity<Guid> {}
+public abstract class Entity : Entity<long> {}
 
 /// <summary>
 /// Represents a persisted entity for Electra
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
-public abstract record Entity<TKey> : EntityBase<TKey> where TKey : IEquatable<TKey>
+public abstract class Entity<TKey> : EntityBase<TKey> where TKey : IEquatable<TKey>
 {
 }
 
@@ -37,7 +37,7 @@ public abstract record Entity<TKey> : EntityBase<TKey> where TKey : IEquatable<T
 /// Represents an enetity that can be persisted
 /// </summary>
 /// <typeparam name="TKey"></typeparam>
-public abstract record EntityBase<TKey> : IEntity<TKey>
+public abstract class EntityBase<TKey> : IEntity<TKey>
     where TKey : IEquatable<TKey>
 {
     [Key]

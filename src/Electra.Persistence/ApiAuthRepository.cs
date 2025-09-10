@@ -20,7 +20,7 @@ public sealed class ApiAuthRepository(ApiAuthContext context, ILogger<ApiAuthRep
         return Task.FromResult(accounts);
     }
 
-    public async Task<ApiAccountModel?> GetByKeyAsync(Guid key)
+    public async Task<ApiAccountModel?> GetByKeyAsync(long key)
     {
         var account = await apiAccountsDb
             .Include(x => x.Claims)
@@ -50,7 +50,7 @@ public sealed class ApiAuthRepository(ApiAuthContext context, ILogger<ApiAuthRep
         return Task.CompletedTask;
     }
 
-    public override async Task DeleteAsync(Guid id)
+    public override async Task DeleteAsync(long id)
     {
         var account = await apiAccountsDb
             .Include(x => x.Claims)

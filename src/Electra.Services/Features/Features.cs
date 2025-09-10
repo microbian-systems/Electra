@@ -2,7 +2,7 @@
 
 namespace Electra.Services.Features;
 
-public record Features : Entity<Guid>, IEntity<Guid>
+public class Features : Entity
 {
     public string Application { get; set; }
     public string Version { get; set; }
