@@ -1,11 +1,10 @@
-namespace Electra.Models
+namespace Electra.Models;
+
+public class RefreshTokenModel
 {
-    public class RefreshTokenModel
-    {
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
+    [JsonPropertyName("id")]
+    public string Id { get; set; }
         
-        [JsonPropertyName("refresh_token")]
-        public string RefreshToken { get; set; }
-    }
+    [JsonPropertyName("refresh_token")]
+    public string RefreshToken { get; set; }
 }

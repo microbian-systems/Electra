@@ -3,70 +3,69 @@ using System.Threading.Tasks;
 using Electra.Common.Commands;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Common.Decorators
+namespace Electra.Common.Decorators;
+
+public class TimingCommandDecorator : IAsyncCommand
 {
-    public class TimingCommandDecorator : IAsyncCommand
+    private readonly ILogger log;
+    readonly IAsyncCommand decorated;
+
+    public TimingCommandDecorator(IAsyncCommand decorated, ILogger log)
     {
-        private readonly ILogger log;
-        readonly IAsyncCommand decorated;
-
-        public TimingCommandDecorator(IAsyncCommand decorated, ILogger log)
-        {
-            this.log = log;
-            this.decorated = decorated;
-        }
-
-        public async Task ExecuteAsync()
-        {
-            log.LogInformation($"entered Timing decorator");
-            var sw = new Stopwatch();
-            sw.Start();
-            await decorated.ExecuteAsync();
-            sw.Stop();
-            log.LogInformation($"{decorated.GetType()} took {sw.ElapsedMilliseconds} ms");
-        }
+        this.log = log;
+        this.decorated = decorated;
     }
 
-    public class TimingCommandDecorator<TCommand> : IAsyncCommand<TCommand>
+    public async Task ExecuteAsync()
     {
-        private readonly ILogger log;
-        readonly IAsyncCommand<TCommand> decorated;
+        log.LogInformation($"entered Timing decorator");
+        var sw = new Stopwatch();
+        sw.Start();
+        await decorated.ExecuteAsync();
+        sw.Stop();
+        log.LogInformation($"{decorated.GetType()} took {sw.ElapsedMilliseconds} ms");
+    }
+}
 
-        public TimingCommandDecorator(IAsyncCommand<TCommand> decorated, ILogger log)
-        {
-            this.log = log;
-            this.decorated = decorated;
-        }
+public class TimingCommandDecorator<TCommand> : IAsyncCommand<TCommand>
+{
+    private readonly ILogger log;
+    readonly IAsyncCommand<TCommand> decorated;
 
-        public async Task ExecuteAsync(TCommand param)
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            await decorated.ExecuteAsync(param);
-            sw.Stop();
-            log.LogInformation($"{decorated.GetType()} took {sw.ElapsedMilliseconds} ms");
-        }
+    public TimingCommandDecorator(IAsyncCommand<TCommand> decorated, ILogger log)
+    {
+        this.log = log;
+        this.decorated = decorated;
     }
 
-    public class TimingCommandDecorator<TCommand, TReturn> : IAsyncCommand<TCommand, TReturn>
+    public async Task ExecuteAsync(TCommand param)
     {
-        private readonly ILogger log;
-        readonly IAsyncCommand<TCommand, TReturn> decorated;
+        var sw = new Stopwatch();
+        sw.Start();
+        await decorated.ExecuteAsync(param);
+        sw.Stop();
+        log.LogInformation($"{decorated.GetType()} took {sw.ElapsedMilliseconds} ms");
+    }
+}
 
-        public TimingCommandDecorator(IAsyncCommand<TCommand, TReturn> decorated, ILogger log)
-        {
-            this.log = log;
-            this.decorated = decorated;
-        }
+public class TimingCommandDecorator<TCommand, TReturn> : IAsyncCommand<TCommand, TReturn>
+{
+    private readonly ILogger log;
+    readonly IAsyncCommand<TCommand, TReturn> decorated;
 
-        public async Task<TReturn> ExecuteAsync(TCommand param)
-        {
-            var sw = new Stopwatch();
-            sw.Start();
-            var result = await decorated.ExecuteAsync(param);
-            sw.Stop();
-            log.LogInformation($"{decorated.GetType()} took {sw.ElapsedMilliseconds} ms");
-            return result;
-        }
+    public TimingCommandDecorator(IAsyncCommand<TCommand, TReturn> decorated, ILogger log)
+    {
+        this.log = log;
+        this.decorated = decorated;
+    }
+
+    public async Task<TReturn> ExecuteAsync(TCommand param)
+    {
+        var sw = new Stopwatch();
+        sw.Start();
+        var result = await decorated.ExecuteAsync(param);
+        sw.Stop();
+        log.LogInformation($"{decorated.GetType()} took {sw.ElapsedMilliseconds} ms");
+        return result;
     }
 }

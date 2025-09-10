@@ -1,6 +1,7 @@
 ﻿using Electra.Common.Web.Infrastructure;
 using Electra.Common.Web.Jwt;
 using Electra.Persistence;
+using Scalar.AspNetCore;
 
 namespace Electra.Common.Web.Extensions;
 
@@ -15,7 +16,6 @@ public static class ApiServiceExtensions
     
     public static IServiceCollection AddDefaultApiServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddSwaggerEndpoint(config);
         services.AddTransient<IJwtFactory, JwtFactory>();
         services.AddTransient<IClaimsPrincipalFactory, ClaimsPrincipalFactory>();
         services.AddScoped<IApiAuthRepository, ApiAuthRepository>();
@@ -26,7 +26,11 @@ public static class ApiServiceExtensions
     public static WebApplication UseDefaultApi(this WebApplication app)
     {
         var env = app.Environment;
-        app.UseSwaggerEx();
+        if(!env.IsProduction())
+        {
+            app.MapOpenApi();
+            app.MapScalarApiReference();
+        }
         return app;
     }
 }

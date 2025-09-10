@@ -1,9 +1,8 @@
-namespace Electra.Common.Web
-{
-    public class ErrorViewModel
-    {
-        public string RequestId { get; set; }
+namespace Electra.Common.Web;
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+public class ErrorViewModel
+{
+    public string RequestId { get; set; }
+
+    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 }

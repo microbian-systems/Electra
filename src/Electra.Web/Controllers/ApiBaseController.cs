@@ -12,16 +12,11 @@ namespace Electra.Common.Web.Controllers;
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-public abstract class ElectraApiBaseController : ControllerBase
+public abstract class ElectraApiBaseController(ILogger<ElectraApiBaseController> log) : ApiControllerBase(log)
 {
-    protected readonly ILogger log;
+    protected readonly ILogger log = log;
     //private IMediator _mediatorInstance; // todo - why do we need a private "instance" of IMediator ?
     //protected IMediator _mediator => _mediatorInstance ??= HttpContext.RequestServices.GetService<IMediator>();
-
-    protected ElectraApiBaseController(ILogger log)
-    {
-        this.log = log;
-    }
 
     protected ActionResult InternalServerError(Exception ex, string message = null)
     {

@@ -5,24 +5,23 @@ using Electra.Common.Extensions;
 using Electra.Models;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence.Marten
+namespace Electra.Persistence.Marten;
+
+public class UpdateUserProfileCommand : IAsyncCommand<ElectraUserProfile, ElectraUserProfile>
 {
-    public class UpdateUserProfileCommand : IAsyncCommand<ElectraUserProfile, ElectraUserProfile>
+    private readonly ILogger<UpdateUserProfileCommand> log;
+    private readonly IGenericRepository<ElectraUserProfile, Guid> db;
+
+    public UpdateUserProfileCommand(IGenericRepository<ElectraUserProfile, Guid> db, ILogger<UpdateUserProfileCommand> log)
     {
-        private readonly ILogger<UpdateUserProfileCommand> log;
-        private readonly IGenericRepository<ElectraUserProfile, Guid> db;
+        this.db = db;
+        this.log = log;
+    }
 
-        public UpdateUserProfileCommand(IGenericRepository<ElectraUserProfile, Guid> db, ILogger<UpdateUserProfileCommand> log)
-        {
-            this.db = db;
-            this.log = log;
-        }
-
-        public async Task<ElectraUserProfile> ExecuteAsync(ElectraUserProfile parameter)
-        {
-            log.LogInformation($"updating user profile: {parameter.ToJson()}");
-            var results = await db.UpsertAsync(parameter);
-            return results;
-        }
+    public async Task<ElectraUserProfile> ExecuteAsync(ElectraUserProfile parameter)
+    {
+        log.LogInformation($"updating user profile: {parameter.ToJson()}");
+        var results = await db.UpsertAsync(parameter);
+        return results;
     }
 }

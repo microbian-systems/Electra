@@ -1,8 +1,7 @@
-﻿namespace Electra.Core
+﻿namespace Electra.Core;
+
+public class BlobStoragePath
 {
-    public class BlobStoragePath
-    {
-        public string Container { get; set; } = "";
-        public List<string> FoldersList { get; protected set; } = new();
-    }
+    public string Container { get; set; } = "";
+    public List<string> FoldersList { get; protected set; } = new();
 }

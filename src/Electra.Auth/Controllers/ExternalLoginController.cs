@@ -1,14 +1,15 @@
 using System.Linq;
 using Electra.Auth.Models;
 using Electra.Common.Web;
+using Electra.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electra.Auth.Controllers;
 
 [Route("api/auth/[controller]")]
 public class ExternalLoginController(
-    SignInManager<ElectraApplicationUser> signInManager,
-    UserManager<ElectraApplicationUser> userManager,
+    SignInManager<ElectraUser> signInManager,
+    UserManager<ElectraUser> userManager,
     ILogger<ExternalLoginController> logger)
     : ApiControllerBase(logger)
 {
@@ -51,7 +52,7 @@ public class ExternalLoginController(
             return BadRequest("Error loading external login information.");
         }
 
-        ElectraApplicationUser? user;
+        ElectraUser? user;
 
         // Sign in the user with this external login provider if the user already has a login
         var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
@@ -78,7 +79,7 @@ public class ExternalLoginController(
         user = await userManager.FindByEmailAsync(email);
         if (user == null)
         {
-            user = new ElectraApplicationUser
+            user = new ElectraUser
             {
                 UserName = email,
                 Email = email,
@@ -110,7 +111,7 @@ public class ExternalLoginController(
         return Redirect($"{returnUrl}?code={await GenerateJwtToken(user)}");
     }
 
-private async Task<string> GenerateJwtToken(ElectraApplicationUser user)
+private async Task<string> GenerateJwtToken(ElectraUser user)
 {
     // Create a unique authentication ticket for this external login
     var principal = await signInManager.CreateUserPrincipalAsync(user);

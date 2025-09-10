@@ -1,5 +1,9 @@
 using Electra.Auth.Context;
 using Electra.Auth.Models;
+using Electra.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Electra.Auth.Extensions;
 
@@ -7,19 +11,21 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAuthenticationServices(
         this IServiceCollection services,
+        IHostEnvironment env,
         IConfiguration config)
     {
         // Configure database context
         services.AddDbContext<ElectraAuthDbContext>(opts =>
         {
-            opts.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            //opts.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            opts.UseSqlite(config.GetConnectionString("DefaultConnection"));
 
             // Register the entity sets needed by OpenIddict
-            opts.UseOpenIddict();
+            // opts.UseOpenIddict();
         });
 
         // Configure ASP.NET Core Identity
-        services.AddIdentity<ElectraApplicationUser, IdentityRole>(opts =>
+        services.AddIdentity<ElectraUser, IdentityRole>(opts =>
             {
                 opts.Password.RequireDigit = true;
                 opts.Password.RequireLowercase = true;
@@ -36,34 +42,58 @@ public static class ServiceCollectionExtensions
         // Add JWT Authentication with OpenIddict
         services.AddJwtAuthentication(config);
 
-        // Configure external authentication providers
-        services.AddAuthentication()
-            .AddGoogle(opts =>
-            {
-                opts.ClientId = config["Authentication:Google:ClientId"];
-                opts.ClientSecret = config["Authentication:Google:ClientSecret"];
+        // Configure authentication
+        services.AddAuthentication(options => {
+                // Default scheme for web pages is Cookies
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                // API requests use JWT
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddFacebook(opts =>
-            {
-                opts.AppId = config["Authentication:Facebook:AppId"];
-                opts.AppSecret = config["Authentication:Facebook:AppSecret"];
+            .AddCookie(options => {
+                options.LoginPath = "/auth/login";
+                options.LogoutPath = "/auth/logout";
+                options.AccessDeniedPath = "/auth/access-denied";
             })
-            .AddTwitter(opts =>
-            {
-                opts.ConsumerKey = config["Authentication:Twitter:ConsumerKey"];
-                opts.ConsumerSecret = config["Authentication:Twitter:ConsumerSecret"];
+            .AddJwtBearer(options => {
+                var jwtSettings = config.GetSection("JwtSettings");
+                var key = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]);
+    
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
             })
-            .AddMicrosoftAccount(opts =>
-            {
-                opts.ClientId = config["Authentication:Microsoft:ClientId"];
-                opts.ClientSecret = config["Authentication:Microsoft:ClientSecret"];
+// Add social logins
+            .AddGoogle(options => {
+                options.ClientId = config["Authentication:Google:ClientId"];
+                options.ClientSecret = config["Authentication:Google:ClientSecret"];
+                options.CallbackPath = "/auth/signin-google";
             })
-            // .AddApple(opts =>
+            .AddTwitter(options => {
+                options.ConsumerKey = config["Authentication:Twitter:ConsumerKey"];
+                options.ConsumerSecret = config["Authentication:Twitter:ConsumerSecret"];
+                options.CallbackPath = "/auth/signin-twitter";
+            })
+// .AddApple(options => {
+//     options.ClientId = config["Authentication:Apple:ClientId"];
+//     options.KeyId = config["Authentication:Apple:KeyId"];
+//     options.TeamId = config["Authentication:Apple:TeamId"];
+//     options.PrivateKey = config["Authentication:Apple:PrivateKey"];
+//     options.CallbackPath = "/auth/signin-apple";
+// })
+            ;
+
+            // .AddMicrosoftAccount(opts =>
             // {
-            //     opts.ClientId = config["Authentication:Apple:ClientId"];
-            //     opts.KeyId = config["Authentication:Apple:KeyId"];
-            //     opts.TeamId = config["Authentication:Apple:TeamId"];
-            //     opts.PrivateKey = config["Authentication:Apple:PrivateKey"];
+            //     opts.ClientId = config["Authentication:Microsoft:ClientId"];
+            //     opts.ClientSecret = config["Authentication:Microsoft:ClientSecret"];
             // })
             ;
 
