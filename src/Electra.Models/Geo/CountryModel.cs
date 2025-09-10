@@ -2,7 +2,7 @@ using Electra.Core.Entities;
 
 namespace Electra.Models.Geo
 {
-    public record CountryModel : Entity<int>
+    public class CountryModel : Entity<int>
     {
         [JsonPropertyName("fips")]
         public string FIPS { get; set; }

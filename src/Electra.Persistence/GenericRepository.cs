@@ -60,12 +60,12 @@ public interface IGenericRepository<T, TKey> : IReadOnlyRepository<T, TKey>, IWr
 /// </summary>
 /// <typeparam name="T">The type of data model to be operated upon <see cref="IEntity{TKey}"/></typeparam>
 /// <remarks>Guid is the default type for the primary key due to the Electra nature of using document stores</remarks>
-public interface IGenericRepository<T> : IGenericRepository<T, Guid> where T : IEntity<Guid>, new()
+public interface IGenericRepository<T> : IGenericRepository<T, long> where T : IEntity<long>, new()
 {
 }
 
-public abstract class GenericRepository<T> : GenericRepository<T, Guid>, IGenericRepository<T>
-    where T : IEntity<Guid>, new()
+public abstract class GenericRepository<T> : GenericRepository<T, long>, IGenericRepository<T>
+    where T : IEntity<long>, new()
 {
     protected GenericRepository(ILogger<GenericRepository<T>> log) : base(log)
     {

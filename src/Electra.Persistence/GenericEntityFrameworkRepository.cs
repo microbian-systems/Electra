@@ -11,9 +11,9 @@ namespace Electra.Persistence
         void SaveChanges();
     }
     
-    public interface IGenericEntityFrameworkRepository<T> : IGenericEntityFrameworkRepository<T, Guid>, IGenericRepository<T> where T : class, IEntity<Guid>, new() {}
+    public interface IGenericEntityFrameworkRepository<T> : IGenericEntityFrameworkRepository<T, long>, IGenericRepository<T> where T : class, IEntity<long>, new() {}
 
-    public class GenericEntityFrameworkRepository<T> : GenericEntityFrameworkRepository<T, Guid>, IGenericRepository<T> where T : class, IEntity<Guid>, new()
+    public class GenericEntityFrameworkRepository<T> : GenericEntityFrameworkRepository<T, long>, IGenericRepository<T> where T : class, IEntity<long>, new()
     {
         public GenericEntityFrameworkRepository(DbContext context, ILogger<GenericEntityFrameworkRepository<T>> log) : base(context, log)
         {

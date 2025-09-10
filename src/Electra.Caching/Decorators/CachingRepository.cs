@@ -16,7 +16,7 @@ public abstract record DbCacheResult<T, TKey>
     public bool Success { get; set; }
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;    
 }
-public sealed record DbCacheResult<T> : DbCacheResult<T, Guid> where T : IEntity<Guid>, new() { }
+public sealed record DbCacheResult<T> : DbCacheResult<T, long> where T : IEntity<long>, new() { }
 
 // Todo - Consider not inheriting from IGenericRepository for the cache repository and change return values to DbCacheResult
 public interface ICachingRepositoryDecorator<T, TKey> : IGenericRepository<T, TKey>
@@ -37,7 +37,7 @@ public interface ICachingRepositoryDecorator<T, TKey> : IGenericRepository<T, TK
     Task<T> UpsertAsync([NotNull] T entity, CacheOptions opts = default);
 }
 
-public interface ICachingRepositoryDecorator<T> : ICachingRepositoryDecorator<T, Guid>, IGenericRepository<T> where T : IEntity<Guid>, new() { }
+public interface ICachingRepositoryDecorator<T> : ICachingRepositoryDecorator<T, long>, IGenericRepository<T> where T : IEntity<long>, new() { }
 
 
 public class CachingRepository<T>(

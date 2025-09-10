@@ -2,7 +2,7 @@
 
 namespace Electra.Models;
 
-public record ApiAccountModel : Entity
+public class ApiAccountModel : Entity
 {
     public string? ApiKey { get; set; }
     public string Email { get; set; }

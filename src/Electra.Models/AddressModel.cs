@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Models
 {
-    public record AddressModel : Entity
+    public class AddressModel : Entity
     {
         public string UserId { get; set; }
         [PersonalData]

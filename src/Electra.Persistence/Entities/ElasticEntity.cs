@@ -16,7 +16,7 @@ namespace Electra.Persistence.Entities
         }
     }
     
-    public abstract record ElasticEntity : Entity<string>
+    public abstract class ElasticEntity : Entity<string>
     {
 
     }

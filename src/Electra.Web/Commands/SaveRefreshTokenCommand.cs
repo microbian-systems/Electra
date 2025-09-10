@@ -39,7 +39,7 @@ namespace Electra.Common.Web.Commands
         public async Task<bool> ExecuteAsync(SaveRefreshTokenRequest parameter) => await SaveRefreshToken(parameter);
     }
 
-    public record SaveRefreshTokenRequest : Entity<string>
+    public class SaveRefreshTokenRequest : Entity<string>
     {
         public string Username { get; set; }
         public string Password { get; set; }

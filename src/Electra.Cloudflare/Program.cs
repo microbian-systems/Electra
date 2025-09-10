@@ -14,11 +14,21 @@ services.AddHttpClient();
 services.AddHttpContextAccessor();
 services.AddHostedService<DnsUpdaterHostedService>();
 
+
 var log = new LoggerConfiguration()
     .ReadFrom.Configuration(config)
     .Enrich.FromLogContext()
     .Enrich.WithProperty("Application", "CloudFlareDnsUpdater")
+    .WriteTo.Console()
     .CreateBootstrapLogger();
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(config)
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("Application", "CloudFlareDnsUpdater")
+    .WriteTo.Console()
+    .CreateLogger();
+    
+builder.Logging.AddSerilog(logger, dispose: true);
 
 config.AddJsonFile("appsettings.json", true);
 config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
