@@ -49,8 +49,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Electra\src\Electra.Models\Electra.Models.csproj" />
-    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Electra\src\Electra.Web\Electra.Web.csproj" />
+    <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
+    <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
+    <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
   </ItemGroup>
 
 </Project>
