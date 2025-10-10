@@ -14,4 +14,8 @@
       <ProjectReference Include="D:\proj\microbians\Electra\Solnet\src\Solnet.Wallet\Solnet.Wallet.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+    </ItemGroup>
+
 </Project>

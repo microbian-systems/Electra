@@ -1,3 +1,12 @@
 [submodule "Solnet"]
 	path = Solnet
 	url = git@github.com:microbian-systems/Solnet.git
+[submodule "Solnet.Pyth"]
+	path = Solnet.Pyth
+	url = git@github.com:microbian-systems/Solnet.Pyth.git
+[submodule "Solnet.Raydium"]
+	path = Solnet.Raydium
+	url = git@github.com:microbian-systems/Solnet.Raydium.git
+[submodule "Solnet.Metaplex"]
+	path = Solnet.Metaplex
+	url = git@github.com:microbian-systems/Solnet.Metaplex.git
