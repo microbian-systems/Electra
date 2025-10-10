@@ -1,0 +1,3 @@
+[submodule "Solnet"]
+	path = Solnet
+	url = git@github.com:microbian-systems/Solnet.git
