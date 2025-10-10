@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Nethereum.KeyStore" Version="5.0.0" />
+      <PackageReference Include="Nethereum.Merkle" Version="5.0.0" />
+      <PackageReference Include="Nethereum.Web3" Version="5.0.0" />
+    </ItemGroup>
+
+</Project>
