@@ -1,5 +1,6 @@
 ﻿using Electra.Persistence;
 using Electra.Persistence.Marten;
+using JasperFx;
 using Marten;
 using Weasel.Core;
 

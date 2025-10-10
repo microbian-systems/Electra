@@ -73,7 +73,7 @@ public class ElectraIdentityService : ElectraIdentityService<ElectraUser, Guid>,
         if (!result.Succeeded)
             return null;
 
-        var identity = userManager.Users.FindFirst(u => string.Equals(u.UserName,
+        var identity = userManager.Users.First(u => string.Equals(u.UserName,
             username, StringComparison.InvariantCultureIgnoreCase));
 
         var roles = await userManager.GetRolesAsync(identity);

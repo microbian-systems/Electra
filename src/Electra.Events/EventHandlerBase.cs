@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Threading;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Events;
 
@@ -6,6 +8,8 @@ public interface IEventHandlerBase { }
 
 public abstract class EventHandlerBase(ILogger<EventHandlerBase> log) : IEventHandlerBase
 {
+    private readonly ILogger<EventHandlerBase> log = log;
+
     /// <summary>
     /// Cancelation token support for event handlers
     /// </summary>
