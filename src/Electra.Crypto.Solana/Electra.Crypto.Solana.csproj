@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Electra.Crypto.Core\Electra.Crypto.Core.csproj" />
       <ProjectReference Include="D:\proj\microbians\Electra\Solnet.Metaplex\Solnet.Metaplex\Solnet.Metaplex.csproj" />
       <ProjectReference Include="D:\proj\microbians\Electra\Solnet.Pyth\Solnet.Pyth\Solnet.Pyth.csproj" />
       <ProjectReference Include="D:\proj\microbians\Electra\Solnet.Raydium\Solnet.Raydium\Solnet.Raydium.csproj" />

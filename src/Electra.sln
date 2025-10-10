@@ -68,7 +68,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Auth.OpenIddict", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Auth", "D:\proj\microbians\Electra\src\Electra.Auth\Electra.Auth.csproj", "{6E83B2D8-BCE1-4429-9B2C-1F902D210523}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Crypto", "Electra.Crypto\Electra.Crypto.csproj", "{A83EA28C-F9E6-451C-8381-6E59E12A7EE0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Crypto.Core", "Electra.Crypto.Core\Electra.Crypto.Core.csproj", "{A83EA28C-F9E6-451C-8381-6E59E12A7EE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Crypto.Solana", "Electra.Crypto.Solana\Electra.Crypto.Solana.csproj", "{F0B31F16-13F0-4893-BCDF-28964E59FE8B}"
 EndProject
