@@ -169,7 +169,7 @@ private async Task<string> GenerateJwtToken(ElectraUser user)
             Principal = principal,
             Status = Statuses.Valid,
             Subject = await userManager.GetUserIdAsync(user),
-            Type = TokenTypeHints.AuthorizationCode
+            Type = TokenTypeHints.AccessToken
         };
         
         // Create token

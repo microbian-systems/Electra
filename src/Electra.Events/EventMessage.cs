@@ -1,7 +1,13 @@
+using Marten.Events;
 using SnowflakeGenerator;
 using Wolverine;
 
 namespace Electra.Events;
+
+public interface IEvent
+{
+    
+}
 
 public interface IEventMessage : IEvent, IMessage
 {
