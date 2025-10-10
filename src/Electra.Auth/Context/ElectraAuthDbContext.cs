@@ -9,7 +9,7 @@ public sealed class ElectraIdentityRole : IdentityRole<long>
     public ElectraIdentityRole() => Id = Snowflake.NewId();
 
     /// <summary>
-    /// Initializes a new instance of <see cref="T:Electra.Auth.ElectraIdentityRole" />.
+    /// Initializes a new instance of <see cref="T:ElectraIdentityRole" />.
     /// </summary>
     /// <param name="roleName">The role name.</param>
     /// <remarks>

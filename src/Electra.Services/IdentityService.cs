@@ -272,7 +272,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         log.LogInformation($"successfully sent password reset email to {email}");
 
 
-        return (true, token, Array.Empty<string>());
+        return (true, token, []);
     }
 
     public async Task<(bool success, string[] errors)> ResetPasswordConfirmation(string email, string token, string password)
@@ -292,7 +292,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         
         log.LogInformation($"successfully reset password for {email}");
 
-        return (true, Array.Empty<string>());
+        return (true, []);
     }
     
     public async Task<T> GetByIdAsync(string id) => await userManager.FindByIdAsync(id);
@@ -309,7 +309,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         var user = await userManager.FindByIdAsync(userId);
 
         if (user == null)
-            return Array.Empty<string>();
+            return [];
 
         var roles = await userManager.GetRolesAsync(user);
 

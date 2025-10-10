@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build:*)",
+      "Bash(dotnet restore:*)",
+      "Bash(dotnet test:*)",
+      "Bash(rg:*)",
+      "Bash(csc:*)",
+      "Bash(dotnet --version)",
+      "Bash(del \"d:\\proj\\microbians\\Electra\\test_build.cs\")",
+      "Bash(rm:*)",
+      "Bash(echo $PWD)",
+      "Bash(dir)",
+      "Bash(dotnet clean:*)"
+    ],
+    "deny": []
+  }
+}
