@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="D:\proj\microbians\Electra\Solnet.Metaplex\Solnet.Metaplex\Solnet.Metaplex.csproj" />
+      <ProjectReference Include="D:\proj\microbians\Electra\Solnet.Pyth\Solnet.Pyth\Solnet.Pyth.csproj" />
+      <ProjectReference Include="D:\proj\microbians\Electra\Solnet.Raydium\Solnet.Raydium\Solnet.Raydium.csproj" />
       <ProjectReference Include="D:\proj\microbians\Electra\Solnet\src\Solnet.Extensions\Solnet.Extensions.csproj" />
       <ProjectReference Include="D:\proj\microbians\Electra\Solnet\src\Solnet.KeyStore\Solnet.KeyStore.csproj" />
       <ProjectReference Include="D:\proj\microbians\Electra\Solnet\src\Solnet.Programs\Solnet.Programs.csproj" />
