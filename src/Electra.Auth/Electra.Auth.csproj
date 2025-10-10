@@ -49,9 +49,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Electra.Actors\Electra.Actors.csproj" />  
     <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
-    <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
   </ItemGroup>
 
 </Project>
