@@ -8,52 +8,49 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ChatAIze.Passkeys" Version="0.2.6" />
-    <PackageReference Include="DotNext" Version="5.21.0" />
-    <PackageReference Include="Fido2" Version="3.0.1" />
-    <PackageReference Include="Fido2.AspNet" Version="3.0.1" />
-    <PackageReference Include="Fido2.Models" Version="3.0.1" />
-    <PackageReference Include="FluentAssertions" Version="8.3.0" />
+    <PackageReference Include="ChatAIze.Passkeys" Version="0.2.7" />
+    <PackageReference Include="DotNext" Version="5.25.1" />
+    <PackageReference Include="Fido2" Version="4.0.0" />
+    <PackageReference Include="Fido2.AspNet" Version="4.0.0" />
+    <PackageReference Include="Fido2.Models" Version="4.0.0" />
+    <PackageReference Include="FluentAssertions" Version="8.7.1" />
     <PackageReference Include="FluentAssertions.Analyzers" Version="0.34.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="FluentResults" Version="3.16.0" />
+    <PackageReference Include="FluentResults" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="9.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="9.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.5" />
-    <PackageReference Include="OpenIddict" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.Abstractions" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.EntityFramework.Models" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.Server" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="6.3.0" />
-    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.9" />
+    <PackageReference Include="OpenIddict" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.Abstractions" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.AspNetCore" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.EntityFramework.Models" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.Server" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="7.1.0" />
+    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="7.1.0" />
     <PackageReference Include="Passkeys" Version="1.0.0" />
-    <PackageReference Include="SecretSharing.Core.dll" Version="1.0.6" />
     <PackageReference Include="SecretSharingDotNet" Version="0.12.0" />
     <PackageReference Include="SnowflakeGuid" Version="1.0.2" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.11.0" />
-    <PackageReference Include="ThrowGuard" Version="1.0.7" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+    <PackageReference Include="ThrowGuard" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
-    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
-    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
-    <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
+    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Electra\src\Electra.Models\Electra.Models.csproj" />
+    <ProjectReference Include="C:\Users\bbqch\proj\microbians\Electra\src\Electra.Web\Electra.Web.csproj" />
   </ItemGroup>
 
 </Project>
