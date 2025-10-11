@@ -11,28 +11,21 @@ namespace Electra.Web.BlogEngine.Services;
 /// <summary>
 /// Service for managing blog operations
 /// </summary>
-public class BlogService : IBlogService
+public class BlogService(BlogDbContext context, ILogger<BlogService> logger) : IBlogService
 {
-    private readonly BlogDbContext _context;
-    private readonly ILogger<BlogService> _logger;
-    private readonly MarkdownPipeline _markdownPipeline;
+    private readonly MarkdownPipeline _markdownPipeline = new MarkdownPipelineBuilder()
+        .UseAdvancedExtensions()
+        .UseBootstrap()
+        //.UseSyntaxHighlighting()
+        .Build();
 
-    public BlogService(BlogDbContext context, ILogger<BlogService> logger)
-    {
-        _context = context;
-        _logger = logger;
-        _markdownPipeline = new MarkdownPipelineBuilder()
-            .UseAdvancedExtensions()
-            .UseBootstrap()
-            //.UseSyntaxHighlighting()
-            .Build();
-    }
+    //.UseSyntaxHighlighting()
 
     public async Task<IEnumerable<Entities.BlogEntry>> GetLatestBlogsAsync(int count)
     {
         try
         {
-            return await _context.Blogs
+            return await context.Blogs
                 .Where(b => b.IsPublished && !b.IsDraft)
                 .OrderByDescending(b => b.CreatedAt)
                 .Take(count)
@@ -40,7 +33,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving latest blogs");
+            logger.LogError(ex, "Error retrieving latest blogs");
             return [];
         }
     }
@@ -49,7 +42,7 @@ public class BlogService : IBlogService
     {
         try
         {
-            var query = _context.Blogs.AsQueryable();
+            var query = context.Blogs.AsQueryable();
 
             if (publishedOnly)
             {
@@ -67,7 +60,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving paginated blogs");
+            logger.LogError(ex, "Error retrieving paginated blogs");
             return PaginatedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }
@@ -76,12 +69,12 @@ public class BlogService : IBlogService
     {
         try
         {
-            return await _context.Blogs
+            return await context.Blogs
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving blog by ID: {BlogId}", id);
+            logger.LogError(ex, "Error retrieving blog by ID: {BlogId}", id);
             return null;
         }
     }
@@ -90,12 +83,12 @@ public class BlogService : IBlogService
     {
         try
         {
-            return await _context.Blogs
+            return await context.Blogs
                 .FirstOrDefaultAsync(b => b.Slug == slug && b.IsPublished && !b.IsDraft);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving blog by slug: {Slug}", slug);
+            logger.LogError(ex, "Error retrieving blog by slug: {Slug}", slug);
             return null;
         }
     }
@@ -104,7 +97,7 @@ public class BlogService : IBlogService
     {
         try
         {
-            return await _context.Blogs
+            return await context.Blogs
                 .Where(b => b.IsFeatured && b.IsPublished && !b.IsDraft)
                 .OrderByDescending(b => b.CreatedAt)
                 .Take(count)
@@ -112,7 +105,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving featured blogs");
+            logger.LogError(ex, "Error retrieving featured blogs");
             return [];
         }
     }
@@ -126,7 +119,7 @@ public class BlogService : IBlogService
                 return await GetPaginatedBlogsAsync(pageNumber, pageSize);
             }
 
-            var query = _context.Blogs
+            var query = context.Blogs
                 .Where(b => b.IsPublished && !b.IsDraft &&
                            (b.Title.Contains(searchTerm) ||
                             b.Description.Contains(searchTerm) ||
@@ -143,7 +136,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error searching blogs with term: {SearchTerm}", searchTerm);
+            logger.LogError(ex, "Error searching blogs with term: {SearchTerm}", searchTerm);
             return PaginatedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }
@@ -152,7 +145,7 @@ public class BlogService : IBlogService
     {
         try
         {
-            var query = _context.Blogs
+            var query = context.Blogs
                 .Where(b => b.IsPublished && !b.IsDraft &&
                            b.Tags.Any(t => t.Equals(tag, StringComparison.OrdinalIgnoreCase)));
 
@@ -167,7 +160,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving blogs by tag: {Tag}", tag);
+            logger.LogError(ex, "Error retrieving blogs by tag: {Tag}", tag);
             return PaginatedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }
@@ -180,15 +173,15 @@ public class BlogService : IBlogService
             blog.CreatedAt = DateTime.UtcNow;
             blog.UpdatedAt = DateTime.UtcNow;
 
-            _context.Blogs.Add(blog);
-            await _context.SaveChangesAsync();
+            context.Blogs.Add(blog);
+            await context.SaveChangesAsync();
 
-            _logger.LogInformation("Blog created successfully: {BlogId}", blog.Id);
+            logger.LogInformation("Blog created successfully: {BlogId}", blog.Id);
             return blog;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error creating blog");
+            logger.LogError(ex, "Error creating blog");
             throw;
         }
     }
@@ -197,7 +190,7 @@ public class BlogService : IBlogService
     {
         try
         {
-            var existingBlog = await _context.Blogs.FindAsync(blog.Id);
+            var existingBlog = await context.Blogs.FindAsync(blog.Id);
             if (existingBlog == null)
             {
                 throw new InvalidOperationException($"Blog with ID {blog.Id} not found");
@@ -218,14 +211,14 @@ public class BlogService : IBlogService
             existingBlog.Slug = blog.Slug;
             existingBlog.UpdatedAt = DateTime.UtcNow;
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
-            _logger.LogInformation("Blog updated successfully: {BlogId}", blog.Id);
+            logger.LogInformation("Blog updated successfully: {BlogId}", blog.Id);
             return existingBlog;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error updating blog: {BlogId}", blog.Id);
+            logger.LogError(ex, "Error updating blog: {BlogId}", blog.Id);
             throw;
         }
     }
@@ -234,21 +227,21 @@ public class BlogService : IBlogService
     {
         try
         {
-            var blog = await _context.Blogs.FindAsync(id);
+            var blog = await context.Blogs.FindAsync(id);
             if (blog == null)
             {
                 return false;
             }
 
-            _context.Blogs.Remove(blog);
-            await _context.SaveChangesAsync();
+            context.Blogs.Remove(blog);
+            await context.SaveChangesAsync();
 
-            _logger.LogInformation("Blog deleted successfully: {BlogId}", id);
+            logger.LogInformation("Blog deleted successfully: {BlogId}", id);
             return true;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error deleting blog: {BlogId}", id);
+            logger.LogError(ex, "Error deleting blog: {BlogId}", id);
             return false;
         }
     }
@@ -270,7 +263,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error converting content to HTML for blog: {BlogId}", blog.Id);
+            logger.LogError(ex, "Error converting content to HTML for blog: {BlogId}", blog.Id);
             return blog.Content;
         }
     }
@@ -287,7 +280,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving raw markdown for blog: {BlogId}", blog.Id);
+            logger.LogError(ex, "Error retrieving raw markdown for blog: {BlogId}", blog.Id);
             return string.Empty;
         }
     }
@@ -296,20 +289,20 @@ public class BlogService : IBlogService
     {
         try
         {
-            var blog = await _context.Blogs.FindAsync(id);
+            var blog = await context.Blogs.FindAsync(id);
             if (blog == null)
             {
                 return 0;
             }
 
             blog.ViewCount++;
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             return blog.ViewCount;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error incrementing view count for blog: {BlogId}", id);
+            logger.LogError(ex, "Error incrementing view count for blog: {BlogId}", id);
             return 0;
         }
     }
@@ -318,7 +311,7 @@ public class BlogService : IBlogService
     {
         try
         {
-            var blogs = await _context.Blogs
+            var blogs = await context.Blogs
                 .Where(b => b.IsPublished && !b.IsDraft)
                 .Select(b => b.Tags)
                 .ToListAsync();
@@ -334,7 +327,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving all tags");
+            logger.LogError(ex, "Error retrieving all tags");
             return [];
         }
     }
@@ -343,7 +336,7 @@ public class BlogService : IBlogService
     {
         try
         {
-            var query = _context.Blogs
+            var query = context.Blogs
                 .Where(b => b.IsPublished && !b.IsDraft &&
                            b.Authors.Any(a => a.Equals(author, StringComparison.OrdinalIgnoreCase)));
 
@@ -358,7 +351,7 @@ public class BlogService : IBlogService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error retrieving blogs by author: {Author}", author);
+            logger.LogError(ex, "Error retrieving blogs by author: {Author}", author);
             return PaginatedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }

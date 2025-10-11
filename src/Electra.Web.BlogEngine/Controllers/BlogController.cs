@@ -11,17 +11,8 @@ namespace Electra.Web.BlogEngine.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/[controller]")]
-public class BlogController : ApiControllerBase
+public class BlogController(IBlogService blogService, ILogger<BlogController> log) : ApiControllerBase(log)
 {
-    private readonly IBlogService blogService;
-    private readonly ILogger<BlogController> log;
-
-    public BlogController(IBlogService blogService, ILogger<BlogController> log) : base(log)
-    {
-        this.log = log;
-        this.blogService = blogService;
-    }
-
     /// <summary>
     /// Gets paginated blog posts
     /// </summary>
