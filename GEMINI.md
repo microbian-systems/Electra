@@ -11,18 +11,13 @@ Electra is a .NET utilities framework designed to be flexible and powerful. It p
 *   Docker
 *   PostgreSQL
 *   Redis
-*   Riak
-*   RethinkDB
-*   Cassandra
-*   Zookeeper
-*   Kafka
+*   Microsoft Garnet
 *   Vault
 *   RabbitMQ
-*   Seq
 *   Elasticsearch
 *   Kibana
+*   Grafana
 *   Logstash
-*   Jaeger
 
 **Architecture:**
 
