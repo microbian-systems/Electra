@@ -58,6 +58,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Misc__", "__Misc__", "{5C
 		update-database.ps1 = update-database.ps1
 		upgrade.ps1 = upgrade.ps1
 		upgrade-packages.ps1 = upgrade-packages.ps1
+		D:\proj\microbians\Electra\CLAUDE.md = D:\proj\microbians\Electra\CLAUDE.md
+		D:\proj\microbians\Electra\README.md = D:\proj\microbians\Electra\README.md
+		D:\proj\microbians\Electra\src\GEMINI.md = D:\proj\microbians\Electra\src\GEMINI.md
+		D:\proj\microbians\Electra\src\garnet.conf.dev = D:\proj\microbians\Electra\src\garnet.conf.dev
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09F2C056-7069-4502-B195-CB6AB74AE86D}"
