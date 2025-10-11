@@ -1,4 +1,5 @@
 ﻿using Electra.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using ILogger = Serilog.ILogger;
 
 namespace Electra.Persistence.EfCore;

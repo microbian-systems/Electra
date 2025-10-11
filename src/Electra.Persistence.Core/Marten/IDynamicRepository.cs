@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Electra.Core.Entities;
 
 namespace Electra.Persistence.Marten;

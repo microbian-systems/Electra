@@ -1,6 +1,7 @@
 using Electra.Auth.Models;
 using Electra.Core;
 using Electra.Models;
+using Electra.Models.Entities;
 
 namespace Electra.Auth.Context;
 

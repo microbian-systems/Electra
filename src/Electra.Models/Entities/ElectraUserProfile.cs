@@ -1,16 +1,20 @@
 using System.ComponentModel.DataAnnotations;
+using Electra.Common;
 using Electra.Core.Entities;
 
-namespace Electra.Models;
+namespace Electra.Models.Entities;
 
 // todo - determine what format to store the profile
 // todo - later denormalize if join performance costs too much (cache first, then denormalize)
 // todo - add foreign key to the Users (AspNetUsers) table
 // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
-public class ElectraUserProfile : Entity<Guid>
+public class ElectraUserProfile : Entity
 {
-    // [JsonPropertyName("user_id")]
-    // public string UserId { get; set; }
+    /// <summary>
+    /// Foreign key to the Electra Identity table
+    /// </summary>
+    [JsonPropertyName("user_id")]
+    public long Userid { get; set; } // todo - make this generic so the type can vary for pkey
 
     [MinLength(4)] // todo - remove data annotations and use FluentValidation
     [MaxLength(256)]
@@ -24,7 +28,7 @@ public class ElectraUserProfile : Entity<Guid>
     public string Website { get; set; }
 
     [JsonPropertyName("social_media")]
-    public Dictionary<string, string> SocialMedia { get; } = new();
+    public Dictionary<SocialMediaType, string> SocialMedia { get; } = new();
 
     [MaxLength(256)]
     [JsonPropertyName("firstname")]
@@ -34,7 +38,7 @@ public class ElectraUserProfile : Entity<Guid>
     [JsonPropertyName("lastname")]
     public string Lastname { get; set; }
 
-    [MaxLength(50)]
+    [MaxLength(128)]
     [JsonPropertyName("headline")]
     public string Headline { get; set; }
 

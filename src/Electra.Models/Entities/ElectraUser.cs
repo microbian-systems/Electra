@@ -1,9 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Electra.Core.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace Electra.Models;
+namespace Electra.Models.Entities;
 
 // public class ElectraUser : ElectraUser<Guid>
 // {
@@ -51,9 +50,7 @@ public interface IElectraUser
     ICollection<IdentityUserRole<string>> Roles { get; set; }
 }
 
-public class ElectraUser : ElectraUser<long>, IElectraUser
-{
-}
+public class ElectraUser : ElectraUser<long>, IElectraUser;
 
 public interface IElectraUser<TKey>  where TKey : IEquatable<TKey> 
 {
@@ -135,3 +132,5 @@ public class ElectraUser<TKey>
     // todo - implement identity model properly
     // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-6.0
 }
+
+

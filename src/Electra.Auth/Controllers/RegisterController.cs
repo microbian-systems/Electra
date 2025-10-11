@@ -1,6 +1,7 @@
 using Electra.Auth.Models;
 using Electra.Common.Web;
 using Electra.Models;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Electra.Auth.Controllers;

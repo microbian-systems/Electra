@@ -1,4 +1,5 @@
 using Electra.Core;
+using Electra.Models.Entities;
 using Electra.Services;
 using MassTransit;
 

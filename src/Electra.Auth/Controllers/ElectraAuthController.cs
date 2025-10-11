@@ -3,6 +3,7 @@ using Electra.Auth.Models;
 using Electra.Common.Web;
 using Electra.Common.Web.Controllers;
 using Electra.Models;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;

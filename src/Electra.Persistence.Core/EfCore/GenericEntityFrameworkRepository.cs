@@ -1,6 +1,13 @@
 ﻿using Electra.Common.Extensions;
 using Electra.Core.Entities;
 using Electra.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Electra.Persistence.EfCore;
 
@@ -8,23 +15,15 @@ public interface IGenericEntityFrameworkRepository<T, TKey> : IGenericRepository
     where T : IEntity<TKey>, new() where TKey : IEquatable<TKey>
 {
     Task<List<T>> GetPaged(int page = 1, int rows = 10);
-    Task SaveChangesAsync();
-    void SaveChanges();
 }
     
-public interface IGenericEntityFrameworkRepository<T> : IGenericEntityFrameworkRepository<T, long>, IGenericRepository<T> where T : class, IEntity<long>, new() {}
+public interface IGenericEntityFrameworkRepository<T> : IGenericEntityFrameworkRepository<T, long>, IGenericRepository<T> 
+    where T : class, IEntity<long>, new() {}
 
-public class GenericEntityFrameworkRepository<T> : GenericEntityFrameworkRepository<T, long>, IGenericRepository<T> where T : class, IEntity<long>, new()
-{
-    public GenericEntityFrameworkRepository(DbContext context, ILogger<GenericEntityFrameworkRepository<T>> log) : base(context, log)
-    {
-    }
-}
+public class GenericEntityFrameworkRepository<T>(DbContext context, ILogger<GenericEntityFrameworkRepository<T>> log)
+    : GenericEntityFrameworkRepository<T, long>(context, log), IGenericRepository<T>
+    where T : class, IEntity<long>, new();
 
-    
-    
-// todo - Implement transactions following this paradigm:
-// https://stackoverflow.com/questions/39906474/how-can-i-implement-a-transaction-for-my-repositories-with-entity-framework/39921514
 public class GenericEntityFrameworkRepository<T, TKey> : GenericRepository<T, TKey>, IGenericEntityFrameworkRepository<T, TKey> where T : class, IEntity<TKey>, new() where TKey : IEquatable<TKey>
 {
     protected readonly DbSet<T> db;
@@ -77,7 +76,6 @@ public class GenericEntityFrameworkRepository<T, TKey> : GenericRepository<T, TK
             log.LogInformation($"updating/inserting entity with id {entity.Id}");
             
             var exists = db.Any(x => x.Id.Equals(entity.Id));
-            //var result = (exists == null) ? await db.AddAsync(entity) : db.Update(entity);
 
             if (exists)
             {
@@ -88,7 +86,6 @@ public class GenericEntityFrameworkRepository<T, TKey> : GenericRepository<T, TK
                 await db.AddAsync(entity);
             }
 
-            var res = await context.SaveChangesAsync();
             log.LogInformation($"upserted entity with id {entity.Id}");
             
             return entity;
@@ -136,8 +133,6 @@ public class GenericEntityFrameworkRepository<T, TKey> : GenericRepository<T, TK
 
     public override async Task<IReadOnlyCollection<T>> GetByIdsAsync(IEnumerable<TKey> ids)
     {
-        // https://stackoverflow.com/questions/50669574/ef-core-find-method-equivalent-for-multiple-records
-        // poor mans way follows....
         var tasks = new List<Task>();
         foreach (var id in ids)
         {
@@ -146,26 +141,19 @@ public class GenericEntityFrameworkRepository<T, TKey> : GenericRepository<T, TK
         }
         throw new NotImplementedException();
     }
-        
-    public virtual void SaveChanges() => SaveChangesAsync().GetAwaiter().GetResult();
-
-    public virtual async Task SaveChangesAsync() => await context.SaveChangesAsync();
 }
 
-public abstract class GenericEntityFrameworkRepository<T, TKey, TContext> : GenericRepository<T, TKey>,
-    IGenericEntityFrameworkRepository<T, TKey>
-    where T : class, IEntity<TKey>, new()  // todo - do we need the new() constraint on the generic repositories?  class is already specified
+public abstract class GenericEntityFrameworkRepository<T, TKey, TContext>(
+    TContext context,
+    ILogger<GenericEntityFrameworkRepository<T, TKey, TContext>> log)
+    : GenericRepository<T, TKey>(log),
+        IGenericEntityFrameworkRepository<T, TKey>
+    where T : class, IEntity<TKey>, new()
     where TKey : IEquatable<TKey>
     where TContext : DbContext
 {
-    protected readonly DbSet<T> db;
-    protected readonly TContext context;
-
-    protected GenericEntityFrameworkRepository(TContext context, ILogger<GenericEntityFrameworkRepository<T, TKey, TContext>> log) : base(log)
-    {
-        this.db = context.Set<T>();
-        this.context = context;
-    }
+    protected readonly DbSet<T> db = context.Set<T>();
+    protected readonly TContext context = context;
 
     public override async Task<IEnumerable<T>> GetAllAsync() => await Task.FromResult(db.ToList());
 
@@ -204,7 +192,7 @@ public abstract class GenericEntityFrameworkRepository<T, TKey, TContext> : Gene
 
     public override async Task DeleteAsync(T entity)
     {
-        await Task.Delay(0); // todo - remove  task.delay as async sub
+        await Task.Delay(0);
 
         var id = entity.Id;
         log.LogInformation($"deleting entity with id {id}");
@@ -234,22 +222,12 @@ public abstract class GenericEntityFrameworkRepository<T, TKey, TContext> : Gene
     public override async Task<IReadOnlyCollection<T>> GetByIdsAsync(IEnumerable<TKey> ids)
     {
         await Task.Delay(0);
-
-        // todo - imple GetByIdsAsync() in Repository base
-        // https://stackoverflow.com/questions/50669574/ef-core-find-method-equivalent-for-multiple-records
-        // poor mans way follows....
         var tasks = new List<Task>();
         foreach (var id in ids)
         {
-            //var test = db.Where(x => x.Id.Equals(ids.First()));
-                
         }
         throw new NotImplementedException();
     }
-        
-    public void SaveChanges() => SaveChangesAsync().GetAwaiter().GetResult();
-
-    public async Task SaveChangesAsync() => await context.SaveChangesAsync();
     public async Task<List<T>> GetPaged(int page = 1, int rows = 10)
     {
         await Task.CompletedTask;

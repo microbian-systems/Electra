@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Electra.Models;
+namespace Electra.Models.Entities;
 
-public record ApiClaimsModel
+public class ApiClaimsModel // todo - inherit from Entity<long>
 {
     [Key]
     public int Id { get; set; }

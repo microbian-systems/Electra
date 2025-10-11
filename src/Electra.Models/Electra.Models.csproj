@@ -6,9 +6,6 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include=".gitignore" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Serilog" Version="4.3.0" />
     <PackageReference Include="ThrowGuard" Version="1.1.0" />
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />

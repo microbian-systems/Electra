@@ -1,4 +1,6 @@
-﻿using Electra.Core.Entities;
+﻿using System.Linq.Expressions;
+using Electra.Core.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.Repositories;
 

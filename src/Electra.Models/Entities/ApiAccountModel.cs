@@ -1,6 +1,6 @@
 ﻿using Electra.Core.Entities;
 
-namespace Electra.Models;
+namespace Electra.Models.Entities;
 
 public class ApiAccountModel : Entity
 {

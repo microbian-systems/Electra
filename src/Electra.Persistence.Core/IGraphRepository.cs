@@ -1,4 +1,5 @@
-﻿using Electra.Core.Entities;
+﻿using System.Linq.Expressions;
+using Electra.Core.Entities;
 
 namespace Electra.Persistence.Repositories;
 

@@ -1,7 +1,7 @@
 using Electra.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace Electra.Models;
+namespace Electra.Models.Entities;
 
 public class AddressModel : Entity
 {

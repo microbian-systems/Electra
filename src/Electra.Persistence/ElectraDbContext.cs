@@ -1,24 +1,97 @@
+using Electra.Models.Entities;
+using Electra.Models.Geo;
+
 namespace Electra.Persistence;
 
-public class ElectraDbContext(DbContextOptions<ElectraDbContext<ElectraUser, ElectraRole>> options)
-    : ElectraDbContext<ElectraUser>(options);
+public class ElectraDbContextOptions : DbContextOptions<ElectraIdentityDbContext<ElectraUser, ElectraRole>>;
 
-public class ElectraDbContext<T>(DbContextOptions<ElectraDbContext<T, ElectraRole>> options)
-    : ElectraDbContext<T, ElectraRole>(options)
+public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentityDbContext<ElectraUser, ElectraRole>(options)
+{
+    public DbSet<AddressModel> Addresses { get; set; }
+    public DbSet<ApiAccountModel> ApiAccounts { get; set; }
+    public DbSet<ApiClaimsModel> ApiClaims { get; set; }
+    public DbSet<CityModel> Cities { get; set; }
+    public DbSet<CountryModel> Countries { get; set; }
+    public DbSet<ElectraUserProfile> UserProfiles { get; set; }    
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        ModelApiAuth(builder);
+        ModelUserProfile(builder);
+        base.OnModelCreating(builder);
+    }
+
+    protected virtual void ModelUserProfile(ModelBuilder builder)
+    {
+        const string schemaName = "Users";
+        base.OnModelCreating(builder);
+
+        builder.Entity<ElectraUserProfile>()
+            .ToTable("UserProfiles", schema: schemaName);
+        builder.Entity<ElectraUserProfile>()
+            .HasKey(i => i.Id);
+        builder.Entity<ElectraUserProfile>()
+            .HasIndex(i => i.Email);
+    }
+
+    protected virtual void ModelApiAuth(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.Entity<ApiAccountModel>()
+            .ToTable("ApiAccounts", schema: schema);
+        builder.Entity<ApiAccountModel>()
+            .HasKey(i => i.Id);
+        builder.Entity<ApiAccountModel>()
+            .HasIndex(i => i.ApiKey, "ix_apikey")
+            .IsUnique();
+        builder.Entity<ApiAccountModel>()
+            .HasIndex(i => i.Email);
+        builder.Entity<ApiAccountModel>()
+            .HasIndex(i => i.Enabled);
+        builder.Entity<ApiAccountModel>()
+            .HasIndex(i => i.CreateDate);
+        builder.Entity<ApiAccountModel>()
+            .HasIndex(i => i.ModifiedDate);
+
+        builder.Entity<ApiClaimsModel>()
+            .HasIndex(i => i.ClaimKey);
+        builder.Entity<ApiClaimsModel>()
+            .HasIndex(i => i.ClaimValue);
+
+        builder.Entity<ApiAccountModel>()
+            .HasMany<ApiClaimsModel>()
+            .WithOne();
+
+        builder.Entity<ApiClaimsModel>()
+            .ToTable("ApiClaims", schema: schema)
+            .HasKey(pk => pk.Id);
+        builder.Entity<ApiClaimsModel>()
+            .HasOne<ApiAccountModel>()
+            .WithMany(m => m.Claims)
+            .HasForeignKey(m => m.AccountId);
+    }   
+}
+
+public class ElectraIdentityDbContext(DbContextOptions<ElectraIdentityDbContext<ElectraUser, ElectraRole>> options)
+    : ElectraIdentityDbContext<ElectraUser>(options);
+
+public class ElectraIdentityDbContext<T>(DbContextOptions<ElectraIdentityDbContext<T, ElectraRole>> options)
+    : ElectraIdentityDbContext<T, ElectraRole>(options)
     where T : ElectraUser;
 
-public class ElectraDbContext<T, TRole>(DbContextOptions<ElectraDbContext<T, TRole>> options)
+public class ElectraIdentityDbContext<T, TRole>(DbContextOptions<ElectraIdentityDbContext<T, TRole>> options)
     : IdentityDbContext<T, TRole, long>(options)
     where T : ElectraUser
     where TRole : IdentityRole<long>
 {
-    protected const string schema = "Users";
+    protected const string schema = "Electra";
 
     public DbSet<ElectraUserProfile> UserProfile { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.HasDefaultSchema(schema);
+        base.OnModelCreating(builder); // todo - this may or may not work? verify....
 
         foreach (var property in builder.Model.GetEntityTypes()
                      .SelectMany(t => t.GetProperties())
@@ -94,11 +167,5 @@ public class ElectraDbContext<T, TRole>(DbContextOptions<ElectraDbContext<T, TRo
             .HasOne<ElectraUserProfile>(x => x.Profile)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade);
-
-        // builder.Entity<ElectraUserProfile>()
-        //     .HasOne<ElectraUser>(x => x.User)
-        //     .WithOne()
-        //     .HasForeignKey<ElectraUserProfile>(x => x.UserId)
-        //     .OnDelete(DeleteBehavior.Cascade);
     }
 }

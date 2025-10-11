@@ -1,17 +1,18 @@
-﻿using Electra.Persistence.EfCore;
+﻿using Electra.Models.Entities;
+using Electra.Persistence.EfCore;
 
-namespace Electra.Persistence.Auth;
+namespace Electra.Persistence;
 
 public interface IApiAuthRepository : IGenericEntityFrameworkRepository<ApiAccountModel>
 {
     Task<ApiAccountModel?> GetByApiKey(string apiKey);
 }
 
-public sealed class ApiAuthRepository(ApiAuthContext context, ILogger<ApiAuthRepository> log)
+public sealed class ApiAuthRepository(ElectraDbContext context, ILogger<ApiAuthRepository> log)
     : GenericEntityFrameworkRepository<ApiAccountModel>(context, log), IApiAuthRepository
 {
     private readonly DbSet<ApiAccountModel> apiAccountsDb = context.ApiAccounts;
-    private readonly DbSet<ApiClaimsModel> apiClaimsDb = context.Claims;
+    private readonly DbSet<ApiClaimsModel> apiClaimsDb = context.ApiClaims;
 
     public override Task<IEnumerable<ApiAccountModel>> GetAllAsync()
     {
@@ -69,7 +70,7 @@ public sealed class ApiAuthRepository(ApiAuthContext context, ILogger<ApiAuthRep
         return Task.FromResult(accounts);
     }
 
-    public override async Task<int> SaveChangesAsync() 
+    public async Task<int> SaveChangesAsync() 
         => await context.SaveChangesAsync();
 
     public async Task<ApiAccountModel?> GetByApiKey(string apiKey)

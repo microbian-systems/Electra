@@ -3,6 +3,7 @@ using Electra.Common.Web.Middleware;
 using Electra.Services;
 using Electra.Common.Web.Performance;
 using Electra.Common.Web.Services;
+using Electra.Persistence.Extensions;
 using Electra.Services.Geo;
 using Electra.Services.Mail;
 using Microsoft.AspNetCore.Authentication.Cookies;

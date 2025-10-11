@@ -1,11 +1,10 @@
-﻿using Electra.Common.Caching.Decorators;
-using Electra.Core.Identity;
-using Electra.Models;
-using Electra.Persistence;
-using Electra.Persistence.EfCore;
+﻿using Electra.Persistence.EfCore;
 using Electra.Persistence.Repositories;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Electra.Common.Web.Extensions;
+namespace Electra.Persistence.Extensions;
 
 public static class PersistenceExtensions
 {
@@ -23,19 +22,12 @@ public static class PersistenceExtensions
                 x => x.MigrationsHistoryTable("__ElectraMigrations", "electra")
                     .MigrationsAssembly(typeof(ElectraDbContext).Assembly.FullName)
                     .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
-        services.AddDbContext<ElectraDbContext<ElectraUser, ElectraRole>>(o =>
-            o.UseSqlite(
-                config.GetConnectionString("sqlite"),
-                x => x.MigrationsHistoryTable("__ElectraMigrations", "electra")
-                    .MigrationsAssembly(typeof(ElectraDbContext).Assembly.FullName)
-                    .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
         log.LogInformation($"configuring generic repositories");
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericEntityFrameworkRepository<>));
         services.AddScoped(typeof(IGenericEntityFrameworkRepository<>), typeof(GenericEntityFrameworkRepository<>));
         services.AddScoped(typeof(IGenericEntityFrameworkRepository<,>), typeof(GenericEntityFrameworkRepository<,>));
-        services.AddScoped(typeof(ICachingRepositoryDecorator<,>), typeof(CachingRepository<,>));
-        services.AddScoped(typeof(ICachingRepositoryDecorator<>), typeof(CachingRepository<>));
+        services.AddScoped<IElectraUnitOfWork, ElectraUnitOfWork>();
 
         return services;
     }

@@ -1,6 +1,7 @@
 using Electra.Auth.Context;
 using Electra.Auth.Models;
 using Electra.Models;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
