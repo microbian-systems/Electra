@@ -1,7 +1,8 @@
 using Electra.Core.Entities;
+using Electra.Persistence.Repositories;
 using LiteDB;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.LiteDB;
 
 public class LiteDbRepository<T> : GenericRepository<T, string> where T : Entity<string>, new()
 {

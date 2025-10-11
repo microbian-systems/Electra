@@ -2,6 +2,8 @@
 using Electra.Core.Identity;
 using Electra.Models;
 using Electra.Persistence;
+using Electra.Persistence.EfCore;
+using Electra.Persistence.Repositories;
 
 namespace Electra.Common.Web.Extensions;
 

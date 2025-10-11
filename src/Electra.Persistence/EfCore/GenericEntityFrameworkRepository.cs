@@ -1,7 +1,8 @@
 ﻿using Electra.Common.Extensions;
 using Electra.Core.Entities;
+using Electra.Persistence.Repositories;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.EfCore;
 
 public interface IGenericEntityFrameworkRepository<T, TKey> : IGenericRepository<T, TKey>
     where T : IEntity<TKey>, new() where TKey : IEquatable<TKey>

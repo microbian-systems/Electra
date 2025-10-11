@@ -2,6 +2,7 @@ using Electra.Persistence;
 using Electra.Persistence.Entities;
 using Electra.Common.Commands;
 using Electra.Core.Entities;
+using Electra.Persistence.Marten;
 
 namespace Electra.Common.Web.Commands;
 

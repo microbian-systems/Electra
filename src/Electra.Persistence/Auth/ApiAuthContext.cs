@@ -1,4 +1,4 @@
-﻿namespace Electra.Persistence;
+﻿namespace Electra.Persistence.Auth;
 
 public sealed class ApiAuthContext(DbContextOptions<ApiAuthContext> options)
     : DbContext(options)

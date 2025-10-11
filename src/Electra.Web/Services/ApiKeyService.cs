@@ -3,6 +3,7 @@ using Electra.Common.Web.Infrastructure;
 using Electra.Common.Web.Jwt;
 using Electra.Models;
 using Electra.Persistence;
+using Electra.Persistence.Auth;
 
 namespace Electra.Common.Web.Services;
 

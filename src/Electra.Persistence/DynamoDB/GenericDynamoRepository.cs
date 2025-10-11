@@ -3,8 +3,9 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
 using Electra.Core.Entities;
+using Electra.Persistence.Repositories;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.DynamoDB;
 
 public interface IGenericDynamoRepository<T> where T : Entity
 {

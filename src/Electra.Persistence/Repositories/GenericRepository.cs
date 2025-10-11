@@ -1,6 +1,6 @@
 ﻿using Electra.Core.Entities;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.Repositories;
 
 public interface IReadonlyRepositorySync<T, TKey> where T : IEntity<TKey> where TKey : IEquatable<TKey>
 {
@@ -64,23 +64,15 @@ public interface IGenericRepository<T> : IGenericRepository<T, long> where T : I
 {
 }
 
-public abstract class GenericRepository<T> : GenericRepository<T, long>, IGenericRepository<T>
-    where T : IEntity<long>, new()
-{
-    protected GenericRepository(ILogger<GenericRepository<T>> log) : base(log)
-    {
-    }
-}
+public abstract class GenericRepository<T>(ILogger<GenericRepository<T>> log)
+    : GenericRepository<T, long>(log), IGenericRepository<T>
+    where T : IEntity<long>, new();
 
-public abstract class GenericRepository<T, TKey> : IGenericRepository<T, TKey>
-    where T : IEntity<TKey>, new() where TKey : IEquatable<TKey>
+public abstract class GenericRepository<T, TKey>(ILogger log) : IGenericRepository<T, TKey>
+    where T : IEntity<TKey>, new()
+    where TKey : IEquatable<TKey>
 {
-    protected readonly ILogger log;
-
-    protected GenericRepository(ILogger log)
-    {
-        this.log = log;
-    }
+    protected readonly ILogger log = log;
 
     public IEnumerable<T> GetAll() => GetAllAsync().GetAwaiter().GetResult();
 

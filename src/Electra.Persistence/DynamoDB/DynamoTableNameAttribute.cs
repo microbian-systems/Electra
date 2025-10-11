@@ -1,4 +1,4 @@
-﻿namespace Electra.Persistence;
+﻿namespace Electra.Persistence.DynamoDB;
 
 /// <summary>
 /// Represents a table-name for a DynamoDB table. We have to do this

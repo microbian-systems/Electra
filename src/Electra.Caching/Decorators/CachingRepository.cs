@@ -4,6 +4,7 @@ using Foundatio.Caching;
 using Electra.Common.Caching.Extensions;
 using Electra.Core.Entities;
 using Electra.Persistence;
+using Electra.Persistence.Repositories;
 
 namespace Electra.Common.Caching.Decorators;
 

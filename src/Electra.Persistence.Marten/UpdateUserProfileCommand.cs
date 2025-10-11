@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Electra.Common.Commands;
 using Electra.Common.Extensions;
 using Electra.Models;
+using Electra.Persistence.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.Marten;

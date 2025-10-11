@@ -1,6 +1,6 @@
 ﻿using Electra.Core.Entities;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.Repositories;
 
 public abstract class RepositoryBase<T, TKey>(ILogger<RepositoryBase<T, TKey>> log) 
     : IWriteRepository<T, TKey>

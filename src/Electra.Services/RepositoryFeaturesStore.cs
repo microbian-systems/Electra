@@ -1,3 +1,5 @@
+using Electra.Persistence.Repositories;
+
 namespace Electra.Services;
 
 

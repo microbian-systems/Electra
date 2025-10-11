@@ -1,11 +1,14 @@
 ﻿using Amazon.DynamoDBv2;
 using Electra.Common.Extensions;
 using Electra.Core.Entities;
+using Electra.Persistence.Repositories;
 using ServiceStack.Aws.DynamoDb;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.DynamoDB;
 
-public interface IGenericPocoDynamoRepository<T> where T : Entity
+public interface IGenericPocoDynamoRepository<T> 
+    : IGenericDynamoRepository<T>  
+    where T : Entity
 {
     Task<IEnumerable<T>> GetAllAsync();
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> strategy);

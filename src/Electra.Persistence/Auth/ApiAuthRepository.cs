@@ -1,4 +1,6 @@
-﻿namespace Electra.Persistence;
+﻿using Electra.Persistence.EfCore;
+
+namespace Electra.Persistence.Auth;
 
 public interface IApiAuthRepository : IGenericEntityFrameworkRepository<ApiAccountModel>
 {
