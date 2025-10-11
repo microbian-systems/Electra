@@ -1,14 +1,13 @@
 using Electra.Core.Entities;
 
-namespace Electra.Models.Geo
+namespace Electra.Models.Geo;
+
+public class CityModel : Entity<int>
 {
-    public class CityModel : Entity<int>
-    {
-        [JsonPropertyName("fips")]
-        public string FIPS { get; set; }    
-        [JsonPropertyName("iso")]
-        public string ISO { get; set; }
-        [JsonPropertyName("name")]
-        public string Name { get; set; }
-    }
+    [JsonPropertyName("fips")]
+    public string FIPS { get; set; }    
+    [JsonPropertyName("iso")]
+    public string ISO { get; set; }
+    [JsonPropertyName("name")]
+    public string Name { get; set; }
 }

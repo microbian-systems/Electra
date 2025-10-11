@@ -2,11 +2,12 @@
 
 namespace Electra.Persistence;
 
-public abstract class RepositoryBase<T, TKey> : IWriteRepository<T, TKey> where T : EntityBase<TKey>, new() where TKey : IEquatable<TKey>
+public abstract class RepositoryBase<T, TKey>(ILogger<RepositoryBase<T, TKey>> log) 
+    : IWriteRepository<T, TKey>
+    where T : EntityBase<TKey>, new()
+    where TKey : IEquatable<TKey>
 {
-    protected ILogger<RepositoryBase<T, TKey>> log;
-
-    protected RepositoryBase(ILogger<RepositoryBase<T, TKey>> log) => this.log = log;
+    protected ILogger<RepositoryBase<T, TKey>> log = log;
 
     public abstract IEnumerable<T> GetAll();
     public abstract T FindById(TKey id);
