@@ -6,12 +6,8 @@ namespace Electra.Web.BlogEngine.Data;
 /// <summary>
 /// Database context for blog functionality
 /// </summary>
-public class BlogDbContext : DbContext
+public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(options)
 {
-    public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options)
-    {
-    }
-
     /// <summary>
     /// Blog posts collection
     /// </summary>
@@ -81,7 +77,7 @@ public class BlogDbContext : DbContext
     {
         // Update timestamps
         var entries = ChangeTracker.Entries<Entities.BlogEntry>()
-            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+            .Where(e => e.State is EntityState.Added or EntityState.Modified);
 
         foreach (var entry in entries)
         {

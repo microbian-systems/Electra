@@ -46,6 +46,7 @@ public static class BlogServiceCollectionExtensions
 
         // Register blog service
         services.AddScoped<IBlogService, BlogService>();
+        services.AddScoped<IBlogRepository, BlogRepository>();
 
         return services;
     }
