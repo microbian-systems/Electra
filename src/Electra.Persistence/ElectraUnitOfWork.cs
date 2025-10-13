@@ -1,4 +1,6 @@
 using Electra.Persistence.Core;
+using Electra.Models.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence;
 
@@ -8,7 +10,8 @@ namespace Electra.Persistence;
 public interface IElectraUnitOfWork : IUnitOfWork
 {
     public ElectraDbContext Context { get; }
-    IApiAuthRepository authReoo { get; }
+    IApiAuthRepository AuthRepo { get; }
+    IUserRepository User { get; }
     IElectraUserProfileRepository userProfileRepo { get; }
 }
 
@@ -20,12 +23,14 @@ public class ElectraUnitOfWork(
     ElectraDbContext context,
     IApiAuthRepository authRepo,
     IElectraUserProfileRepository userProfileRepo,
+    IUserRepository userRepository,
     ILogger<ElectraUnitOfWork> log)
     : UnitOfWorkBase(context), IElectraUnitOfWork
 {
     public new ElectraDbContext Context { get; } = context;
 
-    public IApiAuthRepository authReoo { get; } = authRepo;
+    public IApiAuthRepository AuthRepo { get; } = authRepo;
+    public IUserRepository User { get; } = userRepository;
     public IElectraUserProfileRepository userProfileRepo { get; } = userProfileRepo;
 }
 

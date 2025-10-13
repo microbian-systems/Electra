@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.SemanticKernel" Version="1.66.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Abstractions" Version="1.66.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.66.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
+      <ProjectReference Include="..\Electra.Events\Electra.Events.csproj" />
+      <ProjectReference Include="..\Electra.Persistence.Core\Electra.Persistence.Core.csproj" />
+      <ProjectReference Include="..\Electra.Persistence.Marten\Electra.Persistence.Marten.csproj" />
+      <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="SmartKernelFactory.cs" />
+      <None Include="SmartKernelFactory.cs" />
+    </ItemGroup>
+
+</Project>

@@ -6,6 +6,7 @@ using Electra.Common.Web.Services;
 using Electra.Persistence.Extensions;
 using Electra.Services.Geo;
 using Electra.Services.Mail;
+using Electra.Web.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity.UI.Services;

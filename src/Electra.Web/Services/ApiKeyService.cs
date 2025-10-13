@@ -66,7 +66,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
     [Obsolete("Remove submission of ApiAccountModel directly from service", false)]
     public override async Task<ApiAccountModel> Register(ApiAccountModel model)
     {
-        await uow.authReoo.InsertAsync(model);
+        await uow.AuthRepo.InsertAsync(model);
         await uow.SaveChangesAsync();
 
         return model;
@@ -75,7 +75,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
     // todo - change update method signature to use a UpdateAccountRequest view model
     public override async Task<ApiAccountModel> Update(ApiAccountModel model)
     {
-        await uow.authReoo.UpdateAsync(model);
+        await uow.AuthRepo.UpdateAsync(model);
         await uow.SaveChangesAsync();
 
         return model;
@@ -121,7 +121,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
 
     public override async Task<bool> Revoke(string apiKey)
     {
-        var model = await uow.authReoo.GetByApiKey(apiKey);
+        var model = await uow.AuthRepo.GetByApiKey(apiKey);
 
         if (model == null)
         {
@@ -129,7 +129,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
         }
 
         model.Enabled = false;
-        await uow.authReoo.UpdateAsync(model);
+        await uow.AuthRepo.UpdateAsync(model);
 
         await uow.SaveChangesAsync();
         return true;
@@ -137,12 +137,12 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
 
     public override async Task RevokeAll(string email)
     {
-        var accounts = await uow.authReoo.FindAsync(x => x.Email == email);
+        var accounts = await uow.AuthRepo.FindAsync(x => x.Email == email);
 
         foreach (var account in accounts)
         {
             account.Enabled = false;
-            await uow.authReoo.UpdateAsync(account);
+            await uow.AuthRepo.UpdateAsync(account);
         }
 
         await uow.SaveChangesAsync();
@@ -150,14 +150,14 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
 
     public override async Task<ApiAccountModel?> GetAccountById(string id)
     {
-        var account = await uow.authReoo.GetByApiKey(id);
+        var account = await uow.AuthRepo.GetByApiKey(id);
 
         return account!;
     }
 
     public override async Task<ApiAccountModel?> GetAccountByApiKey(string key)
     {
-        var account = await uow.authReoo.GetByApiKey(key);
+        var account = await uow.AuthRepo.GetByApiKey(key);
 
         return account!;
     }
@@ -165,7 +165,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
     public override async Task<List<ApiAccountModel>> GetAccountsByEmail(string email)
     {
         var accounts =
-            (await uow.authReoo.FindAsync(x => x.Email == email))
+            (await uow.AuthRepo.FindAsync(x => x.Email == email))
             .ToList();
 
         return accounts;
@@ -173,7 +173,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
 
     public override async Task<ApiAccountModel?> Authenticate(ApiKeyAuthRequestModel model)
     {
-        var account = await uow.authReoo.GetByApiKey(model.ApiKey);
+        var account = await uow.AuthRepo.GetByApiKey(model.ApiKey);
         return account is not { Enabled: true } ? null! : account;
     }
 }

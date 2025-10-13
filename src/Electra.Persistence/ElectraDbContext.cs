@@ -1,5 +1,9 @@
+using Electra.Core.Identity;
 using Electra.Models.Entities;
 using Electra.Models.Geo;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Persistence;
 
@@ -7,6 +11,7 @@ public class ElectraDbContextOptions : DbContextOptions<ElectraIdentityDbContext
 
 public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentityDbContext<ElectraUser, ElectraRole>(options)
 {
+    public DbSet<AiUsageLog> AiUsageLogs { get; set; }
     public DbSet<AddressModel> Addresses { get; set; }
     public DbSet<ApiAccountModel> ApiAccounts { get; set; }
     public DbSet<ApiClaimsModel> ApiClaims { get; set; }
@@ -38,7 +43,7 @@ public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentity
         base.OnModelCreating(builder);
 
         builder.Entity<ApiAccountModel>()
-            .ToTable("ApiAccounts", schema: schema);
+            .ToTable("ApiAccounts", schema: "Electra");
         builder.Entity<ApiAccountModel>()
             .HasKey(i => i.Id);
         builder.Entity<ApiAccountModel>()
@@ -63,7 +68,7 @@ public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentity
             .WithOne();
 
         builder.Entity<ApiClaimsModel>()
-            .ToTable("ApiClaims", schema: schema)
+            .ToTable("ApiClaims", schema: "Electra")
             .HasKey(pk => pk.Id);
         builder.Entity<ApiClaimsModel>()
             .HasOne<ApiAccountModel>()
@@ -118,15 +123,15 @@ public class ElectraIdentityDbContext<T, TRole>(DbContextOptions<ElectraIdentity
         });
 
         builder.Entity<TRole>(entity => { entity.ToTable(name: "Roles"); });
-        builder.Entity<IdentityUserRole<string>>(entity => { entity.ToTable("UserRoles"); });
+        builder.Entity<IdentityUserRole<long>>(entity => { entity.ToTable("UserRoles"); });
 
-        builder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable("UserClaims"); });
+        builder.Entity<IdentityUserClaim<long>>(entity => { entity.ToTable("UserClaims"); });
 
-        builder.Entity<IdentityUserLogin<string>>(entity => { entity.ToTable("UserLogins"); });
+        builder.Entity<IdentityUserLogin<long>>(entity => { entity.ToTable("UserLogins"); });
 
-        builder.Entity<IdentityUserClaim<string>>(entity => { entity.ToTable("RoleClaims"); });
+        builder.Entity<IdentityRoleClaim<long>>(entity => { entity.ToTable("RoleClaims"); });
 
-        builder.Entity<IdentityUserToken<string>>(entity => { entity.ToTable("UserTokens"); });
+        builder.Entity<IdentityUserToken<long>>(entity => { entity.ToTable("UserTokens"); });
 
         builder.Entity<T>()
             .HasMany(p => p.Roles)

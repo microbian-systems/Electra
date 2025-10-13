@@ -1,8 +1,10 @@
-﻿using Electra.Persistence.EfCore;
+using Electra.Persistence.EfCore;
 using Electra.Persistence.Repositories;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.Extensions;
 
@@ -16,6 +18,7 @@ public static class PersistenceExtensions
 
         log.LogInformation($"Adding data later persistence rules");
 
+        // todo - add a configuration to choose the db provider at startup
         services.AddDbContext<ElectraDbContext>(o =>
             o.UseSqlite(
                 config.GetConnectionString("sqlite"),
@@ -27,6 +30,11 @@ public static class PersistenceExtensions
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericEntityFrameworkRepository<>));
         services.AddScoped(typeof(IGenericEntityFrameworkRepository<>), typeof(GenericEntityFrameworkRepository<>));
         services.AddScoped(typeof(IGenericEntityFrameworkRepository<,>), typeof(GenericEntityFrameworkRepository<,>));
+        services.AddScoped<IElectraUserProfileRepository, ElectraUserProfileRepository>(); 
+        services.AddScoped<IAiUsageLogRepository, AiUsageLogsRepository>();
+        services.AddScoped<IApiAuthRepository, ApiAuthRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IElectraUserProfileRepository, ElectraUserProfileRepository>();
         services.AddScoped<IElectraUnitOfWork, ElectraUnitOfWork>();
 
         return services;

@@ -1,4 +1,4 @@
-using Electra.Common.Caching.Decorators;
+using Electra.Caching.Decorators;
 
 namespace Electra.Services;
 

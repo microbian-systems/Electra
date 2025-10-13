@@ -11,7 +11,12 @@
       "Bash(rm:*)",
       "Bash(echo $PWD)",
       "Bash(dir)",
-      "Bash(dotnet clean:*)"
+      "Bash(dotnet clean:*)",
+      "Bash(ls:*)",
+      "Bash(dir:*)",
+      "Bash(powershell:*)",
+      "Bash(find:*)",
+      "Bash(where dotnet)"
     ],
     "deny": []
   }
