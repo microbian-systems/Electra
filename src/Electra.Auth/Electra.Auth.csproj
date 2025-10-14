@@ -54,10 +54,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="ElectraAuthDbContext.cs" />
     <None Include="ElectraAuthDbContext.cs" />
   </ItemGroup>
