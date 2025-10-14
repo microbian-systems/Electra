@@ -28,7 +28,7 @@ public class SaveRefreshTokenCommand : IAsyncCommand<SaveRefreshTokenRequest, bo
         var entity = new RefreshTokens
         {
             Token = request.Token, 
-            UserId = request.Username,
+            UserId = request.UserId,
             CreatedOn = DateTime.UtcNow,
             ModifiedOn =  DateTime.UtcNow
         };
@@ -40,8 +40,9 @@ public class SaveRefreshTokenCommand : IAsyncCommand<SaveRefreshTokenRequest, bo
     public async Task<bool> ExecuteAsync(SaveRefreshTokenRequest parameter) => await SaveRefreshToken(parameter);
 }
 
-public class SaveRefreshTokenRequest : Entity<string>
+public class SaveRefreshTokenRequest : Entity
 {
+    public long UserId { get; set; }
     public string Username { get; set; }
     public string Password { get; set; }
     public string Token { get; set; }

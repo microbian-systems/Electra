@@ -7,7 +7,7 @@ namespace Electra.Services;
 
 public interface IElectraIdentityService : IElectraIdentityService<ElectraUser>{}
 
-public interface IElectraIdentityService<T> : IElectraIdentityService<T, Guid>
+public interface IElectraIdentityService<T> : IElectraIdentityService<T, long>
     where T : ElectraUser, new()
 { }
 
@@ -22,16 +22,16 @@ public interface IElectraIdentityService<T, TKey>
     Task<(T user, IdentityResult identityReuslt)> AddUserAsync(T model, string password = "");
     Task<(T user,  IdentityResult identityReuslt)> UpdateUserAsync(T model);
     Task<(T user,  IdentityResult identityReuslt)> DeleteUserAsync(T model);
-    Task<(T user,  IdentityResult identityReuslt)> DeleteUserAsync(string id);
+    Task<(T user,  IdentityResult identityReuslt)> DeleteUserAsync(long id);
     Task<bool> ChangePassword(T user, string current, string updated);
     Task<(bool success, string token, string errorMessage)> GenerateResetPasswordToken(string email);
     Task<(bool success, string token, string[] errors)> ResetPassword(string email, string fromEmail, string url, string subject, string scheme = "https");
     Task<(bool success, string[] errors)> ResetPasswordConfirmation(string email, string token, string password);
     Task<T> GetByIdAsync(string id);
-    Task<T> GetByIdAsync(Guid id);
+    Task<T> GetByIdAsync(long id);
     Task<T> GetByUsernameAsync(string username);
     Task<T> GetByEmailAsync(string email);
-    Task<IEnumerable<string>> GetRoles(Guid userId);
+    Task<IEnumerable<string>> GetRoles(long userId);
     Task<IEnumerable<string>> GetRoles(string userId);
     Task<IdentityResult> AddToRole(T user, string role);
     Task<IdentityResult> AddToRole(string userId, string role);
@@ -41,7 +41,7 @@ public interface IElectraIdentityService<T, TKey>
     Task<IdentityResult> AddClaim(string userId, Claim claim);
     Task<IdentityResult> AddClaimsAsync(T user, IEnumerable<Claim> claims);
     Task<IdentityResult> AddClaimsAsync(string userId, IEnumerable<Claim> claims);
-    Task<IDictionary<string,string>> GetClaims(Guid userId);
+    Task<IDictionary<string,string>> GetClaims(long userId);
     Task<IDictionary<string,string>> GetClaims(string userId);
     Task<(T model, IdentityResult identityResult)> Register(RegistrationRequestModel model, string createdBy = "User");
     Task<(T model, IdentityResult identityResult)> Register(T user, string password, string createdBy = "User");
@@ -50,7 +50,7 @@ public interface IElectraIdentityService<T, TKey>
     Task<bool> VerifyPassword(string username, string password);
 }
 
-public class ElectraIdentityService : ElectraIdentityService<ElectraUser, Guid>, IElectraIdentityService
+public class ElectraIdentityService : ElectraIdentityService<ElectraUser, long>, IElectraIdentityService
 {
     public ElectraIdentityService(
         // SignInManager<ElectraUser> signinManager,
@@ -112,8 +112,8 @@ public abstract class ElectraIdentityService<T>(
     IHttpContextAccessor contextAccessor,
     IFluentEmail fluentEmail,
     IZipApiService zipService,
-    ILogger<ElectraIdentityService<T, Guid>> log)
-    : ElectraIdentityService<T, Guid>(signinManager, userManager, roleManager, passwordService, contextAccessor,
+    ILogger<ElectraIdentityService<T, long>> log)
+    : ElectraIdentityService<T, long>(signinManager, userManager, roleManager, passwordService, contextAccessor,
         fluentEmail, zipService, log)
     where T : ElectraUser, new();
 
@@ -206,10 +206,11 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         
         return (model, res);
     }
+    
 
-    public async Task<(T user, IdentityResult identityReuslt)> DeleteUserAsync(string id)
+    public async Task<(T user, IdentityResult identityReuslt)> DeleteUserAsync(long id)
     {
-        var user = await userManager.FindByIdAsync(id);
+        var user = await userManager.FindByIdAsync(id.ToString());
         var res = await userManager.DeleteAsync(user);
         
         return (user, res);
@@ -298,13 +299,13 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
     
     public async Task<T> GetByIdAsync(string id) => await userManager.FindByIdAsync(id);
 
-    public async Task<T> GetByIdAsync(Guid id) => await GetByIdAsync(id.ToString());
+    public async Task<T> GetByIdAsync(long id) => await GetByIdAsync(id.ToString());
 
     public async Task<T> GetByUsernameAsync(string username) => await userManager.FindByNameAsync(username);
     
     public async Task<T> GetByEmailAsync(string email) => await userManager.FindByEmailAsync((email));
 
-    public async Task<IEnumerable<string>> GetRoles(Guid userId) => await GetRoles(userId.ToString());
+    public async Task<IEnumerable<string>> GetRoles(long userId) => await GetRoles(userId.ToString());
     public async Task<IEnumerable<string>> GetRoles(string userId)
     {
         var user = await userManager.FindByIdAsync(userId);
@@ -366,7 +367,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         return await AddClaimsAsync(user, claims);
     }
 
-    public async Task<IDictionary<string,string>> GetClaims(Guid userId) => await GetClaims(userId.ToString());
+    public async Task<IDictionary<string,string>> GetClaims(long userId) => await GetClaims(userId.ToString());
     public async Task<IDictionary<string,string>> GetClaims(string userId)
     {
         var user = await userManager.FindByIdAsync(userId);
@@ -397,6 +398,11 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
         return res;
     }
 
+    public async Task<bool> SaveRefreshTokenAsync(string username, string token)
+    {
+        throw new NotImplementedException();
+    }
+
     protected virtual T RegistrationModelToUser(RegistrationRequestModel model, string createdBy = "User") => new()
     {
             Id = Snowflake.NewId(),
@@ -408,15 +414,15 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
             CreatedBy = createdBy,
         };
 
-    public async Task<bool> SaveRefreshTokenAsync(string username, string token)
+    public async Task<bool> SaveRefreshTokenAsync(long id, string token)
     {
         //throw new NotImplementedException();
-        var request = new SaveRefreshTokenRequest(username, token);
+        var request = new SaveRefreshTokenRequest(id, token);
         //var success = await saveHandler.ExecuteAsync(request);
         var entity = new RefreshTokens
         {
             Token = token, 
-            UserId = username,
+            UserId = id,
             //DateCreated = DateTime.UtcNow,
             //DateModified =  DateTime.UtcNow
         };
@@ -453,4 +459,4 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
     }
 }
 
-public record SaveRefreshTokenRequest(string username, string token);
+public record SaveRefreshTokenRequest(long userId, string token);
