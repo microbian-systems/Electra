@@ -14,7 +14,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\Electra.Actors\Electra.Actors.csproj" />
-        <ProjectReference Include="..\..\Electra.Auth.Identity\Electra.Auth.Identity.csproj" />
         <ProjectReference Include="..\..\Electra.Caching\Electra.Caching.csproj" />
         <ProjectReference Include="..\..\Electra.Common\Electra.Common.csproj" />
         <ProjectReference Include="..\..\Electra.Components\Electra.Components.csproj" />

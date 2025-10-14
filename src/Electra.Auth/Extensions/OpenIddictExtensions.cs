@@ -1,4 +1,4 @@
-using Electra.Auth.Context;
+using Electra.Persistence;
 
 namespace Electra.Auth.Extensions;
 
@@ -20,7 +20,7 @@ public static class OpenIddictExtensions
             {
                 // Configure OpenIddict to use the Entity Framework Core stores and models
                 options.UseEntityFrameworkCore()
-                    .UseDbContext<ElectraAuthDbContext>();
+                    .UseDbContext<ElectraDbContext>();
             })
 
             // Register the OpenIddict server components

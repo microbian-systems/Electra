@@ -12,7 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="ElectraIdentityServerContext.cs" />
-    <None Include="ElectraIdentityServerContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Elasticsearch.Net" Version="7.17.5" />

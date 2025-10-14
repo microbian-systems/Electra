@@ -5,7 +5,15 @@ namespace Electra.Core.Identity;
 
 
 [Table("Roles")]
-public class ElectraRole : ElectraRole<long>{}
+public class ElectraRole : ElectraRole<long>
+{
+    public ElectraRole() => Id = Snowflake.NewId();
+    public ElectraRole(string roleName)
+        : this()
+    {
+        this.Name = roleName;
+    }
+}
 
 
 [Table("Roles")]

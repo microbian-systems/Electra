@@ -1,7 +1,8 @@
-using Electra.Auth.Context;
 using Electra.Auth.Models;
+using Electra.Core.Identity;
 using Electra.Models;
 using Electra.Models.Entities;
+using Electra.Persistence;
 
 namespace Electra.Auth;
 
@@ -10,9 +11,9 @@ public class Seeder
     public static async Task Initialize(IServiceProvider serviceProvider, IConfiguration configuration)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ElectraAuthDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<ElectraDbContext>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ElectraIdentityRole>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ElectraRole>>();
         var applicationManager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
 
         // Create database and apply migrations
@@ -24,7 +25,7 @@ public class Seeder
         {
             if (!await roleManager.RoleExistsAsync(role))
             {
-                await roleManager.CreateAsync(new ElectraIdentityRole(role));
+                await roleManager.CreateAsync(new ElectraRole(role));
             }
         }
 

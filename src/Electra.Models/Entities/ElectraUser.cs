@@ -65,7 +65,6 @@ public interface IElectraUser<TKey>  where TKey : IEquatable<TKey>
 
     // todo - remove data attribute -> ModelBuilding (EF)
     public string ProfilePictureDataUrl { get; set; }
-
     public DateTimeOffset CreatedOn { get; set; }
     public string ModifiedBy { get; set; }
     public DateTimeOffset? ModifiedOn { get; set; }
@@ -121,6 +120,8 @@ public class ElectraUser<TKey>
     public string RefreshToken { get; set; }
     public DateTimeOffset? RefreshTokenExpiryTime { get; set; }
     public DateTimeOffset? LastLoginAt { get; set; }
+    
+    public TKey UserProfileId { get; set; }
     
     // todo - consider converting the user profile property to a JsonB field vs a Foreign related table
     // Documentation on JsonB columns:

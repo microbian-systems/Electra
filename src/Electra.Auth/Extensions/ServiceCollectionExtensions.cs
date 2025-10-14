@@ -1,7 +1,7 @@
-using Electra.Auth.Context;
 using Electra.Auth.Models;
 using Electra.Models;
 using Electra.Models.Entities;
+using Electra.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
         IConfiguration config)
     {
         // Configure database context
-        services.AddDbContext<ElectraAuthDbContext>(opts =>
+        services.AddDbContext<ElectraDbContext>(opts =>
         {
             //opts.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             opts.UseSqlite(config.GetConnectionString("DefaultConnection"));
@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
                 opts.User.RequireUniqueEmail = true;
                 opts.SignIn.RequireConfirmedEmail = false; // Set to true if email confirmation is implemented
             })
-            .AddEntityFrameworkStores<ElectraAuthDbContext>()
+            .AddEntityFrameworkStores<ElectraDbContext>()
             .AddDefaultTokenProviders();
 
         // Add JWT Authentication with OpenIddict
