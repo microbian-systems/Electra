@@ -1,5 +1,6 @@
 using Electra.Common.Web;
 using Electra.Web.BlogEngine.Services;
+using Electra.Web.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

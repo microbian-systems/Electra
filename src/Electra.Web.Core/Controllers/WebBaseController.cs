@@ -1,4 +1,7 @@
-namespace Electra.Common.Web.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Electra.Web.Core.Controllers;
 
 [Authorize]
 [ValidateAntiForgeryToken]

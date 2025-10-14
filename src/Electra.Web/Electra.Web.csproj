@@ -79,5 +79,6 @@
     <ProjectReference Include="..\Electra.Services\Electra.Services.csproj" />
     <ProjectReference Include="..\Electra.SignalR\Electra.SignalR.csproj" />
     <ProjectReference Include="..\Electra.Validators\Electra.Validators.csproj" />
+    <ProjectReference Include="..\Electra.Web.Core\Electra.Web.Core.csproj" />
   </ItemGroup>
 </Project>

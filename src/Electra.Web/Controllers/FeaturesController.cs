@@ -1,4 +1,5 @@
 ﻿using Electra.Services.Features;
+using Electra.Web.Core.Controllers;
 
 namespace Electra.Common.Web.Controllers;
 

@@ -4,6 +4,7 @@ using Electra.Common.Web.Jwt;
 using Electra.Common.Web.Services;
 using Electra.Core.Extensions;
 using Electra.Models;
+using Electra.Web.Core.Controllers;
 
 namespace Electra.Common.Web.Controllers;
 

@@ -1,7 +1,9 @@
 ﻿using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace Electra.Common.Web;
+namespace Electra.Web.Core.Controllers;
 
 [Authorize] 
 [ApiController]

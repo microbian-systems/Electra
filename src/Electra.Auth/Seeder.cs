@@ -1,8 +1,10 @@
-using Electra.Auth.Models;
 using Electra.Core.Identity;
-using Electra.Models;
 using Electra.Models.Entities;
 using Electra.Persistence;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using OpenIddict.Abstractions;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Electra.Auth;
 
@@ -42,9 +44,13 @@ public class Seeder
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    FirstName = "Admin",
-                    LastName = "User",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    Profile = new ElectraUserProfile
+                    {
+                        Firstname = "Admin",
+                        Lastname = "User",
+                        Email = adminEmail
+                    }
                 };
 
                 await userManager.CreateAsync(adminUser, adminPassword);
@@ -61,8 +67,8 @@ public class Seeder
                 ClientId = "electra_web_client",
                 ClientSecret = "web_client_secret",
                 DisplayName = "Electra Web Client",
-                RedirectUris = { new Uri(configuration["ClientUrls:Web"]) },
-                PostLogoutRedirectUris = { new Uri(configuration["ClientUrls:Web"]) },
+                RedirectUris = { new Uri(configuration["ClientUrls:Web"] ?? "https://localhost:3000") },
+                PostLogoutRedirectUris = { new Uri(configuration["ClientUrls:Web"] ?? "https://localhost:3000") },
                 Permissions =
                 {
                     Permissions.Endpoints.Token,
