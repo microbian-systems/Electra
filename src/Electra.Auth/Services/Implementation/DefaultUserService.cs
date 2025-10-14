@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using Electra.Auth.Constants;
 using Electra.Auth.Services.Abstractions.CookieStore;
 using Electra.Auth.Services.Abstractions.User;
-using Electra.Auth.Services.Abstractions.User.Models;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.WebUtilities;
 
@@ -12,7 +12,7 @@ namespace Electra.Auth.Services.Implementation;
 public class DefaultUserService(IDataProtectionProvider provider)
     : AbstractProtectedCookieStore(provider, DataProtectionPurpose, CookieConstants.UserHandle), IUserService
 {
-    private const string DataProtectionPurpose = "WebAuthn.Net.Demo.RegistrationCeremonyHandle";
+    private const string DataProtectionPurpose = "electra.auth.userstore.v1";
     private const int ItemsToPreserve = 5;
 
     public Task<byte[]> CreateAsync(
@@ -28,7 +28,7 @@ public class DefaultUserService(IDataProtectionProvider provider)
         return Task.FromResult(newItem.UserHandle);
     }
 
-    public Task<ApplicationUser?> FindAsync(
+    public Task<ElectraUser?> FindAsync(
         HttpContext httpContext,
         byte[] userHandle,
         CancellationToken cancellationToken)
@@ -39,14 +39,18 @@ public class DefaultUserService(IDataProtectionProvider provider)
             .FirstOrDefault(x => x.UserHandle.AsSpan().SequenceEqual(userHandle));
         if (foundItem is not null)
         {
-            var applicationUser = new ApplicationUser(foundItem.UserHandle, foundItem.UserName);
-            return Task.FromResult<ApplicationUser?>(applicationUser);
+            var applicationUser = new ElectraUser()
+            {
+                UserHandle = foundItem.UserHandle,
+                UserName = foundItem.UserName
+            };
+            return Task.FromResult<ElectraUser?>(applicationUser);
         }
 
-        return Task.FromResult<ApplicationUser?>(null);
+        return Task.FromResult<ElectraUser?>(null);
     }
 
-    public Task<ApplicationUser?> FindAsync(
+    public Task<ElectraUser?> FindAsync(
         HttpContext httpContext,
         string userName,
         CancellationToken cancellationToken)
@@ -57,11 +61,15 @@ public class DefaultUserService(IDataProtectionProvider provider)
             .FirstOrDefault(x => x.UserName == userName);
         if (foundItem is not null)
         {
-            var applicationUser = new ApplicationUser(foundItem.UserHandle, foundItem.UserName);
-            return Task.FromResult<ApplicationUser?>(applicationUser);
+            var applicationUser = new ElectraUser()
+            {
+                UserHandle = foundItem.UserHandle,
+                UserName = foundItem.UserName
+            };
+            return Task.FromResult<ElectraUser?>(applicationUser);
         }
 
-        return Task.FromResult<ApplicationUser?>(null);
+        return Task.FromResult<ElectraUser?>(null);
     }
 
     public Task DeleteAsync(

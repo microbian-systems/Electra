@@ -74,4 +74,8 @@
     <Compile Remove="Controllers\PasskeyController.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Abstractions\User\Models\" />
+  </ItemGroup>
+
 </Project>

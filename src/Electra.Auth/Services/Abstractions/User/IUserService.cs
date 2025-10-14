@@ -1,4 +1,4 @@
-﻿using Electra.Auth.Services.Abstractions.User.Models;
+﻿using Electra.Models.Entities;
 
 namespace Electra.Auth.Services.Abstractions.User;
 
@@ -9,12 +9,12 @@ public interface IUserService
         string userName,
         CancellationToken cancellationToken);
 
-    Task<ApplicationUser?> FindAsync(
+    Task<ElectraUser?> FindAsync(
         HttpContext httpContext,
         byte[] userHandle,
         CancellationToken cancellationToken);
 
-    Task<ApplicationUser?> FindAsync(
+    Task<ElectraUser?> FindAsync(
         HttpContext httpContext,
         string userName,
         CancellationToken cancellationToken);

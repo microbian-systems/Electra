@@ -121,6 +121,7 @@ public class ElectraUser<TKey>
     public DateTimeOffset? RefreshTokenExpiryTime { get; set; }
     public DateTimeOffset? LastLoginAt { get; set; }
     
+    public byte[] UserHandle { get; set; } 
     public TKey UserProfileId { get; set; }
     
     // todo - consider converting the user profile property to a JsonB field vs a Foreign related table
