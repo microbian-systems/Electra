@@ -104,11 +104,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Persistence.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Core.Ai", "Electra.Core.Ai\Electra.Core.Ai.csproj", "{636D696D-AA27-4B33-9A32-B4F78EEB909A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Identity.Server", "Electra.Identity.Server\Electra.Identity.Server\Electra.Identity.Server.csproj", "{7A9591DF-A5D3-400F-B440-0C602508E6A2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Identity.Server.Client", "Electra.Identity.Server\Electra.Identity.Server.Client\Electra.Identity.Server.Client.csproj", "{E7E86C9E-39D7-4287-9B86-3AB4AAEF158A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Web.Core", "Electra.Web.Core\Electra.Web.Core.csproj", "{F14CBDFC-89DA-4403-9A21-4CAFFEB4FEB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Auth.Tests", "Electra.Auth.Tests\Electra.Auth.Tests.csproj", "{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -255,18 +253,14 @@ Global
 		{636D696D-AA27-4B33-9A32-B4F78EEB909A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{636D696D-AA27-4B33-9A32-B4F78EEB909A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{636D696D-AA27-4B33-9A32-B4F78EEB909A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A9591DF-A5D3-400F-B440-0C602508E6A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A9591DF-A5D3-400F-B440-0C602508E6A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A9591DF-A5D3-400F-B440-0C602508E6A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A9591DF-A5D3-400F-B440-0C602508E6A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7E86C9E-39D7-4287-9B86-3AB4AAEF158A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7E86C9E-39D7-4287-9B86-3AB4AAEF158A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7E86C9E-39D7-4287-9B86-3AB4AAEF158A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7E86C9E-39D7-4287-9B86-3AB4AAEF158A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F14CBDFC-89DA-4403-9A21-4CAFFEB4FEB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F14CBDFC-89DA-4403-9A21-4CAFFEB4FEB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F14CBDFC-89DA-4403-9A21-4CAFFEB4FEB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F14CBDFC-89DA-4403-9A21-4CAFFEB4FEB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2} = {09F2C056-7069-4502-B195-CB6AB74AE86D}

@@ -28,6 +28,8 @@ dotnet test src/Electra.sln
 dotnet test src/Electra.Core.Tests/
 dotnet test src/Electra.Validators.Tests/
 dotnet test src/Electra.Crypto.Solana.Tests/
+dotnet test src/Electra.Crypto.Base.Tests/
+dotnet test src/Electra.SendGrid.Tests/
 ```
 
 **Development Environment:**
@@ -68,21 +70,31 @@ This is a .NET 9.0 modular web framework implementing **Clean Architecture** wit
 
 **Core Projects:**
 - `Electra.Core` - Core domain entities, algorithms (including Shamir's Secret Sharing), encryption
+- `Electra.Core.Ai` - AI integration using Microsoft.SemanticKernel for LLM operations
 - `Electra.Common` - Command/Query patterns, decorators, shared utilities
 - `Electra.Models` - DTOs, view models, API request/response models
 - `Electra.Persistence` - Repository implementations for multiple databases
+- `Electra.Persistence.Core` - Core persistence abstractions and interfaces
+- `Electra.Persistence.Marten` - Marten (PostgreSQL) document store implementation
 - `Electra.Services` - Business logic, feature toggles, user management
 
 **Infrastructure:**
 - `Electra.Web` - Web framework extensions, middleware, JWT authentication
-- `Electra.Caching` - Foundatio-based caching with decorators
+- `Electra.Web.Core` - Core web abstractions and utilities
+- `Electra.Web.BlogEngine` - Blog engine implementation
+- `Electra.Caching` - FusionCache-based caching with Redis backplane
 - `Electra.Auth` - OpenIddict authentication with passkey support
 - `Electra.Validators` - FluentValidation implementations
+- `Electra.Events` - Event sourcing and domain events
 
 **Specialized:**
+- `Electra.Crypto.Core` - Core cryptographic abstractions and interfaces
+- `Electra.Crypto.Base` - Base cryptographic implementations and utilities
 - `Electra.Crypto.Solana` - Solana blockchain integration using Solnet libraries
 - `Electra.SignalR` - Real-time communication hub
 - `Electra.Components` - Blazor components
+- `Electra.Actors` - Actor model implementation
+- `Electra.Workflows` - Workflow orchestration
 
 **Testing:**
 - Test projects use XUnit with mocking libraries (FakeItEasy, NSubstitute)
@@ -120,11 +132,12 @@ The project includes comprehensive Solana blockchain support through multiple So
 
 ### Development Infrastructure
 
-The `docker-compose.yml` provides a comprehensive development environment including:
-- PostgreSQL, Redis, Elasticsearch cluster
-- Message queues (Kafka, RabbitMQ)
-- Monitoring (Seq, Jaeger, Kibana)
-- Multiple database options for testing
+The `src/docker-compose.yml` provides a comprehensive development environment including:
+- **Databases**: PostgreSQL, Redis, Elasticsearch cluster, RethinkDB, Cassandra, Riak
+- **Message queues**: Kafka, RabbitMQ, Zookeeper
+- **Monitoring & Logging**: Seq, Jaeger, Kibana, ELK Stack (Logstash, various Beats)
+- **Security**: Vault for secrets management
+- **APM**: Application Performance Monitoring with Elastic APM
 
 ### Key Design Principles
 
@@ -135,9 +148,27 @@ The `docker-compose.yml` provides a comprehensive development environment includ
 5. **Clean Abstractions** - Heavy use of interfaces and dependency inversion
 6. **Cross-Cutting Concerns** - Decorators handle logging, caching, validation, timing automatically
 
+### Recent Architecture Changes
+
+**AI Integration:**
+- New `Electra.Core.Ai` project implements Microsoft.SemanticKernel integration
+- Supports LLM operations and AI-powered features
+- Includes usage logging through `AiUsageLog` entity
+
+**Caching Evolution:**
+- Migrated from Foundatio to FusionCache with Redis backplane
+- Improved performance and reliability with distributed caching
+- Maintains decorator pattern for transparent caching
+
+**Cryptography Modularization:**
+- Split crypto functionality into `Electra.Crypto.Core` and `Electra.Crypto.Base`
+- Enhanced separation of concerns for cryptographic operations
+- Maintains Solana-specific implementations in dedicated project
+
 ### Common Gotchas
 
 - Some PowerShell scripts may reference outdated paths (Microbians vs Electra)
 - The solution includes git submodules for Solnet libraries
 - Authentication supports both JWT and OpenIddict with passkey integration
 - Repository decorators are automatically applied through DI configuration
+- The docker-compose.yml is located in `src/` directory, not root

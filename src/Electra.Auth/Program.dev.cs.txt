@@ -8,38 +8,17 @@ using Serilog;
 using WebAuthn.Net.Configuration.DependencyInjection;
 using WebAuthn.Net.Storage.PostgreSql.Configuration.DependencyInjection;
 
-var builder = WebApplication.CreateBuilder(args);
-
-// Add Serilog
-builder.Host.UseSerilog((context, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration));
-
-// Add services to the container
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-
-// Add CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("DefaultPolicy", policy =>
-    {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3001")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
 
 // Configure Entity Framework with PostgreSQL
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ElectraDbContext>(options =>
+services.AddDbContext<ElectraDbContext>(options =>
 {
     options.UseNpgsql(connectionString);
     options.UseOpenIddict<long>();
 });
 
 // Add ASP.NET Core Identity
-builder.Services.AddIdentity<ElectraUser, ElectraRole>(options =>
+services.AddIdentity<ElectraUser, ElectraRole>(options =>
 {
     // Password settings
     options.Password.RequireDigit = true;
@@ -66,7 +45,7 @@ builder.Services.AddIdentity<ElectraUser, ElectraRole>(options =>
 .AddDefaultTokenProviders();
 
 // Add OpenIddict with enhanced configuration
-builder.Services.AddOpenIddict()
+services.AddOpenIddict()
     .AddCore(options =>
     {
         options.UseEntityFrameworkCore()
@@ -130,7 +109,7 @@ builder.Services.AddOpenIddict()
     });
 
 // Add WebAuthn.Net for passkey support
-builder.Services.AddWebAuthnCore(options =>
+services.AddWebAuthnCore(options =>
 {
     options.RelyingPartyId = builder.Configuration["WebAuthn:RelyingPartyId"] ?? "localhost";
     options.RelyingPartyName = builder.Configuration["WebAuthn:RelyingPartyName"] ?? "Electra Auth";
@@ -143,7 +122,7 @@ builder.Services.AddWebAuthnCore(options =>
 });
 
 // Add external authentication providers
-var authBuilder = builder.Services.AddAuthentication();
+var authBuilder = services.AddAuthentication();
 
 // Google OAuth
 if (!string.IsNullOrEmpty(builder.Configuration["Auth:Google:ClientId"]))
@@ -191,21 +170,14 @@ if (!string.IsNullOrEmpty(builder.Configuration["Auth:Twitter:ConsumerKey"]))
 }
 
 // Add authorization
-builder.Services.AddAuthorization();
+services.AddAuthorization();
 
 // Add YARP for reverse proxy
-builder.Services.AddReverseProxy()
+services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
-}
 
 app.UseHttpsRedirection();
 app.UseCors("DefaultPolicy");
@@ -213,10 +185,8 @@ app.UseCors("DefaultPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
 
-// Map YARP reverse proxy
-app.MapReverseProxy();
+
 
 // Ensure database is created and seeded
 using (var scope = app.Services.CreateScope())
@@ -232,4 +202,3 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.Run();
