@@ -11,7 +11,7 @@ public static class OpenIddictExtensions
         // Configure JWT Token settings
         var jwtSettings = configuration.GetSection("JwtSettings");
         // todo - pull openiddict settings from appsettings.json for secret key
-        var secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"]);
+        var secretKey = Encoding.ASCII.GetBytes(jwtSettings["SecretKey"] ?? "default_secret_key_please_change");
 
         // Add OpenIddict with EF Core stores
         services.AddOpenIddict()

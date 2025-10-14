@@ -47,9 +47,7 @@ public class AuthController : ControllerBase
             Email = request.Email,
             Profile = new ElectraUserProfile
             {
-                Firstname = request.FirstName,
-                Lastname = request.LastName,
-                Email = request.Email
+                
             }
         };
 
@@ -133,8 +131,8 @@ public class AuthController : ControllerBase
 
         if (user.Profile != null)
         {
-            claims[Claims.GivenName] = user.Profile.Firstname ?? string.Empty;
-            claims[Claims.FamilyName] = user.Profile.Lastname ?? string.Empty;
+            claims[Claims.GivenName] = user.FirstName ?? string.Empty;
+            claims[Claims.FamilyName] = user.LastName ?? string.Empty;
         }
 
         return Ok(claims);

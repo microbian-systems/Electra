@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Electra.Auth.Controllers;
 
-public class AccountController(UserManager<ElectraUser> userManager, ILogger<AccountController> log) : ElectraWebBaseController(log)
+public class AccountController(UserManager<ElectraUser> userManager, ILogger<AccountController> log) 
+    : ElectraWebBaseController(log)
 {
     [HttpPost]
     [ValidateAntiForgeryToken]

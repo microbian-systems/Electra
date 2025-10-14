@@ -277,9 +277,7 @@ public class ExternalLoginController : ControllerBase
             EmailConfirmed = true, // Trust external provider's email verification
             Profile = new ElectraUserProfile
             {
-                Firstname = firstName ?? string.Empty,
-                Lastname = lastName ?? string.Empty,
-                Email = email
+               
             }
         };
 

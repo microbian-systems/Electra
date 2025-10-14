@@ -1,6 +1,7 @@
 ﻿using Electra.Auth.Services.Abstractions.AuthenticationCeremonyHandle;
 using Electra.Auth.Services.Abstractions.User;
 using Electra.Auth.ViewModels.Usernameless;
+using Electra.Web.Core.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ using WebAuthn.Net.Services.AuthenticationCeremony;
 
 namespace Electra.Auth.Controllers;
 
-public class UsernamelessController : Controller
+public class UsernamelessController : ElectraWebBaseController
 {
     private readonly IAuthenticationCeremonyHandleService _authenticationCeremonyHandleService;
     private readonly IAuthenticationCeremonyService _authenticationCeremonyService;
@@ -18,7 +19,8 @@ public class UsernamelessController : Controller
     public UsernamelessController(
         IAuthenticationCeremonyService authenticationCeremonyService,
         IAuthenticationCeremonyHandleService authenticationCeremonyHandleService,
-        IUserService userService)
+        IUserService userService,
+        ILogger<UsernamelessController> log) : base(log)
     {
         ArgumentNullException.ThrowIfNull(authenticationCeremonyService);
         ArgumentNullException.ThrowIfNull(authenticationCeremonyHandleService);

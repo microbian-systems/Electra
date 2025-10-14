@@ -108,6 +108,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Web.Core", "Electra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Auth.Tests", "Electra.Auth.Tests\Electra.Auth.Tests.csproj", "{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Auth.Tests.WebHost", "Electra.Auth.Tests.WebHost\Electra.Auth.Tests.WebHost.csproj", "{91740254-8AE3-4E00-ACDF-7DD028B6BE9A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -261,6 +263,10 @@ Global
 		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91740254-8AE3-4E00-ACDF-7DD028B6BE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91740254-8AE3-4E00-ACDF-7DD028B6BE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91740254-8AE3-4E00-ACDF-7DD028B6BE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91740254-8AE3-4E00-ACDF-7DD028B6BE9A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2} = {09F2C056-7069-4502-B195-CB6AB74AE86D}

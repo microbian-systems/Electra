@@ -73,6 +73,19 @@ A complete .NET 9 authentication microservice implementing OpenIddict, ASP.NET C
 
 ## 🔧 Configuration
 
+### Using the New Service Registration
+
+```csharp
+using Electra.Auth.Extensions;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add comprehensive authentication services with automatic environment-based configuration
+builder.Services.AddElectraAuthentication(builder.Environment, builder.Configuration);
+
+var app = builder.Build();
+```
+
 ### Database Connection
 ```json
 {
@@ -81,6 +94,8 @@ A complete .NET 9 authentication microservice implementing OpenIddict, ASP.NET C
   }
 }
 ```
+
+**Note**: In development, the system automatically uses an in-memory database. In production, it uses PostgreSQL.
 
 ### Social Login Providers
 ```json

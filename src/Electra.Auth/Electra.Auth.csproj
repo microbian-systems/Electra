@@ -10,7 +10,9 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-
+<ItemGroup>
+  <InternalsVisibleTo Include="Electra.Auth.Tests" />
+</ItemGroup>
   <ItemGroup>
     <PackageReference Include="ChatAIze.Passkeys" Version="0.2.7" />
     <PackageReference Include="FluentAssertions" Version="8.7.1" />
@@ -55,6 +57,7 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
   </ItemGroup>
 

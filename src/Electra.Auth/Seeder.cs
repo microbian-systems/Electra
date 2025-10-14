@@ -47,9 +47,6 @@ public class Seeder
                     EmailConfirmed = true,
                     Profile = new ElectraUserProfile
                     {
-                        Firstname = "Admin",
-                        Lastname = "User",
-                        Email = adminEmail
                     }
                 };
 

@@ -6,10 +6,11 @@ using Electra.Persistence.Marten;
 namespace Electra.Services;
 
 public sealed class MartenUserProfileService<T>(
+    IUserRepository userRepository,
     IGenericMartenRepository<T, long> db,
     ILogger<MartenUserProfileService<T>> log)
     : IUserProfileService<T>
-    where T : ElectraUserProfile, IEntity<long>, new()
+    where T : ElectraUserProfile, new()
 {
     public async Task<T> GetById(long id)
     {
@@ -17,14 +18,16 @@ public sealed class MartenUserProfileService<T>(
         return await db.FindByIdAsync(id);
     }
 
-    public async Task<T> GetByEmail(string email)
+    public async Task<T> GetByEmail(string email) 
     {
-        var result = await db.FindAsync(x => x.Email == email);
+        var user = (await userRepository.FindAsync(x => x.Email == email))
+            .FirstOrDefault();
 
-        if (result.Any())
-            return result?.First();
+        if (user is null)
+            return null;
 
-        return null;
+        var profile = user.Profile;
+        return (T)profile;
     }
 
     public async Task InsertAsync(T model)

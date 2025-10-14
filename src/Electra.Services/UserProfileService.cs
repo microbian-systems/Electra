@@ -8,8 +8,8 @@ namespace Electra.Services;
 
 public interface IElectraUserProfileService : IUserProfileService<ElectraUserProfile>{}
 
-public class ElectraUserProfileService(IElectraUserProfileRepository db, ILogger<ElectraUserProfileService> log)
-    : UserProfileService<ElectraUserProfile>(db, log), IElectraUserProfileService;
+public class ElectraUserProfileService(IUserRepository userRepo, IElectraUserProfileRepository db, ILogger<ElectraUserProfileService> log)
+    : UserProfileService<ElectraUserProfile>(userRepo, db, log), IElectraUserProfileService;
 
 public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity
 {
@@ -23,7 +23,7 @@ public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 }
     
-public class UserProfileService<T>(IGenericRepository<T> db, ILogger<UserProfileService<T>> log)
+public class UserProfileService<T>(IUserRepository userRepo, IGenericRepository<T> db, ILogger<UserProfileService<T>> log)
     : IUserProfileService<T>
     where T : ElectraUserProfile, new()
 {
@@ -37,8 +37,15 @@ public class UserProfileService<T>(IGenericRepository<T> db, ILogger<UserProfile
 
     public async Task<T> GetByEmail(string email)
     {
-        var results = await db.FindAsync(x => x.Email.ToUpper() == email);
-        return results?.First();
+        //var results = await db.FindAsync(x => x.Email.ToUpper() == email);
+        var user = await userRepo.FindAsync(x => x.Email.ToUpper() == email.ToUpper());
+        if (user == null || !user.Any())
+        {
+            log.LogWarning("No user found with email {Email}", email);
+            return null;
+        }
+        var profile = user.First().Profile;
+        return (T)profile;
     }
 
     public async Task InsertAsync(T model)

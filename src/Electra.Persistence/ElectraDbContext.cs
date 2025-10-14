@@ -7,10 +7,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Persistence;
 
-public class ElectraDbContextOptions : DbContextOptions<ElectraIdentityDbContext<ElectraUser, ElectraRole>>;
 
-public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentityDbContext<ElectraUser, ElectraRole>(options)
+public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long,
+    IdentityUserClaim<long>,
+    IdentityUserRole<long>,
+    IdentityUserLogin<long>,
+    IdentityRoleClaim<long>,
+    IdentityUserToken<long>>
 {
+    public ElectraDbContext(DbContextOptions<ElectraDbContext> options) : base(options)
+    {
+    }
+
     public DbSet<AiUsageLog> AiUsageLogs { get; set; }
     public DbSet<AddressModel> Addresses { get; set; }
     public DbSet<ApiAccountModel> ApiAccounts { get; set; }
@@ -23,84 +31,41 @@ public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentity
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        
+        ConfigureIdentityTables(builder);
+        ConfigureDecimalPrecision(builder);
         ModelApiAuth(builder);
         ModelUserProfile(builder);
-        builder.HasDefaultSchema(Schemas.Auth);
+    }
 
-        foreach (var property in builder.Model.GetEntityTypes()
-                     .SelectMany(t => t.GetProperties())
-                     .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
-        {
-            property.SetColumnType("decimal(18,2)");
-        }
-
-        builder.Entity<ElectraRole>(entity =>
-        {
-            entity
-                .HasMany(r => r.Claims)
-                .WithOne()
-                .HasForeignKey(r => r.RoleId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        // Customize the ASP.NET Identity model and override table names
+    private void ConfigureIdentityTables(ModelBuilder builder)
+    {
         builder.Entity<ElectraUser>(entity =>
         {
-            entity.ToTable("Users");
-            entity.Property(x => x.CreatedOn)
-                .HasDefaultValue(DateTimeOffset.UtcNow);
-
-            entity.Property(x => x.ModifiedOn)
-                .HasDefaultValue(DateTimeOffset.UtcNow);
-
+            entity.ToTable("Users", schema: Schemas.Auth);
+            
+            // Auditing
+            entity.Property(x => x.CreatedOn).HasDefaultValue(DateTimeOffset.UtcNow);
+            entity.Property(x => x.ModifiedOn).HasDefaultValue(DateTimeOffset.UtcNow);
             entity.HasIndex(x => x.CreatedOn);
             entity.HasIndex(x => x.ModifiedOn);
             entity.HasIndex(x => x.CreatedBy);
             entity.HasIndex(x => x.ModifiedBy);
             
-            entity.HasOne<ElectraUserProfile>()
+            // Profile relationship - ONLY CONFIGURE ONCE
+            entity.HasOne(x => x.Profile)
                 .WithOne()
                 .HasForeignKey<ElectraUserProfile>(x => x.Userid)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasIndex(i => i.UserProfileId)
-                .IsUnique();
             
-            entity
-                .HasMany(p => p.Roles)
-                .WithOne()
-                .HasForeignKey(p => p.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity
-                .HasMany(e => e.Claims)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity
-                .HasMany(r => r.Logins)
-                .WithOne()
-                .HasForeignKey(r => r.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity
-                .HasMany(r => r.Tokens)
-                .WithOne()
-                .HasForeignKey(r => r.UserId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity
-                .HasOne<ElectraUserProfile>(x => x.Profile)
-                .WithOne()
-                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(i => i.UserProfileId).IsUnique();
         });
-        builder.Entity<IdentityRole<long>>().ToTable("Roles", schema: Schemas.Auth);
+
+        builder.Entity<ElectraRole>(entity =>
+        {
+            entity.ToTable("Roles", schema: Schemas.Auth);
+        });
+        
         builder.Entity<IdentityUserRole<long>>().ToTable("UserRoles", schema: Schemas.Auth);
         builder.Entity<IdentityUserClaim<long>>().ToTable("UserClaims", schema: Schemas.Auth);
         builder.Entity<IdentityUserLogin<long>>().ToTable("UserLogins", schema: Schemas.Auth);
@@ -108,7 +73,17 @@ public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentity
         builder.Entity<IdentityUserToken<long>>().ToTable("UserTokens", schema: Schemas.Auth);
     }
 
-    protected virtual void ModelUserProfile(ModelBuilder builder)
+    private void ConfigureDecimalPrecision(ModelBuilder builder)
+    {
+        foreach (var property in builder.Model.GetEntityTypes()
+                     .SelectMany(t => t.GetProperties())
+                     .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
+        {
+            property.SetColumnType("decimal(18,2)");
+        }
+    }
+
+        protected virtual void ModelUserProfile(ModelBuilder builder)
     {
         builder.Entity<ElectraUserProfile>(entity =>
         {
@@ -124,7 +99,6 @@ public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentity
             entity.Property(x => x.ModifiedOn)
                 .HasDefaultValue(DateTimeOffset.UtcNow);
 
-            entity.HasIndex(x => x.Email);
             entity.HasIndex(x => x.CreatedOn);
             entity.HasIndex(x => x.ModifiedOn);
             entity.HasIndex(x => x.CreatedBy);
@@ -167,94 +141,3 @@ public class ElectraDbContext(ElectraDbContextOptions options) : ElectraIdentity
     }
 }
 
-public class ElectraIdentityDbContext(DbContextOptions<ElectraIdentityDbContext<ElectraUser, ElectraRole>> options)
-    : ElectraIdentityDbContext<ElectraUser>(options);
-
-public class ElectraIdentityDbContext<T>(DbContextOptions<ElectraIdentityDbContext<T, ElectraRole>> options)
-    : ElectraIdentityDbContext<T, ElectraRole>(options)
-    where T : ElectraUser;
-
-public class ElectraIdentityDbContext<T, TRole>(DbContextOptions<ElectraIdentityDbContext<T, TRole>> options)
-    : IdentityDbContext<T, TRole, long>(options)
-    where T : ElectraUser
-    where TRole : IdentityRole<long>
-{
-    protected const string schema = "Electra";
-
-    public DbSet<ElectraUserProfile> UserProfile { get; set; }
-
-    // protected override void OnModelCreating(ModelBuilder builder)
-    // {
-    //     builder.HasDefaultSchema(schema);
-    //     base.OnModelCreating(builder); // todo - this may or may not work? verify....
-    //
-    //     foreach (var property in builder.Model.GetEntityTypes()
-    //                  .SelectMany(t => t.GetProperties())
-    //                  .Where(p => p.ClrType == typeof(decimal) || p.ClrType == typeof(decimal?)))
-    //     {
-    //         property.SetColumnType("decimal(18,2)");
-    //     }
-    //
-    //     builder.Entity<T>(entity =>
-    //     {
-    //         entity.ToTable(name: "Users");
-    //         entity.Property(x => x.CreatedOn)
-    //             .HasDefaultValue(DateTimeOffset.UtcNow);
-    //
-    //         entity.Property(x => x.ModifiedOn)
-    //             .HasDefaultValue(DateTimeOffset.UtcNow);
-    //
-    //         entity.HasIndex(x => x.CreatedOn);
-    //         entity.HasIndex(x => x.ModifiedOn);
-    //         entity.HasIndex(x => x.CreatedBy);
-    //         entity.HasIndex(x => x.ModifiedBy);
-    //     });
-    //
-    //     builder.Entity<TRole>(entity => { entity.ToTable(name: "Roles"); });
-    //     builder.Entity<IdentityUserRole<long>>(entity => { entity.ToTable("UserRoles"); });
-    //     builder.Entity<IdentityUserClaim<long>>(entity => { entity.ToTable("UserClaims"); });
-    //     builder.Entity<IdentityUserLogin<long>>(entity => { entity.ToTable("UserLogins"); });
-    //     builder.Entity<IdentityRoleClaim<long>>(entity => { entity.ToTable("RoleClaims"); });
-    //     builder.Entity<IdentityUserToken<long>>(entity => { entity.ToTable("UserTokens"); });
-    //
-    //     builder.Entity<T>()
-    //         .HasMany(p => p.Roles)
-    //         .WithOne()
-    //         .HasForeignKey(p => p.UserId)
-    //         .IsRequired()
-    //         .OnDelete(DeleteBehavior.Cascade);
-    //
-    //     builder.Entity<T>()
-    //         .HasMany(e => e.Claims)
-    //         .WithOne()
-    //         .HasForeignKey(e => e.UserId)
-    //         .IsRequired()
-    //         .OnDelete(DeleteBehavior.Cascade);
-    //
-    //     builder.Entity<ElectraRole>()
-    //         .HasMany(r => r.Claims)
-    //         .WithOne()
-    //         .HasForeignKey(r => r.RoleId)
-    //         .IsRequired()
-    //         .OnDelete(DeleteBehavior.Cascade);
-    //
-    //     builder.Entity<T>()
-    //         .HasMany(r => r.Logins)
-    //         .WithOne()
-    //         .HasForeignKey(r => r.UserId)
-    //         .IsRequired()
-    //         .OnDelete(DeleteBehavior.Cascade);
-    //
-    //     builder.Entity<T>()
-    //         .HasMany(r => r.Tokens)
-    //         .WithOne()
-    //         .HasForeignKey(r => r.UserId)
-    //         .IsRequired()
-    //         .OnDelete(DeleteBehavior.Cascade);
-    //
-    //     builder.Entity<T>()
-    //         .HasOne<ElectraUserProfile>(x => x.Profile)
-    //         .WithOne()
-    //         .OnDelete(DeleteBehavior.Cascade);
-    // }
-}

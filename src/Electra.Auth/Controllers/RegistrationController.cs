@@ -1,6 +1,7 @@
 ﻿using Electra.Auth.Services.Abstractions.RegistrationCeremonyHandle;
 using Electra.Auth.Services.Abstractions.User;
 using Electra.Auth.ViewModels.Registration;
+using Electra.Web.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAuthn.Net.Models.Protocol.Json.RegistrationCeremony.CreateCredential;
@@ -8,7 +9,7 @@ using WebAuthn.Net.Services.RegistrationCeremony;
 
 namespace Electra.Auth.Controllers;
 
-public class RegistrationController : Controller
+public class RegistrationController : ElectraWebBaseController
 {
     private readonly IRegistrationCeremonyHandleService _registrationCeremonyHandleService;
     private readonly IRegistrationCeremonyService _registrationCeremonyService;
@@ -17,7 +18,8 @@ public class RegistrationController : Controller
     public RegistrationController(
         IRegistrationCeremonyService registrationCeremonyService,
         IRegistrationCeremonyHandleService registrationCeremonyHandleService,
-        IUserService userService)
+        IUserService userService,
+        ILogger<RegistrationController> log) : base(log)
     {
         ArgumentNullException.ThrowIfNull(registrationCeremonyService);
         ArgumentNullException.ThrowIfNull(registrationCeremonyHandleService);

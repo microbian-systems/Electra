@@ -25,18 +25,10 @@ public class ElectraUserProfile : Entity
     [MinLength(4)]
     [MaxLength(1024)]
     [JsonPropertyName("website")]
-    public string Website { get; set; }
+    public string? Website { get; set; }
 
     [JsonPropertyName("social_media")]
-    public Dictionary<SocialMediaType, string> SocialMedia { get; } = new();
-
-    [MaxLength(256)]
-    [JsonPropertyName("firstname")]
-    public string Firstname { get; set; }
-
-    [MaxLength(256)]
-    [JsonPropertyName("lastname")]
-    public string Lastname { get; set; }
+    public Dictionary<SocialMediaType, string> SocialMedia { get; } = [];
 
     [MaxLength(128)]
     [JsonPropertyName("headline")]
@@ -48,22 +40,16 @@ public class ElectraUserProfile : Entity
 
     [MaxLength(1024)]
     [JsonPropertyName("bio")]
-    public string Bio { get; set; }
+    public string? Bio { get; set; }
 
     /// <summary>
     /// Can store as base64 encoded image or path to url
     /// </summary>
     [Url]
     [JsonPropertyName("image_url")]
-    public string ImageUrl { get; set; }
+    public string? ImageUrl { get; set; }
 
-    [EmailAddress]
-    [MinLength(5)]
-    [MaxLength(512)]
-    [JsonPropertyName("email")]
-    public string Email { get; set; }
+    public bool AgreedToTos { get; set; } 
 
-    public bool AgreedToTos { get; set; }
-
-    public AddressModel Address { get; set; }
+    public AddressModel? Address { get; set; }
 }
