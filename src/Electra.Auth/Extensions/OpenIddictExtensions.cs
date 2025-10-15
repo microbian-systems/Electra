@@ -28,6 +28,10 @@ public static class OpenIddictExtensions
             {
                 // Enable the token endpoint
                 options.SetTokenEndpointUris("/connect/token");
+                
+                // Enable revocation endpoint for proper token revocation
+                options.SetRevocationEndpointUris("/connect/revoke");
+                
                 // todo - enable userinfo endpoint uris for openiddict
                 //options.SetUserinfoEndpointUris("/connect/userinfo")
                 ;
@@ -52,7 +56,10 @@ public static class OpenIddictExtensions
 
                 // Configure token lifetime
                 options.SetAccessTokenLifetime(TimeSpan.FromMinutes(15));
-                options.SetRefreshTokenLifetime(TimeSpan.FromMinutes(5));
+                options.SetRefreshTokenLifetime(TimeSpan.FromDays(30));
+
+                // Enable reference refresh tokens for rotation and breach detection
+                options.UseReferenceRefreshTokens();
 
                 // Register scopes
                 options.RegisterScopes("api", "offline_access");

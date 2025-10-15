@@ -203,13 +203,54 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Revoke()
     {
         var request = HttpContext.GetOpenIddictServerRequest();
-        if (request == null)
+        if (request == null || string.IsNullOrEmpty(request.Token))
         {
-            return BadRequest("Invalid request");
+            _logger.LogWarning("Invalid revocation request: missing token");
+            return BadRequest(new { error = "invalid_request", error_description = "Missing token parameter" });
         }
 
-        // Implement token revocation logic here
-        return Ok();
+        try
+        {
+            var tokenManager = HttpContext.RequestServices.GetRequiredService<IOpenIddictTokenManager>();
+            
+            // Try to find the token by reference ID (for refresh tokens) or by value (for access tokens)
+            var token = await tokenManager.FindByReferenceIdAsync(request.Token) ??
+                       await tokenManager.FindByIdAsync(request.Token);
+
+            if (token != null)
+            {
+                var tokenType = await tokenManager.GetTypeAsync(token);
+                var subject = await tokenManager.GetSubjectAsync(token);
+                
+                // Revoke the specific token
+                await tokenManager.TryRevokeAsync(token);
+                
+                _logger.LogInformation("Token revoked successfully. Type: {TokenType}, Subject: {Subject}", tokenType, subject);
+                
+                // If it's a refresh token and token_type_hint suggests revoking all, revoke all user tokens
+                if (request.TokenTypeHint == TokenTypeHints.RefreshToken || string.IsNullOrEmpty(request.TokenTypeHint))
+                {
+                    if (!string.IsNullOrEmpty(subject))
+                    {
+                        // Optional: Revoke all refresh tokens for the user (uncomment for stricter security)
+                        // await RevokeAllUserRefreshTokens(subject);
+                        // _logger.LogInformation("All refresh tokens revoked for user {Subject}", subject);
+                    }
+                }
+            }
+            else
+            {
+                _logger.LogInformation("Token not found for revocation: {Token}", request.Token);
+                // Per OAuth 2.0 spec, we should return success even if token doesn't exist
+            }
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error occurred during token revocation");
+            return StatusCode(500, new { error = "server_error", error_description = "An error occurred while processing the revocation request" });
+        }
     }
 
     private async Task<IActionResult> HandlePasswordFlow(OpenIddictRequest request)
@@ -312,6 +353,44 @@ public class AuthController : ControllerBase
             return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
 
+        // SECURITY FIX: Implement refresh token rotation with breach detection
+        var tokenManager = HttpContext.RequestServices.GetRequiredService<IOpenIddictTokenManager>();
+        
+        // Find the current refresh token
+        var refreshToken = await tokenManager.FindByReferenceIdAsync(request.RefreshToken!);
+        if (refreshToken == null)
+        {
+            _logger.LogWarning("Refresh token not found for user {UserId}", userId);
+            var properties = new AuthenticationProperties(new Dictionary<string, string?>
+            {
+                [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
+                [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "Invalid refresh token."
+            });
+
+            return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+        }
+
+        // Check if the refresh token has already been used (breach detection)
+        var tokenStatus = await tokenManager.GetStatusAsync(refreshToken);
+        if (tokenStatus != Statuses.Valid)
+        {
+            _logger.LogWarning("Possible token replay attack detected for user {UserId}. Token status: {Status}", userId, tokenStatus);
+            
+            // SECURITY: Revoke all refresh tokens for this user to prevent further abuse
+            await RevokeAllUserRefreshTokens(userId!);
+            
+            var properties = new AuthenticationProperties(new Dictionary<string, string?>
+            {
+                [OpenIddictServerAspNetCoreConstants.Properties.Error] = Errors.InvalidGrant,
+                [OpenIddictServerAspNetCoreConstants.Properties.ErrorDescription] = "Token replay detected. All sessions have been terminated."
+            });
+
+            return Forbid(properties, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+        }
+
+        // SECURITY FIX: Immediately revoke the current refresh token (rotation)
+        await tokenManager.TryRevokeAsync(refreshToken);
+
         // Create a new claims identity with updated claims
         var identity = new ClaimsIdentity(result.Principal.Claims, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         
@@ -343,8 +422,9 @@ public class AuthController : ControllerBase
             claim.SetDestinations(GetDestinations(claim, principal));
         }
 
-        _logger.LogInformation("Refresh token flow successful for user {UserId}", userId);
+        _logger.LogInformation("Refresh token flow successful for user {UserId}. New tokens issued.", userId);
 
+        // SECURITY FIX: This will now issue BOTH a new access token AND a new refresh token
         return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
     }
 
@@ -378,6 +458,40 @@ public class AuthController : ControllerBase
             default:
                 yield return Destinations.AccessToken;
                 yield break;
+        }
+    }
+
+    /// <summary>
+    /// Revokes all refresh tokens for a specific user (used for breach detection)
+    /// </summary>
+    private async Task RevokeAllUserRefreshTokens(string userId)
+    {
+        try
+        {
+            var tokenManager = HttpContext.RequestServices.GetRequiredService<IOpenIddictTokenManager>();
+            
+            // Find all refresh tokens for the user
+            var tokens = tokenManager.FindBySubjectAsync(userId);
+            
+            await foreach (var token in tokens)
+            {
+                var tokenType = await tokenManager.GetTypeAsync(token);
+                if (tokenType == TokenTypeHints.RefreshToken)
+                {
+                    var tokenStatus = await tokenManager.GetStatusAsync(token);
+                    if (tokenStatus == Statuses.Valid)
+                    {
+                        await tokenManager.TryRevokeAsync(token);
+                        _logger.LogInformation("Revoked refresh token for user {UserId} during breach response", userId);
+                    }
+                }
+            }
+            
+            _logger.LogWarning("All refresh tokens revoked for user {UserId} due to security breach detection", userId);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error revoking all refresh tokens for user {UserId}", userId);
         }
     }
 }
