@@ -16,7 +16,8 @@
       "Bash(dir:*)",
       "Bash(powershell:*)",
       "Bash(find:*)",
-      "Bash(where dotnet)"
+      "Bash(where dotnet)",
+      "Bash(del src\\Electra.Auth.Tests\\Services\\DefaultAuthenticationCeremonyHandleServiceTests.cs)"
     ],
     "deny": []
   }

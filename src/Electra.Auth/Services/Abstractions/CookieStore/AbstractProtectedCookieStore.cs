@@ -60,7 +60,7 @@ public abstract class AbstractProtectedCookieStore
         try
         {
             var encodedProtectedBytes = _cookieManager.GetRequestCookie(httpContext, _cookieName);
-            if (encodedProtectedBytes is null)
+            if (string.IsNullOrEmpty(encodedProtectedBytes))
             {
                 payload = null;
                 return false;

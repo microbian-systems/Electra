@@ -1,66 +1,40 @@
-using Electra.Auth.Controllers;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
+// Basic Account Controller tests - main tests are in ElectraAuthIntegrationTests.cs
+using System.Net;
+using System.Net.Http;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Electra.Auth.Tests;
 
-// Controllers/AccountControllerTests.cs
-using  System.Net;
-using System.Threading.Tasks;
-using Xunit;
-
-public class AccountControllerTests(TestWebAppFactory factory) : IClassFixture<TestWebAppFactory>
+public class AccountControllerIntegrationTests : IClassFixture<TestWebAppFactory>
 {
-    private readonly HttpClient _client = factory.CreateClient();
+    private readonly HttpClient _client;
 
-    
-    [Fact]
-    public async Task AccountController_List_Passkeys_Success()
+    public AccountControllerIntegrationTests(TestWebAppFactory factory)
     {
-        using var scope = factory.Services.CreateScope();
-        var services = scope.ServiceProvider;
-
-        var controller = ActivatorUtilities.CreateInstance<AccountController>(services);
-
-        controller.ControllerContext = new()
-        {
-            HttpContext = new DefaultHttpContext
-            {
-                RequestServices = services
-            }
-        };
-
-        var result = await controller.ListPasskeys(); // whatever action you have
-        Assert.NotNull(result);
+        _client = factory.CreateClient();
     }
-    
+
     [Fact]
-    public async Task AccountController_Logout_Success()
+    public async Task GetAccountListPasskeys_ShouldReturnUnauthorized_WhenNotAuthenticated()
     {
-        using var scope = factory.Services.CreateScope();
-        var services = scope.ServiceProvider;
-
-        var controller = ActivatorUtilities.CreateInstance<AccountController>(services);
-
-        controller.ControllerContext = new()
-        {
-            HttpContext = new DefaultHttpContext
-            {
-                RequestServices = services
-            }
-        };
-
-        var result = await controller.Logout("", CancellationToken.None); // whatever action you have
-        Assert.NotNull(result);
-    }
-    
-    [Fact]
-    public async Task GetAccount_ReturnsOk()
-    {
-        // Arrange
-        var response = await _client.GetAsync("/api/account");
+        // Act
+        var response = await _client.GetAsync("/Account/list");
 
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+    }
+
+    [Fact]
+    public async Task PostLogout_ShouldRequireAntiForgeryToken()
+    {
+        // Arrange
+        var content = new StringContent("", System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
+
+        // Act
+        var response = await _client.PostAsync("/Account/Logout", content);
+
+        // Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }

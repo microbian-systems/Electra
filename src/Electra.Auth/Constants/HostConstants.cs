@@ -2,5 +2,5 @@
 
 public static class HostConstants
 {
-    public const string WebAuthnDisplayName = "WebAuthn.Net Demo";
+    public const string WebAuthnDisplayName = "WebAuthn.passkeys";
 }
