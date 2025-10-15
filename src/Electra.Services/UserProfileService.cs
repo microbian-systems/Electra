@@ -1,8 +1,7 @@
 using System.Linq.Expressions;
 using Electra.Core.Entities;
 using Electra.Models.Entities;
-using Electra.Persistence.EfCore;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
 
 namespace Electra.Services;
 

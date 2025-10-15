@@ -3,7 +3,7 @@ using Electra.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence.Repositories;
+namespace Electra.Persistence.Core;
 
 public interface IReadonlyRepositorySync<T, TKey> where T : IEntity<TKey> where TKey : IEquatable<TKey>
 {

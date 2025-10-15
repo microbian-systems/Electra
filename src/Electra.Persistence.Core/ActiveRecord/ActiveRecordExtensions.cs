@@ -3,7 +3,7 @@ using Electra.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence.ActiveRecord;
+namespace Electra.Persistence.Core.ActiveRecord;
 
 public static class ActiveRecordExtensions
 {

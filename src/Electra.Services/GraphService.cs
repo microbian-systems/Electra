@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Electra.Core.DataStructures.Graphs;
 using Electra.Core.Entities;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
 
 namespace Electra.Services;
 

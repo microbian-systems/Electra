@@ -1,5 +1,5 @@
 using Electra.Models.Entities;
-using Electra.Persistence.EfCore;
+using Electra.Persistence.Core.EfCore;
 
 namespace Electra.Persistence;
 

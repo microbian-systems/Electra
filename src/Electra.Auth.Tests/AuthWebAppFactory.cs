@@ -17,7 +17,7 @@ public class TestWebAppFactory : WebApplicationFactory<Program>
         {
             var env = ctx.HostingEnvironment;
             var config = ctx.Configuration;
-            //services.AddElectraAuthentication(env, config);
+            
         });
 
         return base.CreateHost(builder);

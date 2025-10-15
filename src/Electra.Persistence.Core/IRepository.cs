@@ -1,6 +1,6 @@
 ﻿using Electra.Core.Entities;
 
-namespace Electra.Persistence.Repositories;
+namespace Electra.Persistence.Core;
 
 
 

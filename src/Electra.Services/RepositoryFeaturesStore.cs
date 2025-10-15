@@ -1,4 +1,4 @@
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
 
 namespace Electra.Services;
 

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Electra.Common.Extensions;
 using Electra.Core.Entities;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
 using Marten;
 using Microsoft.Extensions.Logging;
 

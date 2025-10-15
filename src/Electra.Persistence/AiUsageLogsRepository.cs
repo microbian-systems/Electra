@@ -1,6 +1,6 @@
 using Electra.Models.Entities;
-using Electra.Persistence.EfCore;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
+using Electra.Persistence.Core.EfCore;
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence;

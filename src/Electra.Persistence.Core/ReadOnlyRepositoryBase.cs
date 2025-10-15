@@ -2,7 +2,7 @@
 using Electra.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Electra.Persistence.Repositories;
+namespace Electra.Persistence.Core;
 
 public abstract class ReadOnlyRepositoryBase<T, Tkey> : IReadOnlyRepository<T, Tkey> where T : IEntity<Tkey> where Tkey : IEquatable<Tkey>
 {

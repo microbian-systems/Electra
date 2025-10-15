@@ -2,7 +2,7 @@
 using Electra.Core.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence.Repositories;
+namespace Electra.Persistence.Core;
 
 public abstract class RepositoryBase<T, TKey>(ILogger<RepositoryBase<T, TKey>> log) 
     : IWriteRepository<T, TKey>

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Electra.Core.Entities;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
 using LanguageExt;
 
 namespace Electra.Caching.Decorators;

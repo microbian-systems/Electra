@@ -1,5 +1,5 @@
 using Electra.Core.Entities;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
 using LiteDB;
 
 namespace Electra.Persistence.LiteDB;

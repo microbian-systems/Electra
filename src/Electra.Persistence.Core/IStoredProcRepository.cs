@@ -1,4 +1,4 @@
-﻿namespace Electra.Persistence.Repositories;
+﻿namespace Electra.Persistence.Core;
 
 public interface IStoredProcRepository
 {

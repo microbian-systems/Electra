@@ -3,7 +3,7 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using Amazon.DynamoDBv2.Model;
 using Electra.Core.Entities;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
 
 namespace Electra.Persistence.DynamoDB;
 

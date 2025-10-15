@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Electra.Core.Entities;
 
-namespace Electra.Persistence.Marten;
+namespace Electra.Persistence.Core.Marten;
 
 // todo - consider placing a constraint on type TKey for the marten repositories
 public interface IDynamicMartenRepository : IDynamicRepositoryAsync<long>

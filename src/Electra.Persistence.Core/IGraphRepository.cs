@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Electra.Core.Entities;
 
-namespace Electra.Persistence.Repositories;
+namespace Electra.Persistence.Core;
 
 public interface IGraphRepository<TEntity, TKey> : IWriteRepository<TEntity, TKey> 
     where TEntity : class , IEntity<TKey> 

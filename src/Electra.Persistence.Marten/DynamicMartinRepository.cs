@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Electra.Core.Entities;
+using Electra.Persistence.Core.Marten;
 using Marten;
 using Microsoft.Extensions.Logging;
 

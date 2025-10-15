@@ -8,9 +8,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Bogus" Version="35.6.4" />
         <PackageReference Include="coverlet.collector" Version="6.0.2"/>
         <PackageReference Include="FakeItEasy" Version="8.3.0" />
         <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="FluentAssertions" Version="8.7.1" />
+        <PackageReference Include="FluentAssertions.Analyzers" Version="0.34.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

@@ -1,8 +1,8 @@
 using System.ComponentModel;
 using Electra.Common.Extensions;
 using Electra.Core.Entities;
+using Electra.Persistence.Core;
 using Electra.Persistence.Entities;
-using Electra.Persistence.Repositories;
 using Nest;
 
 namespace Electra.Persistence.Elastic;

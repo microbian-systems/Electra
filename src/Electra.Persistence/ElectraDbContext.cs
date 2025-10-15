@@ -1,3 +1,5 @@
+using Electra.Core;
+using Electra.Core.Entities;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
 using Electra.Models.Geo;
@@ -139,5 +141,27 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long
             
         });
     }
-}
 
+    public override int SaveChanges()
+    {
+        AssignSnowflakeIds();
+        return base.SaveChanges();
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        AssignSnowflakeIds();
+        return await base.SaveChangesAsync(cancellationToken);
+    }
+
+    private void AssignSnowflakeIds()
+    {
+        foreach (var entry in ChangeTracker.Entries())
+        {
+            if (entry is { State: EntityState.Added, Entity: IEntity<long> { Id: 0 } entity })
+            {
+                entity.Id = Snowflake.NewId();
+            }
+        }
+    }
+}

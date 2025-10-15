@@ -1,5 +1,5 @@
-using Electra.Persistence.EfCore;
-using Electra.Persistence.Repositories;
+using Electra.Persistence.Core;
+using Electra.Persistence.Core.EfCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
