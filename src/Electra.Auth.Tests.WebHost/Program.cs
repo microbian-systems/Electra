@@ -15,14 +15,6 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddLogging();
 builder.Services.AddHttpContextAccessor();
 
-// builder.Services.AddScoped<ElectraDbContextOptions>(sp =>
-// {
-//     var configuration = sp.GetRequiredService<IConfiguration>();
-//     var optionsBuilder = new DbContextOptionsBuilder<ElectraDbContext>();
-//     optionsBuilder.UseInMemoryDatabase("ElectraAuthTestsDb");
-//     return new ElectraDbContextOptions();
-// });
-
 builder.Services.AddDbContext<ElectraDbContext>(o => { o.UseInMemoryDatabase("ElectraAuthTestsDb"); });
 var env = builder.Environment;
 var config = builder.Configuration;
