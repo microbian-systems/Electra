@@ -76,7 +76,7 @@ public class SwapIntegrationTests : IAsyncLifetime
             q.InputAmount.Should().Be(inputAmount);
             q.OutputAmount.Should().BeGreaterThan(0);
             q.SlippageBps.Should().Be(slippageBps);
-            q.PriceImpactPct.Should().BeGreaterOrEqualTo(0);
+            q.PriceImpactPct.Should().BeGreaterThanOrEqualTo(0);
             q.QuoteResponse.Should().NotBeNull();
         });
     }
@@ -126,7 +126,7 @@ public class SwapIntegrationTests : IAsyncLifetime
             q.InputAmount.Should().Be(inputAmount);
             q.OutputAmount.Should().BeGreaterThan(0);
             q.SlippageBps.Should().Be(slippageBps);
-            q.PriceImpactPct.Should().BeGreaterOrEqualTo(0);
+            q.PriceImpactPct.Should().BeGreaterThanOrEqualTo(0);
         });
     }
 

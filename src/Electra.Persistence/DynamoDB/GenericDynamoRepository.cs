@@ -40,7 +40,7 @@ public class GenericDynamoRepository<T> : GenericRepository<T, string>, IGeneric
     {
         this.client = client;
         tableName = GetTableNameFromAttribute(typeof(T));
-        this.table = Table.LoadTable(client, tableName);  // todo - check if resource exists CreateIfNotExists(tableName);
+        this.table = (Table?)Table.LoadTable(client, tableName);  // todo - check if resource exists CreateIfNotExists(tableName);
         this.contextConfig = new DynamoDBContextConfig{}; // todo - find out best parameters for dynamo config
         this.opConfig = new DynamoDBOperationConfig
         {

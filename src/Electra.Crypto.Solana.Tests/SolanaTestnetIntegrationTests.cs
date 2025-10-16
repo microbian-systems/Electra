@@ -123,7 +123,7 @@ public class SolanaTestnetIntegrationTests : IAsyncLifetime
 
         // Assert
         solBalance.IsSome.Should().BeTrue();
-        solBalance.IfNone(0).Should().BeGreaterOrEqualTo(0);
+        solBalance.IfNone(0).Should().BeGreaterThanOrEqualTo(0);
 
         tokenAssets.IsSome.Should().BeTrue();
         tokenAssets.IfSome(assets =>
@@ -244,7 +244,7 @@ public class SolanaTestnetIntegrationTests : IAsyncLifetime
 
         // Get total portfolio value
         var totalValue = await _walletManager.GetTotalPortfolioValueAsync();
-        totalValue.Should().BeGreaterOrEqualTo(0);
+        totalValue.Should().BeGreaterThanOrEqualTo(0);
     }
 
     [Fact]
@@ -340,7 +340,7 @@ public class SolanaTestnetIntegrationTests : IAsyncLifetime
         solTokenInfo.IfSome(token =>
         {
             token.Symbol.Should().Be("SOL");
-            token.Balance.Should().BeGreaterOrEqualTo(swapAmount);
+            token.Balance.Should().BeGreaterThanOrEqualTo(swapAmount);
             token.MintAddress.Should().Be(SolMintAddress);
         });
     }
@@ -370,8 +370,8 @@ public class SolanaTestnetIntegrationTests : IAsyncLifetime
             {
                 asset.MintAddress.Should().NotBeNullOrEmpty();
                 asset.Symbol.Should().NotBeNullOrEmpty();
-                asset.Balance.Should().BeGreaterOrEqualTo(0);
-                asset.Decimals.Should().BeGreaterOrEqualTo(0);
+                asset.Balance.Should().BeGreaterThanOrEqualTo(0);
+                asset.Decimals.Should().BeGreaterThanOrEqualTo(0);
             }
         });
     }
