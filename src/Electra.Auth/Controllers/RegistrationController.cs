@@ -9,7 +9,8 @@ using WebAuthn.Net.Services.RegistrationCeremony;
 
 namespace Electra.Auth.Controllers;
 
-public class RegistrationController : ElectraWebBaseController
+[Route("api/[controller]")]
+public class RegistrationController : ApiControllerBase
 {
     private readonly IRegistrationCeremonyHandleService _registrationCeremonyHandleService;
     private readonly IRegistrationCeremonyService _registrationCeremonyService;

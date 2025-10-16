@@ -10,16 +10,10 @@ namespace Electra.Auth.Tests;
 /// <summary>
 /// Core integration tests for Electra.Auth - focuses on essential registration and login functionality
 /// </summary>
-public class ElectraAuthIntegrationTests : IClassFixture<TestWebAppFactory>
+public class ElectraAuthIntegrationTests(TestWebAppFactory factory) : IClassFixture<TestWebAppFactory>
 {
-    private readonly HttpClient _client;
-    private readonly TestWebAppFactory _factory;
-
-    public ElectraAuthIntegrationTests(TestWebAppFactory factory)
-    {
-        _factory = factory;
-        _client = factory.CreateClient();
-    }
+    private readonly HttpClient _client = factory.CreateClient();
+    private readonly TestWebAppFactory _factory = factory;
 
     #region Registration Tests
 

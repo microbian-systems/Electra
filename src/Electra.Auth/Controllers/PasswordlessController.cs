@@ -10,6 +10,7 @@ using WebAuthn.Net.Services.AuthenticationCeremony;
 
 namespace Electra.Auth.Controllers;
 
+[Route("api/[controller]")]
 public class PasswordlessController : ElectraWebBaseController
 {
     private readonly IAuthenticationCeremonyHandleService _authenticationCeremonyHandleService;
@@ -30,14 +31,14 @@ public class PasswordlessController : ElectraWebBaseController
         _userService = userService;
     }
 
-    // GET
-    [HttpGet]
-    [AllowAnonymous]
-    public IActionResult Index(CancellationToken cancellationToken)
-    {
-        cancellationToken.ThrowIfCancellationRequested();
-        return View();
-    }
+    // // GET
+    // [HttpGet]
+    // [AllowAnonymous]
+    // public IActionResult Index(CancellationToken cancellationToken)
+    // {
+    //     cancellationToken.ThrowIfCancellationRequested();
+    //     return View();
+    // }
 
     [HttpPost]
     [AllowAnonymous]

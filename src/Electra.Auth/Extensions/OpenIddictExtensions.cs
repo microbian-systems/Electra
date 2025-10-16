@@ -2,6 +2,13 @@ using Electra.Persistence;
 
 namespace Electra.Auth.Extensions;
 
+// todo - ensure openiddict is wired up correctly
+// https://documentation.openiddict.com/guides/getting-started/implementing-token-validation-in-your-apis
+// https://documentation.openiddict.com/guides/getting-started/creating-your-own-server-instance
+// https://documentation.openiddict.com/guides/getting-started/
+// https://documentation.openiddict.com/guides/getting-started/integrating-with-a-remote-server-instance
+// https://github.com/openiddict/openiddict-samples
+
 public static class OpenIddictExtensions
 {
     public static IServiceCollection AddJwtAuthentication(
@@ -38,7 +45,8 @@ public static class OpenIddictExtensions
 
                 // Enable the password and refresh token flows
                 options.AllowPasswordFlow()
-                    .AllowRefreshTokenFlow();
+                    .AllowRefreshTokenFlow()
+                    .AllowClientCredentialsFlow();
 
                 // Accept anonymous clients (i.e., clients that don't send a client_id)
                 options.AcceptAnonymousClients();

@@ -4,35 +4,25 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Server.AspNetCore;
 using System.Security.Claims;
+using Electra.Web.Core.Controllers;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Electra.Auth.Controllers;
 
-[ApiController]
 [Route("api/[controller]")]
-public class ExternalLoginController : ControllerBase
+public class ExternalLoginController(
+    UserManager<ElectraUser> userManager,
+    SignInManager<ElectraUser> signInManager,
+    ILogger<ExternalLoginController> logger)
+    : ElectraApiBaseController(logger)
 {
-    private readonly UserManager<ElectraUser> _userManager;
-    private readonly SignInManager<ElectraUser> _signInManager;
-    private readonly ILogger<ExternalLoginController> _logger;
-
-    public ExternalLoginController(
-        UserManager<ElectraUser> userManager,
-        SignInManager<ElectraUser> signInManager,
-        ILogger<ExternalLoginController> logger)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _logger = logger;
-    }
-
     /// <summary>
     /// Gets available external login providers
     /// </summary>
     [HttpGet("providers")]
     public async Task<IActionResult> GetExternalProviders()
     {
-        var schemes = await _signInManager.GetExternalAuthenticationSchemesAsync();
+        var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
         var providers = schemes.Select(s => new 
         { 
             Name = s.Name,
@@ -67,7 +57,7 @@ public class ExternalLoginController : ControllerBase
         }
 
         var redirectUrl = Url.Action(nameof(Callback), new { returnUrl });
-        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
         
         return Challenge(properties, provider);
     }
@@ -80,21 +70,21 @@ public class ExternalLoginController : ControllerBase
     {
         if (!string.IsNullOrEmpty(remoteError))
         {
-            _logger.LogWarning("External login error: {Error}", remoteError);
+            logger.LogWarning("External login error: {Error}", remoteError);
             return BadRequest($"External login error: {remoteError}");
         }
 
-        var info = await _signInManager.GetExternalLoginInfoAsync();
+        var info = await signInManager.GetExternalLoginInfoAsync();
         if (info == null)
         {
-            _logger.LogWarning("External login info not available");
+            logger.LogWarning("External login info not available");
             return BadRequest("External login failed");
         }
 
         try
         {
             // Check if user already exists with this external login
-            var existingUser = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+            var existingUser = await userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
             
             if (existingUser != null)
             {
@@ -106,20 +96,20 @@ public class ExternalLoginController : ControllerBase
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             if (!string.IsNullOrEmpty(email))
             {
-                var userByEmail = await _userManager.FindByEmailAsync(email);
+                var userByEmail = await userManager.FindByEmailAsync(email);
                 if (userByEmail != null)
                 {
                     // Link this external login to the existing user
-                    var linkResult = await _userManager.AddLoginAsync(userByEmail, info);
+                    var linkResult = await userManager.AddLoginAsync(userByEmail, info);
                     if (linkResult.Succeeded)
                     {
-                        _logger.LogInformation("Linked {Provider} login to existing user {Email}", 
+                        logger.LogInformation("Linked {Provider} login to existing user {Email}", 
                             info.LoginProvider, email);
                         return await CreateTokenResponse(userByEmail);
                     }
                     else
                     {
-                        _logger.LogError("Failed to link external login to user {Email}: {Errors}", 
+                        logger.LogError("Failed to link external login to user {Email}: {Errors}", 
                             email, string.Join(", ", linkResult.Errors.Select(e => e.Description)));
                         return BadRequest("Failed to link external login to existing account");
                     }
@@ -137,7 +127,7 @@ public class ExternalLoginController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error processing external login callback");
+            logger.LogError(ex, "Error processing external login callback");
             return StatusCode(500, "Error processing external login");
         }
     }
@@ -159,14 +149,14 @@ public class ExternalLoginController : ControllerBase
             return Unauthorized();
         }
 
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return NotFound("User not found");
         }
 
         var redirectUrl = Url.Action(nameof(LinkCallback));
-        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, userId);
+        var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, userId);
         
         return Challenge(properties, provider);
     }
@@ -177,7 +167,7 @@ public class ExternalLoginController : ControllerBase
     [HttpGet("link/callback")]
     public async Task<IActionResult> LinkCallback()
     {
-        var info = await _signInManager.GetExternalLoginInfoAsync();
+        var info = await signInManager.GetExternalLoginInfoAsync();
         if (info == null)
         {
             return BadRequest("External login info not available");
@@ -189,16 +179,16 @@ public class ExternalLoginController : ControllerBase
             return BadRequest("Invalid state");
         }
 
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return NotFound("User not found");
         }
 
-        var result = await _userManager.AddLoginAsync(user, info);
+        var result = await userManager.AddLoginAsync(user, info);
         if (result.Succeeded)
         {
-            _logger.LogInformation("Successfully linked {Provider} to user {UserId}", 
+            logger.LogInformation("Successfully linked {Provider} to user {UserId}", 
                 info.LoginProvider, userId);
             return Ok(new { Message = "Provider linked successfully" });
         }
@@ -223,13 +213,13 @@ public class ExternalLoginController : ControllerBase
             return Unauthorized();
         }
 
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return NotFound("User not found");
         }
 
-        var logins = await _userManager.GetLoginsAsync(user);
+        var logins = await userManager.GetLoginsAsync(user);
         var loginToRemove = logins.FirstOrDefault(l => l.LoginProvider == provider);
         
         if (loginToRemove == null)
@@ -238,7 +228,7 @@ public class ExternalLoginController : ControllerBase
         }
 
         // Ensure user has a password or other login method
-        var hasPassword = await _userManager.HasPasswordAsync(user);
+        var hasPassword = await userManager.HasPasswordAsync(user);
         var otherLogins = logins.Where(l => l.LoginProvider != provider).ToList();
         
         if (!hasPassword && otherLogins.Count == 0)
@@ -246,10 +236,10 @@ public class ExternalLoginController : ControllerBase
             return BadRequest("Cannot remove the only login method. Please set a password first.");
         }
 
-        var result = await _userManager.RemoveLoginAsync(user, loginToRemove.LoginProvider, loginToRemove.ProviderKey);
+        var result = await userManager.RemoveLoginAsync(user, loginToRemove.LoginProvider, loginToRemove.ProviderKey);
         if (result.Succeeded)
         {
-            _logger.LogInformation("Successfully unlinked {Provider} from user {UserId}", 
+            logger.LogInformation("Successfully unlinked {Provider} from user {UserId}", 
                 provider, userId);
             return Ok(new { Message = "Provider unlinked successfully" });
         }
@@ -266,7 +256,7 @@ public class ExternalLoginController : ControllerBase
 
         if (string.IsNullOrEmpty(email))
         {
-            _logger.LogWarning("External login {Provider} did not provide an email", info.LoginProvider);
+            logger.LogWarning("External login {Provider} did not provide an email", info.LoginProvider);
             return null;
         }
 
@@ -281,29 +271,29 @@ public class ExternalLoginController : ControllerBase
             }
         };
 
-        var createResult = await _userManager.CreateAsync(user);
+        var createResult = await userManager.CreateAsync(user);
         if (!createResult.Succeeded)
         {
-            _logger.LogError("Failed to create user from external login: {Errors}", 
+            logger.LogError("Failed to create user from external login: {Errors}", 
                 string.Join(", ", createResult.Errors.Select(e => e.Description)));
             return null;
         }
 
-        var loginResult = await _userManager.AddLoginAsync(user, info);
+        var loginResult = await userManager.AddLoginAsync(user, info);
         if (!loginResult.Succeeded)
         {
-            _logger.LogError("Failed to add external login to user: {Errors}", 
+            logger.LogError("Failed to add external login to user: {Errors}", 
                 string.Join(", ", loginResult.Errors.Select(e => e.Description)));
             
             // Cleanup - delete the user we just created
-            await _userManager.DeleteAsync(user);
+            await userManager.DeleteAsync(user);
             return null;
         }
 
         // Add default role
-        await _userManager.AddToRoleAsync(user, "User");
+        await userManager.AddToRoleAsync(user, "User");
 
-        _logger.LogInformation("Created new user {Email} from {Provider} external login", 
+        logger.LogInformation("Created new user {Email} from {Provider} external login", 
             email, info.LoginProvider);
 
         return user;
@@ -319,7 +309,7 @@ public class ExternalLoginController : ControllerBase
         //identity.AddClaim(new Claim(Claims.AuthenticationMethod, "external")); // todo - find out if the external login claim is needed
 
         // Add roles as claims
-        var roles = await _userManager.GetRolesAsync(user);
+        var roles = await userManager.GetRolesAsync(user);
         foreach (var role in roles)
         {
             identity.AddClaim(new Claim(Claims.Role, role));
@@ -341,7 +331,7 @@ public class ExternalLoginController : ControllerBase
         // Set resources (audience)
         principal.SetResources("electra-api");
 
-        _logger.LogInformation("User {Email} authenticated successfully via external login", user.Email);
+        logger.LogInformation("User {Email} authenticated successfully via external login", user.Email);
 
         return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
     }

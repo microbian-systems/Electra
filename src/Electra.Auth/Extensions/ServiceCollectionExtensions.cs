@@ -7,6 +7,7 @@ using Electra.Core.Identity;
 using Electra.Models.Entities;
 using Electra.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ThrowGuard;
 using WebAuthn.Net.Configuration.DependencyInjection;
 using WebAuthn.Net.Storage.InMemory.Models;
 using WebAuthn.Net.Storage.InMemory.Services.ContextFactory;
@@ -24,7 +25,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">The service collection</param>
     /// <param name="env">The hosting environment</param>
     /// <param name="config">Configuration</param>
-    /// <returns>The service collection for chaining</returns>
+    /// <returns>The service collection for chaining</returns> `
     public static IServiceCollection AddElectraAuthentication(
         this IServiceCollection services,
         IHostEnvironment env,
@@ -41,8 +42,8 @@ public static class ServiceCollectionExtensions
             else
             {
                 // Use PostgreSQL for production
-                var connectionString = config.GetConnectionString("DefaultConnection") 
-                    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+                var connectionString = config.GetConnectionString("DefaultConnection");
+                Throw.InvalidOpIfNullOrEmpty(connectionString, "Connection string 'DefaultConnection' null or empty.");
                 opts.UseNpgsql(connectionString);
             }
 
