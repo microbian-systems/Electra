@@ -12,7 +12,6 @@
         
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Automapper" Version="15.0.1" />
         <PackageReference Include="Elsa" Version="3.5.1" />
         <PackageReference Include="Elsa.Abstractions" Version="2.15.2" />
         <PackageReference Include="Elsa.Activities.Console" Version="2.15.2" />
@@ -29,7 +28,6 @@
         <PackageReference Include="Elsa.Scripting.JavaScript" Version="2.15.2" />
         <PackageReference Include="Elsa.Scripting.Liquid" Version="2.15.2" />
         <PackageReference Include="Elsa.WorkflowDesigner" Version="1.5.5.1943" />
-        <PackageReference Include="MediatR" Version="13.0.0" />
         <PackageReference Include="Stateless" Version="5.20.0" />
     </ItemGroup>
     <ItemGroup>
