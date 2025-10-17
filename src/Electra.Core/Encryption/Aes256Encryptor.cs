@@ -20,6 +20,7 @@ public interface IEncryptor
     string DecryptString(string encrypted);
 }
 
+
 /// <summary>
 /// The Aes256Encryptor class provides methods for encrypting and decrypting strings using the
 /// AES-256 encryption algorithm. It requires a 32-byte key and a 16-byte initialization vector
@@ -30,7 +31,7 @@ public interface IEncryptor
 /// </summary>
 /// <param name="key">AES-256 requires a 32-byte key (256 bits)</param>
 /// <param name="iv">AES uses a 16-byte initialization vector (IV)</param>
-public class Aes256Encryptor(byte[] key, byte[] iv) : IEncryptor
+public class Aes256Encryptor(AesEncryptorOptions settings) : IEncryptor
 {
     /// <summary>
     /// Encrypts a string
@@ -40,8 +41,8 @@ public class Aes256Encryptor(byte[] key, byte[] iv) : IEncryptor
     public string EncryptString(string text)
     {
         using var aesAlg = Aes.Create();
-        aesAlg.Key = key;
-        aesAlg.IV = iv;
+        aesAlg.Key = settings.Key.ToByteArray();
+        aesAlg.IV = settings.IV.ToByteArray();
 
         // Create an encryptor to perform the stream transform.
         var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
@@ -68,8 +69,8 @@ public class Aes256Encryptor(byte[] key, byte[] iv) : IEncryptor
     public string DecryptString(string encrypted)
     {
         using var aesAlg = Aes.Create();
-        aesAlg.Key = key;
-        aesAlg.IV = iv;
+        aesAlg.Key = settings.Key.ToByteArray();
+        aesAlg.IV = settings.IV.ToByteArray();
 
         // Create a decryptor to perform the stream transform.
         var decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
@@ -88,3 +89,5 @@ public class Aes256Encryptor(byte[] key, byte[] iv) : IEncryptor
         return secret;
     }
 }
+
+public record AesEncryptorOptions(string Key, string IV);

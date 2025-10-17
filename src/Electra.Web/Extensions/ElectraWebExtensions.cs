@@ -3,6 +3,8 @@ using Electra.Common.Web.Middleware;
 using Electra.Services;
 using Electra.Common.Web.Performance;
 using Electra.Common.Web.Services;
+using Electra.Core.Encryption;
+using Electra.Core.Extensions;
 using Electra.Persistence.Extensions;
 using Electra.Services.Geo;
 using Electra.Services.Mail;
@@ -43,6 +45,7 @@ public static class ElectraWebExtensions
         IWebHostEnvironment host, 
         bool enableAntiForgeryProtection = false)
     {
+        services.AddEncryptionServices();
         services.AddSerilog();
         services.AddSerilogLogging(config);
         services.AddMapster();
@@ -103,7 +106,7 @@ public static class ElectraWebExtensions
         services.AddScoped<IZipApiService, ZipApiService>();
         services.AddScoped(typeof(IElectraUserService<>), typeof(ElectraUserServiceBase<>));
         services.AddScoped<IElectraUserProfileService, ElectraUserProfileService>();
-        services.AddScoped(typeof(IUserProfileService<>), typeof(UserProfileService<>));
+        services.AddScoped(typeof(IUserProfileService<>), typeof(UserProfileService<>)); // todo - very userprofile service is needed, w/ the new electra user profile service
         services.AddEmailServies(config, host);
         services.ConfigureAppSettings(config, host);
         services.ConfigureEmailServices(config);
