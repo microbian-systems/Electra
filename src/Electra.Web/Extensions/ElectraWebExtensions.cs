@@ -46,8 +46,6 @@ public static class ElectraWebExtensions
         bool enableAntiForgeryProtection = false)
     {
         services.AddEncryptionServices();
-        services.AddSerilog();
-        services.AddSerilogLogging(config);
         services.AddMapster();
         // if (enableAntiForgeryProtection)
         //     services.ConfigureAntiForgeryOptions();
@@ -72,10 +70,13 @@ public static class ElectraWebExtensions
         })
         .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
         {
-            // Configure JWT Bearer options
-            // todo - pull this from the JwtOptions in appsettings.json
-            options.Authority = "https://your-authority.com";
-            options.Audience = "your-audience";
+            // Configure JWT Bearer options  
+            var jwtOptions = config.GetSection("Jwt");
+            if (jwtOptions.Exists())
+            {
+                options.Authority = jwtOptions["Authority"];
+                options.Audience = jwtOptions["Audience"];
+            }
         });
 
         services.AddAuthorization(o =>
@@ -94,11 +95,8 @@ public static class ElectraWebExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<ITokenValidationService, ElectraJwtValidationService>();
         services.AddEmailServies(config, host);
-        services.AddOpenApi();
-        services.AddMiniProfilerEx();
         services.ConfigureAppSettings(config, host);
         services.AddElectraCaching(config);
-        services.ConfigureEmailServices(config);
         services.AddScoped<IElectraUserService, ElectraUserService>();
         services.AddScoped<ISmsService, TwilioSmsService>();
         services.AddTransient<IEmailSender, SendGridMailer>();
@@ -106,14 +104,7 @@ public static class ElectraWebExtensions
         services.AddScoped<IZipApiService, ZipApiService>();
         services.AddScoped(typeof(IElectraUserService<>), typeof(ElectraUserServiceBase<>));
         services.AddScoped<IElectraUserProfileService, ElectraUserProfileService>();
-        services.AddScoped(typeof(IUserProfileService<>), typeof(UserProfileService<>)); // todo - very userprofile service is needed, w/ the new electra user profile service
-        services.AddEmailServies(config, host);
-        services.ConfigureAppSettings(config, host);
-        services.ConfigureEmailServices(config);
-        services.AddTransient<IEmailSender, SendGridMailer>();
-        services.AddTransient<IPasswordService, PasswordService>();
-        services.AddTransient<IZipApiService, ZipApiService>();
-        services.AddEmailServies(config, host);
+        services.AddScoped(typeof(IUserProfileService<>), typeof(UserProfileService<>));
 
         return services;
     }
@@ -133,9 +124,6 @@ public static class ElectraWebExtensions
         // app.UseSerilogRequestLogging();
         // app.UseRequestResponseLogging();
         app.UseMiniProfiler();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseAntiforgery();
         // app.UseCustom404Handler();
         // app.UseCustom401Handler();
         // app.UseCustom400Handler();
