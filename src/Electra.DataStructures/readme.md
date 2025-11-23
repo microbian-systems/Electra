@@ -1,3 +1,38 @@
+# Implemented Tree Data Structures
+
+This project contains C# implementations for a variety of common tree data structures.
+
+## Implemented Trees
+
+*   **Binary Tree**: A tree data structure in which each node has at most two children.
+*   **Binary Search Tree (BST)**: A binary tree where the left child contains a key less than the parent and the right child contains a key greater than the parent.
+*   **AVL Tree**: A self-balancing binary search tree.
+*   **Red-Black Tree**: A self-balancing binary search tree that uses node coloring to ensure balance.
+*   **Splay Tree**: A self-balancing binary search tree that moves frequently accessed elements closer to the root.
+*   **Treap**: A randomized binary search tree that uses both a key and a priority.
+*   **Binary Heap**: A complete binary tree that satisfies the heap property, useful for priority queues.
+*   **B-Tree**: A self-balancing tree that is optimized for systems that read and write large blocks of data.
+*   **B+ Tree**: A variation of the B-Tree where all data is stored in the leaf nodes.
+*   **Trie**: A tree used for storing a dynamic set of strings, for fast prefix searches.
+*   **Segment Tree**: A tree data structure for storing information about intervals or segments.
+*   **Interval Tree**: A tree designed to hold intervals and allows for efficient searching of intervals that overlap with a given interval.
+*   **KD-Tree**: A space-partitioning data structure for organizing points in a k-dimensional space.
+*   **R-Tree**: A tree data structure used for storing spatial data. (Structural implementation)
+*   **Expression Tree / AST**: A tree that represents the structure of a mathematical or logical expression.
+
+## Search Algorithms
+
+The following search algorithms are implemented and can be used with the appropriate tree structures:
+
+*   **Depth-First Search (DFS)**: Preorder, Inorder, and Postorder traversals.
+*   **Breadth-First Search (BFS)**: Level-order traversal.
+
+## Examples
+
+For examples on how to use these data structures, please see the [Program.cs](./Examples/Program.cs) file.
+
+---
+
 #  Common Tree Data Structures in Computer Science
 
 ## 1. Binary Trees (Foundational)
@@ -235,4 +270,3 @@ Used with:
 - Recursive operations
 - Memory efficiency important (deep trees)
 - Traversing compiler/language trees (AST, expression tree)
-

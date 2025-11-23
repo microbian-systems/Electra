@@ -1,19 +1,20 @@
-namespace Electra.DataStructures.Trees
+using System.Collections.Generic;
+
+namespace Electra.DataStructures.Trees;
+
+/// <summary>
+/// Represents a node in a tree.
+/// </summary>
+/// <typeparam name="T">The type of the value stored in the node.</typeparam>
+public interface ITreeNode<T>
 {
     /// <summary>
-    /// Represents a node in a tree.
+    /// Gets or sets the value of the node.
     /// </summary>
-    /// <typeparam name="T">The type of the value stored in the node.</typeparam>
-    public interface ITreeNode<T>
-    {
-        /// <summary>
-        /// Gets or sets the value of the node.
-        /// </summary>
-        T Value { get; set; }
+    T Value { get; set; }
 
-        /// <summary>
-        /// Gets the children of the node.
-        /// </summary>
-        IEnumerable<ITreeNode<T>> Children { get; }
-    }
+    /// <summary>
+    /// Gets the children of the node.
+    /// </summary>
+    IEnumerable<ITreeNode<T>> Children { get; }
 }
