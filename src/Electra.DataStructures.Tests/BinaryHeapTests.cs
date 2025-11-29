@@ -3,44 +3,43 @@ using FluentAssertions;
 using Electra.DataStructures.Trees;
 using System;
 
-namespace Electra.DataStructures.Tests
+namespace Electra.DataStructures.Tests;
+
+public class BinaryHeapTests
 {
-    public class BinaryHeapTests
+    [Fact]
+    public void MinHeap_Extract_Returns_Minimum()
     {
-        [Fact]
-        public void MinHeap_Extract_Returns_Minimum()
-        {
-            // Arrange
-            var heap = new BinaryHeap<int>(HeapType.MinHeap);
-            heap.Insert(5);
-            heap.Insert(3);
-            heap.Insert(8);
-            heap.Insert(1);
+        // Arrange
+        var heap = new BinaryHeap<int>(HeapType.MinHeap);
+        heap.Insert(5);
+        heap.Insert(3);
+        heap.Insert(8);
+        heap.Insert(1);
 
-            // Act
-            var min = heap.Extract();
+        // Act
+        var min = heap.Extract();
 
-            // Assert
-            min.Should().Be(1);
-            heap.Peek().Should().Be(3);
-        }
+        // Assert
+        min.Should().Be(1);
+        heap.Peek().Should().Be(3);
+    }
 
-        [Fact]
-        public void MaxHeap_Extract_Returns_Maximum()
-        {
-            // Arrange
-            var heap = new BinaryHeap<int>(HeapType.MaxHeap);
-            heap.Insert(5);
-            heap.Insert(3);
-            heap.Insert(8);
-            heap.Insert(1);
+    [Fact]
+    public void MaxHeap_Extract_Returns_Maximum()
+    {
+        // Arrange
+        var heap = new BinaryHeap<int>(HeapType.MaxHeap);
+        heap.Insert(5);
+        heap.Insert(3);
+        heap.Insert(8);
+        heap.Insert(1);
 
-            // Act
-            var max = heap.Extract();
+        // Act
+        var max = heap.Extract();
 
-            // Assert
-            max.Should().Be(8);
-            heap.Peek().Should().Be(5);
-        }
+        // Assert
+        max.Should().Be(8);
+        heap.Peek().Should().Be(5);
     }
 }
