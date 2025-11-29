@@ -107,8 +107,159 @@ public class BTree<T> where T : IComparable<T>
         
     public void Delete(T key)
     {
-        // Deletion in B-Trees is complex and involves merging or redistributing keys.
-        // This is a placeholder for a future implementation.
-        throw new NotImplementedException("B-Tree deletion is not implemented in this version.");
+        Remove(Root, key);
+
+        if (Root.Keys.Count == 0 && !Root.IsLeaf)
+        {
+            Root = Root.Children[0];
+        }
+    }
+
+    private void Remove(BTreeNode<T> node, T key)
+    {
+        int idx = FindKey(node, key);
+
+        if (idx < node.Keys.Count && node.Keys[idx].CompareTo(key) == 0)
+        {
+            if (node.IsLeaf)
+                RemoveFromLeaf(node, idx);
+            else
+                RemoveFromInternalNode(node, idx);
+        }
+        else
+        {
+            if (node.IsLeaf) return;
+
+            bool flag = (idx == node.Keys.Count);
+
+            if (node.Children[idx].Keys.Count < _degree)
+                Fill(node, idx);
+
+            if (flag && idx > node.Keys.Count)
+                Remove(node.Children[idx - 1], key);
+            else
+                Remove(node.Children[idx], key);
+        }
+    }
+
+    private void RemoveFromLeaf(BTreeNode<T> node, int idx)
+    {
+        node.Keys.RemoveAt(idx);
+    }
+
+    private void RemoveFromInternalNode(BTreeNode<T> node, int idx)
+    {
+        T key = node.Keys[idx];
+
+        if (node.Children[idx].Keys.Count >= _degree)
+        {
+            T pred = GetPred(node, idx);
+            node.Keys[idx] = pred;
+            Remove(node.Children[idx], pred);
+        }
+        else if (node.Children[idx + 1].Keys.Count >= _degree)
+        {
+            T succ = GetSucc(node, idx);
+            node.Keys[idx] = succ;
+            Remove(node.Children[idx + 1], succ);
+        }
+        else
+        {
+            Merge(node, idx);
+            Remove(node.Children[idx], key);
+        }
+    }
+
+    private T GetPred(BTreeNode<T> node, int idx)
+    {
+        BTreeNode<T> cur = node.Children[idx];
+        while (!cur.IsLeaf)
+            cur = cur.Children[cur.Children.Count - 1];
+        return cur.Keys[cur.Keys.Count - 1];
+    }
+
+    private T GetSucc(BTreeNode<T> node, int idx)
+    {
+        BTreeNode<T> cur = node.Children[idx + 1];
+        while (!cur.IsLeaf)
+            cur = cur.Children[0];
+        return cur.Keys[0];
+    }
+
+    private void Fill(BTreeNode<T> node, int idx)
+    {
+        if (idx != 0 && node.Children[idx - 1].Keys.Count >= _degree)
+            BorrowFromPrev(node, idx);
+        else if (idx != node.Keys.Count && node.Children[idx + 1].Keys.Count >= _degree)
+            BorrowFromNext(node, idx);
+        else
+        {
+            if (idx != node.Keys.Count)
+                Merge(node, idx);
+            else
+                Merge(node, idx - 1);
+        }
+    }
+
+    private void BorrowFromPrev(BTreeNode<T> node, int idx)
+    {
+        BTreeNode<T> child = node.Children[idx];
+        BTreeNode<T> sibling = node.Children[idx - 1];
+
+        child.Keys.Insert(0, node.Keys[idx - 1]);
+
+        if (!child.IsLeaf)
+            child.Children.Insert(0, sibling.Children[sibling.Children.Count - 1]);
+
+        node.Keys[idx - 1] = sibling.Keys[sibling.Keys.Count - 1];
+
+        sibling.Keys.RemoveAt(sibling.Keys.Count - 1);
+        if (!sibling.IsLeaf)
+            sibling.Children.RemoveAt(sibling.Children.Count - 1);
+    }
+
+    private void BorrowFromNext(BTreeNode<T> node, int idx)
+    {
+        BTreeNode<T> child = node.Children[idx];
+        BTreeNode<T> sibling = node.Children[idx + 1];
+
+        child.Keys.Add(node.Keys[idx]);
+
+        if (!child.IsLeaf)
+            child.Children.Add(sibling.Children[0]);
+
+        node.Keys[idx] = sibling.Keys[0];
+
+        sibling.Keys.RemoveAt(0);
+        if (!sibling.IsLeaf)
+            sibling.Children.RemoveAt(0);
+    }
+
+    private void Merge(BTreeNode<T> node, int idx)
+    {
+        BTreeNode<T> child = node.Children[idx];
+        BTreeNode<T> sibling = node.Children[idx + 1];
+
+        child.Keys.Add(node.Keys[idx]);
+
+        for (int i = 0; i < sibling.Keys.Count; ++i)
+            child.Keys.Add(sibling.Keys[i]);
+
+        if (!child.IsLeaf)
+        {
+            for (int i = 0; i < sibling.Children.Count; ++i)
+                child.Children.Add(sibling.Children[i]);
+        }
+
+        node.Keys.RemoveAt(idx);
+        node.Children.RemoveAt(idx + 1);
+    }
+
+    private int FindKey(BTreeNode<T> node, T key)
+    {
+        int idx = 0;
+        while (idx < node.Keys.Count && node.Keys[idx].CompareTo(key) < 0)
+            ++idx;
+        return idx;
     }
 }

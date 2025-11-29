@@ -2,18 +2,10 @@ using System;
 
 namespace Electra.DataStructures.Trees;
 
-/// <summary>
-/// Represents a Red-Black Tree, a self-balancing binary search tree.
-/// </summary>
-/// <typeparam name="T">The type of the values in the tree, must be comparable.</typeparam>
 public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
 {
-    /// <summary>
-    /// Gets or sets the root of the tree.
-    /// </summary>
     public RedBlackTreeNode<T> Root { get; private set; }
 
-    /// <inheritdoc />
     public void Insert(T value)
     {
         Root = Insert(Root, value);
@@ -23,90 +15,143 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
     private RedBlackTreeNode<T> Insert(RedBlackTreeNode<T> node, T value)
     {
         if (node == null)
-        {
             return new RedBlackTreeNode<T>(value);
-        }
 
         var compare = value.CompareTo(node.Value);
+
         if (compare < 0)
-        {
-            node.Left = Insert((RedBlackTreeNode<T>)node.Left, value);
-        }
+            node.Left = Insert(Node(node.Left), value);
         else if (compare > 0)
-        {
-            node.Right = Insert((RedBlackTreeNode<T>)node.Right, value);
-        }
+            node.Right = Insert(Node(node.Right), value);
 
-        if (IsRed((RedBlackTreeNode<T>)node.Right) && !IsRed((RedBlackTreeNode<T>)node.Left))
-        {
+        // Fix right-leaning reds
+        if (IsRed(Node(node.Right)) && !IsRed(Node(node.Left)))
             node = LeftRotate(node);
-        }
 
-        if (IsRed((RedBlackTreeNode<T>)node.Left) && IsRed((RedBlackTreeNode<T>)((RedBlackTreeNode<T>)node.Left).Left))
-        {
+        // Fix two reds in a row
+        if (IsRed(Node(node.Left)) && IsRed(Node(node.Left).Left))
             node = RightRotate(node);
-        }
-            
-        if (IsRed((RedBlackTreeNode<T>)node.Left) && IsRed((RedBlackTreeNode<T>)node.Right))
-        {
+
+        // Split 4-nodes
+        if (IsRed(Node(node.Left)) && IsRed(Node(node.Right)))
             FlipColors(node);
-        }
 
         return node;
     }
 
-    /// <inheritdoc />
     public void Delete(T value)
     {
-        // Deletion in a Red-Black tree is notoriously complex.
-        // This is a simplified version and may not cover all cases.
+        if (Root == null) return;
+
+        // Ensure the root is red so we can push a red link down if needed
+        if (!IsRed(Node(Root.Left)) && !IsRed(Node(Root.Right)))
+            Root.Color = NodeColor.Red;
+
         Root = Delete(Root, value);
+
         if (Root != null)
-        {
             Root.Color = NodeColor.Black;
-        }
     }
-        
+
     private RedBlackTreeNode<T> Delete(RedBlackTreeNode<T> node, T value)
     {
-        // Simplified delete - does not rebalance tree
-        if (node == null) return null;
-
-        var cmp = value.CompareTo(node.Value);
-        if (cmp < 0)
+        if (value.CompareTo(node.Value) < 0)
         {
-            node.Left = Delete((RedBlackTreeNode<T>)node.Left, value);
-        }
-        else if (cmp > 0)
-        {
-            node.Right = Delete((RedBlackTreeNode<T>)node.Right, value);
+            // If moving left, ensure the left child is not a 2-node
+            if (node.Left != null && !IsRed(Node(node.Left)) && !IsRed(Node(node.Left).Left))
+                node = MoveRedLeft(node);
+            
+            node.Left = Delete(Node(node.Left), value);
         }
         else
         {
-            if (node.Right == null) return (RedBlackTreeNode<T>)node.Left;
-            if (node.Left == null) return (RedBlackTreeNode<T>)node.Right;
+            if (IsRed(Node(node.Left)))
+                node = RightRotate(node);
 
-            var temp = Min((RedBlackTreeNode<T>)node.Right);
-            node.Value = temp.Value;
-            node.Right = DeleteMin((RedBlackTreeNode<T>)node.Right);
+            if (value.CompareTo(node.Value) == 0 && node.Right == null)
+                return null; // Node to delete found at leaf
+
+            // If moving right, ensure right child is not a 2-node
+            if (node.Right != null && !IsRed(Node(node.Right)) && !IsRed(Node(node.Right).Left))
+                node = MoveRedRight(node);
+
+            if (value.CompareTo(node.Value) == 0)
+            {
+                var minNode = Min(Node(node.Right));
+                node.Value = minNode.Value;
+                node.Right = DeleteMin(Node(node.Right));
+            }
+            else
+            {
+                node.Right = Delete(Node(node.Right), value);
+            }
+        }
+
+        return Balance(node);
+    }
+
+    private RedBlackTreeNode<T> DeleteMin(RedBlackTreeNode<T> node)
+    {
+        if (node.Left == null)
+            return null;
+
+        if (!IsRed(Node(node.Left)) && !IsRed(Node(node.Left).Left))
+            node = MoveRedLeft(node);
+
+        node.Left = DeleteMin(Node(node.Left));
+        return Balance(node);
+    }
+
+    private RedBlackTreeNode<T> Min(RedBlackTreeNode<T> node)
+    {
+        while (node.Left != null)
+            node = Node(node.Left);
+        return node;
+    }
+
+    private RedBlackTreeNode<T> MoveRedLeft(RedBlackTreeNode<T> node)
+    {
+        FlipColors(node);
+        
+        // Safety check: Ensure Right exists before checking Right.Left
+        var right = Node(node.Right);
+        if (right != null && IsRed(Node(right.Left)))
+        {
+            node.Right = RightRotate(right);
+            node = LeftRotate(node);
+            FlipColors(node);
         }
         return node;
     }
-        
-    private RedBlackTreeNode<T> DeleteMin(RedBlackTreeNode<T> node)
+
+    private RedBlackTreeNode<T> MoveRedRight(RedBlackTreeNode<T> node)
     {
-        if (node.Left == null) return (RedBlackTreeNode<T>)node.Right;
-        node.Left = DeleteMin((RedBlackTreeNode<T>)node.Left);
+        FlipColors(node);
+        
+        // Safety check: Ensure Left exists before checking Left.Left
+        var left = Node(node.Left);
+        if (left != null && IsRed(Node(left.Left)))
+        {
+            node = RightRotate(node);
+            FlipColors(node);
+        }
         return node;
     }
-        
-    private RedBlackTreeNode<T> Min(RedBlackTreeNode<T> node)
+
+    private RedBlackTreeNode<T> Balance(RedBlackTreeNode<T> node)
     {
-        if (node.Left == null) return node;
-        return Min((RedBlackTreeNode<T>)node.Left);
+        if (IsRed(Node(node.Right)))
+            node = LeftRotate(node);
+        
+        if (IsRed(Node(node.Left)) && IsRed(Node(node.Left).Left))
+            node = RightRotate(node);
+        
+        if (IsRed(Node(node.Left)) && IsRed(Node(node.Right)))
+            FlipColors(node);
+
+        return node;
     }
 
-    /// <inheritdoc />
     public ITreeNode<T> Find(T value)
     {
         return Find(Root, value);
@@ -118,17 +163,11 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
         {
             var compare = value.CompareTo(node.Value);
             if (compare < 0)
-            {
-                node = (RedBlackTreeNode<T>)node.Left;
-            }
+                node = Node(node.Left);
             else if (compare > 0)
-            {
-                node = (RedBlackTreeNode<T>)node.Right;
-            }
+                node = Node(node.Right);
             else
-            {
                 return node;
-            }
         }
         return null;
     }
@@ -138,16 +177,33 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
         return node != null && node.Color == NodeColor.Red;
     }
 
+    /// <summary>
+    /// Inverts the colors of the node and its children.
+    /// Works for both splitting 4-nodes (insert) and merging 3-nodes (delete).
+    /// </summary>
     private void FlipColors(RedBlackTreeNode<T> node)
     {
-        node.Color = NodeColor.Red;
-        ((RedBlackTreeNode<T>)node.Left).Color = NodeColor.Black;
-        ((RedBlackTreeNode<T>)node.Right).Color = NodeColor.Black;
+        // Toggle Node Color
+        node.Color = node.Color == NodeColor.Red ? NodeColor.Black : NodeColor.Red;
+        
+        // Toggle Left Child Color
+        if (node.Left != null)
+        {
+            var left = Node(node.Left);
+            left.Color = left.Color == NodeColor.Red ? NodeColor.Black : NodeColor.Red;
+        }
+
+        // Toggle Right Child Color
+        if (node.Right != null)
+        {
+            var right = Node(node.Right);
+            right.Color = right.Color == NodeColor.Red ? NodeColor.Black : NodeColor.Red;
+        }
     }
 
     private RedBlackTreeNode<T> LeftRotate(RedBlackTreeNode<T> node)
     {
-        var x = (RedBlackTreeNode<T>)node.Right;
+        var x = Node(node.Right);
         node.Right = x.Left;
         x.Left = node;
         x.Color = node.Color;
@@ -157,11 +213,17 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
 
     private RedBlackTreeNode<T> RightRotate(RedBlackTreeNode<T> node)
     {
-        var x = (RedBlackTreeNode<T>)node.Left;
+        var x = Node(node.Left);
         node.Left = x.Right;
         x.Right = node;
         x.Color = node.Color;
         node.Color = NodeColor.Red;
         return x;
+    }
+
+    // Helper to reduce casting noise and safely handle ITreeNode interface
+    private RedBlackTreeNode<T> Node(ITreeNode<T> node)
+    {
+        return (RedBlackTreeNode<T>)node;
     }
 }
