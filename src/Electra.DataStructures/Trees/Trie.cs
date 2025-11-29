@@ -91,7 +91,7 @@ public class Trie
         if (shouldDeleteChild)
         {
             current.Children.Remove(ch);
-            return current.Children.Count == 0;
+            return current.Children.Count == 0 && !current.IsEndOfWord;
         }
 
         return false;

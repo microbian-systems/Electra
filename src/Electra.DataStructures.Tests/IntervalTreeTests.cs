@@ -21,9 +21,10 @@ namespace Electra.DataStructures.Tests
             var overlapping = intervalTree.SearchOverlapping(new Interval(12, 16)).ToList();
 
             // Assert
-            overlapping.Should().HaveCount(2);
+            overlapping.Should().HaveCount(3);
             overlapping.Should().Contain(i => i.Start == 15 && i.End == 20);
             overlapping.Should().Contain(i => i.Start == 10 && i.End == 30);
+            overlapping.Should().Contain(i => i.Start == 5 && i.End == 20);
         }
     }
 }

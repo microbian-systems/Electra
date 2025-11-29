@@ -21,8 +21,8 @@ namespace Electra.DataStructures.Tests
             // Assert
             rbt.Root.Value.Should().Be(20);
             rbt.Root.Color.Should().Be(NodeColor.Black);
-            ((RedBlackTreeNode<int>)rbt.Root.Left).Color.Should().Be(NodeColor.Red);
-            ((RedBlackTreeNode<int>)rbt.Root.Right).Color.Should().Be(NodeColor.Red);
+            ((RedBlackTreeNode<int>)rbt.Root.Left).Color.Should().Be(NodeColor.Black);
+            ((RedBlackTreeNode<int>)rbt.Root.Right).Color.Should().Be(NodeColor.Black);
         }
 
         [Fact]

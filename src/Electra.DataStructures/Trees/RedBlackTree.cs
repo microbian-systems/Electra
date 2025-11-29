@@ -29,7 +29,7 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
             node = LeftRotate(node);
 
         // Fix two reds in a row
-        if (IsRed(Node(node.Left)) && IsRed(Node(node.Left).Left))
+        if (IsRed(Node(node.Left)) && IsRed(Node(Node(node.Left).Left)))
             node = RightRotate(node);
 
         // Split 4-nodes
@@ -58,7 +58,7 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
         if (value.CompareTo(node.Value) < 0)
         {
             // If moving left, ensure the left child is not a 2-node
-            if (node.Left != null && !IsRed(Node(node.Left)) && !IsRed(Node(node.Left).Left))
+            if (node.Left != null && !IsRed(Node(node.Left)) && !IsRed(Node(Node(node.Left).Left)))
                 node = MoveRedLeft(node);
             
             node.Left = Delete(Node(node.Left), value);
@@ -72,7 +72,7 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
                 return null; // Node to delete found at leaf
 
             // If moving right, ensure right child is not a 2-node
-            if (node.Right != null && !IsRed(Node(node.Right)) && !IsRed(Node(node.Right).Left))
+            if (node.Right != null && !IsRed(Node(node.Right)) && !IsRed(Node(Node(node.Right).Left)))
                 node = MoveRedRight(node);
 
             if (value.CompareTo(node.Value) == 0)
@@ -95,7 +95,7 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
         if (node.Left == null)
             return null;
 
-        if (!IsRed(Node(node.Left)) && !IsRed(Node(node.Left).Left))
+        if (!IsRed(Node(node.Left)) && !IsRed(Node(Node(node.Left).Left)))
             node = MoveRedLeft(node);
 
         node.Left = DeleteMin(Node(node.Left));
@@ -143,7 +143,7 @@ public class RedBlackTree<T> : ITree<T> where T : IComparable<T>
         if (IsRed(Node(node.Right)))
             node = LeftRotate(node);
         
-        if (IsRed(Node(node.Left)) && IsRed(Node(node.Left).Left))
+        if (IsRed(Node(node.Left)) && IsRed(Node(Node(node.Left).Left)))
             node = RightRotate(node);
         
         if (IsRed(Node(node.Left)) && IsRed(Node(node.Right)))
