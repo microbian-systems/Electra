@@ -241,7 +241,7 @@ public class SolanaWalletManagerTests
         // Assert
         //result.Should().BeTrue();
         // Value will be 0 since we're not mocking actual balance calls, but the method should work
-        //result.IfNone(-1).Should().BeGreaterOrEqualTo(0);
+        //result.IfNone(-1).Should().BeGreaterThanOrEqualTo(0);
     }
 
     [Fact]

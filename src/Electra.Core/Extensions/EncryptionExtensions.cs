@@ -1,5 +1,7 @@
+using Electra.Common;
 using Electra.Core.Encryption;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Electra.Core.Extensions;
 
@@ -7,7 +9,17 @@ public static class EncryptionExtensions
 {
     public static IServiceCollection AddEncryptionServices(this IServiceCollection services)
     {
-        services.AddScoped<IEncryptor, Aes256Encryptor>();
+        services.AddTransient<IEncryptor, Aes256Encryptor>(sp =>
+        {
+            var monitor = sp.GetRequiredService<IOptionsMonitor<AppSettings>>();
+            var settings = monitor.CurrentValue;
+            var key = settings.AesEncryptionSettings.Key;
+            var iv = settings.AesEncryptionSettings.IV;
+            var opts = new AesEncryptorOptions(key, iv);
+            var encryptor = new Aes256Encryptor(opts);
+
+            return encryptor;
+        });
         return services;
     }
 }

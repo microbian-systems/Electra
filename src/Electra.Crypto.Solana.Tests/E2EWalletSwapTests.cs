@@ -336,13 +336,13 @@ public class E2EWalletSwapTests : IAsyncLifetime
             {
                 asset.MintAddress.Should().NotBeNullOrEmpty();
                 asset.Symbol.Should().NotBeNullOrEmpty();
-                asset.Balance.Should().BeGreaterOrEqualTo(0);
+                asset.Balance.Should().BeGreaterThanOrEqualTo(0); 
             }
         });
 
         // Step 4: Get total portfolio value
         var totalValue = await _walletManager.GetTotalPortfolioValueAsync();
-        totalValue.Should().BeGreaterOrEqualTo(0);
+        totalValue.Should().BeGreaterThanOrEqualTo(0);
 
         // Step 5: Test popular tokens retrieval
         var popularTokens = await _tokenAssetService.GetPopularTokensAsync();

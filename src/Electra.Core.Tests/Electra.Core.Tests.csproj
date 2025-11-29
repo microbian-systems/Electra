@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -7,7 +7,13 @@
     <RootNamespace>Electra.Core.Tests</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="8.7.1" />
+      <PackageReference Include="Bogus" Version="35.6.4" />
+      <PackageReference Include="FakeItEasy" Version="8.3.0" />
+      <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="FluentAssertions" Version="8.7.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
