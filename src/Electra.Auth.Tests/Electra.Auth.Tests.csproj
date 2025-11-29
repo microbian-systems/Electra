@@ -45,7 +45,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Electra.Auth.Tests.WebHost\Electra.Auth.Tests.WebHost.csproj" />
       <ProjectReference Include="..\Electra.Web.Core\Electra.Web.Core.csproj" />
-      <ProjectReference Include="..\Electra.Auth\Electra.Auth.csproj" />
     </ItemGroup>
 
 </Project>
