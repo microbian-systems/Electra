@@ -62,6 +62,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Misc__", "__Misc__", "{5C
 		D:\proj\microbians\Electra\README.md = D:\proj\microbians\Electra\README.md
 		D:\proj\microbians\Electra\src\GEMINI.md = D:\proj\microbians\Electra\src\GEMINI.md
 		D:\proj\microbians\Electra\src\garnet.conf.dev = D:\proj\microbians\Electra\src\garnet.conf.dev
+		..\clean.cs = ..\clean.cs
+		..\submod.cs = ..\submod.cs
+		..\upgrade.cs = ..\upgrade.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09F2C056-7069-4502-B195-CB6AB74AE86D}"

@@ -40,27 +40,29 @@ public class GitAutomator
 
         try
         {
-            // 1. Stage changes in all submodules recursively
-            Console.WriteLine("\n--- Staging changes in all submodules (git submodule foreach --recursive 'git add .') ---");
-            // Note: We only stage (add) in the submodules. We commit the submodule changes 
-            // and the main repo changes together in the final step.
+            // 1. Stage and commit changes in all submodules recursively
+            Console.WriteLine("\n--- Staging and committing changes in all submodules (git submodule foreach --recursive) ---");
             RunGitCommand($"submodule foreach --recursive \"git add .\"", "Failed to stage changes in submodules.");
+            RunGitCommand($"submodule foreach --recursive \"git commit -m '{commitMessage}'\"", "Failed to commit changes in submodules. (This is acceptable if no changes exist.)");
 
-
-            // 2. Stage changes in the main repository
+            // 2. Update submodule references and stage changes in the main repository
             Console.WriteLine("\n--- Staging changes in the main repository (git add .) ---");
             RunGitCommand("add .", "Failed to stage changes in main repository.");
 
             
             // 3. Commit staged changes with the provided message
-            Console.WriteLine($"\n--- Committing all staged changes (git commit -m \"{commitMessage}\") ---");
-            
-            // Use git commit -m instead of -am, since we explicitly ran 'git add .' already.
-            // Using -m allows committing the staged submodule reference updates as well.
-            // We use Replace to escape any quotes within the message for the command line argument.
+            Console.WriteLine($"\n--- Committing all staged changes in main repo (git commit -m \"{commitMessage}\") ---");
             RunGitCommand($"commit -m \"{commitMessage.Replace("\"", "\"\"")}\"", "Commit failed. Check if there are any staged changes.");
 
-            Console.WriteLine("\nSuccessfully completed staging and commit operation.");
+            // 4. Push changes to remote
+            Console.WriteLine("\n--- Pushing changes to remote (git push) ---");
+            RunGitCommand("push", "Failed to push changes to remote.");
+
+            // 5. Push submodule changes to their remotes
+            Console.WriteLine("\n--- Pushing submodule changes to their remotes (git push --recurse-submodules=on-demand) ---");
+            RunGitCommand("push --recurse-submodules=on-demand", "Failed to push submodule changes. (This is acceptable if no changes exist.)");
+
+            Console.WriteLine("\nSuccessfully completed staging, commit, and push operations.");
         }
         catch (Exception ex)
         {
@@ -105,12 +107,31 @@ public class GitAutomator
 
             if (process.ExitCode != 0)
             {
-                // Handle a common non-failure case where nothing is committed (exit code 1)
+                // Handle common non-failure cases
+                bool isExpectedNonFailure = false;
+
+                // Exit code 1 for commit when nothing to commit
                 if (process.ExitCode == 1 && arguments.StartsWith("commit"))
                 {
-                    Console.WriteLine("[INFO] Commit command completed, but may have exited with code 1 because 'nothing to commit'. This is often acceptable.");
+                    Console.WriteLine("[INFO] Commit command exited with code 1 (nothing to commit). This is often acceptable.");
+                    isExpectedNonFailure = true;
                 }
-                else
+
+                // Exit code 1 for submodule foreach when some submodules have no changes
+                if (process.ExitCode == 1 && arguments.Contains("submodule foreach"))
+                {
+                    Console.WriteLine("[INFO] Submodule operation exited with code 1 (some submodules may have no changes). This is often acceptable.");
+                    isExpectedNonFailure = true;
+                }
+
+                // Exit code 1 for push when nothing to push
+                if (process.ExitCode == 1 && arguments.StartsWith("push"))
+                {
+                    Console.WriteLine("[INFO] Push command exited with code 1 (nothing to push). This is often acceptable.");
+                    isExpectedNonFailure = true;
+                }
+
+                if (!isExpectedNonFailure)
                 {
                     throw new Exception($"{errorMessage} (Exit Code: {process.ExitCode})");
                 }
