@@ -1,4 +1,5 @@
-﻿using Electra.Auth.Constants;
+﻿using System.Threading;
+using Electra.Auth.Constants;
 using Electra.Auth.Services.Abstractions.AuthenticationCeremonyHandle;
 using Electra.Auth.Services.Abstractions.CookieStore;
 using Microsoft.AspNetCore.DataProtection;

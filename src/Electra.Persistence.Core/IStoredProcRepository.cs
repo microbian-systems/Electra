@@ -1,4 +1,6 @@
-﻿namespace Electra.Persistence.Core;
+﻿using System.Threading.Tasks;
+
+namespace Electra.Persistence.Core;
 
 public interface IStoredProcRepository
 {

@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Solnet.Pyth\Solnet.Pyth\Solnet.Pyth.csproj" />
-      <ProjectReference Include="..\..\Solnet\src\Solnet.Extensions\Solnet.Extensions.csproj" />
+      <ProjectReference Include="..\..\..\..\Electra\Solnet.Pyth\Solnet.Pyth\Solnet.Pyth.csproj" />
+      <ProjectReference Include="..\..\..\..\Electra\Solnet\src\Solnet.Extensions\Solnet.Extensions.csproj" />
       <ProjectReference Include="..\Electra.Crypto.Core\Electra.Crypto.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.10" />
-      <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.10" />
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.10" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
     </ItemGroup>
 
 </Project>

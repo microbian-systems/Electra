@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Electra.Auth.Constants;
 using Electra.Auth.Extensions;

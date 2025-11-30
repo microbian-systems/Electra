@@ -1,4 +1,5 @@
-﻿using Electra.Models.Entities;
+﻿using System.Threading;
+using Electra.Models.Entities;
 
 namespace Electra.Auth.Services.Abstractions.User;
 

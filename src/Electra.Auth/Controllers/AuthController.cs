@@ -1,3 +1,4 @@
+using System.Linq;
 using Electra.Auth.Models;
 using Electra.Core.Identity;
 using Electra.Models.Entities;

@@ -1,6 +1,5 @@
 // Fixtures/TestWebAppFactory.cs
 
-using Electra.Auth.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Hosting;

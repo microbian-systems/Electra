@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Electra.Core.Entities;
 
 namespace Electra.Persistence.Core.Marten;

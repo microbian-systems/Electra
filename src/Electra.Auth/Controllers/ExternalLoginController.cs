@@ -1,3 +1,4 @@
+using System.Linq;
 using Electra.Models.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;

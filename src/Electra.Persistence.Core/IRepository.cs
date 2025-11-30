@@ -1,4 +1,7 @@
-﻿using Electra.Core.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Electra.Core.Entities;
 
 namespace Electra.Persistence.Core;
 

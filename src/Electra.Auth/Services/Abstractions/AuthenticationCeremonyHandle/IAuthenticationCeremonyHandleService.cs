@@ -1,4 +1,6 @@
-﻿namespace Electra.Auth.Services.Abstractions.AuthenticationCeremonyHandle;
+﻿using System.Threading;
+
+namespace Electra.Auth.Services.Abstractions.AuthenticationCeremonyHandle;
 
 public interface IAuthenticationCeremonyHandleService
 {

@@ -1,4 +1,5 @@
-﻿using Electra.Auth.Services.Abstractions.RegistrationCeremonyHandle;
+﻿using System.Threading;
+using Electra.Auth.Services.Abstractions.RegistrationCeremonyHandle;
 using Electra.Auth.Services.Abstractions.User;
 using Electra.Auth.ViewModels.Registration;
 using Electra.Web.Core.Controllers;
