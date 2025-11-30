@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Actors", "Electra.Actors\Electra.Actors.csproj", "{B139FDFB-1F5C-4805-80A0-3679FD20671A}"
 EndProject
@@ -39,32 +39,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "__Misc__", "__Misc__", "{5C
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
 		.gitignore = .gitignore
-		appx.conf = appx.conf
-		appx.service = appx.service
 		appx-deploy.sh = appx-deploy.sh
 		appx-ubuntu-install.sh = appx-ubuntu-install.sh
+		appx.conf = appx.conf
+		appx.service = appx.service
+		..\CLAUDE.md = ..\CLAUDE.md
+		..\clean.cs = ..\clean.cs
 		clean.ps1 = clean.ps1
 		DB_Init.sql = DB_Init.sql
 		Directory.Build.props = Directory.Build.props
 		docker-compose.yml = docker-compose.yml
 		Dockerfile = Dockerfile
-		NuGet.Config = NuGet.Config
+		garnet.conf.dev = garnet.conf.dev
+		GEMINI.md = GEMINI.md
 		nuget-publish.sh = nuget-publish.sh
 		nuget-update.sh = nuget-update.sh
+		NuGet.Config = NuGet.Config
 		pack.sh = pack.sh
+		..\README.md = ..\README.md
 		rm-bin-obj.sh = rm-bin-obj.sh
 		rm-vscode.sh = rm-vscode.sh
 		run-migrations.ps1 = run-migrations.ps1
-		update-database.ps1 = update-database.ps1
-		upgrade.ps1 = upgrade.ps1
-		upgrade-packages.ps1 = upgrade-packages.ps1
-		D:\proj\microbians\Electra\CLAUDE.md = D:\proj\microbians\Electra\CLAUDE.md
-		D:\proj\microbians\Electra\README.md = D:\proj\microbians\Electra\README.md
-		D:\proj\microbians\Electra\src\GEMINI.md = D:\proj\microbians\Electra\src\GEMINI.md
-		D:\proj\microbians\Electra\src\garnet.conf.dev = D:\proj\microbians\Electra\src\garnet.conf.dev
-		..\clean.cs = ..\clean.cs
 		..\submod.cs = ..\submod.cs
+		update-database.ps1 = update-database.ps1
+		upgrade-packages.ps1 = upgrade-packages.ps1
 		..\upgrade.cs = ..\upgrade.cs
+		upgrade.ps1 = upgrade.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{09F2C056-7069-4502-B195-CB6AB74AE86D}"
@@ -123,9 +123,6 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B139FDFB-1F5C-4805-80A0-3679FD20671A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -289,10 +286,15 @@ Global
 		{221867EE-20C9-4622-9AB9-1A79D348D0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{221867EE-20C9-4622-9AB9-1A79D348D0B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
 		{BBC4614F-9008-4A7D-8925-A8BE5C7773AB} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
 		{493C3A32-8E53-47F2-846E-5B9D5C327326} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
+		{3AF44B27-ED47-4DCA-BB26-CDC5C0C4B4E2} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
+		{F82B2563-8CD4-4FCB-945D-FB75AD55E54B} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
+		{4C82CFFA-8B71-4AA5-8AD7-828099C05729} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
 		{9E6B1607-00E6-4E49-B331-C7F95EBF69A5} = {5C26607E-528E-429D-842B-E2015FDBEDCF}
 		{D803796E-C3D6-4A74-A204-A2C0B5B8A64F} = {5C26607E-528E-429D-842B-E2015FDBEDCF}
 		{1D793C7F-6BDD-4901-BD34-364ACB3EA18E} = {5C26607E-528E-429D-842B-E2015FDBEDCF}
@@ -303,8 +305,9 @@ Global
 		{6B3917F8-9C0D-48F5-95A2-7F725E05CBFC} = {5C26607E-528E-429D-842B-E2015FDBEDCF}
 		{E114002A-DD1C-4A5C-9B6D-B77D08DFCE72} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
 		{91740254-8AE3-4E00-ACDF-7DD028B6BE9A} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
-		{F82B2563-8CD4-4FCB-945D-FB75AD55E54B} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
-		{4C82CFFA-8B71-4AA5-8AD7-828099C05729} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
 		{73FD86F9-5C24-42B8-B908-774244BBFD50} = {09F2C056-7069-4502-B195-CB6AB74AE86D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {08526601-965A-46A9-881C-3866AD3CC253}
 	EndGlobalSection
 EndGlobal
