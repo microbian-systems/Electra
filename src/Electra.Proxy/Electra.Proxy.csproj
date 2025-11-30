@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OwaspHeaders.Core" Version="9.9.0" />
+    <PackageReference Include="OwaspHeaders.Core" Version="10.0.0" />
     <PackageReference Include="ThrowGuard" Version="1.1.0" />
     <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
     <PackageReference Include="Yarp.Telemetry.Consumption" Version="2.3.0" />
