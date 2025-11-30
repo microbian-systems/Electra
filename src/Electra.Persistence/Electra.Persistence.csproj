@@ -35,6 +35,7 @@
     <PackageReference Include="ServiceStack.Aws" Version="8.10.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.10.1" />
     <PackageReference Include="System.Data.Async" Version="2.0.0" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
     <PackageReference Include="ThrowGuard" Version="1.1.0" />
     <PackageReference Include="YeSql.Net" Version="2.0.0" />
     <PackageReference Include="Z.EntityFramework.Extensions.EFCore" Version="10.105.0" />

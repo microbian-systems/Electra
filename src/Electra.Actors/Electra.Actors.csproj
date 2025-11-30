@@ -26,6 +26,7 @@
     <PackageReference Include="Proto.Actor" Version="1.8.0" />
     <PackageReference Include="Proto.Actor.Extensions" Version="0.3.0" />
     <PackageReference Include="Proto.Serialization.Json" Version="0.2.0.1" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
     <PackageReference Include="ThrowGuard" Version="1.1.0" />
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
   </ItemGroup>
