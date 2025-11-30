@@ -7,8 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\Electra\Solnet.Pyth\Solnet.Pyth\Solnet.Pyth.csproj" />
-      <ProjectReference Include="..\..\..\..\Electra\Solnet\src\Solnet.Extensions\Solnet.Extensions.csproj" />
+      <ProjectReference Include="..\..\Solnet.Metaplex\Solnet.Metaplex\Solnet.Metaplex.csproj" />
+      <ProjectReference Include="..\..\Solnet.Pyth\Solnet.Pyth\Solnet.Pyth.csproj" />
+      <ProjectReference Include="..\..\Solnet.Raydium\Solnet.Raydium\Solnet.Raydium.csproj" />
+      <ProjectReference Include="..\..\Solnet\src\Solnet.Extensions\Solnet.Extensions.csproj" />
+      <ProjectReference Include="..\..\Solnet\src\Solnet.KeyStore\Solnet.KeyStore.csproj" />
+      <ProjectReference Include="..\..\Solnet\src\Solnet.Programs\Solnet.Programs.csproj" />
+      <ProjectReference Include="..\..\Solnet\src\Solnet.Rpc\Solnet.Rpc.csproj" />
+      <ProjectReference Include="..\..\Solnet\src\Solnet.Wallet\Solnet.Wallet.csproj" />
       <ProjectReference Include="..\Electra.Crypto.Core\Electra.Crypto.Core.csproj" />
     </ItemGroup>
 
