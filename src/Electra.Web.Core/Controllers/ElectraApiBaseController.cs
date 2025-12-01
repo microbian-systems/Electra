@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace Electra.Web.Core.Controllers;
 
 [Authorize] 
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
+[EnableRateLimiting("api")]
 [ProducesResponseType(StatusCodes.Status200OK)]
 [ProducesResponseType(StatusCodes.Status201Created)]
 [ProducesResponseType(StatusCodes.Status202Accepted)]
