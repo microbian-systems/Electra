@@ -7,12 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Boxed.AspNetCore" Version="9.0.1" />
-        <PackageReference Include="Foundatio.AzureStorage" Version="12.0.0" />
-        <PackageReference Include="Honeycomb" Version="1.4.0" />
-        <PackageReference Include="Honeycomb.AspNetCore" Version="1.4.0" />
-        <PackageReference Include="Honeycomb.OpenTelemetry" Version="1.5.0" />
-        <PackageReference Include="Honeycomb.Serilog.Sink" Version="2.2.0" />
         <PackageReference Include="IPAddressRange" Version="6.3.0" />
         <PackageReference Include="Mapster" Version="7.4.0" />
         <PackageReference Include="Mapster.Async" Version="2.0.1" />
@@ -32,38 +26,19 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
-        <PackageReference Include="MiniProfiler.AspNetCore" Version="4.5.4" />
-        <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.5.4" />
-        <PackageReference Include="MiniProfiler.Elasticsearch" Version="7.1.0" />
-        <PackageReference Include="MiniProfiler.EntityFrameworkCore" Version="4.5.4" />
-        <PackageReference Include="MiniProfiler.Providers.PostgreSql" Version="4.5.4" />
-        <PackageReference Include="MiniProfiler.Providers.Redis" Version="4.5.4" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
         <PackageReference Include="OwaspHeaders.Core" Version="10.0.0" />
         <PackageReference Include="Scalar.AspNetCore" Version="2.11.0" />
+        <PackageReference Include="StrawberryShake" Version="15.1.11" />
+        <PackageReference Include="StrawberryShake.Blazor" Version="15.1.11" />
+        <PackageReference Include="StrawberryShake.CodeGeneration.CSharp" Version="12.22.6" />
+        <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.22.6" />
+        <PackageReference Include="StrawberryShake.Razor" Version="15.1.11" />
+        <PackageReference Include="StrawberryShake.Resources" Version="15.1.11" />
+        <PackageReference Include="StrawberryShake.Tools.Configuration" Version="15.1.11" />
+        <PackageReference Include="StrawberryShake.Transport.WebSockets" Version="15.1.11" />
         <PackageReference Include="ThrowGuard" Version="1.1.0" />
-        <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
-        <PackageReference Include="Serilog" Version="4.3.0" />
-        <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
-        <PackageReference Include="Serilog.Enrichers.Context" Version="4.6.5" />
-        <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
-        <PackageReference Include="Serilog.Enrichers.Memory" Version="1.0.4" />
-        <PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
-        <PackageReference Include="Serilog.Enrichers.Span" Version="3.1.0" />
-        <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
-        <PackageReference Include="Serilog.Exceptions.EntityFrameworkCore" Version="8.4.0" />
-        <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
-        <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
-        <PackageReference Include="Serilog.Settings.Configuration" Version="10.0.0" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
-        <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
-        <PackageReference Include="Serilog.Sinks.OpenTelemetry" Version="4.2.0" />
-        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-        <PackageReference Include="Serilog.Sinks.Trace" Version="4.0.0" />
     </ItemGroup>
 
     <ItemGroup>
