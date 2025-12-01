@@ -50,9 +50,9 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long
         {
             entity.ToTable("Users", schema: Schemas.Auth);
             
-            // Auditing
-            entity.Property(x => x.CreatedOn).HasDefaultValue(DateTimeOffset.UtcNow);
-            entity.Property(x => x.ModifiedOn).HasDefaultValue(DateTimeOffset.UtcNow);
+            // Auditing - use ValueGeneratedOnAdd for server-side defaults
+            entity.Property(x => x.CreatedOn).ValueGeneratedOnAdd();
+            entity.Property(x => x.ModifiedOn).ValueGeneratedOnAdd();
             entity.HasIndex(x => x.CreatedOn);
             entity.HasIndex(x => x.ModifiedOn);
             entity.HasIndex(x => x.CreatedBy);
@@ -100,10 +100,10 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long
                 .OnDelete(DeleteBehavior.Cascade);
             entity.HasIndex(x => x.Userid).IsUnique();
             entity.Property(x => x.CreatedOn)
-                .HasDefaultValue(DateTimeOffset.UtcNow);
+                .ValueGeneratedOnAdd();
 
             entity.Property(x => x.ModifiedOn)
-                .HasDefaultValue(DateTimeOffset.UtcNow);
+                .ValueGeneratedOnAdd();
 
             entity.HasIndex(x => x.CreatedOn);
             entity.HasIndex(x => x.ModifiedOn);
@@ -120,10 +120,10 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long
             entity.HasIndex(i => i.ApiKey, "ix_apikey")
                 .IsUnique();
             entity.Property(x => x.CreatedOn)
-                .HasDefaultValue(DateTimeOffset.UtcNow);
+                .ValueGeneratedOnAdd();
 
             entity.Property(x => x.ModifiedOn)
-                .HasDefaultValue(DateTimeOffset.UtcNow);
+                .ValueGeneratedOnAdd();
 
             entity.HasIndex(x => x.CreatedOn);
             entity.HasIndex(x => x.ModifiedOn);
