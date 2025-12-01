@@ -1,12 +1,16 @@
-﻿using Electra.Core.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using Electra.Core.Entities;
 
 namespace Electra.Models.Entities;
 
 public class ApiAccountModel : Entity
 {
+    [MaxLength(128)]
     public string? ApiKey { get; set; }
+    [MaxLength(256)]
     public string Email { get; set; }
     public bool Enabled { get; set; }
+    [MaxLength(1024)]
     public string RefreshToken { get; set; }
     public DateTimeOffset RefreshTokenExpiry { get; set; }
     public DateTimeOffset CreateDate { get; set; }

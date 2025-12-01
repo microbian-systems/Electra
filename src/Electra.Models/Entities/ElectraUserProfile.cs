@@ -46,6 +46,7 @@ public class ElectraUserProfile : Entity
     /// Can store as base64 encoded image or path to url
     /// </summary>
     [Url]
+    [MaxLength(1024)]
     [JsonPropertyName("image_url")]
     public string? ImageUrl { get; set; }
 
