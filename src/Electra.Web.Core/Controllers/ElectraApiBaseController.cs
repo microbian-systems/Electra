@@ -9,13 +9,20 @@ namespace Electra.Web.Core.Controllers;
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
 [ProducesResponseType(StatusCodes.Status200OK)]
+[ProducesResponseType(StatusCodes.Status201Created)]
+[ProducesResponseType(StatusCodes.Status202Accepted)]
+[ProducesResponseType(StatusCodes.Status204NoContent)]
+[ProducesResponseType(StatusCodes.Status304NotModified)]
 [ProducesResponseType(StatusCodes.Status400BadRequest)]
 [ProducesResponseType(StatusCodes.Status404NotFound)]
+[ProducesResponseType(StatusCodes.Status403Forbidden)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-public abstract class ApiControllerBase(ILogger<ApiControllerBase> log)
+public abstract class ElectraApiBaseController(ILogger<ElectraApiBaseController> log)
     : ControllerBase
 {
-    protected readonly ILogger<ApiControllerBase> log = log;
+    protected readonly ILogger<ElectraApiBaseController> log = log;
     protected Guid GetUserID()
     {
         if (this.User.Claims.FirstOrDefault(x => x.Type == "id") == null)
@@ -27,6 +34,12 @@ public abstract class ApiControllerBase(ILogger<ApiControllerBase> log)
 
 
     protected virtual InternalErrorResult InternalError() => new();
+
+    protected ActionResult InternalServerError(Exception ex, string message = null)
+    {
+        log.LogError(ex, $"en error has occured: {string.Join(Environment.NewLine, message, ex.Message)}");
+        return new StatusCodeResult(500);
+    }
 }
 
 /// <summary>

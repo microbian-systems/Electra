@@ -11,7 +11,7 @@ using WebAuthn.Net.Services.RegistrationCeremony;
 namespace Electra.Auth.Controllers;
 
 [Route("api/[controller]")]
-public class RegistrationController : ApiControllerBase
+public class RegistrationController : ElectraApiBaseController
 {
     private readonly IRegistrationCeremonyHandleService _registrationCeremonyHandleService;
     private readonly IRegistrationCeremonyService _registrationCeremonyService;
