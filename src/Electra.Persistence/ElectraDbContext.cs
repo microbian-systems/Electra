@@ -21,6 +21,10 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long
     {
     }
 
+    public ElectraDbContext(DbContextOptions options) : base(options)
+    {
+    }
+
     public DbSet<AiUsageLog> AiUsageLogs { get; set; }
     public DbSet<AddressModel> Addresses { get; set; }
     public DbSet<ApiAccountModel> ApiAccounts { get; set; }
