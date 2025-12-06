@@ -41,4 +41,9 @@ public class BlogService(IBlogRepository repository, ILogger<BlogService> logger
     public async Task<IEnumerable<string>> GetAllTagsAsync() => await repository.GetAllTagsAsync();
 
     public async Task<PaginatedResult<Entities.BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber, int pageSize) => await repository.GetBlogsByAuthorAsync(author, pageNumber, pageSize);
+
+    public Task<string?> GetLatestEntries(int v)
+    {
+        throw new NotImplementedException();
+    }
 }
