@@ -51,7 +51,7 @@
     <PackageReference Include="MiniProfiler.Providers.Redis" Version="4.5.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
     <PackageReference Include="OwaspHeaders.Core" Version="10.0.0" />
-    <PackageReference Include="Scalar.AspNetCore" Version="2.11.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.11.1" />
     <PackageReference Include="ThrowGuard" Version="1.1.0" />
     <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.0" />

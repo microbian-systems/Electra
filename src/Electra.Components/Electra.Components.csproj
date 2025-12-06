@@ -55,23 +55,23 @@
     <PackageReference Include="Blazorise.Tailwind" Version="1.8.7" />
     <PackageReference Include="Blazorise.TreeView" Version="1.8.7" />
     <PackageReference Include="Blazorise.Video" Version="1.8.7" />
-    <PackageReference Include="LightweightCharts.Blazor" Version="5.0.8.1" />
+    <PackageReference Include="LightweightCharts.Blazor" Version="5.0.8.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
-    <PackageReference Include="Syncfusion.Blazor" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.Cards" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.Data" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="31.2.15" />
+    <PackageReference Include="Syncfusion.Blazor" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.BulletChart" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.Cards" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.Data" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="31.2.16" />
     <PackageReference Include="Syncfusion.Blazor.PdfViewer" Version="27.1.58" />
-    <PackageReference Include="Syncfusion.Blazor.Popups" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="31.2.15" />
-    <PackageReference Include="Syncfusion.Blazor.StockChart" Version="31.2.15" />
+    <PackageReference Include="Syncfusion.Blazor.Popups" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.ProgressBar" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.SplitButtons" Version="31.2.16" />
+    <PackageReference Include="Syncfusion.Blazor.StockChart" Version="31.2.16" />
     <PackageReference Include="ThrowGuard" Version="1.1.0" />
   </ItemGroup>
 
