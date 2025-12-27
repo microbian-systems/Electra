@@ -10,10 +10,10 @@ Setup the development environment and audit existing code.
 ## Phase 2: Core Store Implementation (TDD)
 Implement the fundamental stores required for Identity.
 
-- [ ] Task: Write failing unit tests for `UserStore` core operations (Create, Update, Delete, Find)
-- [ ] Task: Implement `UserStore` core operations in `Electra.Persistence.RavenDB`
-- [ ] Task: Write failing unit tests for `RoleStore` core operations
-- [ ] Task: Implement `RoleStore` core operations
+- [x] Task: Write failing unit tests for `UserStore` core operations (Create, Update, Delete, Find) (Completed)
+- [x] Task: Implement `UserStore` core operations in `Electra.Persistence.RavenDB` (Completed)
+- [x] Task: Write failing unit tests for `RoleStore` core operations (Completed)
+- [x] Task: Implement `RoleStore` core operations (Completed)
 - [ ] Task: Conductor - User Manual Verification 'Core Store Implementation' (Protocol in workflow.md)
 
 ## Phase 3: Advanced Identity Features & Passkeys (TDD)

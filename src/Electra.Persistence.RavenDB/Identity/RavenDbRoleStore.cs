@@ -346,7 +346,7 @@ public abstract class RoleStore<TRole, TRoleClaim> :
     /// <param name="claim">The claim to add to the role.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> used to propagate notifications that the operation should be canceled.</param>
     /// <returns>The <see cref="Task"/> that represents the asynchronous operation.</returns>
-    public virtual Task AddClaimAsync(TRole role, Claim claim, CancellationToken cancellationToken = default)
+    public virtual async Task AddClaimAsync(TRole role, Claim claim, CancellationToken cancellationToken = default)
     {
         ThrowIfDisposed();
         if (role == null)
@@ -359,7 +359,7 @@ public abstract class RoleStore<TRole, TRoleClaim> :
         }
         role.Claims.Add(CreateRoleClaim(role, claim));
 
-        return Task.FromResult(false);
+        await SaveChanges(cancellationToken);
     }
 
     /// <summary>
@@ -381,13 +381,13 @@ public abstract class RoleStore<TRole, TRoleClaim> :
             throw new ArgumentNullException(nameof(claim));
         }
 
-        await Task.FromResult(0);
-
         var claims = role.Claims.Where(c => c.ClaimValue == claim.Value).ToList();
         foreach (var c in claims)
         {
             role.Claims.Remove(c);
         }
+
+        await SaveChanges(cancellationToken);
     }
 
     /// <summary>

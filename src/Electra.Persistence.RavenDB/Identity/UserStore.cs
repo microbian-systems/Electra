@@ -463,6 +463,8 @@ public class UserStore<TUser, TRole> :
         {
             existingRoleOrNull.Users.Add(user.Id);
         }
+
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />
@@ -478,6 +480,8 @@ public class UserStore<TUser, TRole> :
         {
             roleOrNull.Users.Remove(user.Id);
         }
+
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />

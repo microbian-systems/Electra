@@ -1,0 +1,221 @@
+using System.Security.Claims;
+using Electra.Core;
+using Electra.Core.Identity;
+using Electra.Models.Entities;
+using Electra.Persistence.RavenDB.Identity;
+using FakeItEasy;
+using FluentAssertions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Raven.Client.Documents;
+using Xunit;
+
+namespace Electra.Persistence.RavenDB.Tests;
+
+public class UserStoreTests : RavenDbTestBase
+{
+    private readonly UserStore<ElectraUser, ElectraRole> _userStore;
+    private readonly ILogger<UserStore<ElectraUser, ElectraRole>> _logger;
+    private readonly IOptions<RavenDbIdentityOptions> _options;
+
+    public UserStoreTests()
+    {
+        _logger = A.Fake<ILogger<UserStore<ElectraUser, ElectraRole>>>();
+        _options = Microsoft.Extensions.Options.Options.Create(new RavenDbIdentityOptions
+        {
+            AutoSaveChanges = true,
+            UseStaticIndexes = false
+        });
+
+        _userStore = new UserStore<ElectraUser, ElectraRole>(DocumentStore.OpenAsyncSession(), _logger, _options);
+    }
+
+    [Fact]
+    public async Task CreateAsync_Should_Create_User_And_Email_Reservation()
+    {
+        // Arrange
+        var user = new ElectraUser
+        {
+            Id = $"users/{Snowflake.NewId()}",
+            UserName = "testuser",
+            Email = "test@example.com",
+            FirstName = "Test",
+            LastName = "User",
+            CreatedBy = "System"
+        };
+
+        // Act
+        var result = await _userStore.CreateAsync(user, CancellationToken.None);
+
+        // Assert
+        result.Succeeded.Should().BeTrue();
+        
+        using var session = DocumentStore.OpenAsyncSession();
+        var savedUser = await session.LoadAsync<ElectraUser>(user.Id);
+        savedUser.Should().NotBeNull();
+        savedUser.Email.Should().Be("test@example.com");
+
+        var compareExchangeKey = Conventions.CompareExchangeKeyFor("test@example.com");
+        var reservation = await DocumentStore.Operations.SendAsync(new Raven.Client.Documents.Operations.CompareExchange.GetCompareExchangeValueOperation<string>(compareExchangeKey));
+        reservation.Should().NotBeNull();
+        reservation.Value.Should().Be(user.Id);
+    }
+
+    [Fact]
+    public async Task CreateAsync_Should_Fail_If_Email_Already_Reserved()
+    {
+        // Arrange
+        var user1 = new ElectraUser
+        {
+            Id = $"users/{Snowflake.NewId()}",
+            UserName = "user1",
+            Email = "duplicate@example.com",
+            FirstName = "User",
+            LastName = "One",
+            CreatedBy = "System"
+        };
+        await _userStore.CreateAsync(user1, CancellationToken.None);
+
+        var user2 = new ElectraUser
+        {
+            Id = $"users/{Snowflake.NewId()}",
+            UserName = "user2",
+            Email = "duplicate@example.com",
+            FirstName = "User",
+            LastName = "Two",
+            CreatedBy = "System"
+        };
+
+        // Act
+        var result = await _userStore.CreateAsync(user2, CancellationToken.None);
+
+        // Assert
+        result.Succeeded.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.Code == "DuplicateEmail");
+    }
+
+    [Fact]
+    public async Task FindByIdAsync_Should_Return_User()
+    {
+        // Arrange
+        var user = new ElectraUser
+        {
+            Id = $"users/{Snowflake.NewId()}",
+            UserName = "findme",
+            Email = "findme@example.com",
+            FirstName = "Find",
+            LastName = "Me",
+            CreatedBy = "System"
+        };
+        await _userStore.CreateAsync(user, CancellationToken.None);
+
+        // Act
+        var foundUser = await _userStore.FindByIdAsync(user.Id, CancellationToken.None);
+
+        // Assert
+        foundUser.Should().NotBeNull();
+        foundUser.Id.Should().Be(user.Id);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_Should_Update_User_And_Sync_Username_If_Match()
+    {
+        // Arrange
+        var user = new ElectraUser
+        {
+            Id = $"users/{Snowflake.NewId()}",
+            UserName = "old@example.com",
+            Email = "old@example.com",
+            FirstName = "Old",
+            LastName = "Name",
+            CreatedBy = "System"
+        };
+        await _userStore.CreateAsync(user, CancellationToken.None);
+
+        // Update properties
+        user.Email = "new@example.com";
+        user.FirstName = "New";
+
+        // Act
+        var result = await _userStore.UpdateAsync(user, CancellationToken.None);
+
+        // Assert
+        result.Succeeded.Should().BeTrue();
+        
+        using var session = DocumentStore.OpenAsyncSession();
+        var updatedUser = await session.LoadAsync<ElectraUser>(user.Id);
+        updatedUser.Email.Should().Be("new@example.com");
+        updatedUser.UserName.Should().Be("new@example.com");
+        updatedUser.FirstName.Should().Be("New");
+
+        // Verify old reservation is gone and new exists
+        var oldKey = Conventions.CompareExchangeKeyFor("old@example.com");
+        var newKey = Conventions.CompareExchangeKeyFor("new@example.com");
+        
+        var oldReservation = await DocumentStore.Operations.SendAsync(new Raven.Client.Documents.Operations.CompareExchange.GetCompareExchangeValueOperation<string>(oldKey));
+        oldReservation.Should().BeNull();
+
+        var newReservation = await DocumentStore.Operations.SendAsync(new Raven.Client.Documents.Operations.CompareExchange.GetCompareExchangeValueOperation<string>(newKey));
+        newReservation.Should().NotBeNull();
+        newReservation.Value.Should().Be(user.Id);
+    }
+
+    [Fact]
+    public async Task DeleteAsync_Should_Remove_User_And_Reservation()
+    {
+        // Arrange
+        var user = new ElectraUser
+        {
+            Id = $"users/{Snowflake.NewId()}",
+            UserName = "deleteme",
+            Email = "delete@example.com",
+            FirstName = "Delete",
+            LastName = "Me",
+            CreatedBy = "System"
+        };
+        await _userStore.CreateAsync(user, CancellationToken.None);
+
+        // Act
+        var result = await _userStore.DeleteAsync(user, CancellationToken.None);
+
+        // Assert
+        result.Succeeded.Should().BeTrue();
+
+        using var session = DocumentStore.OpenAsyncSession();
+        var deletedUser = await session.LoadAsync<ElectraUser>(user.Id);
+        deletedUser.Should().BeNull();
+
+        var compareExchangeKey = Conventions.CompareExchangeKeyFor("delete@example.com");
+        var reservation = await DocumentStore.Operations.SendAsync(new Raven.Client.Documents.Operations.CompareExchange.GetCompareExchangeValueOperation<string>(compareExchangeKey));
+        reservation.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task AddToRoleAsync_Should_Add_Role_To_User_And_User_To_Role()
+    {
+        // Arrange
+        var user = new ElectraUser
+        {
+            Id = $"users/{Snowflake.NewId()}",
+            UserName = "roleuser",
+            Email = "role@example.com",
+            FirstName = "Role",
+            LastName = "User",
+            CreatedBy = "System"
+        };
+        await _userStore.CreateAsync(user, CancellationToken.None);
+
+        // Act
+        await _userStore.AddToRoleAsync(user, "Admin", CancellationToken.None);
+
+        // Assert
+        user.GetRolesList().Should().Contain("admin"); // Store implementation lowers it if role doesn't exist
+
+        using var session = DocumentStore.OpenAsyncSession();
+        var roleId = Conventions.RoleIdFor<ElectraRole>("Admin", DocumentStore);
+        var role = await session.LoadAsync<ElectraRole>(roleId);
+        role.Should().NotBeNull();
+        role.Users.Should().Contain(user.Id);
+    }
+}

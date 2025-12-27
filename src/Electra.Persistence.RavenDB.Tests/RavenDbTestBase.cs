@@ -1,33 +1,48 @@
 using Raven.Client.Documents;
+using Raven.Client.ServerWide.Operations;
 using Raven.Embedded;
 
 namespace Electra.Persistence.RavenDB.Tests;
 
 public abstract class RavenDbTestBase : IDisposable
 {
+    private static readonly object _lock = new object();
+    private static bool _serverStarted = false;
+    
     protected IDocumentStore DocumentStore { get; }
 
     protected RavenDbTestBase()
     {
-        EmbeddedServer.Instance.StartServer(new ServerOptions
+        lock (_lock)
         {
-            FrameworkVersion = "8.0.22",
-            DataDirectory = "RavenData"
-        });
+            if (!_serverStarted)
+            {
+                EmbeddedServer.Instance.StartServer(new ServerOptions
+                {
+                    FrameworkVersion = "8.0.22",
+                    DataDirectory = "RavenData"
+                });
+                _serverStarted = true;
+            }
+        }
 
-        DocumentStore = EmbeddedServer.Instance.GetDocumentStore(new DatabaseOptions("TestDB")
-        {
-            // In-memory mode
-        });
-        
-        // Wait for server to be ready and database to be created
-        // (Embedded usually handles this synchronously on GetDocumentStore)
+        // Use a unique database name for each test class to avoid collisions
+        string dbName = "TestDB_" + Guid.NewGuid().ToString("N");
+        DocumentStore = EmbeddedServer.Instance.GetDocumentStore(new DatabaseOptions(dbName));
     }
 
     public void Dispose()
     {
+        // Delete the database after the test is done
+        try 
+        {
+            DocumentStore.Maintenance.Server.Send(new DeleteDatabasesOperation(DocumentStore.Database, hardDelete: true));
+        }
+        catch 
+        {
+            // Ignore errors during cleanup
+        }
+        
         DocumentStore.Dispose();
-        // Note: EmbeddedServer.Instance.Dispose() could be called, 
-        // but typically we keep it running for the duration of the test run.
     }
 }
