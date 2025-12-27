@@ -15,6 +15,7 @@ Implement the fundamental stores required for Identity.
 - [x] Task: Write failing unit tests for `RoleStore` core operations (Completed)
 - [x] Task: Implement `RoleStore` core operations (Completed)
 - [x] Task: Write unit tests for `ElectraUserRepository` and `RavenDbUnitOfWork` (Completed)
+- [x] Task: Write integration tests for ASP.NET Identity with RavenDB (Add, Update, Search, Delete) (Completed)
 - [x] Task: Conductor - User Manual Verification 'Core Store Implementation' (Protocol in workflow.md) (06aef36)
 
 ## Phase 3: Advanced Identity Features & Passkeys (TDD)
