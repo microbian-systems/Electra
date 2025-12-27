@@ -7,11 +7,16 @@ namespace Electra.Persistence.Core;
 
 public interface IUnitOfWork : IDisposable
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    void SaveChanges();
+    public int SaveChanges();
 }
 
-public abstract class UnitOfWorkBase(DbContext context) : IUnitOfWork
+public interface IAsyncUnitOfWork : IDisposable
+{
+    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+}
+
+
+public abstract class UnitOfWorkEfCore(DbContext context) : IUnitOfWork, IAsyncUnitOfWork
 {
     public DbContext Context { get; } = context;
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -19,14 +24,15 @@ public abstract class UnitOfWorkBase(DbContext context) : IUnitOfWork
         return await Context.SaveChangesAsync(cancellationToken);
     }
 
-    public void SaveChanges()
+    public int SaveChanges()
     {
-        Context.SaveChanges();
+        return Context.SaveChanges();
     }
 
     public void Dispose()
     {
         Context.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
 

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
+      <ProjectReference Include="..\Electra.Persistence.Core\Electra.Persistence.Core.csproj" />
+      <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+      <PackageReference Include="RavenDB.Client" Version="7.1.5" />
+    </ItemGroup>
+
+</Project>

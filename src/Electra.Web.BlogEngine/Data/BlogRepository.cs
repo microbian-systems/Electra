@@ -30,7 +30,7 @@ public interface IBlogRepository
     Task<string> GetRawMarkdownAsync(Entities.BlogEntry blog);
 }
 
-public class BlogRepository(BlogDbContext context, ILogger<BlogRepository> logger) : IBlogRepository
+public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryEfCore> logger) : IBlogRepository
 {
     private readonly MarkdownPipeline _markdownPipeline = new MarkdownPipelineBuilder()
         .UseAdvancedExtensions()

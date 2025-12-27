@@ -25,7 +25,7 @@ public class ElectraUnitOfWork(
     IElectraUserProfileRepository userProfileRepo,
     IUserRepository userRepository,
     ILogger<ElectraUnitOfWork> log)
-    : UnitOfWorkBase(context), IElectraUnitOfWork
+    : UnitOfWorkEfCore(context), IElectraUnitOfWork
 {
     public new ElectraDbContext Context { get; } = context;
 
