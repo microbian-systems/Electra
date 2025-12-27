@@ -10,7 +10,7 @@ public class SnowflakeTests
     public void NewId_ShouldGenerateUniqueIds()
     {
         // Arrange
-        var ids = new HashSet<long>();
+        var ids = new HashSet<string>();
         var numberOfIdsToGenerate = 10_000_000;
 
         // Act
