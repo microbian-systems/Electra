@@ -114,7 +114,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
         };
         
         user.RefreshToken = newRefreshToken;
-        uow.SaveChanges();
+        uow.SaveChangesAsync().GetAwaiter().GetResult();
         return true;
     }
 

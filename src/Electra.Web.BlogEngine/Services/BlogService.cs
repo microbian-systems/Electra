@@ -16,7 +16,7 @@ public class BlogService(IBlogRepository repository, ILogger<BlogService> logger
 
     public async Task<PaginatedResult<Entities.BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true) => await repository.GetPaginatedBlogsAsync(pageNumber, pageSize, publishedOnly);
 
-    public async Task<Entities.BlogEntry?> GetBlogByIdAsync(long id) => await repository.GetBlogByIdAsync(id);
+    public async Task<Entities.BlogEntry?> GetBlogByIdAsync(string id) => await repository.GetBlogByIdAsync(id);
 
     public async Task<Entities.BlogEntry?> GetBlogBySlugAsync(string slug) => await repository.GetBlogBySlugAsync(slug);
 
@@ -30,13 +30,13 @@ public class BlogService(IBlogRepository repository, ILogger<BlogService> logger
 
     public async Task<Entities.BlogEntry> UpdateBlogAsync(Entities.BlogEntry blog) => await repository.UpdateBlogAsync(blog);
 
-    public async Task<bool> DeleteBlogAsync(long id) => await repository.DeleteBlogAsync(id);
+    public async Task<bool> DeleteBlogAsync(string id) => await repository.DeleteBlogAsync(id);
 
     public async Task<string> GetContentAsHtmlAsync(Entities.BlogEntry blog) => await repository.GetContentAsHtmlAsync(blog);
 
     public async Task<string> GetRawMarkdownAsync(Entities.BlogEntry blog) => await repository.GetRawMarkdownAsync(blog);
 
-    public async Task<int> IncrementViewCountAsync(long id) => await repository.IncrementViewCountAsync(id);
+    public async Task<int> IncrementViewCountAsync(string id) => await repository.IncrementViewCountAsync(id);
 
     public async Task<IEnumerable<string>> GetAllTagsAsync() => await repository.GetAllTagsAsync();
 

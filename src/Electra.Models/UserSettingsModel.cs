@@ -5,7 +5,7 @@ namespace Electra.Models;
 
 public class UserSettingsModel : Entity
 {
-    public long UserId { get; set; } // foreign key
+    public string UserId { get; set; } // foreign key
     public ElectraUser User { get; set; } // ef core relation
     public string Stuff { get; set; }
 }

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace Electra.Persistence.Marten;
 
 public class UpdateUserProfileCommand(
-    IGenericRepository<ElectraUserProfile, long> db,
+    IGenericRepository<ElectraUserProfile, string> db,
     ILogger<UpdateUserProfileCommand> log)
     : IAsyncCommand<ElectraUserProfile, ElectraUserProfile>
 {

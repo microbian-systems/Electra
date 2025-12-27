@@ -77,9 +77,9 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// <summary>
     /// Gets a blog post by ID
     /// </summary>
-    [HttpGet("{id:long}")]
+    [HttpGet("{id:string}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetBlog(long id)
+    public async Task<IActionResult> GetBlog(string id)
     {
         try
         {
@@ -131,9 +131,9 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// <summary>
     /// Gets blog content as HTML
     /// </summary>
-    [HttpGet("{id:long}/html")]
+    [HttpGet("{id:string}/html")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetBlogHtml(long id)
+    public async Task<IActionResult> GetBlogHtml(string id)
     {
         try
         {
@@ -265,8 +265,8 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// <summary>
     /// Updates an existing blog post
     /// </summary>
-    [HttpPut("{id:long}")]
-    public async Task<IActionResult> UpdateBlog(long id, [FromBody] Entities.BlogEntry blog)
+    [HttpPut("{id:string}")]
+    public async Task<IActionResult> UpdateBlog(string id, [FromBody] Entities.BlogEntry blog)
     {
         try
         {
@@ -297,8 +297,8 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// <summary>
     /// Deletes a blog post
     /// </summary>
-    [HttpDelete("{id:long}")]
-    public async Task<IActionResult> DeleteBlog(long id)
+    [HttpDelete("{id:string}")]
+    public async Task<IActionResult> DeleteBlog(string id)
     {
         try
         {

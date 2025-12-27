@@ -18,7 +18,8 @@ public static class IdentityBuilderExtensions
 	/// <param name="builder">The builder.</param>
 	/// <param name="configure">Options configuration callback for identity integration.</param>
 	/// <returns></returns>
-	public static IdentityBuilder AddRavenDbIdentityStores<TUser>(this IdentityBuilder builder, Action<RavenDbIdentityOptions>? configure = null) where TUser : ElectraUser
+	public static IdentityBuilder AddRavenDbIdentityStores<TUser>(this IdentityBuilder builder, Action<RavenDbIdentityOptions>? configure = null) 
+		where TUser : ElectraUser, new()
 	{
 		return builder.AddRavenDbIdentityStores<TUser, ElectraRole>(configure);
 	}
@@ -32,7 +33,7 @@ public static class IdentityBuilderExtensions
 	/// <param name="configure">Options configuration callback for identity integration.</param>
 	/// <returns>The builder.</returns>
 	public static IdentityBuilder AddRavenDbIdentityStores<TUser, TRole>(this IdentityBuilder builder, Action<RavenDbIdentityOptions>? configure = null)
-		where TUser : ElectraUser
+		where TUser : ElectraUser, new()
 		where TRole : ElectraRole, new()
 	{
 		if (configure != null)

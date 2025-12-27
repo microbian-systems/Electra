@@ -73,13 +73,13 @@ public interface IGenericRepositoryOption<T, TKey>
 /// </summary>
 /// <typeparam name="T">The type of data model to be operated upon <see cref="IEntity{TKey}"/></typeparam>
 /// <remarks>Guid is the default type for the primary key due to the Electra nature of using document stores</remarks>
-public interface IGenericRepositoryOption<T> : IGenericRepositoryOption<T, long> where T : IEntity<long>, new()
+public interface IGenericRepositoryOption<T> : IGenericRepositoryOption<T, string> where T : IEntity<string>, new()
 {
 }
 
 public abstract class GenericRepositoryOption<T>(ILogger<GenericRepositoryOption<T>> log)
-    : GenericRepositoryOption<T, long>(log), IGenericRepositoryOption<T>
-    where T : IEntity<long>, new();
+    : GenericRepositoryOption<T, string>(log), IGenericRepositoryOption<T>
+    where T : IEntity<string>, new();
 
 public abstract class GenericRepositoryOption<T, TKey>(ILogger log) 
     : IGenericRepositoryOption<T, TKey>

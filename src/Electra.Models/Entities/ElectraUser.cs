@@ -13,7 +13,7 @@ namespace Electra.Models.Entities;
 
 public interface IElectraUser
 {
-    long Id { get; set; }
+    string Id { get; set; }
     string? UserName { get; set; }
     string? NormalizedUserName { get; set; }
     string? Email { get; set; }
@@ -48,13 +48,13 @@ public interface IElectraUser
     DateTimeOffset? LastLoginAt { get; set; }
     ElectraUserProfile Profile { get; set; }
     UserSettingsModel UserSettings { get; set; }
-    ICollection<IdentityUserClaim<long>> Claims { get; set; }
-    ICollection<IdentityUserLogin<long>> Logins { get; set; }
-    ICollection<IdentityUserToken<long>> Tokens { get; set; }
-    ICollection<IdentityUserRole<long>> Roles { get; set; }
+    ICollection<IdentityUserClaim<string>> Claims { get; set; }
+    ICollection<IdentityUserLogin<string>> Logins { get; set; }
+    ICollection<IdentityUserToken<string>> Tokens { get; set; }
+    ICollection<string> Roles { get; set; } 
 }
 
-public class ElectraUser : ElectraUser<long>, IElectraUser;
+public class ElectraUser : ElectraUser<string>, IElectraUser;
 
 public interface IElectraUser<TKey>  where TKey : IEquatable<TKey> 
 {
@@ -76,10 +76,10 @@ public interface IElectraUser<TKey>  where TKey : IEquatable<TKey>
     public DateTimeOffset? RefreshTokenExpiryTime { get; set; }
     public ElectraUserProfile Profile { get; set;  }
     public UserSettingsModel UserSettings { get; set; }
-    public ICollection<IdentityUserClaim<long>> Claims { get; set; }
-    public ICollection<IdentityUserLogin<long>> Logins { get; set; }
-    public ICollection<IdentityUserToken<long>> Tokens { get; set; }
-    public ICollection<IdentityUserRole<long>> Roles { get; set; }
+    public ICollection<IdentityUserClaim<string>> Claims { get; set; }
+    public ICollection<IdentityUserLogin<string>> Logins { get; set; }
+    public ICollection<IdentityUserToken<string>> Tokens { get; set; }
+    public ICollection<string> Roles { get; set; }
     TKey Id { get; set; }
     string? UserName { get; set; }
     string? NormalizedUserName { get; set; }
@@ -134,13 +134,24 @@ public class ElectraUser<TKey>
 
     public virtual UserSettingsModel UserSettings { get; set; } = new();
 
-    public virtual ICollection<IdentityUserClaim<long>> Claims { get; set; } = new List<IdentityUserClaim<long>>();
-    public virtual ICollection<IdentityUserLogin<long>> Logins { get; set; } = new List<IdentityUserLogin<long>>();
-    public virtual ICollection<IdentityUserToken<long>> Tokens { get; set; } = new List<IdentityUserToken<long>>();
+    public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; } = new List<IdentityUserClaim<string>>();
+    public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; } = new List<IdentityUserLogin<string>>();
+    public virtual ICollection<IdentityUserToken<string>> Tokens { get; set; } = new List<IdentityUserToken<string>>();
 
-    public virtual ICollection<IdentityUserRole<long>> Roles { get; set; } = new List<IdentityUserRole<long>>();
-    // todo - implement identity model properly
-    // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-6.0
+    public virtual ICollection<string> Roles { get; set; } = new List<string>();
+
+    [NotMapped]
+    [JsonIgnore]
+    public virtual List<string> RoleNames { get; set; } = new();
+
+    public virtual List<string> TwoFactorRecoveryCodes { get; set; } = new();
+
+    public virtual string? TwoFactorAuthenticatorKey { get; set; }
+
+    // For Passkeys (WebAuthn)
+    public virtual List<IdentityUserPasskey<string>> WebAuthnCredentials { get; set; } = new();
+
+    public virtual List<string> GetRolesList() => RoleNames;
 }
 
 

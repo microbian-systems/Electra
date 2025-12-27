@@ -23,7 +23,7 @@ public sealed class ApiAuthRepository(ElectraDbContext context, ILogger<ApiAuthR
         return Task.FromResult(accounts);
     }
 
-    public async Task<ApiAccountModel?> GetByKeyAsync(long key)
+    public async Task<ApiAccountModel?> GetByKeyAsync(string key)
     {
         var account = await apiAccountsDb
             .Include(x => x.Claims)
@@ -53,7 +53,7 @@ public sealed class ApiAuthRepository(ElectraDbContext context, ILogger<ApiAuthR
         return Task.CompletedTask;
     }
 
-    public override async Task DeleteAsync(long id)
+    public override async Task DeleteAsync(string id)
     {
         var account = await apiAccountsDb
             .Include(x => x.Claims)

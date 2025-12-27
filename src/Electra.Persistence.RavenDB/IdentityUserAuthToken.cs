@@ -1,27 +1,10 @@
-﻿namespace Electra.Persistence.RavenDB;
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace Electra.Persistence.RavenDB;
 
 /// <summary>
 /// A authorization token created by a login provider.
 /// </summary>
-public class IdentityUserAuthToken
+public class IdentityUserAuthToken : IdentityUserToken<string>
 {
-    /// <summary>
-    /// The ID of the <see cref="IdentityUser"/> this auth token is for.
-    /// </summary>
-    public string UserId { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The login provider.
-    /// </summary>
-    public string LoginProvider { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The name of the token.
-    /// </summary>
-    public string Name { get; set; } = string.Empty;
-
-    /// <summary>
-    /// The value of the token.
-    /// </summary>
-    public string Value { get; set; } = string.Empty;
 }

@@ -12,13 +12,13 @@ public class ElectraUserProfileService(IUserRepository userRepo, IElectraUserPro
 
 public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity
 {
-    Task<T> GetById(long id);
+    Task<T> GetById(string id);
     Task<T> GetByEmail(string email);
     Task InsertAsync(T model);
     Task UpdateAsync(T model);
     Task UpsertAsync(T model);
     Task DeleteAsync(T model);
-    Task DeleteAsync(long id);
+    Task DeleteAsync(string id);
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 }
     
@@ -28,7 +28,7 @@ public class UserProfileService<T>(IUserRepository userRepo, IGenericRepository<
 {
     private readonly ILogger<UserProfileService<T>> log = log;
 
-    public async Task<T> GetById(long id)
+    public async Task<T> GetById(string id)
     {
         var results = await db.FindByIdAsync(id);
         return results;
@@ -67,7 +67,7 @@ public class UserProfileService<T>(IUserRepository userRepo, IGenericRepository<
         await DeleteAsync(model.Id);
     }
 
-    public async Task DeleteAsync(long id)
+    public async Task DeleteAsync(string id)
     {
         await db.DeleteAsync(id);
     }

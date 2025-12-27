@@ -106,7 +106,7 @@ public static class Conventions
     /// <param name="db">The Raven database. Used for finding the collection name for <typeparamref name="TRole"/>s and the identity parts separator.</param>
     /// <returns>An ID for the role with the specified name.</returns>
     public static string RoleIdFor<TRole>(string roleName, IDocumentStore db)
-        where TRole : IdentityRole
+        where TRole : IdentityRole<string>
     {
         var roleNameLowered = roleName.ToLowerInvariant();
         return CollectionNameWithSeparator<TRole>(db) + roleNameLowered;

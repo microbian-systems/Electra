@@ -10,12 +10,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Electra.Persistence;
 
 
-public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long,
-    IdentityUserClaim<long>,
-    IdentityUserRole<long>,
-    IdentityUserLogin<long>,
-    IdentityRoleClaim<long>,
-    IdentityUserToken<long>>
+public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, string,
+    IdentityUserClaim<string>,
+    IdentityUserRole<string>,
+    IdentityUserLogin<string>,
+    IdentityRoleClaim<string>,
+    IdentityUserToken<string>>
 {
     public ElectraDbContext(DbContextOptions<ElectraDbContext> options) : base(options)
     {
@@ -162,9 +162,9 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, long
     {
         foreach (var entry in ChangeTracker.Entries())
         {
-            if (entry is { State: EntityState.Added, Entity: IEntity<long> { Id: 0 } entity })
+            if (entry is { State: EntityState.Added, Entity: IEntity{ Id: null } entity })
             {
-                entity.Id = Snowflake.NewId();
+                entity.Id = Snowflake.NewId().ToString();
             }
         }
     }

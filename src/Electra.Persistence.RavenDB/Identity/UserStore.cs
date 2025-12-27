@@ -2,9 +2,11 @@ using System.Collections;
 using System.Security.Claims;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
+using JasperFx.Core.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Operations.CompareExchange;
 using ThrowGuard;
@@ -31,7 +33,7 @@ public class UserStore<TUser, TRole> :
     IUserAuthenticationTokenStore<TUser>,
     IUserTwoFactorRecoveryCodeStore<TUser>,
     IQueryableUserStore<TUser>
-    where TUser : ElectraUser
+    where TUser : ElectraUser, new()
     where TRole : ElectraRole, new()
 {
     private bool _disposed;
@@ -92,25 +94,25 @@ public class UserStore<TUser, TRole> :
     #region IUserStore implementation
 
     /// <inheritdoc />
-    public virtual Task<string?> GetUserIdAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.Id.ToString());
+    public virtual Task<string> GetUserIdAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.Id.ToString()!);
 
     /// <inheritdoc />
-    public virtual Task<string> GetUserNameAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
+    public virtual Task<string?> GetUserNameAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
 
     /// <inheritdoc />
-    public virtual Task SetUserNameAsync(TUser user, string userName, CancellationToken cancellationToken)
+    public virtual Task SetUserNameAsync(TUser user, string? userName, CancellationToken cancellationToken)
     {
         user.UserName = userName;
         return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public virtual Task<string> GetNormalizedUserNameAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
+    public virtual Task<string?> GetNormalizedUserNameAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
 
     /// <inheritdoc />
-    public virtual Task SetNormalizedUserNameAsync(TUser user, string normalizedName, CancellationToken cancellationToken)
+    public virtual Task SetNormalizedUserNameAsync(TUser user, string? normalizedName, CancellationToken cancellationToken)
     {
-        user.UserName = normalizedName.ToLowerInvariant();
+        user.UserName = normalizedName?.ToLowerInvariant();
         return Task.CompletedTask;
     }
 
@@ -296,7 +298,7 @@ public class UserStore<TUser, TRole> :
         ThrowIfNullDisposedCancelled(user, cancellationToken);
         ArgumentNullException.ThrowIfNull(login);
 
-        var info = new IdentityUserLogin<long>
+        var info = new IdentityUserLogin<string>
         {
             LoginProvider = login.LoginProvider,
             ProviderKey = login.ProviderKey,
@@ -311,7 +313,13 @@ public class UserStore<TUser, TRole> :
     public virtual Task RemoveLoginAsync(TUser user, string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
-        user.Logins.ToList().RemoveAll(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey);
+        
+        var login = user.Logins.FirstOrDefault(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey);
+        if (login != null)
+        {
+            user.Logins.Remove(login);
+        }
+        
         return Task.CompletedTask;
     }
 
@@ -336,8 +344,12 @@ public class UserStore<TUser, TRole> :
                 //.FirstOrDefault(cancellationToken)
                 ;
                 
-            var rec = res.FirstOrDefault().As<TUser>();
-            return rec;
+            var rec = res.FirstOrDefault();
+            return new TUser()
+            {
+                Email = rec.Email,
+                UserName = rec.UserName,
+            };
         }
 
         // COMMENTED OUT: as of Raven 7, calling .Any(...) with multiple fields is not supported: https://github.com/JudahGabriel/RavenDB.Identity/issues/59
@@ -371,7 +383,10 @@ public class UserStore<TUser, TRole> :
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
-        user.Claims.AddRange(claims.Select(c => new IdentityUserClaim { ClaimType = c.Type, ClaimValue = c.Value }));
+        foreach (var c in claims)
+        {
+            user.Claims.Add(new IdentityUserClaim<string> { ClaimType = c.Type, ClaimValue = c.Value, UserId = user.Id });
+        }
         return Task.CompletedTask;
     }
 
@@ -380,11 +395,11 @@ public class UserStore<TUser, TRole> :
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
-        var indexOfClaim = user.Claims.As<List<IdentityUserClaim<long>>>()
+        var indexOfClaim = user.Claims.As<List<IdentityUserClaim<string>>>()
             .FindIndex(c => c.ClaimType == claim.Type && c.ClaimValue == claim.Value);
         if (indexOfClaim != -1)
         {
-            user.Claims.As<List<TUser>>().RemoveAt(indexOfClaim);
+            user.Claims.As<List<IdentityUserClaim<string>>>().RemoveAt(indexOfClaim);
             await this.AddClaimsAsync(user, [newClaim], cancellationToken);
         }
     }
@@ -394,7 +409,7 @@ public class UserStore<TUser, TRole> :
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
-        user.Claims.As<List<IdentityUserClaim<long>>>()
+        user.Claims.As<List<IdentityUserClaim<string>>>()
             .RemoveAll(identityClaim => claims.Any(c => c.Type == identityClaim.ClaimType && c.Value == identityClaim.ClaimValue));
         return Task.CompletedTask;
     }
@@ -439,12 +454,12 @@ public class UserStore<TUser, TRole> :
 
         // Use the real name (not normalized/uppered/lowered) of the role, as specified by the user.
         var roleRealName = existingRoleOrNull.Name;
-        if (!user.Roles.Contains(roleRealName, StringComparer.InvariantCultureIgnoreCase))
+        if (!user.GetRolesList().Contains(roleRealName, StringComparer.InvariantCultureIgnoreCase))
         {
             user.GetRolesList().Add(roleRealName);
         }
 
-        if (user.Id != null && !existingRoleOrNull.Users.Contains(user.Id, StringComparer.InvariantCultureIgnoreCase))
+        if (!existingRoleOrNull.Users.Contains(user.Id))
         {
             existingRoleOrNull.Users.Add(user.Id);
         }
@@ -458,8 +473,8 @@ public class UserStore<TUser, TRole> :
         user.GetRolesList().RemoveAll(r => string.Equals(r, roleName, StringComparison.InvariantCultureIgnoreCase));
 
         var roleId = RoleStore<TRole>.GetRavenIdFromRoleName(roleName, DbSession.Advanced.DocumentStore);
-        var roleOrNull = await DbSession.LoadAsync<IdentityRole>(roleId, cancellationToken);
-        if (roleOrNull != null && user.Id != null)
+        var roleOrNull = await DbSession.LoadAsync<TRole>(roleId, cancellationToken);
+        if (roleOrNull != null)
         {
             roleOrNull.Users.Remove(user.Id);
         }
@@ -470,7 +485,7 @@ public class UserStore<TUser, TRole> :
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
-        return Task.FromResult<IList<string>>(new List<string>(user.Roles));
+        return Task.FromResult<IList<string>>(new List<string>(user.GetRolesList()));
     }
 
     /// <inheritdoc />
@@ -481,7 +496,7 @@ public class UserStore<TUser, TRole> :
             throw new ArgumentNullException(nameof(roleName));
         }
 
-        return Task.FromResult(user.Roles
+        return Task.FromResult(user.GetRolesList()
             .Contains(roleName, StringComparer.InvariantCultureIgnoreCase));
     }
 
@@ -495,8 +510,7 @@ public class UserStore<TUser, TRole> :
         }
 
         var users = await UserQuery()
-            .Where(u => u.Roles.As<List<string>>()
-                .Contains(roleName, StringComparer.InvariantCultureIgnoreCase))
+            .Where(u => u.RoleNames.Contains(roleName))
             .ToListAsync(cancellationToken);
 
         return users;
@@ -507,7 +521,7 @@ public class UserStore<TUser, TRole> :
     #region IUserPasswordStore implementation
 
     /// <inheritdoc />
-    public virtual Task SetPasswordHashAsync(TUser user, string passwordHash, CancellationToken cancellationToken)
+    public virtual Task SetPasswordHashAsync(TUser user, string? passwordHash, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
@@ -534,7 +548,7 @@ public class UserStore<TUser, TRole> :
     #region IUserSecurityStampStore implementation
 
     /// <inheritdoc />
-    public virtual Task SetSecurityStampAsync(TUser user, string stamp, CancellationToken cancellationToken)
+    public virtual Task SetSecurityStampAsync(TUser user, string? stamp, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
@@ -555,15 +569,15 @@ public class UserStore<TUser, TRole> :
     #region IUserEmailStore implementation
 
     /// <inheritdoc />
-    public virtual Task SetEmailAsync(TUser user, string email, CancellationToken cancellationToken)
+    public virtual Task SetEmailAsync(TUser user, string? email, CancellationToken cancellationToken)
     {
         ThrowIfDisposedOrCancelled(cancellationToken);
-        user.Email = email?.ToLowerInvariant() ?? throw new ArgumentNullException(nameof(email));
+        user.Email = email?.ToLowerInvariant();
         return Task.CompletedTask;
     }
 
     /// <inheritdoc />
-    public virtual Task<string> GetEmailAsync(TUser user, CancellationToken cancellationToken) =>
+    public virtual Task<string?> GetEmailAsync(TUser user, CancellationToken cancellationToken) =>
         Task.FromResult(user.Email);
 
     /// <inheritdoc />
@@ -578,13 +592,15 @@ public class UserStore<TUser, TRole> :
     }
 
     /// <inheritdoc />
-    public virtual async Task<TUser?> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
+    public virtual async Task<TUser?> FindByEmailAsync(string? normalizedEmail, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrEmpty(normalizedEmail)) return null;
+
         if (options.Value.UseStaticIndexes)
         {
             return await DbSession.Query<IdentityUserIndex<TUser>.Result, IdentityUserIndex<TUser>>()
                 .Where(u => u.Email == normalizedEmail)
-                .As<TUser>()
+                .OfType<TUser>()
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
@@ -603,13 +619,13 @@ public class UserStore<TUser, TRole> :
     }
 
     /// <inheritdoc />
-    public virtual Task<string> GetNormalizedEmailAsync(TUser user, CancellationToken cancellationToken) =>
+    public virtual Task<string?> GetNormalizedEmailAsync(TUser user, CancellationToken cancellationToken) =>
         Task.FromResult(user.Email);
 
     /// <inheritdoc />
-    public virtual Task SetNormalizedEmailAsync(TUser user, string normalizedEmail, CancellationToken cancellationToken)
+    public virtual Task SetNormalizedEmailAsync(TUser user, string? normalizedEmail, CancellationToken cancellationToken)
     {
-        user.Email = normalizedEmail.ToLowerInvariant(); // I don't like the ALL CAPS default. We're going all lower.
+        user.Email = normalizedEmail?.ToLowerInvariant(); // I don't like the ALL CAPS default. We're going all lower.
         return Task.CompletedTask;
     }
 
@@ -702,7 +718,7 @@ public class UserStore<TUser, TRole> :
     #region IUserPhoneNumberStore implementation
 
     /// <inheritdoc />
-    public virtual Task SetPhoneNumberAsync(TUser user, string phoneNumber, CancellationToken cancellationToken)
+    public virtual Task SetPhoneNumberAsync(TUser user, string? phoneNumber, CancellationToken cancellationToken)
     {
         user.PhoneNumber = phoneNumber;
         return Task.CompletedTask;
@@ -728,7 +744,7 @@ public class UserStore<TUser, TRole> :
     #region IUserAuthenticatorKeyStore implementation
 
     /// <inheritdoc />
-    public virtual Task SetAuthenticatorKeyAsync(TUser user, string key, CancellationToken cancellationToken)
+    public virtual Task SetAuthenticatorKeyAsync(TUser user, string? key, CancellationToken cancellationToken)
     {
         user.TwoFactorAuthenticatorKey = key;
         return Task.CompletedTask;
@@ -745,7 +761,7 @@ public class UserStore<TUser, TRole> :
     #region IUserAuthenticationTokenStore
 
     /// <inheritdoc />
-    public virtual Task SetTokenAsync(TUser user, string loginProvider, string name, string value, CancellationToken cancellationToken)
+    public virtual Task SetTokenAsync(TUser user, string loginProvider, string name, string? value, CancellationToken cancellationToken)
     {
         var existingToken = user.Tokens.FirstOrDefault(t => t.LoginProvider == loginProvider && t.Name == name);
         if (existingToken != null)
@@ -756,6 +772,7 @@ public class UserStore<TUser, TRole> :
         {
             user.Tokens.Add(new IdentityUserAuthToken
             {
+                UserId = user.Id,
                 LoginProvider = loginProvider,
                 Name = name,
                 Value = value
@@ -768,7 +785,7 @@ public class UserStore<TUser, TRole> :
     /// <inheritdoc />
     public virtual Task RemoveTokenAsync(TUser user, string loginProvider, string name, CancellationToken cancellationToken)
     {
-        if(user.Tokens is List<IdentityUserToken<long>> tokens)
+        if(user.Tokens is List<IdentityUserToken<string>> tokens)
             tokens.RemoveAll(t => t.LoginProvider == loginProvider && t.Name == name);
         return Task.CompletedTask;
     }
@@ -783,25 +800,20 @@ public class UserStore<TUser, TRole> :
     /// <inheritdoc />
     public virtual Task ReplaceCodesAsync(TUser user, IEnumerable<string> recoveryCodes, CancellationToken cancellationToken)
     {
-        //user.TwoFactorRecoveryCodes = new List<string>(recoveryCodes);
-        Throw.NotImplemented($"{nameof(ReplaceCodesAsync)}: This store does not support recovery codes.");
+        user.TwoFactorRecoveryCodes = new List<string>(recoveryCodes);
         return Task.CompletedTask;
     }
 
     /// <inheritdoc />
     public virtual Task<bool> RedeemCodeAsync(TUser user, string code, CancellationToken cancellationToken)
     {
-        //return Task.FromResult(user.TwoFactorRecoveryCodes.Remove(code));
-        Throw.NotImplemented($"{nameof(RedeemCodeAsync)}: This store does not support recovery codes.");
-        return Task.FromResult(false);
+        return Task.FromResult(user.TwoFactorRecoveryCodes.Remove(code));
     }
 
     /// <inheritdoc />
     public virtual Task<int> CountCodesAsync(TUser user, CancellationToken cancellationToken)
     {
-        Throw.NotImplemented($"{nameof(CountCodesAsync)}: This store does not support counting recovery codes.");
-        //return Task.FromResult(user.TwoFactorRecoveryCodes.Count);
-        return Task.FromResult(0);
+        return Task.FromResult(user.TwoFactorRecoveryCodes.Count);
     }
 
     #endregion

@@ -7,12 +7,12 @@ namespace Electra.Services;
 
 public sealed class MartenUserProfileService<T>(
     IUserRepository userRepository,
-    IGenericMartenRepository<T, long> db,
+    IGenericMartenRepository<T, string> db,
     ILogger<MartenUserProfileService<T>> log)
     : IUserProfileService<T>
     where T : ElectraUserProfile, new()
 {
-    public async Task<T> GetById(long id)
+    public async Task<T> GetById(string id)
     {
         log.LogInformation($"getting user profile with id: {id}");
         return await db.FindByIdAsync(id);
@@ -53,7 +53,7 @@ public sealed class MartenUserProfileService<T>(
 
     public async Task DeleteAsync(T model) => await DeleteAsync(model.Id);
 
-    public async Task DeleteAsync(long id)
+    public async Task DeleteAsync(string id)
     {
         log.LogWarning($"deleting user with id {id}");
         await db.DeleteAsync(id);

@@ -31,7 +31,7 @@ public class IdentityTests : IClassFixture<TestWebAppFactory>, IDisposable
     {
         var user = new ElectraUser()
         {
-            Id = Snowflake.NewId(),
+            Id = Snowflake.NewId().ToString(),
             FirstName = faker.Person.FirstName,
             LastName = faker.Person.LastName,
             UserName = faker.Person.UserName,

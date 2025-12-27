@@ -3,7 +3,7 @@
 ## Phase 1: Assessment and Baseline
 Focus on identifying current gaps in coverage and standardization.
 
-- [ ] Task: Audit current test coverage for `Electra.Common` and `Electra.Core`
+- [~] Task: Audit current test coverage for `Electra.Common` and `Electra.Core`
 - [ ] Task: Review `Electra.Common` for API consistency and DX guidelines
 - [ ] Task: Review `Electra.Core` for API consistency and DX guidelines
 - [ ] Task: Conductor - User Manual Verification 'Assessment and Baseline' (Protocol in workflow.md)

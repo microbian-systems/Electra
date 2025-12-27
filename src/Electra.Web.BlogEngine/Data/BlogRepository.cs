@@ -15,15 +15,15 @@ public interface IBlogRepository
 {
     Task<IEnumerable<Entities.BlogEntry>> GetLatestBlogsAsync(int count);
     Task<PaginatedResult<Entities.BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true);
-    Task<Entities.BlogEntry?> GetBlogByIdAsync(long id);
+    Task<Entities.BlogEntry?> GetBlogByIdAsync(string id);
     Task<Entities.BlogEntry?> GetBlogBySlugAsync(string slug);
     Task<IEnumerable<Entities.BlogEntry>> GetFeaturedBlogsAsync(int count = 5);
     Task<PaginatedResult<Entities.BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber, int pageSize);
     Task<PaginatedResult<Entities.BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber, int pageSize);
     Task<Entities.BlogEntry> AddBlogAsync(Entities.BlogEntry blog);
     Task<Entities.BlogEntry> UpdateBlogAsync(Entities.BlogEntry blog);
-    Task<bool> DeleteBlogAsync(long id);
-    Task<int> IncrementViewCountAsync(long id);
+    Task<bool> DeleteBlogAsync(string id);
+    Task<int> IncrementViewCountAsync(string id);
     Task<IEnumerable<string>> GetAllTagsAsync();
     Task<PaginatedResult<Entities.BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber, int pageSize);
     Task<string> GetContentAsHtmlAsync(Entities.BlogEntry blog);
@@ -81,7 +81,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<Entities.BlogEntry?> GetBlogByIdAsync(long id)
+    public async Task<Entities.BlogEntry?> GetBlogByIdAsync(string id)
     {
         try
         {
@@ -239,7 +239,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<bool> DeleteBlogAsync(long id)
+    public async Task<bool> DeleteBlogAsync(string id)
     {
         try
         {
@@ -262,7 +262,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<int> IncrementViewCountAsync(long id)
+    public async Task<int> IncrementViewCountAsync(string id)
     {
         try
         {

@@ -17,7 +17,7 @@ public class BlogRepositoryRaven(IDocumentStore store, ILogger<BlogRepositoryRav
         throw new NotImplementedException();
     }
 
-    public async Task<BlogEntry?> GetBlogByIdAsync(long id)
+    public async Task<BlogEntry?> GetBlogByIdAsync(string id)
     {
         throw new NotImplementedException();
     }
@@ -52,12 +52,12 @@ public class BlogRepositoryRaven(IDocumentStore store, ILogger<BlogRepositoryRav
         throw new NotImplementedException();
     }
 
-    public async Task<bool> DeleteBlogAsync(long id)
+    public async Task<bool> DeleteBlogAsync(string id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<int> IncrementViewCountAsync(long id)
+    public async Task<int> IncrementViewCountAsync(string id)
     {
         throw new NotImplementedException();
     }

@@ -15,7 +15,7 @@ public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, 
         return await session.Query<TEntity>().LongCountAsync();
     }
 
-    public override async Task<bool> ExistsAsync(long id)
+    public override async Task<bool> ExistsAsync(string id)
     {
         var res = session.Query<TEntity>().Any(x => x.Id == id);
         return await Task.FromResult(res);
@@ -28,7 +28,7 @@ public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, 
         return res;
     }
 
-    public override async Task<Option<TEntity>> FindByIdAsync(long id)
+    public override async Task<Option<TEntity>> FindByIdAsync(string id)
     {
         var entity = await session.Query<TEntity>().FirstOrDefaultAsync(x => x.Id == id);
         var res = entity is not null ? Some(entity) : None;
@@ -81,7 +81,7 @@ public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, 
         }
     }
 
-    public override async Task<bool> DeleteAsync(long id)
+    public override async Task<bool> DeleteAsync(string id)
     {
         try
         {
@@ -123,13 +123,13 @@ public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, 
         return results ?? [];
     }
 
-    public override async Task<Option<TEntity>> GetByIdAsync(long id)
+    public override async Task<Option<TEntity>> GetByIdAsync(string id)
     {
         var res = await FindByIdAsync(id);
         return res;
     }
 
-    public override async Task<IEnumerable<TEntity>> GetByIdsAsync(IEnumerable<long> ids)
+    public override async Task<IEnumerable<TEntity>> GetByIdsAsync(IEnumerable<string> ids)
     {
         return await FindAsync(x => ids.Contains(x.Id));
     }

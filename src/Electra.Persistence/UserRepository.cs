@@ -9,15 +9,15 @@ namespace Electra.Persistence;
 
 public interface IUserRepository : IGenericEntityFrameworkRepository<ElectraUser>
 {
-    Task<Option<ElectraUser>> GetFullUserById(long userId);
-    Task<Option<ElectraUserProfile>> GetUserProfileAsync(long userId);
-    Task<Option<UserSettingsModel>> GetUserSettingsAsync(long userId);
+    Task<Option<ElectraUser>> GetFullUserById(string userId);
+    Task<Option<ElectraUserProfile>> GetUserProfileAsync(string userId);
+    Task<Option<UserSettingsModel>> GetUserSettingsAsync(string userId);
 }
 
 public class UserRepository(ElectraDbContext context, ILogger<GenericEntityFrameworkRepository<ElectraUser>> log)
     : GenericEntityFrameworkRepository<ElectraUser>(context, log), IUserRepository
 {
-    public async Task<Option<ElectraUser>> GetFullUserById(long userId)
+    public async Task<Option<ElectraUser>> GetFullUserById(string userId)
     {
         var user = await db.Where(x => x.Id == userId)
             .Include(x => x.Profile)
@@ -27,7 +27,7 @@ public class UserRepository(ElectraDbContext context, ILogger<GenericEntityFrame
         return user;
     }
 
-    public async Task<Option<ElectraUserProfile>> GetUserProfileAsync(long userId)
+    public async Task<Option<ElectraUserProfile>> GetUserProfileAsync(string userId)
     {
         var user = await db.Where(x => x.Id == userId)
             .Include(x => x.Profile)
@@ -36,7 +36,7 @@ public class UserRepository(ElectraDbContext context, ILogger<GenericEntityFrame
         return user?.Profile;
     }
 
-    public async Task<Option<UserSettingsModel>> GetUserSettingsAsync(long userId)
+    public async Task<Option<UserSettingsModel>> GetUserSettingsAsync(string userId)
     {
         var user = await db.Where(x => x.Id == userId)
             .Include(x => x.UserSettings)

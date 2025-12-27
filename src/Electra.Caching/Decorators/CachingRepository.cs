@@ -15,7 +15,7 @@ public abstract record DbCacheResult<T, TKey>
     public bool Success { get; set; }
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;    
 }
-public sealed record DbCacheResult<T> : DbCacheResult<T, long> where T : IEntity<long>, new() { }
+public sealed record DbCacheResult<T> : DbCacheResult<T, string> where T : IEntity<string>, new() { }
 
 // Todo - Consider not inheriting from IGenericRepository for the cache repository and change return values to DbCacheResult
 public interface ICachingRepositoryDecorator<T, TKey> : IGenericRepository<T, TKey>
@@ -37,16 +37,16 @@ public interface ICachingRepositoryDecorator<T, TKey> : IGenericRepository<T, TK
 }
 
 public interface ICachingRepositoryDecorator<T>
-    : ICachingRepositoryDecorator<T, long>, IGenericRepository<T>
-    where T : IEntity<long>, new();
+    : ICachingRepositoryDecorator<T, string>, IGenericRepository<T>
+    where T : IEntity<string>, new();
 
 
 public class CachingRepository<T>(
     ICacheService cache,
-    IGenericRepository<T, long> db,
-    ILogger<CachingRepository<T, long>> log)
-    : CachingRepository<T, long>(cache, db, log)
-    where T : IEntity<long>, new();
+    IGenericRepository<T, string> db,
+    ILogger<CachingRepository<T, string>> log)
+    : CachingRepository<T, string>(cache, db, log)
+    where T : IEntity<string>, new();
 
 public class CachingRepository<T, TKey>(
     ICacheService cache,

@@ -39,13 +39,13 @@ public class IdentityUserIndex<TUser> : AbstractIndexCreationTask<TUser, Identit
     /// </summary>
     public IdentityUserIndex()
     {
-        Map = users => from user in users
+        Map = (IEnumerable<TUser> users) => from u in users
             select new Result
             {
-                UserName = user.UserName,
-                Email = user.Email,
-                LoginProviderIdentifiers = user.Logins.Select(x => x.LoginProvider + "|" + x.ProviderKey).ToList(),
-                Roles = user.Roles.Select(x => x.RoleId).ToList()
+                UserName = u.UserName,
+                Email = u.Email,
+                LoginProviderIdentifiers = u.Logins.Select(x => x.LoginProvider + "|" + x.ProviderKey).ToList(),
+                Roles = u.Roles.ToList()
             };
     }
 

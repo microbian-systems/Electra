@@ -28,7 +28,7 @@ public interface IBlogService
     /// </summary>
     /// <param name="id">Blog post ID</param>
     /// <returns>Blog post if found, null otherwise</returns>
-    Task<Entities.BlogEntry?> GetBlogByIdAsync(long id);
+    Task<Entities.BlogEntry?> GetBlogByIdAsync(string id);
 
     /// <summary>
     /// Gets a blog post by its slug
@@ -81,7 +81,7 @@ public interface IBlogService
     /// </summary>
     /// <param name="id">Blog post ID to delete</param>
     /// <returns>True if deleted successfully, false otherwise</returns>
-    Task<bool> DeleteBlogAsync(long id);
+    Task<bool> DeleteBlogAsync(string id);
 
     /// <summary>
     /// Converts blog content to HTML format
@@ -102,7 +102,7 @@ public interface IBlogService
     /// </summary>
     /// <param name="id">Blog post ID</param>
     /// <returns>Updated view count</returns>
-    Task<int> IncrementViewCountAsync(long id);
+    Task<int> IncrementViewCountAsync(string id);
 
     /// <summary>
     /// Gets all unique tags used in blog posts

@@ -7,7 +7,7 @@ namespace Electra.Persistence;
 /// <summary>
 /// Interface for Electra-specific unit of work operations
 /// </summary>
-public interface IElectraUnitOfWork : IUnitOfWork
+public interface IElectraUnitOfWork : IAsyncUnitOfWork
 {
     public ElectraDbContext Context { get; }
     IApiAuthRepository AuthRepo { get; }
