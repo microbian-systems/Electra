@@ -4,7 +4,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [~] Track: Project Stabilization & Core Refinement
+## [ ] Track: Project Stabilization & Core Refinement
 *Link: [./conductor/tracks/stabilization_20251227/](./conductor/tracks/stabilization_20251227/)*
 
 ---

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.RavenDB;
 
-public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, ILogger<GenericRepositoryOption<TEntity>> log) 
+public abstract class RavenDbRepositoryBase<TEntity>(IAsyncDocumentSession session, ILogger<GenericRepositoryOption<TEntity>> log) 
     : GenericRepositoryOption<TEntity>(log)
     where TEntity : IEntity, new()
 {
@@ -17,8 +17,7 @@ public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, 
 
     public override async Task<bool> ExistsAsync(string id)
     {
-        var res = session.Query<TEntity>().Any(x => x.Id == id);
-        return await Task.FromResult(res);
+        return await session.Query<TEntity>().AnyAsync(x => x.Id == id);
     }
 
     public override async Task<IEnumerable<TEntity>> GetAllAsync()
@@ -72,7 +71,7 @@ public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, 
         {
             var existing = await FindByIdAsync(entity.Id);
             await session.StoreAsync(entity);
-            return existing;
+            return Some(entity);
         }
         catch (Exception ex)
         {
@@ -85,14 +84,14 @@ public abstract class RavenDbRepository<TEntity>(IAsyncDocumentSession session, 
     {
         try
         {
-            var entity = await FindByIdAsync(id);
-            if (entity.IsNone)
+            var entityOption = await FindByIdAsync(id);
+            if (entityOption.IsNone)
             {
                 log.LogWarning("Entity with id: {id} not found for deletion", id);
                 return false;
             }
 
-            session.Delete(entity);
+            entityOption.IfSome(entity => session.Delete(entity));
             return true;
         }
         catch (Exception ex)

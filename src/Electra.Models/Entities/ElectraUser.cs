@@ -54,7 +54,7 @@ public interface IElectraUser
     ICollection<string> Roles { get; set; } 
 }
 
-public class ElectraUser : ElectraUser<string>, IElectraUser;
+public class ElectraUser : ElectraUser<string>, IElectraUser, IEntity;
 
 public interface IElectraUser<TKey>  where TKey : IEquatable<TKey> 
 {

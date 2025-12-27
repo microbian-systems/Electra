@@ -14,7 +14,8 @@ Implement the fundamental stores required for Identity.
 - [x] Task: Implement `UserStore` core operations in `Electra.Persistence.RavenDB` (Completed)
 - [x] Task: Write failing unit tests for `RoleStore` core operations (Completed)
 - [x] Task: Implement `RoleStore` core operations (Completed)
-- [ ] Task: Conductor - User Manual Verification 'Core Store Implementation' (Protocol in workflow.md)
+- [x] Task: Write unit tests for `ElectraUserRepository` and `RavenDbUnitOfWork` (Completed)
+- [x] Task: Conductor - User Manual Verification 'Core Store Implementation' (Protocol in workflow.md) (06aef36)
 
 ## Phase 3: Advanced Identity Features & Passkeys (TDD)
 Implement claims, logins, and the new WebAuthn/Passkey support.
