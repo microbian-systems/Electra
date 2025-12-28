@@ -2,7 +2,7 @@ using Electra.Core.Entities;
 
 namespace Electra.Services.Models;
 
-public record UserViewModel : UserViewModel<long>;
+public record UserViewModel : UserViewModel<string>;
 
 public record UserViewModel<TKey> : IEntity<TKey>
     where TKey : IEquatable<TKey> , IComparable<TKey>

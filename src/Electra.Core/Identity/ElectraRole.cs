@@ -5,7 +5,15 @@ namespace Electra.Core.Identity;
 
 
 [Table("Roles")]
-public class ElectraRole : ElectraRole<long>{}
+public class ElectraRole : ElectraRole<string>
+{
+    public ElectraRole() => Id = Snowflake.NewId().ToString();
+    public ElectraRole(string roleName)
+        : this()
+    {
+        this.Name = roleName;
+    }
+}
 
 
 [Table("Roles")]
@@ -17,4 +25,6 @@ public class ElectraRole<Tkey> : IdentityRole<Tkey>
     public ElectraRole(string roleName) : base(roleName) { }
 
     public virtual ICollection<IdentityRoleClaim<string>> Claims { get; set; } = new List<IdentityRoleClaim<string>>();
+
+    public virtual List<string> Users { get; set; } = [];
 }

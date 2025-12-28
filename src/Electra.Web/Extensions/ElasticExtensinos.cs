@@ -1,5 +1,6 @@
 ﻿using Elasticsearch.Net;
 using Electra.Persistence;
+using Electra.Persistence.Elastic;
 using Nest;
 
 namespace Electra.Common.Web.Extensions;

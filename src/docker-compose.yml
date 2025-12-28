@@ -446,4 +446,17 @@ volumes:
 
 networks:
   appx:
-    driver: bridge
+    driver: bridgeservices:
+  electra.identity.server:
+    image: electra.identity.server
+    build:
+      context: .
+      dockerfile: Electra.Identity.Server/Electra.Identity.Server/Dockerfile
+
+services:
+  electra.identity.server.client:
+    image: electra.identity.server.client
+    build:
+      context: .
+      dockerfile: Electra.Identity.Server/Electra.Identity.Server.Client/Dockerfile
+

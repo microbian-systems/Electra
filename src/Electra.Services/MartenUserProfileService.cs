@@ -1,29 +1,33 @@
 using System.Linq.Expressions;
 using Electra.Core.Entities;
+using Electra.Models.Entities;
 using Electra.Persistence.Marten;
 
 namespace Electra.Services;
 
 public sealed class MartenUserProfileService<T>(
-    IGenericMartenRepository<T, Guid> db,
+    IUserRepository userRepository,
+    IGenericMartenRepository<T, string> db,
     ILogger<MartenUserProfileService<T>> log)
     : IUserProfileService<T>
-    where T : ElectraUserProfile, IEntity<Guid>, new()
+    where T : ElectraUserProfile, new()
 {
-    public async Task<T> GetById(Guid id)
+    public async Task<T> GetById(string id)
     {
         log.LogInformation($"getting user profile with id: {id}");
         return await db.FindByIdAsync(id);
     }
 
-    public async Task<T> GetByEmail(string email)
+    public async Task<T> GetByEmail(string email) 
     {
-        var result = await db.FindAsync(x => x.Email == email);
+        var user = (await userRepository.FindAsync(x => x.Email == email))
+            .FirstOrDefault();
 
-        if (result.Any())
-            return result?.First();
+        if (user is null)
+            return null;
 
-        return null;
+        var profile = user.Profile;
+        return (T)profile;
     }
 
     public async Task InsertAsync(T model)
@@ -49,7 +53,7 @@ public sealed class MartenUserProfileService<T>(
 
     public async Task DeleteAsync(T model) => await DeleteAsync(model.Id);
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(string id)
     {
         log.LogWarning($"deleting user with id {id}");
         await db.DeleteAsync(id);

@@ -1,49 +1,34 @@
 using System.Linq.Expressions;
 using Electra.Core.Entities;
+using Electra.Models.Entities;
+using Electra.Persistence.Core;
 
 namespace Electra.Services;
 
 public interface IElectraUserProfileService : IUserProfileService<ElectraUserProfile>{}
 
-public interface IElectraUserProfileServiceRepository : IGenericEntityFrameworkRepository<ElectraUserProfile, Guid>{}
-public class ElectraUserProfileServiceRepository : GenericEntityFrameworkRepository<ElectraUserProfile, Guid>, IElectraUserProfileServiceRepository
-{
-    public ElectraUserProfileServiceRepository(ElectraDbContext context, ILogger<ElectraUserProfileServiceRepository> log) : base(context, log)
-    {
-    }
-}
-public class ElectraUserProfileService : UserProfileService<ElectraUserProfile>, IElectraUserProfileService
-{
-    public ElectraUserProfileService(IElectraUserProfileServiceRepository db, ILogger<ElectraUserProfileService> log) : base(db, log)
-    {
-    }
-}
+public class ElectraUserProfileService(IUserRepository userRepo, IElectraUserProfileRepository db, ILogger<ElectraUserProfileService> log)
+    : UserProfileService<ElectraUserProfile>(userRepo, db, log), IElectraUserProfileService;
 
-public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity<Guid>
+public interface IUserProfileService<T> where T : ElectraUserProfile, IEntity
 {
-    Task<T> GetById(Guid id);
+    Task<T> GetById(string id);
     Task<T> GetByEmail(string email);
     Task InsertAsync(T model);
     Task UpdateAsync(T model);
     Task UpsertAsync(T model);
     Task DeleteAsync(T model);
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(string id);
     Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);
 }
     
-public class UserProfileService<T> : IUserProfileService<T>
+public class UserProfileService<T>(IUserRepository userRepo, IGenericRepository<T> db, ILogger<UserProfileService<T>> log)
+    : IUserProfileService<T>
     where T : ElectraUserProfile, new()
 {
-    private readonly IGenericRepository<T, Guid> db;
-    private readonly ILogger<UserProfileService<T>> log;
+    private readonly ILogger<UserProfileService<T>> log = log;
 
-    public UserProfileService(IGenericRepository<T, Guid> db, ILogger<UserProfileService<T>> log)
-    {
-        this.db = db;
-        this.log = log;
-    }
-        
-    public async Task<T> GetById(Guid id)
+    public async Task<T> GetById(string id)
     {
         var results = await db.FindByIdAsync(id);
         return results;
@@ -51,8 +36,15 @@ public class UserProfileService<T> : IUserProfileService<T>
 
     public async Task<T> GetByEmail(string email)
     {
-        var results = await db.FindAsync(x => x.Email.ToUpper() == email);
-        return results?.First();
+        //var results = await db.FindAsync(x => x.Email.ToUpper() == email);
+        var user = await userRepo.FindAsync(x => x.Email.ToUpper() == email.ToUpper());
+        if (user == null || !user.Any())
+        {
+            log.LogWarning("No user found with email {Email}", email);
+            return null;
+        }
+        var profile = user.First().Profile;
+        return (T)profile;
     }
 
     public async Task InsertAsync(T model)
@@ -75,7 +67,7 @@ public class UserProfileService<T> : IUserProfileService<T>
         await DeleteAsync(model.Id);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(string id)
     {
         await db.DeleteAsync(id);
     }

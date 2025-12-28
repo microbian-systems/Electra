@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Solnet.Metaplex\Solnet.Metaplex\Solnet.Metaplex.csproj" />
+      <ProjectReference Include="..\..\Solnet.Pyth\Solnet.Pyth\Solnet.Pyth.csproj" />
+      <ProjectReference Include="..\..\Solnet.Raydium\Solnet.Raydium\Solnet.Raydium.csproj" />
+      <ProjectReference Include="..\Electra.Crypto.Core\Electra.Crypto.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+    </ItemGroup>
+
+</Project>

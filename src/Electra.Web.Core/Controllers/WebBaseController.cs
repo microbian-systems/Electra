@@ -1,0 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Electra.Web.Core.Controllers;
+
+[Authorize]
+[ValidateAntiForgeryToken]
+public abstract class ElectraWebBaseController(ILogger<ElectraWebBaseController> log)
+    : Controller
+{
+    protected readonly ILogger<ElectraWebBaseController> log = log;
+}

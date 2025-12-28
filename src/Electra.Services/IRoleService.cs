@@ -2,7 +2,7 @@
 namespace Electra.Services;
 
 public interface IRoleService<T>
-    where T : IdentityRole<Guid>
+    where T : IdentityRole<long>
 {
     Task<T> GetById(string id);
     Task<T> GetByName(string roleName);
@@ -17,7 +17,7 @@ public interface IRoleService<T>
 
 public class RoleService<T>(RoleManager<T> roleManager, ILogger<RoleService<T>> log)
     : IRoleService<T>
-    where T : IdentityRole<Guid> {
+    where T : IdentityRole<long> {
     public async Task<T> GetById(string id)
     {
         await Task.Delay(0);

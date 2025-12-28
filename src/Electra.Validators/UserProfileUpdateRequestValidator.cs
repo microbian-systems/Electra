@@ -1,5 +1,6 @@
 using System;
 using Electra.Models;
+using Electra.Models.Entities;
 using Electra.Validators.Extensions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;

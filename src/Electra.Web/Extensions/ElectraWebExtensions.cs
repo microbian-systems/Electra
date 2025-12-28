@@ -3,8 +3,12 @@ using Electra.Common.Web.Middleware;
 using Electra.Services;
 using Electra.Common.Web.Performance;
 using Electra.Common.Web.Services;
+using Electra.Core.Encryption;
+using Electra.Core.Extensions;
+using Electra.Persistence.Extensions;
 using Electra.Services.Geo;
 using Electra.Services.Mail;
+using Electra.Web.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -41,8 +45,7 @@ public static class ElectraWebExtensions
         IWebHostEnvironment host, 
         bool enableAntiForgeryProtection = false)
     {
-        services.AddSerilog();
-        services.AddSerilogLogging(config);
+        services.AddEncryptionServices();
         services.AddMapster();
         // if (enableAntiForgeryProtection)
         //     services.ConfigureAntiForgeryOptions();
@@ -67,10 +70,13 @@ public static class ElectraWebExtensions
         })
         .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
         {
-            // Configure JWT Bearer options
-            // todo - pull this from the JwtOptions in appsettings.json
-            options.Authority = "https://your-authority.com";
-            options.Audience = "your-audience";
+            // Configure JWT Bearer options  
+            var jwtOptions = config.GetSection("Jwt");
+            if (jwtOptions.Exists())
+            {
+                options.Authority = jwtOptions["Authority"];
+                options.Audience = jwtOptions["Audience"];
+            }
         });
 
         services.AddAuthorization(o =>
@@ -89,11 +95,8 @@ public static class ElectraWebExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<ITokenValidationService, ElectraJwtValidationService>();
         services.AddEmailServies(config, host);
-        services.AddOpenApi();
-        services.AddMiniProfilerEx();
         services.ConfigureAppSettings(config, host);
         services.AddElectraCaching(config);
-        services.ConfigureEmailServices(config);
         services.AddScoped<IElectraUserService, ElectraUserService>();
         services.AddScoped<ISmsService, TwilioSmsService>();
         services.AddTransient<IEmailSender, SendGridMailer>();
@@ -102,13 +105,6 @@ public static class ElectraWebExtensions
         services.AddScoped(typeof(IElectraUserService<>), typeof(ElectraUserServiceBase<>));
         services.AddScoped<IElectraUserProfileService, ElectraUserProfileService>();
         services.AddScoped(typeof(IUserProfileService<>), typeof(UserProfileService<>));
-        services.AddEmailServies(config, host);
-        services.ConfigureAppSettings(config, host);
-        services.ConfigureEmailServices(config);
-        services.AddTransient<IEmailSender, SendGridMailer>();
-        services.AddTransient<IPasswordService, PasswordService>();
-        services.AddTransient<IZipApiService, ZipApiService>();
-        services.AddEmailServies(config, host);
 
         return services;
     }
@@ -128,9 +124,6 @@ public static class ElectraWebExtensions
         // app.UseSerilogRequestLogging();
         // app.UseRequestResponseLogging();
         app.UseMiniProfiler();
-        app.UseAuthentication();
-        app.UseAuthorization();
-        app.UseAntiforgery();
         // app.UseCustom404Handler();
         // app.UseCustom401Handler();
         // app.UseCustom400Handler();

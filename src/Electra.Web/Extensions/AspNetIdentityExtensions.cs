@@ -1,6 +1,8 @@
 ﻿using Electra.Core.Identity;
 using Electra.Models;
+using Electra.Models.Entities;
 using Electra.Persistence;
+using Electra.Persistence.Extensions;
 using Electra.Services;
 using Microsoft.AspNetCore.Identity;
 
@@ -25,7 +27,7 @@ public static class AspNetIdentityExtensions
 
         services.AddScoped<IElectraIdentityService, ElectraIdentityService>();
         services.AddScoped<IElectraUserProfileService, ElectraUserProfileService>();
-        services.AddScoped<IElectraUserProfileServiceRepository, ElectraUserProfileServiceRepository>();
+        services.AddScoped<IElectraUserProfileRepository, ElectraUserProfileRepository>();
 
         return services;
     }

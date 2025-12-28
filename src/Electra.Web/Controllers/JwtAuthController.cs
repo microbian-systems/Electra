@@ -4,11 +4,12 @@ using Electra.Common.Web.Jwt;
 using Electra.Common.Web.Services;
 using Electra.Core.Extensions;
 using Electra.Models;
+using Electra.Web.Core.Controllers;
 
 namespace Electra.Common.Web.Controllers;
 
 [Route("/api")]
-public sealed class JwtAuthController : ApiControllerBase
+public sealed class JwtAuthController : ElectraApiBaseController
 {
     private readonly IApiKeyService apiService;
     private readonly IJwtFactory jwtGenerator;
