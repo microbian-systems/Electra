@@ -28,15 +28,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
         <PackageReference Include="OwaspHeaders.Core" Version="10.0.0" />
-        <PackageReference Include="Scalar.AspNetCore" Version="2.11.0" />
-        <PackageReference Include="StrawberryShake" Version="15.1.11" />
-        <PackageReference Include="StrawberryShake.Blazor" Version="15.1.11" />
-        <PackageReference Include="StrawberryShake.CodeGeneration.CSharp" Version="12.22.6" />
-        <PackageReference Include="StrawberryShake.CodeGeneration.CSharp.Analyzers" Version="12.22.6" />
-        <PackageReference Include="StrawberryShake.Razor" Version="15.1.11" />
-        <PackageReference Include="StrawberryShake.Resources" Version="15.1.11" />
-        <PackageReference Include="StrawberryShake.Tools.Configuration" Version="15.1.11" />
-        <PackageReference Include="StrawberryShake.Transport.WebSockets" Version="15.1.11" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.11.1" />
         <PackageReference Include="ThrowGuard" Version="1.1.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
     </ItemGroup>

@@ -118,4 +118,5 @@ public interface IBlogService
     /// <param name="pageSize">Number of items per page</param>
     /// <returns>Paginated result of blog posts by the specified author</returns>
     Task<PaginatedResult<Entities.BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber = 1, int pageSize = 10);
+    Task<string?> GetLatestEntries(int v);
 }
