@@ -54,6 +54,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
+    <ProjectReference Include="..\Electra.Persistence.RavenDB\Electra.Persistence.RavenDB.csproj" />
     <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
     <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Web.Core\Electra.Web.Core.csproj" />

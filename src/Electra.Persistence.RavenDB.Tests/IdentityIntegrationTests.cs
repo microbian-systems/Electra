@@ -26,7 +26,12 @@ public class IdentityIntegrationTests : RavenDbTestBase
         services.AddSingleton(DocumentStore);
 
         // 3. Add Scoped Session
-        services.AddScoped(sp => DocumentStore.OpenAsyncSession());
+        services.AddScoped(sp => 
+        {
+            var session = DocumentStore.OpenAsyncSession();
+            session.Advanced.WaitForIndexesAfterSaveChanges(TimeSpan.FromSeconds(5));
+            return session;
+        });
 
         // 4. Add Identity
         services.AddIdentity<ElectraUser, ElectraRole>(options =>

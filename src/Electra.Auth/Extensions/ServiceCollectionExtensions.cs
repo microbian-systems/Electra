@@ -8,12 +8,19 @@ using Electra.Models.Entities;
 using Electra.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using ThrowGuard;
 using WebAuthn.Net.Configuration.DependencyInjection;
 using WebAuthn.Net.Storage.InMemory.Models;
 using WebAuthn.Net.Storage.InMemory.Services.ContextFactory;
 using WebAuthn.Net.Storage.PostgreSql.Models;
 using WebAuthn.Net.Storage.PostgreSql.Services.ContextFactory;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Electra.Persistence.RavenDB;
 
 namespace Electra.Auth.Extensions;
 
@@ -32,6 +39,8 @@ public static class ServiceCollectionExtensions
         IHostEnvironment env,
         IConfiguration config)
     {
+        var useRavenDb = config.GetValue<bool>("Identity:UseRavenDB");
+
         // Configure database context with conditional registration
         services.AddDbContext<ElectraDbContext>(opts =>
         {
@@ -53,7 +62,7 @@ public static class ServiceCollectionExtensions
         });
 
         // Configure ASP.NET Core Identity
-        services.AddIdentity<ElectraUser, ElectraRole>(opts =>
+        var identityBuilder = services.AddIdentity<ElectraUser, ElectraRole>(opts =>
             {
                 opts.Password.RequireDigit = true;
                 opts.Password.RequireLowercase = true;
@@ -63,9 +72,21 @@ public static class ServiceCollectionExtensions
 
                 opts.User.RequireUniqueEmail = true;
                 opts.SignIn.RequireConfirmedEmail = false; // Set to true if email confirmation is implemented
-            })
-            .AddEntityFrameworkStores<ElectraDbContext>()
-            .AddDefaultTokenProviders()
+            });
+
+        if (useRavenDb)
+        {
+            identityBuilder.AddRavenDbIdentityStores<ElectraUser, ElectraRole>(options =>
+            {
+                options.AutoSaveChanges = true;
+            });
+        }
+        else
+        {
+            identityBuilder.AddEntityFrameworkStores<ElectraDbContext>();
+        }
+
+        identityBuilder.AddDefaultTokenProviders()
             .AddPasswordlessLoginProvider(); // Add passkey support
 
         // Add JWT Authentication with OpenIddict

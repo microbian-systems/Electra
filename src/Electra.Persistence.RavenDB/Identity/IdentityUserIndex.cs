@@ -32,6 +32,11 @@ public class IdentityUserIndex<TUser> : AbstractIndexCreationTask<TUser, Identit
         /// The roles assigned to the user.
         /// </summary>
         public List<string>? Roles { get; set; } = [];
+
+        /// <summary>
+        /// The WebAuthn credential identifiers.
+        /// </summary>
+        public List<byte[]>? WebAuthnCredentialIds { get; set; } = [];
     }
 
     /// <summary>
@@ -45,10 +50,11 @@ public class IdentityUserIndex<TUser> : AbstractIndexCreationTask<TUser, Identit
                 UserName = u.UserName,
                 Email = u.Email,
                 LoginProviderIdentifiers = u.Logins.Select(x => x.LoginProvider + "|" + x.ProviderKey).ToList(),
-                Roles = u.Roles.ToList()
+                Roles = u.Roles.ToList(),
+                WebAuthnCredentialIds = u.WebAuthnCredentials.Select(x => x.CredentialId).ToList()
             };
     }
 
     /// <inheritdoc />
-    public override string IndexName => "IdentityUserIndex";
+    public override string IndexName => $"Identity/Users/ByDetails";
 }

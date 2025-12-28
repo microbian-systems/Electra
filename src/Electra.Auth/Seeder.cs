@@ -13,13 +13,16 @@ public class Seeder
     public static async Task Initialize(IServiceProvider serviceProvider, IConfiguration configuration)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ElectraDbContext>();
+        var context = scope.ServiceProvider.GetService<ElectraDbContext>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ElectraRole>>();
         var applicationManager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
 
-        // Create database and apply migrations
-        await context.Database.MigrateAsync();
+        // Create database and apply migrations if EF is used
+        if (context != null)
+        {
+            await context.Database.MigrateAsync();
+        }
 
         // Seed roles
         string[] roles = ["Admin", "User", "Editor"];

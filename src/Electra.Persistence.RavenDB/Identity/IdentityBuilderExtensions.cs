@@ -42,6 +42,21 @@ public static class IdentityBuilderExtensions
 		}
 		builder.Services.AddScoped<IUserStore<TUser>, UserStore<TUser, TRole>>();
 		builder.Services.AddScoped<IRoleStore<TRole>, RoleStore<TRole>>();
+		
+		// Advanced stores
+		builder.Services.AddScoped<IUserLoginStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserClaimStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserRoleStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserPasswordStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserSecurityStampStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserEmailStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserLockoutStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserTwoFactorStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserPhoneNumberStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserAuthenticatorKeyStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserAuthenticationTokenStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IUserTwoFactorRecoveryCodeStore<TUser>, UserStore<TUser, TRole>>();
+		builder.Services.AddScoped<IQueryableUserStore<TUser>, UserStore<TUser, TRole>>();
 
 		return builder;
 	}

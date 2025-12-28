@@ -218,4 +218,92 @@ public class UserStoreTests : RavenDbTestBase
         role.Should().NotBeNull();
         role.Users.Should().Contain(user.Id);
     }
+
+    [Fact]
+    public async Task Claims_Operations_Should_Work()
+    {
+        // Arrange
+        var user = new ElectraUser { Id = "users/claims", UserName = "c", Email = "c@e.com", FirstName = "f", LastName = "l", CreatedBy = "s" };
+        await _userStore.CreateAsync(user, default);
+        var claim = new Claim("type1", "value1");
+
+        // Act - Add
+        await _userStore.AddClaimsAsync(user, new[] { claim }, default);
+
+        // Assert - Add
+        user.Claims.Should().HaveCount(1);
+        using (var session = DocumentStore.OpenAsyncSession())
+        {
+            var refreshedUser = await session.LoadAsync<ElectraUser>(user.Id);
+            refreshedUser.Claims.Should().HaveCount(1);
+            refreshedUser.Claims.First().ClaimType.Should().Be("type1");
+        }
+
+        // Act - Replace
+        var newClaim = new Claim("type1", "value2");
+        await _userStore.ReplaceClaimAsync(user, claim, newClaim, default);
+
+        // Assert - Replace
+        user.Claims.Should().HaveCount(1);
+        user.Claims.First().ClaimValue.Should().Be("value2");
+
+        // Act - Remove
+        await _userStore.RemoveClaimsAsync(user, new[] { newClaim }, default);
+
+        // Assert - Remove
+        user.Claims.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task Logins_Operations_Should_Work()
+    {
+        // Arrange
+        var user = new ElectraUser { Id = "users/logins", UserName = "l", Email = "l@e.com", FirstName = "f", LastName = "l", CreatedBy = "s" };
+        await _userStore.CreateAsync(user, default);
+        var login = new UserLoginInfo("Google", "g123", "Google Login");
+
+        // Act - Add
+        await _userStore.AddLoginAsync(user, login, default);
+
+        // Assert - Add
+        user.Logins.Should().HaveCount(1);
+        using (var session = DocumentStore.OpenAsyncSession())
+        {
+            var refreshedUser = await session.LoadAsync<ElectraUser>(user.Id);
+            refreshedUser.Logins.Should().HaveCount(1);
+            refreshedUser.Logins.First().LoginProvider.Should().Be("Google");
+        }
+
+        // Act - Remove
+        await _userStore.RemoveLoginAsync(user, "Google", "g123", default);
+
+        // Assert - Remove
+        user.Logins.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task Tokens_Operations_Should_Work()
+    {
+        // Arrange
+        var user = new ElectraUser { Id = "users/tokens", UserName = "t", Email = "t@e.com", FirstName = "f", LastName = "l", CreatedBy = "s" };
+        await _userStore.CreateAsync(user, default);
+
+        // Act - Set
+        await _userStore.SetTokenAsync(user, "p1", "n1", "v1", default);
+
+        // Assert - Set
+        user.Tokens.Should().HaveCount(1);
+        using (var session = DocumentStore.OpenAsyncSession())
+        {
+            var refreshedUser = await session.LoadAsync<ElectraUser>(user.Id);
+            refreshedUser.Tokens.Should().HaveCount(1);
+            refreshedUser.Tokens.First().Value.Should().Be("v1");
+        }
+
+        // Act - Remove
+        await _userStore.RemoveTokenAsync(user, "p1", "n1", default);
+
+        // Assert - Remove
+        user.Tokens.Should().BeEmpty();
+    }
 }

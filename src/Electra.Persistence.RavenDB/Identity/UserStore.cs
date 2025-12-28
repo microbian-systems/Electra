@@ -293,7 +293,7 @@ public class UserStore<TUser, TRole> :
     #region IUserLoginStore implementation
 
     /// <inheritdoc />
-    public virtual Task AddLoginAsync(TUser user, UserLoginInfo login, CancellationToken cancellationToken)
+    public virtual async Task AddLoginAsync(TUser user, UserLoginInfo login, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
         ArgumentNullException.ThrowIfNull(login);
@@ -306,11 +306,11 @@ public class UserStore<TUser, TRole> :
         };
         user.Logins.Add(info);
         //user.Logins.Add(login);
-        return Task.CompletedTask;
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public virtual Task RemoveLoginAsync(TUser user, string loginProvider, string providerKey, CancellationToken cancellationToken)
+    public virtual async Task RemoveLoginAsync(TUser user, string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
         
@@ -320,7 +320,7 @@ public class UserStore<TUser, TRole> :
             user.Logins.Remove(login);
         }
         
-        return Task.CompletedTask;
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />
@@ -335,31 +335,15 @@ public class UserStore<TUser, TRole> :
     {
         if (options.Value.UseStaticIndexes)
         {
-            // index has a bit different structure
             var key = loginProvider + "|" + providerKey;
-            var res =  await DbSession.Query<IdentityUserIndex<TUser>.Result, IdentityUserIndex<TUser>>()
-                .Where(u => u.LoginProviderIdentifiers != null && u.LoginProviderIdentifiers.Contains(key))
-                .ToListAsync(cancellationToken);
-                //.As<TUser>()
-                //.FirstOrDefault(cancellationToken)
-                ;
-                
-            var rec = res.FirstOrDefault();
-            return new TUser()
-            {
-                Email = rec.Email,
-                UserName = rec.UserName,
-            };
+            return await DbSession.Query<TUser, IdentityUserIndex<TUser>>()
+                .Where(u => u.Logins.Any(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey))
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
-        // COMMENTED OUT: as of Raven 7, calling .Any(...) with multiple fields is not supported: https://github.com/JudahGabriel/RavenDB.Identity/issues/59
-        // Instead, we'll just get all users with the provider key (typically a unique ID like a Google account ID), and then filter them in memory by login provider.
-        // This should be safe since provider key is unique across providers. 
-        //return DbSession.Query<TUser>()
-        //    .FirstOrDefaultAsync(u => u.Logins.Any(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey), cancellationToken);
         var usersWithProviderKey = await DbSession.Query<TUser>()
             .Where(p => p.Logins.Any(l => l.ProviderKey == providerKey))
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
         return usersWithProviderKey.FirstOrDefault(p => p.Logins.Any(l => l.LoginProvider == loginProvider));
     }
 
@@ -379,7 +363,7 @@ public class UserStore<TUser, TRole> :
     }
 
     /// <inheritdoc />
-    public virtual Task AddClaimsAsync(TUser user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
+    public virtual async Task AddClaimsAsync(TUser user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
@@ -387,7 +371,7 @@ public class UserStore<TUser, TRole> :
         {
             user.Claims.Add(new IdentityUserClaim<string> { ClaimType = c.Type, ClaimValue = c.Value, UserId = user.Id });
         }
-        return Task.CompletedTask;
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />
@@ -400,18 +384,19 @@ public class UserStore<TUser, TRole> :
         if (indexOfClaim != -1)
         {
             user.Claims.As<List<IdentityUserClaim<string>>>().RemoveAt(indexOfClaim);
-            await this.AddClaimsAsync(user, [newClaim], cancellationToken);
+            user.Claims.Add(new IdentityUserClaim<string> { ClaimType = newClaim.Type, ClaimValue = newClaim.Value, UserId = user.Id });
         }
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public virtual Task RemoveClaimsAsync(TUser user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
+    public virtual async Task RemoveClaimsAsync(TUser user, IEnumerable<Claim> claims, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
 
         user.Claims.As<List<IdentityUserClaim<string>>>()
             .RemoveAll(identityClaim => claims.Any(c => c.Type == identityClaim.ClaimType && c.Value == identityClaim.ClaimValue));
-        return Task.CompletedTask;
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />
@@ -765,7 +750,7 @@ public class UserStore<TUser, TRole> :
     #region IUserAuthenticationTokenStore
 
     /// <inheritdoc />
-    public virtual Task SetTokenAsync(TUser user, string loginProvider, string name, string? value, CancellationToken cancellationToken)
+    public virtual async Task SetTokenAsync(TUser user, string loginProvider, string name, string? value, CancellationToken cancellationToken)
     {
         var existingToken = user.Tokens.FirstOrDefault(t => t.LoginProvider == loginProvider && t.Name == name);
         if (existingToken != null)
@@ -783,15 +768,16 @@ public class UserStore<TUser, TRole> :
             });
         }
 
-        return Task.CompletedTask;
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />
-    public virtual Task RemoveTokenAsync(TUser user, string loginProvider, string name, CancellationToken cancellationToken)
+    public virtual async Task RemoveTokenAsync(TUser user, string loginProvider, string name, CancellationToken cancellationToken)
     {
         if(user.Tokens is List<IdentityUserToken<string>> tokens)
             tokens.RemoveAll(t => t.LoginProvider == loginProvider && t.Name == name);
-        return Task.CompletedTask;
+        
+        await SaveChangesAsync();
     }
 
     /// <inheritdoc />

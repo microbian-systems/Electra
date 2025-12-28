@@ -4,8 +4,8 @@
 Setup the development environment and audit existing code.
 
 - [x] Task: Audit existing code in `Electra.Persistence.RavenDB` for Identity parity
-- [ ] Task: Setup RavenDB embedded/in-memory configuration for development testing
-- [ ] Task: Conductor - User Manual Verification 'Environment & Discovery' (Protocol in workflow.md)
+- [x] Task: Setup RavenDB embedded/in-memory configuration for development testing
+- [x] Task: Conductor - User Manual Verification 'Environment & Discovery' (Protocol in workflow.md)
 
 ## Phase 2: Core Store Implementation (TDD)
 Implement the fundamental stores required for Identity.
@@ -21,11 +21,12 @@ Implement the fundamental stores required for Identity.
 ## Phase 3: Advanced Identity Features & Passkeys (TDD)
 Implement claims, logins, and the new WebAuthn/Passkey support.
 
-- [ ] Task: Write failing unit tests for `IUserWebAuthnCredentialStore` (Passkeys)
-- [ ] Task: Implement `IUserWebAuthnCredentialStore` and related entities in RavenDB
-- [ ] Task: Write failing unit tests for Claims, Logins, and Tokens stores
-- [ ] Task: Implement Claims, Logins, and Tokens stores
-- [ ] Task: Conductor - User Manual Verification 'Advanced Identity Features & Passkeys' (Protocol in workflow.md)
+- [x] Task: Write failing unit tests for `IUserWebAuthnCredentialStore` (Passkeys)
+- [x] Task: Implement `IUserWebAuthnCredentialStore` and related entities in RavenDB
+- [x] Task: Write failing unit tests for Claims, Logins, and Tokens stores
+- [x] Task: Implement Claims, Logins, and Tokens stores
+- [x] Task: Add Transactional support to UnitOfWork base and RavenDB implementation
+- [x] Task: Conductor - User Manual Verification 'Advanced Identity Features & Passkeys' (Protocol in workflow.md)
 
 ## Phase 4: Optimization & Integration
 Ensure performance and full microservice compatibility.

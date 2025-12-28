@@ -63,6 +63,26 @@ public class RavenDbUnitOfWork : IRavenDbUnitOfWork
         return count;
     }
 
+    public Task StartTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        // RavenDB sessions are transactional by default. 
+        // We could use ClusterTransaction if needed, but for standard session-level transactions,
+        // just having the session is enough.
+        return Task.CompletedTask;
+    }
+
+    public async Task CommitTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        await SaveChangesAsync(cancellationToken);
+    }
+
+    public Task RollbackTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        // To rollback in RavenDB session, we clear the session state.
+        _session.Advanced.Clear();
+        return Task.CompletedTask;
+    }
+
     public void Dispose()
     {
         _session.Dispose();
