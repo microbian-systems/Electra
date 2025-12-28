@@ -46,4 +46,36 @@
       <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
       <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\" />
+    </ItemGroup>
+
+    <Target Name="CopyBlogViews" AfterTargets="Build">
+        <PropertyGroup>
+            <!-- Adjust this path to match the relative location of the web project -->
+            <WebProjectName Condition="'$(WebProjectName)' == ''">microbians.io.web</WebProjectName>
+            <WebProjectDir>$(MSBuildProjectDirectory)\..\$(WebProjectName)</WebProjectDir>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <BlogViewFiles Include="blogarticle.cshtml">
+                <Dest>$(WebProjectDir)\Areas\Blog\Views\BlogArticle.cshtml</Dest>
+            </BlogViewFiles>
+            <BlogViewFiles Include="blogindex.html">
+                <Dest>$(WebProjectDir)\Areas\Blog\Views\Blog\Index.cshtml</Dest>
+            </BlogViewFiles>
+        </ItemGroup>
+
+        <!-- Create Directories -->
+        <!-- We construct the directory path from the destination file path -->
+        <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('%(BlogViewFiles.Dest)'))" />
+
+        <!-- Copy only if destination does not exist -->
+        <Copy SourceFiles="%(BlogViewFiles.Identity)"
+              DestinationFiles="%(BlogViewFiles.Dest)"
+              Condition="!Exists('%(BlogViewFiles.Dest)')"
+              SkipUnchangedFiles="true"
+        />
+    </Target>
 </Project>
