@@ -1,4 +1,3 @@
-using Marten.Events;
 using SnowflakeGenerator;
 using Wolverine;
 

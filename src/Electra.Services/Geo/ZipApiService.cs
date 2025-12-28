@@ -79,7 +79,7 @@ public class ZipApiService : IZipApiService
         if (res.success)
             return (true, res.data);
 
-        return (false, Array.Empty<string>());
+        return (false, []);
     }
 
     public async Task<(bool status, List<(string zipCode, string distance)>)> GetRadius(string zip, int radius)
@@ -120,7 +120,7 @@ public class ZipApiService : IZipApiService
         if (res.success)
             return (true, res.data);
 
-        return (false, ("", Array.Empty<string>()));
+        return (false, ("", []));
     }
 }
 

@@ -1,61 +1,33 @@
-﻿namespace Electra.Common.Caching;
+﻿using LanguageExt;
 
-public interface ICacheService<T> where T : class
+namespace Electra.Caching;
+
+/// <summary>
+/// A generic caching interface for a variety of caching operations.
+/// It supports basic GET/SET, as well as Redis-specific features like hashes and atomic counters.
+/// </summary>
+public interface ICacheService
 {
-    IEnumerable<T> GetCollection(string key);
-    T Get(string key);
-    void Set(T entity, string key);
-    void Set(T entity, string key, TimeSpan timeSpan);
-    void SetCollection(IEnumerable<T> collection, string key);
-    void SetCollection(IEnumerable<T> collection, string key, TimeSpan timeSpan);
-    void Delete(string key);
-    Task<IEnumerable<T>> GetCollectionAsync(string key);
-    Task<T> GetAsync(string key);
-    Task SetAsync(T entity, string key);
-    Task SetAsync(T entity, string key, TimeSpan timeSpan);
-    Task SetCollectionAsync(IEnumerable<T> collection, string key);
-    Task SetCollectionAsync(IEnumerable<T> collection, string key, TimeSpan timeSpan);
+    Task<Option<T>> GetAsync<T>(string key);
+    Option<T> Get<T>(string key);
+    Task<Option<T>> GetOrSetAsync<T>(string key, Func<Task<T>> factory, TimeSpan? absoluteExpiration = null);
+    Option<T> GetOrSet<T>(string key, Func<T> factory, TimeSpan? absoluteExpiration = null);
+    Task SetAsync<T>(string key, T value, TimeSpan? absoluteExpiration = null);
+    void Set<T>(string key, T value, TimeSpan? absoluteExpiration = null);
+    Task SetAsync<T>(string key, IEnumerable<T> value, TimeSpan? absoluteExpiration = null);
+    void Set<T>(string key, IEnumerable<T> value, TimeSpan? absoluteExpiration = null);
     Task DeleteAsync(string key);
-}
-
-
-public interface ICacheService<TEntity, TKey>
-    : ICacheService<TEntity>
-    where TEntity :
-    class where TKey : IEquatable<TKey>
-{
-    IEnumerable<TEntity> GetCollection(string key);
-    TEntity Get(string key);
-    void Set(TEntity entity, string key);
-    void Set(TEntity entity, string key, TimeSpan timeSpan);
-    void SetCollection(IEnumerable<TEntity> collection, string key);
-    void SetCollection(IEnumerable<TEntity> collection, string key, TimeSpan timeSpan);
     void Delete(string key);
-    Task<IEnumerable<TEntity>> GetCollectionAsync(string key);
-    Task<TEntity> GetAsync(string key);
-    Task SetAsync(TEntity entity, string key);
-    Task SetAsync(TEntity entity, string key, TimeSpan timeSpan);
-    Task SetCollectionAsync(IEnumerable<TEntity> collection, string key);
-    Task SetCollectionAsync(IEnumerable<TEntity> collection, string key, TimeSpan timeSpan);
-    Task DeleteAsync(string key);
-}
-
-
-public abstract class CacheServiceBase<T>(ILogger<CacheServiceBase<T>> log)
-    : ICacheService<T> where T : class
-{
-    public abstract IEnumerable<T> GetCollection(string key);
-    public abstract T Get(string key);
-    public abstract void Set(T entity, string key);
-    public abstract void Set(T entity, string key, TimeSpan timeSpan);
-    public abstract void SetCollection(IEnumerable<T> collection, string key);
-    public abstract void SetCollection(IEnumerable<T> collection, string key, TimeSpan timeSpan);
-    public abstract void Delete(string key);
-    public abstract Task<IEnumerable<T>> GetCollectionAsync(string key);
-    public abstract Task<T> GetAsync(string key);
-    public abstract Task SetAsync(T entity, string key);
-    public abstract Task SetAsync(T entity, string key, TimeSpan timeSpan);
-    public abstract Task SetCollectionAsync(IEnumerable<T> collection, string key);
-    public abstract Task SetCollectionAsync(IEnumerable<T> collection, string key, TimeSpan timeSpan);
-    public abstract Task DeleteAsync(string key);
+    Task<bool> KeyExistsAsync(string key);
+    bool KeyExists(string key);
+    Task<long> IncrementAsync(string key, long value = 1);
+    long Increment(string key, long value = 1);
+    Task<long> DecrementAsync(string key, long value = 1);
+    long Decrement(string key, long value = 1);
+    Task<bool> HashSetAsync<T>(string key, string field, T value);
+    bool HashSet<T>(string key, string field, T value);
+    Task<Option<T>> HashGetAsync<T>(string key, string field);
+    Option<T> HashGet<T>(string key, string field);
+    Task<Option<Dictionary<string, T>>> HashGetAllAsync<T>(string key);
+    Option<Dictionary<string, T>> HashGetAll<T>(string key);
 }

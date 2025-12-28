@@ -1,4 +1,4 @@
-﻿namespace Electra.Common.Caching.Decorators;
+namespace Electra.Caching.Decorators;
 
 // public sealed class CachingCommandDecorator<T> : DecoratorBaseAsync<T>, ICachingCommandDecorator<T>
 // {

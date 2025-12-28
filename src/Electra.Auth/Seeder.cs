@@ -1,6 +1,10 @@
-using Electra.Auth.Context;
-using Electra.Auth.Models;
-using Electra.Models;
+using Electra.Core.Identity;
+using Electra.Models.Entities;
+using Electra.Persistence;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using OpenIddict.Abstractions;
+using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Electra.Auth;
 
@@ -9,13 +13,16 @@ public class Seeder
     public static async Task Initialize(IServiceProvider serviceProvider, IConfiguration configuration)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ElectraAuthDbContext>();
+        var context = scope.ServiceProvider.GetService<ElectraDbContext>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ElectraIdentityRole>>();
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ElectraRole>>();
         var applicationManager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
 
-        // Create database and apply migrations
-        await context.Database.MigrateAsync();
+        // Create database and apply migrations if EF is used
+        if (context != null)
+        {
+            await context.Database.MigrateAsync();
+        }
 
         // Seed roles
         string[] roles = ["Admin", "User", "Editor"];
@@ -23,7 +30,7 @@ public class Seeder
         {
             if (!await roleManager.RoleExistsAsync(role))
             {
-                await roleManager.CreateAsync(new ElectraIdentityRole(role));
+                await roleManager.CreateAsync(new ElectraRole(role));
             }
         }
 
@@ -40,9 +47,10 @@ public class Seeder
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    FirstName = "Admin",
-                    LastName = "User",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    Profile = new ElectraUserProfile
+                    {
+                    }
                 };
 
                 await userManager.CreateAsync(adminUser, adminPassword);
@@ -59,8 +67,8 @@ public class Seeder
                 ClientId = "electra_web_client",
                 ClientSecret = "web_client_secret",
                 DisplayName = "Electra Web Client",
-                RedirectUris = { new Uri(configuration["ClientUrls:Web"]) },
-                PostLogoutRedirectUris = { new Uri(configuration["ClientUrls:Web"]) },
+                RedirectUris = { new Uri(configuration["ClientUrls:Web"] ?? "https://localhost:3000") },
+                PostLogoutRedirectUris = { new Uri(configuration["ClientUrls:Web"] ?? "https://localhost:3000") },
                 Permissions =
                 {
                     Permissions.Endpoints.Token,

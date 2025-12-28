@@ -1,11 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using Foundatio.Caching;
-using Electra.Common.Caching.Extensions;
 using Electra.Core.Entities;
-using Electra.Persistence;
+using Electra.Persistence.Core;
+using LanguageExt;
 
-namespace Electra.Common.Caching.Decorators;
+namespace Electra.Caching.Decorators;
 
 public abstract record DbCacheResult<T, TKey>
     where T : IEntity<TKey>, new()
@@ -16,7 +15,7 @@ public abstract record DbCacheResult<T, TKey>
     public bool Success { get; set; }
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;    
 }
-public sealed record DbCacheResult<T> : DbCacheResult<T, long> where T : IEntity<long>, new() { }
+public sealed record DbCacheResult<T> : DbCacheResult<T, string> where T : IEntity<string>, new() { }
 
 // Todo - Consider not inheriting from IGenericRepository for the cache repository and change return values to DbCacheResult
 public interface ICachingRepositoryDecorator<T, TKey> : IGenericRepository<T, TKey>
@@ -37,18 +36,20 @@ public interface ICachingRepositoryDecorator<T, TKey> : IGenericRepository<T, TK
     Task<T> UpsertAsync([NotNull] T entity, CacheOptions opts = default);
 }
 
-public interface ICachingRepositoryDecorator<T> : ICachingRepositoryDecorator<T, long>, IGenericRepository<T> where T : IEntity<long>, new() { }
+public interface ICachingRepositoryDecorator<T>
+    : ICachingRepositoryDecorator<T, string>, IGenericRepository<T>
+    where T : IEntity<string>, new();
 
 
 public class CachingRepository<T>(
-    ICacheClient cache,
-    IGenericRepository<T, Guid> db,
-    ILogger<CachingRepository<T, Guid>> log)
-    : CachingRepository<T, Guid>(cache, db, log)
-    where T : IEntity<Guid>, new();
+    ICacheService cache,
+    IGenericRepository<T, string> db,
+    ILogger<CachingRepository<T, string>> log)
+    : CachingRepository<T, string>(cache, db, log)
+    where T : IEntity<string>, new();
 
 public class CachingRepository<T, TKey>(
-    ICacheClient cache,
+    ICacheService cache,
     IGenericRepository<T, TKey> db,
     ILogger<CachingRepository<T, TKey>> log)
     : ICachingRepositoryDecorator<T, TKey>
@@ -56,7 +57,7 @@ public class CachingRepository<T, TKey>(
     where TKey : IEquatable<TKey>
 {
     protected readonly IGenericRepository<T,TKey> db = db;
-    protected readonly ICacheClient cache = cache;
+    protected readonly ICacheService cache = cache;
     protected readonly ILogger<CachingRepository<T, TKey>> log = log;
     protected readonly string type = typeof(T).Name; // todo - make sure Type().Name is suffice for cache key
     protected readonly TimeSpan defaultExpiration = TimeSpan.FromMinutes(15);
@@ -68,23 +69,27 @@ public class CachingRepository<T, TKey>(
     public async Task<IEnumerable<T>> GetAllAsync()
     {
         var key = $"{prefix}_all";
-        var success = await cache.TryGetItemAsync(key, out IEnumerable<T> results);
+        var success = await cache.GetAsync<T>(key);
         
-        if(!success)
+        if(success.IsNone)
         {
             log.LogInformation($"cache miss for {key}");
-            results = await db.GetAllAsync();
+            var results = await db.GetAllAsync();
             
             if(results != null)
             {
-                var res = await cache.AddCollectionAsync(prefix, results, defaultOptions);
-                log.LogInformation($"cached {res} items");
+                await cache.SetAsync(prefix, results, defaultOptions.Expiry);
+                log.LogInformation($"cached {results.Count()} items");
+                return results;
             }
+
+            return [];
         }
-        
-        log.LogInformation($"cache hit for {key}");
-        
-        return results;
+        else
+        {
+            log.LogInformation($"cache hit for {key}");
+            return success.AsEnumerable();
+        }
     }
     
     public T FindById(TKey id) => FindByIdAsync(id).GetAwaiter().GetResult();
@@ -92,22 +97,29 @@ public class CachingRepository<T, TKey>(
     public async Task<T> FindByIdAsync(TKey id)
     {
         var key = $"{prefix}_{id}";
-        var success = await cache.TryGetItemAsync(key, out T results);
+        var success = await cache.GetAsync<T>(key);
+
+        var ret = success.Match(Some: x => x, None: () => default);
         
-        if(!success)
+        if(success.IsNone)
         {
             log.LogInformation($"cache miss for {key}");
-            results = await db.FindByIdAsync(id);
+            var results = await db.FindByIdAsync(id);
 
             if(results != null)
-            {
-                var res = await cache.AddAsync(key, results, defaultOptions.Expiry);
-            }
+                await cache.SetAsync(key, results);
+
+            return ret;
+        }
+        else
+        {
+            log.LogInformation("cache hit for {key}", key);
+            return ret;
         }
         
         log.LogInformation($"cache hit for {prefix}");
         
-        return results;
+        return ret;
     }
 
     public IEnumerable<T> Find(Expression<Func<T, bool>> predicate) => FindAsync(predicate).GetAwaiter().GetResult();
@@ -115,22 +127,26 @@ public class CachingRepository<T, TKey>(
     public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
     {
         var key = $"{prefix}_find";
-        var success = await cache.TryGetItemAsync(key, out IEnumerable<T> results);
+        var success = await cache.GetAsync<T>(key);
         
-        if(!success)
+        if(success.IsNone)
         {
             log.LogInformation($"cache miss for {key}");
-            results = await db.FindAsync(predicate);
-            if(results != null)
+            var results = await db.FindAsync(predicate);
+            if(results != null && results.Any())
             {
-                var res = await cache.AddCollectionAsync(prefix, results, defaultOptions);
-                log.LogInformation($"cached {res} items");
+                await cache.SetAsync<T>(prefix, results);
+                log.LogInformation($"cached {results.Count()} items");
+                return results;
             }
+
+            return [];
         }
-        
-        log.LogInformation($"cache hit for {key}");
-        
-        return results;
+        else
+        {
+            log.LogInformation("cache hit for {key}", key);
+            return success.AsEnumerable();
+        }
     }
 
     public T Insert(T entity) => InsertAsync(entity).GetAwaiter().GetResult();
@@ -147,11 +163,7 @@ public class CachingRepository<T, TKey>(
     {
         var dbRes = await db.InsertAsync(entity);
         
-        var res = await cache.SetAsync(entity.Id.ToString(), entity, defaultExpiration);
-        if(!res)
-            log.LogInformation($"failed to cache item w/ id: {entity.Id}");
-
-        log.LogInformation($"cached item with id: {entity.Id}");
+        await cache.SetAsync(entity.Id.ToString(), entity, defaultExpiration);
         
         return dbRes;
     }
@@ -160,9 +172,8 @@ public class CachingRepository<T, TKey>(
     {
         var dbRes = await db.UpdateAsync(entity);
         
-        var res = await cache.SetAsync(entity.Id.ToString(), entity, defaultExpiration);
-        if(!res)
-            log.LogInformation($"failed to set cache for item w/ id: {entity.Id}");
+        await cache.SetAsync(entity.Id.ToString(), entity, defaultExpiration);
+
 
         log.LogInformation($"cached item with id: {entity.Id}");
         
@@ -173,19 +184,23 @@ public class CachingRepository<T, TKey>(
     {
         var dbRes = await db.UpsertAsync(entity);
         
-        var res = await cache.SetAsync(entity.Id.ToString(), entity, defaultExpiration);
-        if(!res)
-            log.LogInformation($"failed to set cache for item w/ id: {entity.Id}");
+        await cache.SetAsync(entity.Id.ToString(), entity, defaultExpiration);
 
         log.LogInformation($"cached item with id: {entity.Id}");
         
         return dbRes;
     }
 
-    public async Task DeleteAsync([NotNull] TKey id)
+    public async Task DeleteAsync(TKey? id)
     {
         log.LogInformation($"removing item with id: {id} from cache");
-        var res = await cache.RemoveAsync(id.ToString());
+        if (id is null)
+        {
+            log.LogWarning("they key was null, nothing to cache");
+            return;
+        }
+
+        await cache.DeleteAsync(id?.ToString());
 
         await db.DeleteAsync(id);
     }
@@ -213,9 +228,9 @@ public class CachingRepository<T, TKey>(
         
         if(dbRes != null)
         {
-            var res = await cache.AddAsync(entry.Key, entry.Value, entry.Options.Expiry);
-            if(!res)
-                log.LogWarning($"(inserting to cache failed for id: {entry.Key}");
+            await cache.SetAsync(entry.Key, entry.Value, entry.Options.Expiry);
+            // if(!res)
+            //     log.LogWarning($"(inserting to cache failed for id: {entry.Key}");
         }
         
         return dbRes;
@@ -227,9 +242,7 @@ public class CachingRepository<T, TKey>(
         
         if(dbRes != null)
         {
-            var res = await cache.SetAsync(entry.Key, entry.Value, entry.Options.Expiry);
-             if(!res)
-                log.LogWarning($"(inserting to cache failed for id: {entry.Key}");
+            await cache.SetAsync(entry.Key, entry.Value, entry.Options.Expiry);
         }
         
         return dbRes;
@@ -241,9 +254,7 @@ public class CachingRepository<T, TKey>(
         
         if(dbRes != null)
         {
-            var res = await cache.SetAsync(entry.Key, entry.Value, entry.Options.Expiry);
-             if(!res)
-                log.LogWarning($"(inserting to cache failed for id: {entry.Key}");
+            await cache.SetAsync(entry.Key, entry.Value, entry.Options.Expiry);
         }
         
         return dbRes;

@@ -1,6 +1,8 @@
-﻿using DotNext;
+﻿
 
-namespace Electra.Auth;
+using LanguageExt;
+
+namespace Electra.Auth.Extensions;
 
 public static class JwtExtensions
 {
@@ -50,7 +52,7 @@ public static class JwtExtensions
     }
 
     // Method to decode JWT payload from HttpRequest
-    public static Result<JwtPayload> DecodeJwtPayload(this HttpRequest request, string secret)
+    public static Option<JwtPayload> DecodeJwtPayload(this HttpRequest request, string secret)
     {
         var token = request.Headers["Authorization"]
             .ToString()?
@@ -59,7 +61,7 @@ public static class JwtExtensions
     }
 
     // Method to decode JWT payload from a token string
-    public static Result<JwtPayload> DecodeJwtPayload(this string token, string secret)
+    public static Option<JwtPayload> DecodeJwtPayload(this string token, string secret)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
@@ -82,7 +84,8 @@ public static class JwtExtensions
         }
         catch (SecurityTokenMalformedException ex)
         {
-            var result = new Result<JwtPayload>(ex);
+            // todo - log the exception here if obtain jwt throws exception or use ThrowGuard
+            var result = Option<JwtPayload>.None;
             return result;
         }
     }

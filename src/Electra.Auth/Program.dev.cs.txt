@@ -1,0 +1,204 @@
+using Electra.Auth.Extensions;
+using Electra.Core.Identity;
+using Electra.Models.Entities;
+using Electra.Persistence;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+using WebAuthn.Net.Configuration.DependencyInjection;
+using WebAuthn.Net.Storage.PostgreSql.Configuration.DependencyInjection;
+
+
+// Configure Entity Framework with PostgreSQL
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+services.AddDbContext<ElectraDbContext>(options =>
+{
+    options.UseNpgsql(connectionString);
+    options.UseOpenIddict<long>();
+});
+
+// Add ASP.NET Core Identity
+services.AddIdentity<ElectraUser, ElectraRole>(options =>
+{
+    // Password settings
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = true;
+
+    // Sign in settings
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+})
+.AddEntityFrameworkStores<ElectraDbContext>()
+.AddDefaultTokenProviders();
+
+// Add OpenIddict with enhanced configuration
+services.AddOpenIddict()
+    .AddCore(options =>
+    {
+        options.UseEntityFrameworkCore()
+               .UseDbContext<ElectraDbContext>()
+               .ReplaceDefaultEntities<long>();
+    })
+    .AddServer(options =>
+    {
+        // Set the endpoints
+        options.SetTokenEndpointUris("/connect/token")
+               .SetUserinfoEndpointUris("/connect/userinfo")
+               .SetAuthorizationEndpointUris("/connect/authorize")
+               .SetLogoutEndpointUris("/connect/logout")
+               .SetIntrospectionEndpointUris("/connect/introspect")
+               .SetRevocationEndpointUris("/connect/revoke");
+
+        // Enable flows
+        options.AllowPasswordFlow()
+               .AllowRefreshTokenFlow()
+               .AllowAuthorizationCodeFlow()
+               .AllowClientCredentialsFlow();
+
+        // Accept anonymous clients for development
+        options.AcceptAnonymousClients();
+
+        // Register signing and encryption credentials
+        if (builder.Environment.IsDevelopment())
+        {
+            options.AddDevelopmentEncryptionCertificate()
+                   .AddDevelopmentSigningCertificate();
+        }
+        else
+        {
+            // In production, use proper certificates
+            // options.AddEncryptionCertificate(...)
+            // options.AddSigningCertificate(...)
+        }
+
+        // Configure token lifetimes - refresh tokens expire in 2 minutes as requested
+        options.SetAccessTokenLifetime(TimeSpan.FromMinutes(15))
+               .SetRefreshTokenLifetime(TimeSpan.FromMinutes(2));
+
+        // Enable refresh token rotation
+        options.UseReferenceRefreshTokens();
+
+        // Register scopes
+        options.RegisterScopes("openid", "email", "profile", "roles", "api", "offline_access");
+
+        // Register the ASP.NET Core host
+        options.UseAspNetCore()
+               .EnableTokenEndpointPassthrough()
+               .EnableUserinfoEndpointPassthrough()
+               .EnableAuthorizationEndpointPassthrough()
+               .EnableLogoutEndpointPassthrough()
+               .EnableStatusCodePagesIntegration();
+    })
+    .AddValidation(options =>
+    {
+        options.UseLocalServer();
+        options.UseAspNetCore();
+    });
+
+// Add WebAuthn.Net for passkey support
+services.AddWebAuthnCore(options =>
+{
+    options.RelyingPartyId = builder.Configuration["WebAuthn:RelyingPartyId"] ?? "localhost";
+    options.RelyingPartyName = builder.Configuration["WebAuthn:RelyingPartyName"] ?? "Electra Auth";
+    options.Origins = builder.Configuration.GetSection("WebAuthn:Origins").Get<string[]>() ?? ["https://localhost"];
+})
+.AddPostgreSqlStorage(options =>
+{
+    options.ConnectionString = connectionString!;
+    options.Schema = "webauthn";
+});
+
+// Add external authentication providers
+var authBuilder = services.AddAuthentication();
+
+// Google OAuth
+if (!string.IsNullOrEmpty(builder.Configuration["Auth:Google:ClientId"]))
+{
+    authBuilder.AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Auth:Google:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Auth:Google:ClientSecret"]!;
+        options.Scope.Add("email");
+        options.Scope.Add("profile");
+    });
+}
+
+// Facebook OAuth
+if (!string.IsNullOrEmpty(builder.Configuration["Auth:Facebook:AppId"]))
+{
+    authBuilder.AddFacebook(options =>
+    {
+        options.AppId = builder.Configuration["Auth:Facebook:AppId"]!;
+        options.AppSecret = builder.Configuration["Auth:Facebook:AppSecret"]!;
+        options.Scope.Add("email");
+    });
+}
+
+// Microsoft OAuth
+if (!string.IsNullOrEmpty(builder.Configuration["Auth:Microsoft:ClientId"]))
+{
+    authBuilder.AddMicrosoftAccount(options =>
+    {
+        options.ClientId = builder.Configuration["Auth:Microsoft:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Auth:Microsoft:ClientSecret"]!;
+        options.Scope.Add("User.Read");
+    });
+}
+
+// Twitter OAuth
+if (!string.IsNullOrEmpty(builder.Configuration["Auth:Twitter:ConsumerKey"]))
+{
+    authBuilder.AddTwitter(options =>
+    {
+        options.ConsumerKey = builder.Configuration["Auth:Twitter:ConsumerKey"]!;
+        options.ConsumerSecret = builder.Configuration["Auth:Twitter:ConsumerSecret"]!;
+        options.RetrieveUserDetails = true;
+    });
+}
+
+// Add authorization
+services.AddAuthorization();
+
+// Add YARP for reverse proxy
+services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+var app = builder.Build();
+
+
+app.UseHttpsRedirection();
+app.UseCors("DefaultPolicy");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+
+
+
+// Ensure database is created and seeded
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        await Seeder.Initialize(scope.ServiceProvider, app.Configuration);
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database");
+    }
+}
+

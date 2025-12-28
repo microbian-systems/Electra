@@ -19,6 +19,7 @@ public static class ApiServiceExtensions
         services.AddTransient<IJwtFactory, JwtFactory>();
         services.AddTransient<IClaimsPrincipalFactory, ClaimsPrincipalFactory>();
         services.AddScoped<IApiAuthRepository, ApiAuthRepository>();
+        services.AddScoped<IApiKeyFactory, DefaultApiKeyFactory>();
         
         return services;
     }

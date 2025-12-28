@@ -1,0 +1,11 @@
+{
+  "Port": 1000,  
+  "Address": "0.0.0.0", 
+  "MemorySize": 134217728, 
+  "PageSize": 1048576,  // Size of each log page in bytes (e.g., 1MB)
+  "EnableLua": false, // Disable Lua script execution
+  "EnableTLS": false, // Disable TLS encryption
+  "GossipSamplePercent": 100, // Percentage of cluster nodes to gossip with
+  "GossipDelay": 5, // Gossip delay in seconds
+  "ClusterTimeout": 60 // Cluster node timeout in seconds
+}

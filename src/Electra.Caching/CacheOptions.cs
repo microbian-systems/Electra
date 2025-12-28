@@ -1,4 +1,4 @@
-﻿namespace Electra.Common.Caching;
+namespace Electra.Caching;
 
 public interface ICacheOptions
 {

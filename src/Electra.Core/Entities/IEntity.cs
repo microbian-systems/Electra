@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Electra.Core.Entities;
 
+public interface IEntity : IEntity<string>;
 public interface IEntity<TKey> where TKey : IEquatable<TKey>
 {
     [Key] [JsonPropertyName("id")]
@@ -23,7 +25,7 @@ public interface IEntity<TKey> where TKey : IEquatable<TKey>
 /// <summary>
 /// Represents a persisted entity for Electra
 /// </summary>
-public abstract class Entity : Entity<long> {}
+public abstract class Entity : Entity<string>, IEntity {}
 
 /// <summary>
 /// Represents a persisted entity for Electra

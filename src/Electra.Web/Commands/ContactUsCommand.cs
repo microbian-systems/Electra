@@ -2,6 +2,8 @@ using Electra.Persistence;
 using Electra.Persistence.Entities;
 using Electra.Models;
 using Electra.Common.Commands;
+using Electra.Persistence.Core.Marten;
+using Electra.Persistence.Marten;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using ILogger = Serilog.ILogger;
 using WebResponse = Electra.Models.WebResponse;
