@@ -2,14 +2,22 @@
 using Electra.Core.Entities;
 using Electra.Persistence.Core.Functional;
 using Microsoft.Extensions.Logging;
+using static System.GC;
 
 
 namespace Electra.Persistence.RavenDB;
 
-public abstract class RavenDbRepositoryBase<TEntity>(IAsyncDocumentSession session, ILogger<GenericRepositoryOption<TEntity>> log) 
-    : GenericRepositoryOption<TEntity>(log)
+public abstract class RavenDbRepositoryBase<TEntity> 
+    : GenericRepositoryOption<TEntity>
     where TEntity : IEntity, new()
 {
+    protected readonly IAsyncDocumentSession session;
+
+    public RavenDbRepositoryBase(IAsyncDocumentSession session, ILogger<GenericRepositoryOption<TEntity>> log) : base(log)
+    {
+        this.session = session;
+    }
+    
     public override async Task<long> CountAsync()
     {
         return await session.Query<TEntity>().LongCountAsync();
@@ -39,6 +47,7 @@ public abstract class RavenDbRepositoryBase<TEntity>(IAsyncDocumentSession sessi
         try
         {
             var existing = await FindByIdAsync(entity.Id);
+            if (existing.IsSome) throw new Exception($"Entity with id: {entity.Id} already exists");
             await session.StoreAsync(entity);
             return Some(entity);
         }
@@ -54,6 +63,7 @@ public abstract class RavenDbRepositoryBase<TEntity>(IAsyncDocumentSession sessi
         try
         {
             var existing = await FindByIdAsync(entity.Id);
+            if (existing.IsNone) throw new Exception($"Update failed - Entity with id: {entity.Id} does not exist");
             await session.StoreAsync(entity);
             return Some(entity);
         }
@@ -69,7 +79,6 @@ public abstract class RavenDbRepositoryBase<TEntity>(IAsyncDocumentSession sessi
     {
         try
         {
-            var existing = await FindByIdAsync(entity.Id);
             await session.StoreAsync(entity);
             return Some(entity);
         }
@@ -136,6 +145,6 @@ public abstract class RavenDbRepositoryBase<TEntity>(IAsyncDocumentSession sessi
     public void Dispose()
     {
         session.Dispose();
-        GC.SuppressFinalize(this);
+        SuppressFinalize(this);
     }
 }

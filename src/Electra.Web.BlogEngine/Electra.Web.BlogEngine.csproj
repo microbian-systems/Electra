@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="IPAddressRange" Version="6.3.0" />
+        <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
         <PackageReference Include="Mapster" Version="7.4.0" />
         <PackageReference Include="Mapster.Async" Version="2.0.1" />
         <PackageReference Include="Mapster.Core" Version="1.2.1" />
@@ -41,6 +42,7 @@
       <ProjectReference Include="..\Electra.Events\Electra.Events.csproj" />
       <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
       <ProjectReference Include="..\Electra.Persistence.Marten\Electra.Persistence.Marten.csproj" />
+      <ProjectReference Include="..\Electra.Persistence.RavenDB\Electra.Persistence.RavenDB.csproj" />
       <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
       <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
     </ItemGroup>

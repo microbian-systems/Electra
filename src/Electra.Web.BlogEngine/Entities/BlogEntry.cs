@@ -104,5 +104,7 @@ public class BlogEntry : Entity
     public int Reads { get; set; } = 0;
     public int Saves { get; set; } = 0;
     public int Prints { get; set; } = 0;
-    public int Copies { get; set; } = 0; 
+    public int Copies { get; set; } = 0;
+    [MaxLength(255)]
+    public string? Series { get; set; } = string.Empty;
 }

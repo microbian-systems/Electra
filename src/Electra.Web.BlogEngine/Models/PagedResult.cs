@@ -4,7 +4,7 @@ namespace Electra.Web.BlogEngine.Models;
 /// Represents a paginated result set
 /// </summary>
 /// <typeparam name="T">Type of items in the result</typeparam>
-public class PaginatedResult<T>
+public class PagedResult<T>
 {
     /// <summary>
     /// The items in the current page
@@ -44,9 +44,9 @@ public class PaginatedResult<T>
     /// <summary>
     /// Creates a new paginated result
     /// </summary>
-    public static PaginatedResult<T> Create(IEnumerable<T> items, int pageNumber, int pageSize, int totalCount)
+    public static PagedResult<T> Create(IEnumerable<T> items, int pageNumber, int pageSize, int totalCount)
     {
-        return new PaginatedResult<T>
+        return new PagedResult<T>
         {
             Items = items,
             PageNumber = pageNumber,

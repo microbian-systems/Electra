@@ -21,7 +21,7 @@ public interface IBlogService
     /// <param name="pageSize">Number of items per page</param>
     /// <param name="publishedOnly">Whether to include only published posts</param>
     /// <returns>Paginated result of blog posts</returns>
-    Task<PaginatedResult<Entities.BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true);
+    Task<PagedResult<Entities.BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true);
 
     /// <summary>
     /// Gets a blog post by its ID
@@ -51,7 +51,7 @@ public interface IBlogService
     /// <param name="pageNumber">Page number (1-based)</param>
     /// <param name="pageSize">Number of items per page</param>
     /// <returns>Paginated search results</returns>
-    Task<PaginatedResult<Entities.BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber = 1, int pageSize = 10);
+    Task<PagedResult<Entities.BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber = 1, int pageSize = 10);
 
     /// <summary>
     /// Gets blog posts by tag
@@ -60,7 +60,7 @@ public interface IBlogService
     /// <param name="pageNumber">Page number (1-based)</param>
     /// <param name="pageSize">Number of items per page</param>
     /// <returns>Paginated result of blog posts with the specified tag</returns>
-    Task<PaginatedResult<Entities.BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber = 1, int pageSize = 10);
+    Task<PagedResult<Entities.BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber = 1, int pageSize = 10);
 
     /// <summary>
     /// Creates a new blog post
@@ -117,6 +117,6 @@ public interface IBlogService
     /// <param name="pageNumber">Page number (1-based)</param>
     /// <param name="pageSize">Number of items per page</param>
     /// <returns>Paginated result of blog posts by the specified author</returns>
-    Task<PaginatedResult<Entities.BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber = 1, int pageSize = 10);
+    Task<PagedResult<Entities.BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber = 1, int pageSize = 10);
     Task<string?> GetLatestEntries(int v);
 }

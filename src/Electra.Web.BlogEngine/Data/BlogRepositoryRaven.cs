@@ -1,84 +1,176 @@
+using Electra.Persistence.RavenDB;
 using Electra.Web.BlogEngine.Entities;
 using Electra.Web.BlogEngine.Models;
+using LanguageExt;
 using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 
 namespace Electra.Web.BlogEngine.Data;
 
-public class BlogRepositoryRaven(IDocumentStore store, ILogger<BlogRepositoryRaven> log) : IBlogRepository
+public class BlogRepositoryRaven : RavenDbRepositoryBase<BlogEntry>, IBlogRepository
 {
+    public BlogRepositoryRaven(IAsyncDocumentSession session, ILogger<BlogRepositoryRaven> log) 
+        : base(session, log)
+    {
+    }
+    
     public async Task<IEnumerable<BlogEntry>> GetLatestBlogsAsync(int count)
     {
-        throw new NotImplementedException();
+        log.LogInformation("Getting latest {Count} blogs", count);
+        var posts = await session.Query<BlogEntry>()
+            .OrderByDescending(b => b.CreatedOn)
+            .Take(count)
+            .ToListAsync();
+        return posts;
     }
 
-    public async Task<PaginatedResult<BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true)
+    public async Task<PagedResult<BlogEntry>> GetPaginatedBlogsAsync(int pageNumber = 1, int pageSize = 10, bool publishedOnly = true)
     {
-        throw new NotImplementedException();
+        if(pageNumber <= 0) pageNumber = 1;
+        log.LogInformation("Getting paginated blogs (pageNumber: {PageNumber}, pageSize: {PageSize})", pageNumber, pageSize);
+        var posts = await session.Query<BlogEntry>()
+            .OrderByDescending(b => b.CreatedOn)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return PagedResult<BlogEntry>.Create(posts ?? [], pageNumber, pageSize, posts?.Count ?? 0);
     }
 
-    public async Task<BlogEntry?> GetBlogByIdAsync(string id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<Option<BlogEntry>> GetBlogByIdAsync(string id)
+        => await FindByIdAsync(id);
 
-    public async Task<BlogEntry?> GetBlogBySlugAsync(string slug)
+    public async Task<Option<BlogEntry>> GetBlogBySlugAsync(string slug)
     {
-        throw new NotImplementedException();
+        var post = await session.Query<BlogEntry>()
+            .Where(b => b.Slug == slug)
+            .SingleOrDefaultAsync();
+        return post;
     }
 
     public async Task<IEnumerable<BlogEntry>> GetFeaturedBlogsAsync(int count = 5)
     {
-        throw new NotImplementedException();
+        var featuredBlogs = await session.Query<BlogEntry>()
+            .Where(b => b.IsFeatured)
+            .OrderByDescending(b => b.CreatedOn)
+            .Take(count)
+            .ToListAsync();
+        return featuredBlogs ?? [];
     }
 
-    public async Task<PaginatedResult<BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber=1, int pageSize=10)
     {
-        throw new NotImplementedException();
+        if(pageNumber <= 0) pageNumber = 1;
+        if(pageSize <= 0) pageSize = 10;
+        var posts = await session.Query<BlogEntry>()
+            .Where(b => b.Title.Contains(searchTerm) || b.Content.Contains(searchTerm))
+            .OrderByDescending(b => b.CreatedOn)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return PagedResult<BlogEntry>.Create(posts ?? [], pageNumber, pageSize, posts?.Count ?? 0);
     }
 
-    public async Task<PaginatedResult<BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber=1, int pageSize=10)
     {
-        throw new NotImplementedException();
+        if(pageNumber <= 0) pageNumber = 1;
+        if(pageSize <= 0) pageSize = 10;
+        var posts = await session.Query<BlogEntry>()
+            .Where(b => b.Tags.AsEnumerable().Contains(tag))
+            .OrderByDescending(b => b.CreatedOn)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return PagedResult<BlogEntry>.Create(posts ?? [], pageNumber, pageSize, posts?.Count ?? 0);
     }
 
-    public async Task<BlogEntry> AddBlogAsync(BlogEntry blog)
+    public async Task<Option<BlogEntry>> AddBlogAsync(BlogEntry? blog)
     {
-        throw new NotImplementedException();
+        if (blog is not null) 
+            return await InsertAsync(blog);
+        
+        log.LogWarning("attempted to add a null blog entry. returning w/ noop");
+        return Option<BlogEntry>.None;
+
     }
 
-    public async Task<BlogEntry> UpdateBlogAsync(BlogEntry blog)
+    public async Task<Option<BlogEntry>> UpdateBlogAsync(BlogEntry? blog)
     {
-        throw new NotImplementedException();
+        if (blog is not null) 
+            return await UpsertAsync(blog);
+        log.LogWarning("attempted to update a null blog entry. returning w/ noop");
+        return Option<BlogEntry>.None;
     }
 
     public async Task<bool> DeleteBlogAsync(string id)
     {
-        throw new NotImplementedException();
+        if(string.IsNullOrEmpty(id))
+        {
+            log.LogWarning("attempted to delete a null blog entry. returning w/ noop");
+            return false;
+        }
+        
+        session.Delete(id);
+        return await Task.FromResult(true);
     }
 
     public async Task<int> IncrementViewCountAsync(string id)
     {
-        throw new NotImplementedException();
+        var post = await FindByIdAsync(id);
+        if(post.IsNone) return 0;
+        post.IfSome(p => p.ViewCount++);
+        return post.Match(p => p.ViewCount, 0);
     }
 
     public async Task<IEnumerable<string>> GetAllTagsAsync()
     {
-        throw new NotImplementedException();
+        var tags = await session.Query<BlogEntry>()
+            .SelectMany(b => b.Tags)
+            .Distinct()
+            .ToListAsync();
+        return tags ?? [];
     }
 
-    public async Task<PaginatedResult<BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber=1, int pageSize=10)
     {
-        throw new NotImplementedException();
+        if(pageNumber <= 0) pageNumber = 1;
+        if(pageSize <= 0) pageSize = 10;
+        var posts = await session.Query<BlogEntry>()
+            .Where(b => b.Authors.AsEnumerable().Contains(author))
+            .OrderByDescending(b => b.CreatedOn)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return PagedResult<BlogEntry>.Create(posts ?? [], pageNumber, pageSize, posts?.Count ?? 0);
     }
 
-    public async Task<string> GetContentAsHtmlAsync(BlogEntry blog)
+    public async Task<bool> BulkImportMarkdown(IReadOnlyList<MarkDownContentModel>? entries)
     {
-        throw new NotImplementedException();
-    }
+        if (entries is null || !entries.Any())
+        {
+            log.LogWarning("No blogs provided for the call to bulk import.");
+            return false;
+        }
 
-    public async Task<string> GetRawMarkdownAsync(BlogEntry blog)
-    {
-        throw new NotImplementedException();
+        foreach (var entry in entries)
+        {
+            var post = new BlogEntry()
+            {
+                ImageUrl = entry.imageUrl,
+                Tags = entry.tags,
+                PublishDate = entry.publishedAt,
+                Content = entry.content,
+                Title = entry.title,
+                Slug = entry.slug,
+                ApprovalRequired = false,
+                IsPublished = false,
+                Series = entry.series,
+                Authors = ["microbians"],
+            };
+            await InsertAsync(post);
+        }
+
+        log.LogInformation("Successfully imported {count} blogs.", entries.Count);
+        return true;
     }
 }
