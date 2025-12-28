@@ -1,6 +1,7 @@
 using Electra.Web.BlogEngine.Data;
 using Electra.Web.BlogEngine.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Electra.Web.BlogEngine.Extensions;
@@ -18,15 +19,15 @@ public static class BlogServiceCollectionExtensions
         /// </summary>
         /// <param name="connectionString">Database connection string</param>
         /// <returns>Service collection for chaining</returns>
-        public IServiceCollection AddBlogServices(string connectionString)
+        public IServiceCollection AddBlogServices(IConfiguration config)
         {
             // Register DbContext
-            services.AddDbContext<BlogDbContext>(options =>
-            {
-                options.UseSqlite(connectionString);
-                options.EnableSensitiveDataLogging(false);
-                options.EnableServiceProviderCaching();
-            });
+            // services.AddDbContext<BlogDbContext>(options =>
+            // {
+            //     options.UseSqlite(connectionString);
+            //     options.EnableSensitiveDataLogging(false);
+            //     options.EnableServiceProviderCaching();
+            // });
 
             // Register blog service
             services.AddScoped<IBlogService, BlogService>();
@@ -46,7 +47,7 @@ public static class BlogServiceCollectionExtensions
 
             // Register blog service
             services.AddScoped<IBlogService, BlogService>();
-            services.AddScoped<IBlogRepository, BlogRepositoryEfCore>();
+            services.AddScoped<IBlogRepository, BlogRepositoryRaven>();
 
             return services;
         }
@@ -91,7 +92,15 @@ public static class BlogServiceCollectionExtensions
             return services.AddBlogServices(options =>
             {
                 options.UseInMemoryDatabase(databaseName);
-                options.EnableSensitiveDataLogging(true);
+                options.EnableSensitiveDataLogging();
+            });
+        }
+
+        public IServiceCollection AddBlogServicesRavenDb(IConfiguration config)
+        {
+            return services.AddBlogServices(options =>
+            {
+                // RavenDB does not use DbContext, so no configuration needed here
             });
         }
     }

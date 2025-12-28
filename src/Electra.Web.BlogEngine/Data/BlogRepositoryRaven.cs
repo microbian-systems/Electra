@@ -154,7 +154,7 @@ public class BlogRepositoryRaven : RavenDbRepositoryBase<BlogEntry>, IBlogReposi
 
         foreach (var entry in entries)
         {
-            var post = new BlogEntry()
+            var post = new BlogEntry
             {
                 ImageUrl = entry.imageUrl,
                 Tags = entry.tags,

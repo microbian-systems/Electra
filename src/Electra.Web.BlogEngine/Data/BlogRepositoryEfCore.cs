@@ -1,4 +1,5 @@
 using Electra.Core;
+using Electra.Web.BlogEngine.Entities;
 using Electra.Web.BlogEngine.Enums;
 using Electra.Web.BlogEngine.Models;
 using Markdig;
@@ -15,7 +16,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         .UseBootstrap()
         .Build();
 
-    public async Task<IEnumerable<Entities.BlogEntry>> GetLatestBlogsAsync(int count)
+    public async Task<IEnumerable<BlogEntry>> GetLatestBlogsAsync(int count)
     {
         try
         {
@@ -32,7 +33,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<PagedResult<Entities.BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true)
+    public async Task<PagedResult<BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true)
     {
         try
         {
@@ -50,16 +51,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<Entities.BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error retrieving paginated blogs");
-            return PagedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<Entities.BlogEntry?> GetBlogByIdAsync(string id)
+    public async Task<BlogEntry?> GetBlogByIdAsync(string id)
     {
         try
         {
@@ -73,7 +74,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<Entities.BlogEntry?> GetBlogBySlugAsync(string slug)
+    public async Task<BlogEntry?> GetBlogBySlugAsync(string slug)
     {
         try
         {
@@ -87,7 +88,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<IEnumerable<Entities.BlogEntry>> GetFeaturedBlogsAsync(int count = 5)
+    public async Task<IEnumerable<BlogEntry>> GetFeaturedBlogsAsync(int count = 5)
     {
         try
         {
@@ -104,7 +105,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<PagedResult<Entities.BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber, int pageSize)
     {
         try
         {
@@ -126,16 +127,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<Entities.BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error searching blogs with term: {SearchTerm}", searchTerm);
-            return PagedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<PagedResult<Entities.BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber, int pageSize)
     {
         try
         {
@@ -150,16 +151,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<Entities.BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error retrieving blogs by tag: {Tag}", tag);
-            return PagedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<Entities.BlogEntry> AddBlogAsync(Entities.BlogEntry blog)
+    public async Task<BlogEntry> AddBlogAsync(BlogEntry blog)
     {
         try
         {
@@ -180,7 +181,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<Entities.BlogEntry> UpdateBlogAsync(Entities.BlogEntry blog)
+    public async Task<BlogEntry> UpdateBlogAsync(BlogEntry blog)
     {
         try
         {
@@ -287,7 +288,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<PagedResult<Entities.BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber, int pageSize)
     {
         try
         {
@@ -302,16 +303,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<Entities.BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error retrieving blogs by author: {Author}", author);
-            return PagedResult<Entities.BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<string> GetContentAsHtmlAsync(Entities.BlogEntry blog)
+    public async Task<string> GetContentAsHtmlAsync(BlogEntry blog)
     {
         try
         {
@@ -333,7 +334,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<string> GetRawMarkdownAsync(Entities.BlogEntry blog)
+    public async Task<string> GetRawMarkdownAsync(BlogEntry blog)
     {
         try
         {

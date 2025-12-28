@@ -1,3 +1,4 @@
+using Electra.Web.BlogEngine.Entities;
 using Electra.Web.BlogEngine.Enums;
 using Electra.Web.BlogEngine.Extensions;
 using Electra.Web.BlogEngine.Services;
@@ -16,7 +17,7 @@ public static class BlogIntegrationExample
     public static void ConfigureServices(IServiceCollection services)
     {
         // Option 1: SQLite (default)
-        services.AddBlogServices("Data Source=blogs.db");
+        //services.AddBlogServices("Data Source=blogs.db");
 
         // Option 2: SQL Server
         // services.AddBlogServicesWithSqlServer("Server=.;Database=BlogDb;Trusted_Connection=true;");
@@ -34,7 +35,7 @@ public static class BlogIntegrationExample
     public static async Task BlogServiceExample(IBlogService blogService)
     {
         // Create a new blog post
-        var newBlog = new Entities.BlogEntry
+        var newBlog = new BlogEntry
         {
             Title = "Getting Started with ASP.NET Core",
             Description = "A comprehensive guide to building web applications with ASP.NET Core",
@@ -65,39 +66,45 @@ This will create a new web API project and start the development server.",
             IsFeatured = true
         };
 
+        
         // Add the blog post
         var createdBlog = await blogService.AddBlogAsync(newBlog);
-        Console.WriteLine($"Created blog with ID: {createdBlog.Id}");
 
-        // Get latest blogs
-        var latestBlogs = await blogService.GetLatestBlogsAsync(5);
-        Console.WriteLine($"Retrieved {latestBlogs.Count()} latest blogs");
+        await createdBlog.IfSomeAsync(async blog =>
+        {
+            Console.WriteLine($"Created blog with ID: {blog.Id}");
 
-        // Get paginated blogs
-        var paginatedBlogs = await blogService.GetPaginatedBlogsAsync(1, 10);
-        Console.WriteLine($"Page 1 contains {paginatedBlogs.Items.Count()} blogs out of {paginatedBlogs.TotalCount} total");
+            // Get latest blogs
+            var latestBlogs = await blogService.GetLatestBlogsAsync(5);
+            Console.WriteLine($"Retrieved {latestBlogs.Count()} latest blogs");
 
-        // Convert markdown to HTML
-        var htmlContent = await blogService.GetContentAsHtmlAsync(createdBlog);
-        Console.WriteLine($"HTML content length: {htmlContent.Length} characters");
+            // Get paginated blogs
+            var paginatedBlogs = await blogService.GetPaginatedBlogsAsync();
+            Console.WriteLine(
+                $"Page 1 contains {paginatedBlogs.Items.Count()} blogs out of {paginatedBlogs.TotalCount} total");
 
-        // Search blogs
-        var searchResults = await blogService.SearchBlogsAsync("ASP.NET", 1, 10);
-        Console.WriteLine($"Found {searchResults.TotalCount} blogs matching 'ASP.NET'");
+            // Convert markdown to HTML
+            var htmlContent = await blogService.GetContentAsHtmlAsync(blog);
+            Console.WriteLine($"HTML content length: {htmlContent.Length} characters");
 
-        // Get blogs by tag
-        var taggedBlogs = await blogService.GetBlogsByTagAsync("tutorial", 1, 10);
-        Console.WriteLine($"Found {taggedBlogs.TotalCount} blogs tagged with 'tutorial'");
+            // Search blogs
+            var searchResults = await blogService.SearchBlogsAsync("ASP.NET");
+            Console.WriteLine($"Found {searchResults.TotalCount} blogs matching 'ASP.NET'");
 
-        // Get all tags
-        var allTags = await blogService.GetAllTagsAsync();
-        Console.WriteLine($"Available tags: {string.Join(", ", allTags)}");
+            // Get blogs by tag
+            var taggedBlogs = await blogService.GetBlogsByTagAsync("tutorial");
+            Console.WriteLine($"Found {taggedBlogs.TotalCount} blogs tagged with 'tutorial'");
 
-        // Update the blog
-        createdBlog.ViewCount = 100;
-        createdBlog.Description = "Updated description";
-        var updatedBlog = await blogService.UpdateBlogAsync(createdBlog);
-        Console.WriteLine($"Updated blog, new view count: {updatedBlog.ViewCount}");
+            // Get all tags
+            var allTags = await blogService.GetAllTagsAsync();
+            Console.WriteLine($"Available tags: {string.Join(", ", allTags)}");
+
+            // Update the blog
+            blog.ViewCount = 100;
+            blog.Description = "Updated description";
+            var updatedBlog = await blogService.UpdateBlogAsync(blog);
+            Console.WriteLine($"Updated blog, new view count: {blog.ViewCount}");
+        });
     }
     
     /// <summary>
@@ -107,7 +114,7 @@ This will create a new web API project and start the development server.",
     {
         var sampleBlogs = new[]
         {
-            new Entities.BlogEntry
+            new BlogEntry
             {
                 Title = "Introduction to Entity Framework Core",
                 Description = "Learn the basics of Entity Framework Core ORM",
@@ -126,7 +133,7 @@ Entity Framework Core is a lightweight, extensible ORM for .NET applications.
                 IsPublished = true,
                 IsDraft = false
             },
-            new Entities.BlogEntry
+            new BlogEntry
             {
                 Title = "Building RESTful APIs",
                 Description = "Best practices for creating REST APIs with ASP.NET Core",
@@ -147,7 +154,7 @@ REST (Representational State Transfer) is an architectural style for web service
                 IsDraft = false,
                 IsFeatured = true
             },
-            new Entities.BlogEntry
+            new BlogEntry
             {
                 Title = "Advanced C# Features",
                 Description = "Exploring modern C# language features",

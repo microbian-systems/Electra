@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Electra.Core;
 using Electra.Core.Entities;
 using Electra.Web.BlogEngine.Enums;
 

@@ -110,17 +110,17 @@ public abstract class RavenDbRepositoryBase<TEntity>
         }
     }
 
-    public override async Task<bool> DeleteAsync(TEntity entity)
+    public override Task<bool> DeleteAsync(TEntity entity)
     {
         try
         {
             session.Delete(entity);
-            return true;
+            return Task.FromResult(true);
         }
         catch (Exception ex)
         {
             log.LogError(ex, "Failed to delete entity with id: {id}", entity.Id);
-            return false;
+            return Task.FromResult(false);
         }
         
     }

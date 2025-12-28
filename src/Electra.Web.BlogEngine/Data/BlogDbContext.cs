@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Electra.Web.BlogEngine.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Web.BlogEngine.Data;
@@ -11,14 +12,14 @@ public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(
     /// <summary>
     /// Blog posts collection
     /// </summary>
-    public DbSet<Entities.BlogEntry> Blogs { get; set; }
+    public DbSet<BlogEntry> Blogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         // Configure Blog entity
-        modelBuilder.Entity<Entities.BlogEntry>(entity =>
+        modelBuilder.Entity<BlogEntry>(entity =>
         {
             // Primary key
             entity.HasKey(e => e.Id);
@@ -76,7 +77,7 @@ public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         // Update timestamps
-        var entries = ChangeTracker.Entries<Entities.BlogEntry>()
+        var entries = ChangeTracker.Entries<BlogEntry>()
             .Where(e => e.State is EntityState.Added or EntityState.Modified);
 
         foreach (var entry in entries)

@@ -1,6 +1,7 @@
-using Electra.Common.Web;
+using Electra.Web.BlogEngine.Entities;
 using Electra.Web.BlogEngine.Services;
 using Electra.Web.Core.Controllers;
+using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -111,15 +112,16 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
         try
         {
             var blog = await blogService.GetBlogBySlugAsync(slug);
-            if (blog == null)
-            {
-                return NotFound();
-            }
+            
+            var result = blog.Match<IActionResult>(
+                Some:  b =>
+                {
+                    blogService.IncrementViewCountAsync(b.Id);
+                    return Ok(b);
+                },
+                None: NotFound);
 
-            // Increment view count
-            await blogService.IncrementViewCountAsync(blog.Id);
-
-            return Ok(blog);
+            return result;
         }
         catch (Exception ex)
         {
@@ -138,12 +140,12 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
         try
         {
             var blog = await blogService.GetBlogByIdAsync(id);
-            if (blog == null)
-            {
+            if(blog.IsNone)
                 return NotFound();
-            }
 
-            var html = await blogService.GetContentAsHtmlAsync(blog);
+            var b = (BlogEntry)blog;
+            
+            var html = await blogService.GetContentAsHtmlAsync(b);
             return Ok(new { html });
         }
         catch (Exception ex)
@@ -243,7 +245,7 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// Creates a new blog post
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> CreateBlog([FromBody] Entities.BlogEntry blog)
+    public async Task<IActionResult> CreateBlog([FromBody] BlogEntry blog)
     {
         try
         {
@@ -253,7 +255,11 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
             }
 
             var createdBlog = await blogService.AddBlogAsync(blog);
-            return CreatedAtAction(nameof(GetBlog), new { id = createdBlog.Id }, createdBlog);
+            var res =  createdBlog.Match<IActionResult>(
+                Some: b => CreatedAtAction(nameof(CreateBlog), new { id = b.Id }, b),
+                None: BadRequest(blog));
+
+            return res;
         }
         catch (Exception ex)
         {
@@ -265,8 +271,8 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// <summary>
     /// Updates an existing blog post
     /// </summary>
-    [HttpPut("{id:string}")]
-    public async Task<IActionResult> UpdateBlog(string id, [FromBody] Entities.BlogEntry blog)
+    [HttpPut("{id:tring}")]
+    public async Task<IActionResult> UpdateBlog(string id, [FromBody] BlogEntry blog)
     {
         try
         {
