@@ -7,7 +7,7 @@ namespace Electra.Web.BlogEngine.Entities;
 /// <summary>
 /// Blog entity representing a blog post
 /// </summary>
-public class BlogEntry : Entity
+public class BlogPost : Entity
 {
     [MaxLength(5)]
     public string Culture { get; set; } = "en-US";
