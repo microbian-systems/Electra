@@ -1,0 +1,37 @@
+@* @model Electra.Web.BlogEngine.Models.BlogIndexViewModel *@
+@model dynamic
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Blog";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8">Blog</h1>
+
+    @*
+    @if (Model.FeaturedArticle != null)
+    {
+        <div class="mb-12">
+            @await Html.PartialAsync("_FeaturedArticle", Model.FeaturedArticle)
+        </div>
+    }
+    *@
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @*
+        @foreach (var article in Model.Articles)
+        {
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+               ...
+            </div>
+        }
+        *@
+        <p>Placeholder for articles list.</p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-12 flex justify-center">
+        @* Pagination controls *@
+    </div>
+</div>

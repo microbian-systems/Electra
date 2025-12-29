@@ -1,4 +1,4 @@
-namespace Electra.Web.BlogEngine.Models;
+namespace Electra.Models;
 
 /// <summary>
 /// Represents a paginated result set

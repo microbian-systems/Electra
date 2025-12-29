@@ -12,14 +12,14 @@ public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(
     /// <summary>
     /// Blog posts collection
     /// </summary>
-    public DbSet<BlogEntry> Blogs { get; set; }
+    public DbSet<BlogPost> Blogs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
         // Configure Blog entity
-        modelBuilder.Entity<BlogEntry>(entity =>
+        modelBuilder.Entity<BlogPost>(entity =>
         {
             // Primary key
             entity.HasKey(e => e.Id);
@@ -77,7 +77,7 @@ public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         // Update timestamps
-        var entries = ChangeTracker.Entries<BlogEntry>()
+        var entries = ChangeTracker.Entries<BlogPost>()
             .Where(e => e.State is EntityState.Added or EntityState.Modified);
 
         foreach (var entry in entries)

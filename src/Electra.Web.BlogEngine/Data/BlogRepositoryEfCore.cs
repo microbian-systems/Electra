@@ -1,7 +1,7 @@
 using Electra.Core;
+using Electra.Models;
 using Electra.Web.BlogEngine.Entities;
 using Electra.Web.BlogEngine.Enums;
-using Electra.Web.BlogEngine.Models;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -16,7 +16,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         .UseBootstrap()
         .Build();
 
-    public async Task<IEnumerable<BlogEntry>> GetLatestBlogsAsync(int count)
+    public async Task<IEnumerable<BlogPost>> GetLatestBlogsAsync(int count)
     {
         try
         {
@@ -33,7 +33,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<PagedResult<BlogEntry>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true)
+    public async Task<PagedResult<BlogPost>> GetPaginatedBlogsAsync(int pageNumber, int pageSize, bool publishedOnly = true)
     {
         try
         {
@@ -51,16 +51,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogPost>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error retrieving paginated blogs");
-            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogPost>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<BlogEntry?> GetBlogByIdAsync(string id)
+    public async Task<BlogPost?> GetBlogByIdAsync(string id)
     {
         try
         {
@@ -74,7 +74,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<BlogEntry?> GetBlogBySlugAsync(string slug)
+    public async Task<BlogPost?> GetBlogBySlugAsync(string slug)
     {
         try
         {
@@ -88,7 +88,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<IEnumerable<BlogEntry>> GetFeaturedBlogsAsync(int count = 5)
+    public async Task<IEnumerable<BlogPost>> GetFeaturedBlogsAsync(int count = 5)
     {
         try
         {
@@ -105,7 +105,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<PagedResult<BlogEntry>> SearchBlogsAsync(string searchTerm, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogPost>> SearchBlogsAsync(string searchTerm, int pageNumber, int pageSize)
     {
         try
         {
@@ -127,16 +127,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogPost>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error searching blogs with term: {SearchTerm}", searchTerm);
-            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogPost>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<PagedResult<BlogEntry>> GetBlogsByTagAsync(string tag, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogPost>> GetBlogsByTagAsync(string tag, int pageNumber, int pageSize)
     {
         try
         {
@@ -151,16 +151,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogPost>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error retrieving blogs by tag: {Tag}", tag);
-            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogPost>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<BlogEntry> AddBlogAsync(BlogEntry blog)
+    public async Task<BlogPost> AddBlogAsync(BlogPost blog)
     {
         try
         {
@@ -181,7 +181,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<BlogEntry> UpdateBlogAsync(BlogEntry blog)
+    public async Task<BlogPost> UpdateBlogAsync(BlogPost blog)
     {
         try
         {
@@ -288,7 +288,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<PagedResult<BlogEntry>> GetBlogsByAuthorAsync(string author, int pageNumber, int pageSize)
+    public async Task<PagedResult<BlogPost>> GetBlogsByAuthorAsync(string author, int pageNumber, int pageSize)
     {
         try
         {
@@ -303,16 +303,16 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
                 .Take(pageSize)
                 .ToListAsync();
 
-            return PagedResult<BlogEntry>.Create(items, pageNumber, pageSize, totalCount);
+            return PagedResult<BlogPost>.Create(items, pageNumber, pageSize, totalCount);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error retrieving blogs by author: {Author}", author);
-            return PagedResult<BlogEntry>.Create([], pageNumber, pageSize, 0);
+            return PagedResult<BlogPost>.Create([], pageNumber, pageSize, 0);
         }
     }
 
-    public async Task<string> GetContentAsHtmlAsync(BlogEntry blog)
+    public async Task<string> GetContentAsHtmlAsync(BlogPost blog)
     {
         try
         {
@@ -334,7 +334,7 @@ public class BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryE
         }
     }
 
-    public async Task<string> GetRawMarkdownAsync(BlogEntry blog)
+    public async Task<string> GetRawMarkdownAsync(BlogPost blog)
     {
         try
         {

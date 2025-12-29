@@ -9,6 +9,9 @@ namespace Electra.Web.BlogEngine.Entities;
 /// </summary>
 public class BlogPost : Entity
 {
+    [MaxLength(128)]
+    public string BlogId { get; set; } = string.Empty;
+    
     [MaxLength(5)]
     public string Culture { get; set; } = "en-US";
     /// <summary>

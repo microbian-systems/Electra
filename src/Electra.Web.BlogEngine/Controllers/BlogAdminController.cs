@@ -143,7 +143,7 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
             if(blog.IsNone)
                 return NotFound();
 
-            var b = (BlogEntry)blog;
+            var b = (BlogPost)blog;
             
             var html = await blogService.GetContentAsHtmlAsync(b);
             return Ok(new { html });
@@ -245,7 +245,7 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// Creates a new blog post
     /// </summary>
     [HttpPost]
-    public async Task<IActionResult> CreateBlog([FromBody] BlogEntry blog)
+    public async Task<IActionResult> CreateBlog([FromBody] BlogPost blog)
     {
         try
         {
@@ -272,7 +272,7 @@ public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminCont
     /// Updates an existing blog post
     /// </summary>
     [HttpPut("{id:tring}")]
-    public async Task<IActionResult> UpdateBlog(string id, [FromBody] BlogEntry blog)
+    public async Task<IActionResult> UpdateBlog(string id, [FromBody] BlogPost blog)
     {
         try
         {

@@ -35,7 +35,7 @@ public static class BlogIntegrationExample
     public static async Task BlogServiceExample(IBlogService blogService)
     {
         // Create a new blog post
-        var newBlog = new BlogEntry
+        var newBlog = new BlogPost
         {
             Title = "Getting Started with ASP.NET Core",
             Description = "A comprehensive guide to building web applications with ASP.NET Core",
@@ -114,7 +114,7 @@ This will create a new web API project and start the development server.",
     {
         var sampleBlogs = new[]
         {
-            new BlogEntry
+            new BlogPost
             {
                 Title = "Introduction to Entity Framework Core",
                 Description = "Learn the basics of Entity Framework Core ORM",
@@ -133,7 +133,7 @@ Entity Framework Core is a lightweight, extensible ORM for .NET applications.
                 IsPublished = true,
                 IsDraft = false
             },
-            new BlogEntry
+            new BlogPost
             {
                 Title = "Building RESTful APIs",
                 Description = "Best practices for creating REST APIs with ASP.NET Core",
@@ -154,7 +154,7 @@ REST (Representational State Transfer) is an architectural style for web service
                 IsDraft = false,
                 IsFeatured = true
             },
-            new BlogEntry
+            new BlogPost
             {
                 Title = "Advanced C# Features",
                 Description = "Exploring modern C# language features",
