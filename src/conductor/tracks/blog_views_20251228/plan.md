@@ -12,7 +12,7 @@ Setup the project structure and the automated build tasks.
 Implement the ViewModels required for the blog pages and components.
 
 - [x] Task: Write failing unit tests for `BlogIndexViewModel` and `ArticleViewModel` (including SEO and Featured data) 3e75e95
-- [ ] Task: Implement `BlogIndexViewModel` and `ArticleViewModel` in `Electra.Web.BlogEngine`
+- [x] Task: Implement `BlogIndexViewModel` and `ArticleViewModel` in `Electra.Web.BlogEngine` 9cb86d8
 - [ ] Task: Conductor - User Manual Verification 'Data Models & ViewModels' (Protocol in workflow.md)
 
 ## Phase 3: Controller & Related Articles Logic (TDD)
