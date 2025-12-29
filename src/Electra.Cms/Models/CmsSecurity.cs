@@ -2,9 +2,14 @@ namespace Electra.Cms.Models
 {
     public static class CmsRoles
     {
-        public const string Admin = "CmsAdmin";
-        public const string Editor = "CmsEditor";
-        public const string Author = "CmsAuthor";
+        public const string Admin = "cms.admin";
+        public const string Creator = "cms.creator";
+        public const string Contributor = "cms.contributor";
+        public const string Viewer = "cms.viewer";
+        
+        // Legacy/Existing - mapping to new ones or keeping if needed
+        public const string Editor = "cms.editor";
+        public const string Author = "cms.author";
     }
 
     public static class CmsPermissions

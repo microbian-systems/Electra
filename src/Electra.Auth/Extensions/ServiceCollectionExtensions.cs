@@ -135,8 +135,8 @@ public static class ServiceCollectionExtensions
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.LoginPath = "/passwordless";
-                options.LogoutPath = "/account/logout";
+                options.LoginPath = "/cms/admin/login";
+                options.LogoutPath = "/cms/admin/logout";
             })
             .AddJwtBearer(options => {
                 var jwtSettings = config.GetSection("JwtSettings");

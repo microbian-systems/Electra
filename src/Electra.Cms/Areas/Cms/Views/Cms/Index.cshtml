@@ -6,7 +6,7 @@
     ViewData["Title"] = Model.Page.Metadata.Title;
 }
 
-<div class="cms-page">
+<div class="electra-page">
     @foreach (var block in Model.Page.Blocks)
     {
         @await BlockRenderer.RenderBlockAsync(Html, block, Model)

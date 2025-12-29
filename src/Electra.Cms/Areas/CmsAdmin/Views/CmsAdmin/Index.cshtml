@@ -1,0 +1,39 @@
+@model IEnumerable<SiteDocument>
+@{
+    ViewData["Title"] = "CMS Admin - Sites";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold">CMS Administration</h1>
+        <a asp-action="Users" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Manage Users
+        </a>
+    </div>
+
+    <div class="bg-white shadow-md rounded my-6">
+        <table class="text-left w-full border-collapse">
+            <thead>
+                <tr>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Site Name</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Hostnames</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var site in Model)
+                {
+                    <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">@site.Name</td>
+                        <td class="py-4 px-6 border-b border-grey-light">
+                            @string.Join(", ", site.Hostnames)
+                        </td>
+                        <td class="py-4 px-6 border-b border-grey-light">
+                            <a asp-action="Pages" asp-route-siteId="@site.Id" class="text-blue-600 hover:text-blue-900 font-bold py-1 px-3 rounded text-xs bg-blue-100 hover:bg-blue-200">Manage Pages</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
