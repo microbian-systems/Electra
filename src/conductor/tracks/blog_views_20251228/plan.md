@@ -4,8 +4,8 @@
 Setup the project structure and the automated build tasks.
 
 - [x] Task: Configure MSBuild Target in `Electra.Web.BlogEngine.csproj` for safe file copying to `microbians.io.web` 200a822
-- [ ] Task: Create initial placeholder `blogarticle.cshtml` and `blogindex.html` in library root
-- [ ] Task: Verify MSBuild copy logic (ensuring no overwrite if file exists)
+- [x] Task: Create initial placeholder `blogarticle.cshtml` and `blogindex.html` in library root 51b00e8
+- [x] Task: Verify MSBuild copy logic (ensuring no overwrite if file exists) 51b00e8
 - [ ] Task: Conductor - User Manual Verification 'Foundation & MSBuild Automation' (Protocol in workflow.md)
 
 ## Phase 2: Data Models & ViewModels (TDD)
