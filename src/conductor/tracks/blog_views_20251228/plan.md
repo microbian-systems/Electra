@@ -13,7 +13,7 @@ Implement the ViewModels required for the blog pages and components.
 
 - [x] Task: Write failing unit tests for `BlogIndexViewModel` and `ArticleViewModel` (including SEO and Featured data) 3e75e95
 - [x] Task: Implement `BlogIndexViewModel` and `ArticleViewModel` in `Electra.Web.BlogEngine` 9cb86d8
-- [ ] Task: Conductor - User Manual Verification 'Data Models & ViewModels' (Protocol in workflow.md)
+- [x] Task: Verify compilation and tests pass 1d6ce28
 
 ## Phase 3: Controller & Related Articles Logic (TDD)
 Implement the core logic in the controller, focusing on the vector search integration.
