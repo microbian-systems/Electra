@@ -9,12 +9,10 @@ using Microsoft.Extensions.Logging;
 namespace Electra.Web.BlogEngine.Controllers;
 
 [AllowAnonymous]
-[Route("/blog/[action]")]
+[Route("/blog")]
 public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseController> log) : ElectraWebBaseController(log)
 {
     [HttpGet]
-    [Route("/blog")]
-    [Route("/blog/index")]
     public async Task<IActionResult> Index([FromQuery] int page = 1)
     {
         if (page < 1) page = 1;
@@ -38,8 +36,7 @@ public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseCont
         return View(viewModel);
     }
 
-    [HttpGet]
-    [Route("{slug}")]
+    [HttpGet("{slug}")]
     public async Task<IActionResult> Article(string slug)
     {
         if (string.IsNullOrEmpty(slug))
@@ -50,8 +47,8 @@ public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseCont
         if (blogOption.IsNone)
             return NotFound();
 
-        var blog = blogOption.IfNone(new BlogPost()); // We know it's Some due to check above
-        
+        var blog = blogOption.IfNone(new BlogPost()); // todo : handle better
+
         await blogService.IncrementViewCountAsync(blog.BlogId); 
         
         var viewModel = MapToViewModel(blog);
