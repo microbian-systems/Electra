@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Electra.Web.BlogEngine.Controllers;
 
 [AllowAnonymous]
+[Area("Blog")]
 [Route("/blog")]
 public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseController> log) : ElectraWebBaseController(log)
 {

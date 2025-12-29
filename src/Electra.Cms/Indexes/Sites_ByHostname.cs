@@ -9,10 +9,9 @@ namespace Electra.Cms.Indexes
         public Sites_ByHostname()
         {
             Map = sites => from site in sites
-                           from hostname in site.Hostnames
                            select new
                            {
-                               Hostname = hostname
+                               site.Hostnames
                            };
         }
     }

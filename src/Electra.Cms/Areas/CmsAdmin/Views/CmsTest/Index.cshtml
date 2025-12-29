@@ -1,0 +1,14 @@
+@using Electra.Cms.Services
+@model PageRenderContext
+@inject IBlockRenderer BlockRenderer
+
+@{
+    ViewData["Title"] = Model.Page.Metadata.Title;
+}
+
+<div class="cms-page">
+    @foreach (var block in Model.Page.Blocks)
+    {
+        @await BlockRenderer.RenderBlockAsync(Html, block, Model)
+    }
+</div>

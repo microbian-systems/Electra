@@ -12,6 +12,7 @@ namespace Electra.Web.BlogEngine.Controllers;
 /// Controller for blog operations
 /// </summary>
 [ApiController]
+[Area("Blog")]
 [Route("api/admin/blog")]
 public class BlogAdminController(IBlogService blogService, ILogger<BlogAdminController> log) : ElectraApiBaseController(log)
 {
