@@ -1,0 +1,58 @@
+@model Electra.Web.BlogEngine.Models.ArticleViewModel
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.MetaTitle ?? Model.Title;
+}
+
+<main class="pt-8 pb-16 lg:pt-16 lg:pb-24 bg-white dark:bg-gray-900 min-h-screen">
+    <div class="flex justify-between px-4 mx-auto max-w-screen-xl ">
+        <article class="mx-auto w-full max-w-2xl format format-sm sm:format-base lg:format-lg format-blue dark:format-invert">
+            <header class="mb-4 lg:mb-6 not-format">
+                <address class="flex items-center mb-6 not-italic">
+                    <div class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white">
+                        <img class="mr-4 w-16 h-16 rounded-full" src="/assets/img/avatar.png" alt="@Model.Author">
+                        <div>
+                            <a href="#" rel="author" class="text-xl font-bold text-gray-900 dark:text-white">@Model.Author</a>
+                            <p class="text-base text-gray-500 dark:text-gray-400">Software Engineer & Tech Lead</p>
+                            <p class="text-base text-gray-500 dark:text-gray-400"><time pubdate datetime="@Model.PublishedDate.ToString("yyyy-MM-dd")" title="@Model.PublishedDate.ToString("MMMM dd, yyyy")">@Model.PublishedDate.ToString("MMM dd, yyyy")</time></p>
+                        </div>
+                    </div>
+                </address>
+                <h1 class="mb-4 text-3xl font-extrabold leading-tight text-gray-900 lg:mb-6 lg:text-4xl dark:text-white">@Model.Title</h1>
+                
+                @if (Model.Tags != null && Model.Tags.Any())
+                {
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        @foreach (var tag in Model.Tags)
+                        {
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">#@tag</span>
+                        }
+                    </div>
+                }
+            </header>
+            
+            @if (!string.IsNullOrEmpty(Model.ThumbnailUrl))
+            {
+                <figure class="mb-8">
+                    <img src="@Model.ThumbnailUrl" class="rounded-lg w-full object-cover max-h-[400px]" alt="@Model.Title">
+                </figure>
+            }
+
+            <div class="prose prose-blue dark:prose-invert max-w-none">
+                @Html.Raw(Model.Content)
+            </div>
+
+            <section class="not-format mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion</h2>
+                </div>
+                <div class="p-4 mb-6 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                    <span class="font-medium">Comments are coming soon!</span> Join our Discord to discuss this post.
+                </div>
+            </section>
+        </article>
+    </div>
+</main>
+
+<partial name="Shared/_RelatedArticles" model="Model.RelatedArticles" />

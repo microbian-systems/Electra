@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AspNetStatic" Version="0.27.1" />
         <PackageReference Include="IPAddressRange" Version="6.3.0" />
         <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
         <PackageReference Include="Mapster" Version="7.4.0" />
@@ -23,11 +24,13 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="10.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.1.0" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
         <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+        <PackageReference Include="Octokit" Version="14.0.0" />
         <PackageReference Include="OwaspHeaders.Core" Version="10.0.0" />
         <PackageReference Include="RavenDB.Client" Version="7.1.5" />
         <PackageReference Include="Scalar.AspNetCore" Version="2.11.10" />
@@ -49,34 +52,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Models\" />
+      <Content Update="Views\_ViewImports.cshtml">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="Views\_ViewStart.cshtml">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="Services\DevToApiConfigurationExample.json">
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
     </ItemGroup>
-
-    <Target Name="CopyBlogViews" AfterTargets="Build">
-        <PropertyGroup>
-            <!-- Adjust this path to match the relative location of the web project -->
-            <WebProjectName Condition="'$(WebProjectName)' == ''">microbians.io.web</WebProjectName>
-            <WebProjectDir>$(MSBuildProjectDirectory)\..\$(WebProjectName)</WebProjectDir>
-        </PropertyGroup>
-
-        <ItemGroup>
-            <BlogViewFiles Include="BlogArticle.cshtml">
-                <Dest>$(WebProjectDir)\Areas\Blog\Views\BlogArticle.cshtml</Dest>
-            </BlogViewFiles>
-            <BlogViewFiles Include="BlogIndex.html">
-                <Dest>$(WebProjectDir)\Areas\Blog\Views\Blog\Index.cshtml</Dest>
-            </BlogViewFiles>
-        </ItemGroup>
-
-        <!-- Create Directories -->
-        <!-- We construct the directory path from the destination file path -->
-        <MakeDir Directories="$([System.IO.Path]::GetDirectoryName('%(BlogViewFiles.Dest)'))" />
-
-        <!-- Copy only if destination does not exist -->
-        <Copy SourceFiles="%(BlogViewFiles.Identity)"
-              DestinationFiles="%(BlogViewFiles.Dest)"
-              Condition="!Exists('%(BlogViewFiles.Dest)')"
-              SkipUnchangedFiles="true"
-        />
-    </Target>
 </Project>

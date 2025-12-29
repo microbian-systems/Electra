@@ -26,7 +26,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Hashnode\" />
       <Folder Include="Mastodon\" />
+      <Folder Include="Facebook\" />
+      <Folder Include="Instagram\" />
+      <Folder Include="Tiktok\" />
+      <Folder Include="Youtube\" />
+      <Folder Include="Twitter\" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,88 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetStatic" Version="0.27.1" />
+    <PackageReference Include="IPAddressRange" Version="6.3.0" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+    <PackageReference Include="Mapster" Version="7.4.0" />
+    <PackageReference Include="Mapster.Async" Version="2.0.1" />
+    <PackageReference Include="Mapster.Core" Version="1.2.1" />
+    <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="Mapster.EFCore" Version="5.1.1" />
+    <PackageReference Include="Markdig" Version="0.44.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    <PackageReference Include="Octokit" Version="14.0.0" />
+    <PackageReference Include="OwaspHeaders.Core" Version="10.0.0" />
+    <PackageReference Include="RavenDB.Client" Version="7.1.5" />
+    <PackageReference Include="RavenDB.Embedded" Version="7.1.5" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.11.10" />
+    <PackageReference Include="ThrowGuard" Version="1.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+    <PackageReference Include="TinyMCE.Blazor" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Electra.Caching\Electra.Caching.csproj" />
+    <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
+    <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
+    <ProjectReference Include="..\Electra.Events\Electra.Events.csproj" />
+    <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
+    <ProjectReference Include="..\Electra.Persistence.Marten\Electra.Persistence.Marten.csproj" />
+    <ProjectReference Include="..\Electra.Persistence.RavenDB\Electra.Persistence.RavenDB.csproj" />
+    <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
+    <ProjectReference Include="..\Electra.Web\Electra.Web.csproj" />
+  </ItemGroup>
+
+<!--  <ItemGroup>-->
+<!--    <Content Update="Views\_ViewImports.cshtml">-->
+<!--      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>-->
+<!--      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
+<!--    </Content>-->
+<!--    <Content Update="Views\_ViewStart.cshtml">-->
+<!--      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>-->
+<!--      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>-->
+<!--    </Content>-->
+<!--  </ItemGroup>-->
+
+  <ItemGroup>
+    <Folder Include="Areas\Blog\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Blog\Services\DevToApiConfigurationExample.json" />
+    <None Include="Areas\Blog\Views\Blog\Article.cshtml" />
+    <None Include="Areas\Blog\Views\Blog\Index.cshtml" />
+    <None Include="Areas\Blog\Views\Shared\_FeaturedArticle.cshtml" />
+    <None Include="Areas\Blog\Views\Shared\_RecommendedArticles.cshtml" />
+    <None Include="Areas\Blog\Views\Shared\_RelatedArticles.cshtml" />
+    <None Include="Areas\Blog\Views\_ViewImports.cshtml" />
+    <None Include="Areas\Blog\Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+
+
+</Project>
