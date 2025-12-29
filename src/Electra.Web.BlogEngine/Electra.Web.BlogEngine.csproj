@@ -33,6 +33,7 @@
         <PackageReference Include="Scalar.AspNetCore" Version="2.11.10" />
         <PackageReference Include="ThrowGuard" Version="1.2.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+        <PackageReference Include="TinyMCE.Blazor" Version="2.2.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -59,10 +60,10 @@
         </PropertyGroup>
 
         <ItemGroup>
-            <BlogViewFiles Include="blogarticle.cshtml">
+            <BlogViewFiles Include="BlogArticle.cshtml">
                 <Dest>$(WebProjectDir)\Areas\Blog\Views\BlogArticle.cshtml</Dest>
             </BlogViewFiles>
-            <BlogViewFiles Include="blogindex.html">
+            <BlogViewFiles Include="BlogIndex.html">
                 <Dest>$(WebProjectDir)\Areas\Blog\Views\Blog\Index.cshtml</Dest>
             </BlogViewFiles>
         </ItemGroup>
