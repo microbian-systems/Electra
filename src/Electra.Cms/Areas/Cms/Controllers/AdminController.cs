@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Electra.Cms.Areas.CmsAdmin.Models;
 using Electra.Cms.Blocks;
 using Electra.Cms.Models;
@@ -8,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 
-namespace Electra.Cms.Areas.CmsAdmin.Controllers
+namespace Electra.Cms.Areas.Cms.Controllers
 {
     [Area("CmsAdmin")]
-    [Route("cms-admin")]
+    [Route("cms/admin")]
     public class AdminController : Controller
     {
         private readonly IAsyncDocumentSession _session;

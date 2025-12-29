@@ -1,27 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Electra.Cms.Models;
 using Electra.Cms.Services;
 using Microsoft.AspNetCore.Mvc;
 using Raven.Client.Documents.Session;
 
-namespace Electra.Cms.Areas.CmsAdmin.Controllers
+namespace Electra.Cms.Areas.Cms.Controllers
 {
     [Area("CmsAdmin")]
-    [Route("cms-test")]
-    public class CmsTestController : Controller
+    public class CmsController : Controller
     {
         private readonly IAsyncDocumentSession _session;
         private readonly IBlockRenderer _blockRenderer;
 
-        public CmsTestController(IAsyncDocumentSession session, IBlockRenderer blockRenderer)
+        public CmsController(IAsyncDocumentSession session, IBlockRenderer blockRenderer)
         {
             _session = session;
             _blockRenderer = blockRenderer;
         }
 
-        [HttpGet]
+        [HttpGet("/cms-test")]
         public async Task<IActionResult> Index()
         {
             // Create a dummy page for testing purposes if it doesn't exist
