@@ -1,0 +1,14 @@
+@using Electra.Cms.Models
+@model BlockDocument
+
+<section class="py-12">
+    <div class="container mx-auto px-4 text-center">
+        <figure class="inline-block">
+            <img src="@(Model.GetValue<string>("Url"))" alt="@(Model.GetValue<string>("AltText"))" class="max-w-full h-auto rounded shadow-lg" />
+            @if (!string.IsNullOrEmpty(Model.GetValue<string>("Caption")))
+            {
+                <figcaption class="mt-2 text-gray-600 italic">@(Model.GetValue<string>("Caption"))</figcaption>
+            }
+        </figure>
+    </div>
+</section>

@@ -1,0 +1,127 @@
+@model PageEditViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = $"Edit Page - {Model.Page.Metadata.Title}";
+}
+
+<div class="mb-4 flex justify-between items-center">
+    <h1 class="text-2xl font-semibold text-gray-900">Edit Page: @Model.Page.Metadata.Title</h1>
+    <div class="space-x-2">
+        <a href="/cms-admin/page/@Model.Page.Id/preview" target="_blank" class="text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 font-medium rounded-lg text-sm px-5 py-2.5">
+            Preview
+        </a>
+        <button type="submit" form="page-form" class="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5">
+            Save Draft
+        </button>
+        <form id="publish-form" method="post" action="/cms-admin/page/@Model.Page.Id/publish" class="inline">
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                Publish
+            </button>
+        </form>
+    </div>
+</div>
+
+<form id="page-form" method="post" action="/cms-admin/page/@Model.Page.Id/save" x-data="pageEditor()">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2 space-y-4">
+            <div class="bg-white shadow rounded-lg p-6">
+                <h3 class="text-lg font-medium mb-4">Content Blocks</h3>
+                
+                <div class="space-y-4" id="blocks-container" x-init="
+                    new Sortable($el, {
+                        handle: '.drag-handle',
+                        animation: 150,
+                        onEnd: (evt) => {
+                            const item = blocks.splice(evt.oldIndex, 1)[0];
+                            blocks.splice(evt.newIndex, 0, item);
+                        }
+                    })
+                ">
+                    <template x-for="(block, index) in blocks" :key="index">
+                        <div class="border rounded-lg p-4 bg-gray-50 relative group">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <span class="drag-handle cursor-move mr-2 text-gray-400 hover:text-gray-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path></svg>
+                                    </span>
+                                    <span class="font-bold" x-text="block.type"></span>
+                                </div>
+                                <div class="space-x-2">
+                                    <button type="button" @@click="removeBlock(index)" class="text-red-600 hover:text-red-800 text-sm">Remove</button>
+                                </div>
+                            </div>
+                            
+                            <input type="hidden" :name="'Blocks[' + index + '].Type'" :value="block.type" />
+                            
+                            <div class="grid grid-cols-1 gap-4">
+                                <template x-for="(field, fIndex) in getFields(block.type)" :key="fIndex">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700" x-text="field.label"></label>
+                                        <input type="text" :name="'Blocks[' + index + '].Data[' + field.name + ']'" x-model="block.data[field.name]" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                
+                <div class="mt-6 pt-6 border-t">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3">Add Block</h4>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach (var block in Model.AvailableBlocks)
+                        {
+                            <button type="button" @@click="addBlock('@block.Type')" class="px-4 py-2 bg-white border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                @block.Name
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="space-y-4">
+            <div class="bg-white shadow rounded-lg p-6">
+                <h3 class="text-lg font-medium mb-4">Metadata</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Title</label>
+                        <input type="text" name="Metadata.Title" value="@Model.Page.Metadata.Title" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Slug</label>
+                        <input type="text" name="Slug" value="@Model.Page.Slug" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">SEO Description</label>
+                        <textarea name="Metadata.SeoDescription" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">@Model.Page.Metadata.SeoDescription</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function pageEditor() {
+        return {
+            blocks: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Page.Blocks)),
+            blockDefinitions: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.AvailableBlocks)),
+            
+            addBlock(type) {
+                this.blocks.push({
+                    type: type,
+                    data: {}
+                });
+            },
+            
+            removeBlock(index) {
+                this.blocks.splice(index, 1);
+            },
+            
+            getFields(type) {
+                const def = this.blockDefinitions.find(d => d.Type === type);
+                return def ? def.Fields : [];
+            }
+        }
+    }
+</script>

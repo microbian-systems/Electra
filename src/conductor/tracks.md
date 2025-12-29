@@ -19,5 +19,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [~] Track: Dynamic ASP.NET Core CMS
+## [x] Track: Dynamic ASP.NET Core CMS
 *Link: [./conductor/tracks/cms_20251228/](./conductor/tracks/cms_20251228/)*
