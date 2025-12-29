@@ -16,3 +16,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [~] Track: Blog MVC Views Implementation
 *Link: [./conductor/tracks/blog_views_20251228/](./conductor/tracks/blog_views_20251228/)*
+
+---
+
+## [~] Track: Dynamic ASP.NET Core CMS
+*Link: [./conductor/tracks/cms_20251228/](./conductor/tracks/cms_20251228/)*

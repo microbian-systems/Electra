@@ -3,7 +3,7 @@
 ## Phase 1: Core Runtime
 Implement the foundational routing and rendering engine.
 
-- [ ] Task: Define RavenDB document models (Site, Page, Block)
+- [~] Task: Define RavenDB document models (Site, Page, Block)
 - [ ] Task: Implement `Pages_BySiteAndUrl` RavenDB index
 - [ ] Task: Implement Site Resolution middleware/service
 - [ ] Task: Implement Page Routing logic (URL -> PageDocument)

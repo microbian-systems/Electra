@@ -117,6 +117,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Web.BlogEngine.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Blog", "Electra.Blog\Electra.Blog.csproj", "{359A44EE-2450-496B-8E37-ADCA13225D4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Cms.Tests", "..\Tests\Electra.Cms.Tests\Electra.Cms.Tests.csproj", "{A702334A-AFB0-4AD2-BC61-93F2BE748F11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -595,6 +597,18 @@ Global
 		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|x64.Build.0 = Release|Any CPU
 		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|x86.ActiveCfg = Release|Any CPU
 		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|x86.Build.0 = Release|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|x64.Build.0 = Debug|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|x86.Build.0 = Debug|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|x64.ActiveCfg = Release|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|x64.Build.0 = Release|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|x86.ActiveCfg = Release|Any CPU
+		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
