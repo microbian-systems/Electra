@@ -39,7 +39,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Convert MerakiUI Complex Form variations b83e62c
   - Write Tests: `FormTests.cs`
   - Implement: `Forms/ContactForm.razor`, `Forms/NewsletterForm.razor`, etc.
-- [ ] Task: Convert MerakiUI Marketing Section variations
+- [x] Task: Convert MerakiUI Marketing Section variations 55acd0d
   - Write Tests: `SectionTests.cs`
   - Implement: `Sections/FeatureSection.razor`, `Sections/PricingSection.razor`, `Sections/CTASection.razor`, etc.
 - [ ] Task: Conductor - User Manual Verification 'Complex Forms & Marketing Sections' (Protocol in workflow.md)
