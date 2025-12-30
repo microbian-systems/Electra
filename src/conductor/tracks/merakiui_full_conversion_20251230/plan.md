@@ -35,14 +35,14 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
   - Implement: `Footers/SimpleFooter.razor`, `Footers/FooterWithColumns.razor`, etc.
 - [x] Task: Conductor - User Manual Verification 'Layout & Navigation' (Protocol in workflow.md) 809eb68
 
-## Phase 4: Complex Forms & Marketing Sections [ ]
-- [x] Task: Convert MerakiUI Complex Form variations b83e62c
+## Phase 4: Complex Forms & Marketing Sections [x] [checkpoint: c992d64]
+- [x] Task: Convert MerakiUI Complex Form variations 5596e3c
   - Write Tests: `FormTests.cs`
   - Implement: `Forms/ContactForm.razor`, `Forms/NewsletterForm.razor`, etc.
 - [x] Task: Convert MerakiUI Marketing Section variations 55acd0d
   - Write Tests: `SectionTests.cs`
   - Implement: `Sections/FeatureSection.razor`, `Sections/PricingSection.razor`, `Sections/CTASection.razor`, etc.
-- [ ] Task: Conductor - User Manual Verification 'Complex Forms & Marketing Sections' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Complex Forms & Marketing Sections' (Protocol in workflow.md) c992d64
 
 ## Phase 5: Finalization & Documentation [ ]
 - [ ] Task: Update `README.md` with new component examples and JS interop notes
