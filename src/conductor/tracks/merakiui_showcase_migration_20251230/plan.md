@@ -41,13 +41,13 @@ Demo complex interactive components and marketing-focused sections.
 - [x] Task: Update `MerakiShowcaseTests.cs` to verify interactive component rendering 317c8d0
 - [x] Task: Conductor - User Manual Verification 'Interactive & Marketing Demos' (Protocol in workflow.md) 317c8d0
 
-## Phase 6: Specialized & Identity Demos
+## Phase 6: Specialized & Identity Demos [x] [checkpoint: 398c159]
 Demo auth forms, email templates, and other specialized layouts.
 
-- [~] Task: Demo Auth (Sign In/Up) and Forms
-- [~] Task: Demo Email Layouts, Error Pages (404s), Heroes, and Teams
-- [ ] Task: Update `MerakiShowcaseTests.cs` to verify specialized component rendering
-- [ ] Task: Conductor - User Manual Verification 'Specialized & Identity Demos' (Protocol in workflow.md)
+- [x] Task: Demo Auth (Sign In/Up) and Forms 398c159
+- [x] Task: Demo Email Layouts, Error Pages (404s), Heroes, and Teams 398c159
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify specialized component rendering 398c159
+- [x] Task: Conductor - User Manual Verification 'Specialized & Identity Demos' (Protocol in workflow.md) 398c159
 
 ## Phase 7: Final Verification
 Final sweep and project-wide stability check.
