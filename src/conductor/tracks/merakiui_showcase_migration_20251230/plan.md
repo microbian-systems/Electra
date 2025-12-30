@@ -27,9 +27,9 @@ Demo fundamental building blocks.
 ## Phase 4: Content & Messaging Demos
 Demo components used for displaying data and providing information.
 
-- [ ] Task: Demo Article and Product Cards
-- [ ] Task: Demo Blog and Portfolio sections
-- [ ] Task: Demo Testimonials, FAQ, and Cookie banners
+- [~] Task: Demo Article and Product Cards
+- [~] Task: Demo Blog and Portfolio sections
+- [~] Task: Demo Testimonials, FAQ, and Cookie banners
 - [ ] Task: Update `MerakiShowcaseTests.cs` to verify content component rendering
 - [ ] Task: Conductor - User Manual Verification 'Content & Messaging Demos' (Protocol in workflow.md)
 
