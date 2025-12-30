@@ -1,0 +1,134 @@
+@namespace Electra.MerakiUI.Areas.Demo.Pages
+@using Electra.MerakiUI.Buttons
+@using Electra.MerakiUI.Navbars
+@using Electra.MerakiUI.Alerts
+@using Electra.MerakiUI.Avatars
+@using Electra.MerakiUI.Blog
+@using Electra.MerakiUI.Breadcrumbs
+@using Electra.MerakiUI.ErrorPages
+
+<div class="space-y-16">
+    <!-- Navbars Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Navbars</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+        
+        <div class="space-y-12">
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Simple Navbar</h3>
+                <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/50 relative" style="min-height: 200px;">
+                    <SimpleNavbar BrandName="Meraki UI">
+                        <Links>
+                            <NavbarLink Href="#" IsActive="true">Home</NavbarLink>
+                            <NavbarLink Href="#">Features</NavbarLink>
+                            <NavbarLink Href="#">Pricing</NavbarLink>
+                            <NavbarLink Href="#">Contact</NavbarLink>
+                        </Links>
+                    </SimpleNavbar>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Navbar with Search</h3>
+                <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/50 relative" style="min-height: 200px;">
+                    <NavbarWithSearch BrandName="Meraki UI">
+                        <Links>
+                            <NavbarLink Href="#" IsActive="true">Dashboard</NavbarLink>
+                            <NavbarLink Href="#">Settings</NavbarLink>
+                            <NavbarLink Href="#">Profile</NavbarLink>
+                        </Links>
+                    </NavbarWithSearch>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buttons Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Buttons</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="p-8 border border-slate-800 rounded-xl bg-slate-900/50">
+                <h3 class="text-lg font-medium text-slate-300 mb-6">Primary Buttons</h3>
+                <div class="flex flex-wrap gap-4">
+                    <PrimaryButton>Default Primary</PrimaryButton>
+                    <PrimaryButton Class="bg-purple-600 hover:bg-purple-500">Purple Variant</PrimaryButton>
+                    <PrimaryButton Class="bg-emerald-600 hover:bg-emerald-500">Success Variant</PrimaryButton>
+                </div>
+            </div>
+
+            <div class="p-8 border border-slate-800 rounded-xl bg-slate-900/50">
+                <h3 class="text-lg font-medium text-slate-300 mb-6">Button Groups</h3>
+                <div class="flex flex-wrap gap-4">
+                    <ButtonGroup>
+                        <ButtonGroupItem>Left</ButtonGroupItem>
+                        <ButtonGroupItem>Center</ButtonGroupItem>
+                        <ButtonGroupItem>Right</ButtonGroupItem>
+                    </ButtonGroup>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alerts Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Alerts</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="grid gap-6">
+            <Alert Type="AlertType.Success" Title="Success">
+                Your changes have been saved successfully.
+            </Alert>
+
+            <Alert Type="AlertType.Info" Title="Information">
+                Please review the latest updates in your dashboard.
+            </Alert>
+
+            <Alert Type="AlertType.Warning" Title="Warning">
+                Your subscription will expire in 3 days.
+            </Alert>
+
+            <Alert Type="AlertType.Error" Title="Error">
+                Something went wrong. Please try again later.
+            </Alert>
+        </div>
+    </section>
+
+    <!-- Avatars Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Avatars</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="p-8 border border-slate-800 rounded-xl bg-slate-900/50">
+                <h3 class="text-lg font-medium text-slate-300 mb-6">Individual Avatars</h3>
+                <div class="flex flex-wrap items-center gap-4">
+                    <Avatar Size="AvatarSize.Xs" />
+                    <Avatar Size="AvatarSize.Sm" />
+                    <Avatar Size="AvatarSize.Md" ShowStatus="true" />
+                    <Avatar Size="AvatarSize.Lg" ShowStatus="true" StatusColor="bg-red-500" />
+                    <Avatar Size="AvatarSize.Xl" Shape="AvatarShape.Square" />
+                </div>
+            </div>
+
+            <div class="p-8 border border-slate-800 rounded-xl bg-slate-900/50">
+                <h3 class="text-lg font-medium text-slate-300 mb-6">Avatar Groups</h3>
+                <AvatarGroup GroupSize="AvatarSize.Sm">
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                    <Avatar />
+                </AvatarGroup>
+            </div>
+        </div>
+    </section>
+</div>

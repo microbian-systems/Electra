@@ -3,9 +3,9 @@
 ## Phase 1: Migration & Page Setup
 Move the existing showcase files and prepare the layout for categorized sections.
 
-- [ ] Task: Migrate `meraki-showcase.cshtml` and its model to `Electra.MerakiUI` RCL
-- [ ] Task: Migrate `MerakiShowcase.razor` to `Electra.MerakiUI` RCL and update namespaces
-- [ ] Task: Create `MerakiShowcaseTests.cs` to verify initial rendering
+- [~] Task: Migrate `meraki-showcase.cshtml` and its model to `Electra.MerakiUI` RCL
+- [~] Task: Migrate `MerakiShowcase.razor` to `Electra.MerakiUI` RCL and update namespaces
+- [~] Task: Create `MerakiShowcaseTests.cs` to verify initial rendering
 - [ ] Task: Conductor - User Manual Verification 'Migration & Page Setup' (Protocol in workflow.md)
 
 ## Phase 2: Navigation & Footer Demos
