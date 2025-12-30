@@ -50,6 +50,7 @@
     <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
     <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
     <ProjectReference Include="..\Electra.Events\Electra.Events.csproj" />
+    <ProjectReference Include="..\Electra.MerakiUI\Electra.MerakiUI.csproj" />
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
     <ProjectReference Include="..\Electra.Persistence.Marten\Electra.Persistence.Marten.csproj" />
     <ProjectReference Include="..\Electra.Persistence.RavenDB\Electra.Persistence.RavenDB.csproj" />
