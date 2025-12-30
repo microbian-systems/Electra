@@ -25,7 +25,7 @@
 - [x] Task: Conductor - User Manual Verification 'Pilot Category - Inputs' (Protocol in workflow.md) ccc241f
 
 ## Phase 5: Pilot Category - Navbars [ ]
-- [ ] Task: Convert MerakiUI Navbar variations (1-to-1)
+- [x] Task: Convert MerakiUI Navbar variations (1-to-1) ccfab39
   - Write Tests: `NavbarTests.cs`
   - Implement: `Navbars/SimpleNavbar.razor`, `Navbars/NavbarWithSearch.razor`, etc. (plus code-behind, css, ts)
 - [ ] Task: Conductor - User Manual Verification 'Pilot Category - Navbars' (Protocol in workflow.md)
