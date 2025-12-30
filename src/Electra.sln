@@ -113,15 +113,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Persistence.RavenDB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Web.BlogEngine.Tests", "..\Tests\Electra.Web.BlogEngine.Tests\Electra.Web.BlogEngine.Tests.csproj", "{4CB88D91-09B2-40DF-8967-63B1A0328811}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Blog", "Electra.Blog\Electra.Blog.csproj", "{359A44EE-2450-496B-8E37-ADCA13225D4B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Cms.Tests", "..\Tests\Electra.Cms.Tests\Electra.Cms.Tests.csproj", "{A702334A-AFB0-4AD2-BC61-93F2BE748F11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.MerakiUI", "Electra.MerakiUI\Electra.MerakiUI.csproj", "{44DA88D6-CF43-480F-9637-FA42DF3E3D68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.MerakiUI.Tests", "..\Tests\Electra.MerakiUI.Tests\Electra.MerakiUI.Tests.csproj", "{5A11B567-5338-42E3-930D-FCB26078DECE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F0850256-A812-4F43-B74C-E1553A8562A2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Cms", "Electra.Cms\Electra.Cms.csproj", "{4D663B7C-5AFB-01D3-DA9A-0C0E328519A4}"
 EndProject
@@ -579,18 +575,6 @@ Global
 		{4CB88D91-09B2-40DF-8967-63B1A0328811}.Release|x64.Build.0 = Release|Any CPU
 		{4CB88D91-09B2-40DF-8967-63B1A0328811}.Release|x86.ActiveCfg = Release|Any CPU
 		{4CB88D91-09B2-40DF-8967-63B1A0328811}.Release|x86.Build.0 = Release|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Debug|x64.Build.0 = Debug|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Debug|x86.Build.0 = Debug|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|x64.ActiveCfg = Release|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|x64.Build.0 = Release|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|x86.ActiveCfg = Release|Any CPU
-		{359A44EE-2450-496B-8E37-ADCA13225D4B}.Release|x86.Build.0 = Release|Any CPU
 		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Debug|x64.ActiveCfg = Debug|Any CPU
