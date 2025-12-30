@@ -36,8 +36,8 @@ Demo components used for displaying data and providing information.
 ## Phase 5: Interactive & Marketing Demos
 Demo complex interactive components and marketing-focused sections.
 
-- [ ] Task: Demo Dropdowns, Modals, and Tabs
-- [ ] Task: Demo CTA, Feature, and Pricing sections
+- [~] Task: Demo Dropdowns, Modals, and Tabs
+- [~] Task: Demo CTA, Feature, and Pricing sections
 - [ ] Task: Update `MerakiShowcaseTests.cs` to verify interactive component rendering
 - [ ] Task: Conductor - User Manual Verification 'Interactive & Marketing Demos' (Protocol in workflow.md)
 

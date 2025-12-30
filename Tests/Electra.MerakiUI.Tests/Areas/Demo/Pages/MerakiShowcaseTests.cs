@@ -27,5 +27,7 @@ public class MerakiShowcaseTests : BunitContext
         Assert.Contains("Testimonials", cut.Markup);
         Assert.Contains("FAQ", cut.Markup);
         Assert.Contains("Cookie Banners", cut.Markup);
+        Assert.Contains("Interactive Elements", cut.Markup);
+        Assert.Contains("Marketing Sections", cut.Markup);
     }
 }
