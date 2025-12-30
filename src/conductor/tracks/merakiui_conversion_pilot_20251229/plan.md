@@ -20,7 +20,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Pilot Category - Buttons' (Protocol in workflow.md)
 
 ## Phase 4: Pilot Category - Inputs [ ]
-- [ ] Task: Convert MerakiUI Input variations (1-to-1)
+- [x] Task: Convert MerakiUI Input variations (1-to-1) f15a502
   - Write Tests: `InputTests.cs`
   - Implement: `Inputs/TextInput.razor`, `Inputs/PasswordInput.razor`, etc. (plus code-behind, css, ts)
 - [ ] Task: Conductor - User Manual Verification 'Pilot Category - Inputs' (Protocol in workflow.md)
