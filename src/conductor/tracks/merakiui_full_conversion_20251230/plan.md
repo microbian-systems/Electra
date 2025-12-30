@@ -30,7 +30,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Convert MerakiUI Sidebar variations 1325d4b
   - Write Tests: `SidebarTests.cs`
   - Implement: `Sidebars/SimpleSidebar.razor`, `Sidebars/SidebarWithIcons.razor`, etc.
-- [ ] Task: Convert MerakiUI Footer variations
+- [x] Task: Convert MerakiUI Footer variations 990ea31
   - Write Tests: `FooterTests.cs`
   - Implement: `Footers/SimpleFooter.razor`, `Footers/FooterWithColumns.razor`, etc.
 - [ ] Task: Conductor - User Manual Verification 'Layout & Navigation' (Protocol in workflow.md)
