@@ -44,8 +44,8 @@ Demo complex interactive components and marketing-focused sections.
 ## Phase 6: Specialized & Identity Demos
 Demo auth forms, email templates, and other specialized layouts.
 
-- [ ] Task: Demo Auth (Sign In/Up) and Forms
-- [ ] Task: Demo Email Layouts, Error Pages (404s), Heroes, and Teams
+- [~] Task: Demo Auth (Sign In/Up) and Forms
+- [~] Task: Demo Email Layouts, Error Pages (404s), Heroes, and Teams
 - [ ] Task: Update `MerakiShowcaseTests.cs` to verify specialized component rendering
 - [ ] Task: Conductor - User Manual Verification 'Specialized & Identity Demos' (Protocol in workflow.md)
 

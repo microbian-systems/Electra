@@ -20,6 +20,11 @@
 @using Electra.MerakiUI.Modals
 @using Electra.MerakiUI.Tabs
 @using Electra.MerakiUI.Sections
+@using Electra.MerakiUI.Auth
+@using Electra.MerakiUI.Forms
+@using Electra.MerakiUI.Emails
+@using Electra.MerakiUI.Heroes
+@using Electra.MerakiUI.Teams
 
 <div class="space-y-16">
     <!-- Navbars Section -->
@@ -348,6 +353,79 @@
                         ButtonUrl="#" />
 
             <PricingSection Title="Simple Pricing" Description="Choose the plan that's right for your business." />
+        </div>
+    </section>
+
+    <!-- Auth & Forms Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Auth & Forms</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Sign In Card</h3>
+                <SignInCard Title="Welcome Back" Subtitle="Please enter your details." />
+            </div>
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Contact Form</h3>
+                <ContactForm Title="Get in touch" Description="Our friendly team is always here to chat." />
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialized Layouts Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Specialized Layouts</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="space-y-12">
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Hero with Form</h3>
+                <div class="border border-slate-800 rounded-xl overflow-hidden">
+                    <HeroWithForm Title="Build your next project faster" 
+                                  Description="A beautiful hero section with an integrated newsletter signup form." />
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Team Section</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <TeamCard Name="Alice Johnson" Role="CEO & Founder" />
+                    <TeamCard Name="Bob Smith" Role="Software Engineer" />
+                    <TeamCard Name="Charlie Brown" Role="UI Designer" />
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Error Pages (404)</h3>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="border border-slate-800 rounded-xl overflow-hidden scale-75 origin-top">
+                        <Simple404 Title="Page not found" Description="Sorry, the page you are looking for doesn't exist." />
+                    </div>
+                    <div class="border border-slate-800 rounded-xl overflow-hidden scale-75 origin-top">
+                        <Centered404 Title="Lost in space" Description="The page you requested was not found." />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Templates Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Email Templates</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="border border-slate-800 rounded-xl p-8 bg-white">
+            <EmailVerification UserName="Developer" 
+                               VerificationCode="123456" 
+                               TeamName="Electra Team" 
+                               RecipientEmail="dev@example.com" />
         </div>
     </section>
 
