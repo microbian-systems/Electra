@@ -2,7 +2,7 @@
 
 ## Core Environment
 - **Language:** C#
-- **Runtime:** .NET 9.0+
+- **Runtime:** .NET 10.0+
 - **Project Type:** Modular Library Collection / Microservices
 
 ## Frameworks & Libraries
