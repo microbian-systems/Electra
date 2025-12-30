@@ -45,6 +45,6 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Conductor - User Manual Verification 'Complex Forms & Marketing Sections' (Protocol in workflow.md) c992d64
 
 ## Phase 5: Finalization & Documentation [ ]
-- [ ] Task: Update `README.md` with new component examples and JS interop notes
+- [x] Task: Update `README.md` with new component examples and JS interop notes fecae11
 - [ ] Task: Final project build and cross-browser/mobile verification
 - [ ] Task: Conductor - User Manual Verification 'Finalization & Documentation' (Protocol in workflow.md)
