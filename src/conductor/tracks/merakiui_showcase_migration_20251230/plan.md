@@ -16,13 +16,13 @@ Demo components related to site structure and movement.
 - [x] Task: Update `MerakiShowcaseTests.cs` to verify navigation component rendering 3b62ed6
 - [x] Task: Conductor - User Manual Verification 'Navigation & Footer Demos' (Protocol in workflow.md) 3b62ed6
 
-## Phase 3: Basic UI Elements Demos
+## Phase 3: Basic UI Elements Demos [x] [checkpoint: 790399c]
 Demo fundamental building blocks.
 
-- [~] Task: Demo Buttons and Avatars
-- [~] Task: Demo Alerts, Skeletons, and Tooltips
-- [ ] Task: Update `MerakiShowcaseTests.cs` to verify basic element rendering
-- [ ] Task: Conductor - User Manual Verification 'Basic UI Elements Demos' (Protocol in workflow.md)
+- [x] Task: Demo Buttons and Avatars 790399c
+- [x] Task: Demo Alerts, Skeletons, and Tooltips 790399c
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify basic element rendering 790399c
+- [x] Task: Conductor - User Manual Verification 'Basic UI Elements Demos' (Protocol in workflow.md) 790399c
 
 ## Phase 4: Content & Messaging Demos
 Demo components used for displaying data and providing information.
