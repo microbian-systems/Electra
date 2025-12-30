@@ -18,7 +18,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Convert MerakiUI Card variations 54631c6
   - Write Tests: `CardTests.cs`
   - Implement: `Cards/ProductCard.razor`, `Cards/ArticleCard.razor`, `Cards/UserCard.razor`, etc.
-- [ ] Task: Convert MerakiUI Table variations
+- [x] Task: Convert MerakiUI Table variations 4fc794c
   - Write Tests: `TableTests.cs`
   - Implement: `Tables/SimpleTable.razor`, `Tables/TableWithActions.razor`, etc.
 - [ ] Task: Conductor - User Manual Verification 'Content Sections' (Protocol in workflow.md)
