@@ -6,7 +6,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Convert MerakiUI Dropdown variations 122d1b5
   - Write Tests: `DropdownTests.cs`
   - Implement: `Dropdowns/SimpleDropdown.razor`, `Dropdowns/DropdownWithIcons.razor`, etc.
-- [ ] Task: Convert MerakiUI Modal variations
+- [x] Task: Convert MerakiUI Modal variations e9af977
   - Write Tests: `ModalTests.cs`
   - Implement: `Modals/SimpleModal.razor`, `Modals/ModalWithAction.razor`, etc.
 - [ ] Task: Convert MerakiUI Tab variations
