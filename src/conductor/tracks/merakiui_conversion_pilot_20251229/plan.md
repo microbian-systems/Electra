@@ -14,7 +14,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Pilot Category - Alerts' (Protocol in workflow.md)
 
 ## Phase 3: Pilot Category - Buttons [ ]
-- [ ] Task: Convert MerakiUI Button variations (1-to-1)
+- [x] Task: Convert MerakiUI Button variations (1-to-1) 9106b64
   - Write Tests: `ButtonTests.cs`
   - Implement: `Buttons/PrimaryButton.razor`, `Buttons/SecondaryButton.razor`, etc. (plus code-behind, css, ts)
 - [ ] Task: Conductor - User Manual Verification 'Pilot Category - Buttons' (Protocol in workflow.md)
