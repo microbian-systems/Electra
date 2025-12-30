@@ -52,6 +52,6 @@ Demo auth forms, email templates, and other specialized layouts.
 ## Phase 7: Final Verification
 Final sweep and project-wide stability check.
 
-- [ ] Task: Perform a final visual audit of the showcase page on mobile and desktop
-- [ ] Task: Run all MerakiUI tests and verify build integrity
+- [~] Task: Perform a final visual audit of the showcase page on mobile and desktop
+- [~] Task: Run all MerakiUI tests and verify build integrity
 - [ ] Task: Conductor - User Manual Verification 'Final Verification' (Protocol in workflow.md)
