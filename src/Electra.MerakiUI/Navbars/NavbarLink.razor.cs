@@ -6,4 +6,7 @@ public partial class NavbarLink : MerakiComponentBase
 {
     [Parameter]
     public string? Href { get; set; } = "#";
+
+    [Parameter]
+    public bool IsActive { get; set; }
 }
