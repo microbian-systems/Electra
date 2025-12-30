@@ -6,6 +6,9 @@
 @using Electra.MerakiUI.Blog
 @using Electra.MerakiUI.Breadcrumbs
 @using Electra.MerakiUI.ErrorPages
+@using Electra.MerakiUI.Sidebars
+@using Electra.MerakiUI.Footers
+@using Electra.MerakiUI.Pagination
 
 <div class="space-y-16">
     <!-- Navbars Section -->
@@ -42,6 +45,68 @@
                     </NavbarWithSearch>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Sidebars Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Sidebars</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="space-y-8">
+            <div>
+                <h3 class="text-lg font-medium text-slate-300 mb-4">Simple Sidebar</h3>
+                <div class="border border-slate-800 rounded-xl overflow-hidden bg-slate-900/50 flex justify-center p-4" style="min-height: 400px;">
+                    <SimpleSidebar BrandName="Electra">
+                        <div class="space-y-3">
+                            <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">Dashboard</a>
+                            <a class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700" href="#">Projects</a>
+                        </div>
+                    </SimpleSidebar>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footers Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Footers</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="space-y-8">
+            <SimpleFooter BrandName="Electra.MerakiUI" />
+        </div>
+    </section>
+
+    <!-- Breadcrumbs Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Breadcrumbs</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="p-8 border border-slate-800 rounded-xl bg-slate-900/50">
+            <Breadcrumb>
+                <BreadcrumbItem Text="Home" Url="/" ShowSeparator="false" />
+                <BreadcrumbItem Text="Components" Url="/components" />
+                <BreadcrumbItem Text="Showcase" Url="#" IsActive="true" />
+            </Breadcrumb>
+        </div>
+    </section>
+
+    <!-- Pagination Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Pagination</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="p-8 border border-slate-800 rounded-xl bg-slate-900/50">
+            <PaginationControl CurrentPage="3" TotalPages="10" />
         </div>
     </section>
 

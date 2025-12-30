@@ -11,8 +11,8 @@ Move the existing showcase files and prepare the layout for categorized sections
 ## Phase 2: Navigation & Footer Demos
 Demo components related to site structure and movement.
 
-- [ ] Task: Demo Navbars and Sidebars
-- [ ] Task: Demo Footers, Breadcrumbs, and Pagination
+- [~] Task: Demo Navbars and Sidebars
+- [~] Task: Demo Footers, Breadcrumbs, and Pagination
 - [ ] Task: Update `MerakiShowcaseTests.cs` to verify navigation component rendering
 - [ ] Task: Conductor - User Manual Verification 'Navigation & Footer Demos' (Protocol in workflow.md)
 
