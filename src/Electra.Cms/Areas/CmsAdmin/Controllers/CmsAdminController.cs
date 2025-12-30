@@ -234,6 +234,19 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
             return View(new UserListViewModel { Users = users });
         }
 
+        [Route("user/add")]
+        public async Task<IActionResult> AddUser()
+        {
+            var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
+
+            return View("EditUser", new UserEditViewModel
+            {
+                User = new ElectraUser { UserName = "", Email = "" },
+                UserRoles = new List<string>(),
+                AllRoles = allRoles
+            });
+        }
+
         [Route("user/{userId}/edit")]
         public async Task<IActionResult> EditUser(string userId)
         {
@@ -253,25 +266,74 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
 
         [HttpPost]
         [Route("user/{userId}/save")]
-        public async Task<IActionResult> SaveUser(string userId, [FromForm] ElectraUser model, [FromForm] string[] selectedRoles)
+        public async Task<IActionResult> SaveUser(string userId, [FromForm] ElectraUser model, [FromForm] string? password, [FromForm] string[] selectedRoles)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null) return NotFound();
+            ElectraUser? user;
+            bool isNew = string.IsNullOrEmpty(userId) || userId == "new";
 
-            user.Email = model.Email;
-            user.UserName = model.Email; // Using email as username
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-
-            var result = await _userManager.UpdateAsync(user);
-            if (!result.Succeeded)
+            if (isNew)
             {
-                foreach (var error in result.Errors)
+                if (string.IsNullOrEmpty(password))
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("Password", "Password is required for new users.");
+                    var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
+                    return View("EditUser", new UserEditViewModel { User = model, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles });
                 }
-                var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
-                return View("EditUser", new UserEditViewModel { User = user, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles });
+
+                user = new ElectraUser
+                {
+                    Email = model.Email,
+                    UserName = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+
+                var createResult = await _userManager.CreateAsync(user, password);
+                if (!createResult.Succeeded)
+                {
+                    foreach (var error in createResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
+                    return View("EditUser", new UserEditViewModel { User = model, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles, Password = password });
+                }
+            }
+            else
+            {
+                user = await _userManager.FindByIdAsync(userId);
+                if (user == null) return NotFound();
+
+                user.Email = model.Email;
+                user.UserName = model.Email; // Using email as username
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
+                    return View("EditUser", new UserEditViewModel { User = user, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles });
+                }
+
+                if (!string.IsNullOrEmpty(password))
+                {
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var passwordResult = await _userManager.ResetPasswordAsync(user, token, password);
+                    if (!passwordResult.Succeeded)
+                    {
+                        foreach (var error in passwordResult.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                        var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
+                        return View("EditUser", new UserEditViewModel { User = user, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles });
+                    }
+                }
             }
 
             // Update Roles

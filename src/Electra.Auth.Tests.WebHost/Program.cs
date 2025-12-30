@@ -15,11 +15,15 @@ builder.Services.AddControllersWithViews()
 builder.Services.AddLogging();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddDbContext<ElectraDbContext>(o => { o.UseInMemoryDatabase("ElectraAuthTestsDb"); });
+
 var env = builder.Environment;
 var config = builder.Configuration;
 builder.Services.AddElectraAuthentication(env, config);
-
+builder.Services.AddDbContext<ElectraDbContext>(o =>
+{
+    //o.UseInMemoryDatabase("ElectraAuthTestsDb");
+    o.UseSqlServer(config.GetConnectionString("localdb"));
+});
 
 var app = builder.Build();
 

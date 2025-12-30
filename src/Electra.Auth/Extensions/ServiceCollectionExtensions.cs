@@ -47,7 +47,8 @@ public static class ServiceCollectionExtensions
             if (env.IsDevelopment())
             {
                 // Use in-memory database for development/testing
-                opts.UseInMemoryDatabase("ElectraAuthDb");
+                //opts.UseInMemoryDatabase("ElectraAuthDb");
+                opts.UseSqlServer(config.GetConnectionString("localdb"));
             }
             else
             {

@@ -20,11 +20,16 @@ public static class PersistenceExtensions
 
         // todo - add a configuration to choose the db provider at startup
         services.AddDbContext<ElectraDbContext>(o =>
-            o.UseSqlite(
-                config.GetConnectionString("sqlite"),
-                x => x.MigrationsHistoryTable("__ElectraMigrations", "electra")
-                    .MigrationsAssembly(typeof(ElectraDbContext).Assembly.FullName)
-                    .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
+        {
+            //o.UseInMemoryDatabase("Electra");
+            o.UseSqlServer(config.GetConnectionString("localdb"));
+        });
+        // services.AddDbContext<ElectraDbContext>(o =>
+        //     o.UseSqlite(
+        //         config.GetConnectionString("sqlite"),
+        //         x => x.MigrationsHistoryTable("__ElectraMigrations", "electra")
+        //             .MigrationsAssembly(typeof(ElectraDbContext).Assembly.FullName)
+        //             .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
         log.LogInformation($"configuring generic repositories");
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericEntityFrameworkRepository<>));

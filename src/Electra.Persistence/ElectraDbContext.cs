@@ -21,7 +21,7 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
     {
     }
 
-    public ElectraDbContext(DbContextOptions options) : base(options)
+    protected ElectraDbContext(DbContextOptions options) : base(options)
     {
     }
 
@@ -72,11 +72,11 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
             entity.ToTable("Roles", schema: Schemas.Auth);
         });
         
-        builder.Entity<IdentityUserRole<long>>().ToTable("UserRoles", schema: Schemas.Auth);
-        builder.Entity<IdentityUserClaim<long>>().ToTable("UserClaims", schema: Schemas.Auth);
-        builder.Entity<IdentityUserLogin<long>>().ToTable("UserLogins", schema: Schemas.Auth);
-        builder.Entity<IdentityRoleClaim<long>>().ToTable("RoleClaims", schema: Schemas.Auth);
-        builder.Entity<IdentityUserToken<long>>().ToTable("UserTokens", schema: Schemas.Auth);
+        builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", schema: Schemas.Auth);
+        builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", schema: Schemas.Auth);
+        builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", schema: Schemas.Auth);
+        builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", schema: Schemas.Auth);
+        builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", schema: Schemas.Auth);
     }
 
     private void ConfigureDecimalPrecision(ModelBuilder builder)

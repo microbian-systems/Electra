@@ -89,21 +89,6 @@ public static class BlogServiceCollectionExtensions
         });
     }
 
-    /// <summary>
-    /// Adds blog services with in-memory database (for testing)
-    /// </summary>
-    /// <param name="services">Service collection</param>
-    /// <param name="databaseName">In-memory database name</param>
-    /// <returns>Service collection for chaining</returns>
-    public static IServiceCollection AddBlogServicesInMemory(this IServiceCollection services, string databaseName = "BlogTestDb")
-    {
-        return services.AddBlogServices(options =>
-        {
-            options.UseInMemoryDatabase(databaseName);
-            options.EnableSensitiveDataLogging();
-        });
-    }
-
     public static IServiceCollection AddBlogServicesRavenDb(this IServiceCollection services, IConfiguration config)
     {
         return services.AddBlogServices(_ =>
