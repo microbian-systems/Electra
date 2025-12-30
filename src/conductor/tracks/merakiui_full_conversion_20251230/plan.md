@@ -23,7 +23,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
   - Implement: `Tables/SimpleTable.razor`, `Tables/TableWithActions.razor`, etc.
 - [x] Task: Conductor - User Manual Verification 'Content Sections' (Protocol in workflow.md) a2a97b7
 
-## Phase 3: Layout & Navigation (Heroes, Sidebars, Footers) [ ]
+## Phase 3: Layout & Navigation (Heroes, Sidebars, Footers) [x] [checkpoint: 809eb68]
 - [x] Task: Convert MerakiUI Hero variations 1d9b01d
   - Write Tests: `HeroTests.cs`
   - Implement: `Heroes/HeroWithImage.razor`, `Heroes/HeroWithForm.razor`, etc.
@@ -33,7 +33,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Convert MerakiUI Footer variations 990ea31
   - Write Tests: `FooterTests.cs`
   - Implement: `Footers/SimpleFooter.razor`, `Footers/FooterWithColumns.razor`, etc.
-- [ ] Task: Conductor - User Manual Verification 'Layout & Navigation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Layout & Navigation' (Protocol in workflow.md) 809eb68
 
 ## Phase 4: Complex Forms & Marketing Sections [ ]
 - [ ] Task: Convert MerakiUI Complex Form variations
