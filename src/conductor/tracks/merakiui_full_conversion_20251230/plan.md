@@ -38,14 +38,14 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Convert MerakiUI Pagination variations 01937a0
 - [x] Task: Conductor - User Manual Verification 'Batch 2' (Protocol in workflow.md) 01937a0
 
-## Phase 7: Remaining Categories (Batch 3) [ ]
-- [ ] Task: Convert MerakiUI Portfolio variations
-- [ ] Task: Convert MerakiUI Sign-in & Registration variations
-- [ ] Task: Convert MerakiUI Skeleton variations
-- [ ] Task: Convert MerakiUI Team variations
-- [ ] Task: Convert MerakiUI Testimonial variations
-- [ ] Task: Convert MerakiUI Tooltip variations
-- [ ] Task: Conductor - User Manual Verification 'Batch 3' (Protocol in workflow.md)
+## Phase 7: Remaining Categories (Batch 3) [x] [checkpoint: 8381f54]
+- [x] Task: Convert MerakiUI Portfolio variations 8381f54
+- [x] Task: Convert MerakiUI Sign-in & Registration variations 8381f54
+- [x] Task: Convert MerakiUI Skeleton variations 8381f54
+- [x] Task: Convert MerakiUI Team variations 8381f54
+- [x] Task: Convert MerakiUI Testimonial variations 8381f54
+- [x] Task: Convert MerakiUI Tooltip variations 8381f54
+- [x] Task: Conductor - User Manual Verification 'Batch 3' (Protocol in workflow.md) 8381f54
 
 ## Phase 8: Finalization & Documentation [ ]
 - [x] Task: Update `README.md` with new component examples and JS interop notes fecae11
