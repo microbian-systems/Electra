@@ -1,0 +1,10 @@
+@inherits MerakiComponentBase
+
+<div class="flex items-center gap-x-2 @Class" id="@Id" @attributes="AdditionalAttributes">
+    <Avatar Size="@Size" Shape="@Shape" Src="@Src" Alt="@Alt" />
+    
+    <div>
+        <h1 class="@GetNameSizeClass() font-semibold text-gray-700 capitalize dark:text-white">@Name</h1>
+        <p class="@GetEmailSizeClass() text-gray-500 dark:text-gray-400">@Email</p>
+    </div>
+</div>

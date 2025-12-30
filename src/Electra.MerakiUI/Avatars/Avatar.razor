@@ -1,0 +1,12 @@
+@inherits MerakiComponentBase
+
+<div class="relative inline-block @Class" id="@Id" @attributes="AdditionalAttributes">
+    <img class="object-cover @GetSizeClass() @GetShapeClass() @GetBorderClass() @GetGroupClass()" 
+         src="@Src" 
+         alt="@Alt">
+    
+    @if (ShowStatus)
+    {
+        <span class="absolute @GetStatusPositionClass() @GetStatusSizeClass() @GetStatusColorClass() rounded-full ring-1 ring-white"></span>
+    }
+</div>
