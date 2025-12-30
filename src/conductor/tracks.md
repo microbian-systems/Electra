@@ -26,3 +26,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: MerakiUI Blazor Conversion (Phase 1 - Pilot)
 *Link: [./conductor/tracks/merakiui_conversion_pilot_20251229/](./conductor/tracks/merakiui_conversion_pilot_20251229/)*
+
+---
+
+## [ ] Track: MerakiUI Full Blazor Conversion
+*Link: [./conductor/tracks/merakiui_full_conversion_20251230/](./conductor/tracks/merakiui_full_conversion_20251230/)*

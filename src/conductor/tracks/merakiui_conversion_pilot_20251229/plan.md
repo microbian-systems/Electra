@@ -12,11 +12,11 @@
   - Implement: `Alert.razor`, `Alert.razor.cs`, `Alert.razor.css`, `Alert.razor.ts`
 - [x] Task: Conductor - User Manual Verification 'Pilot Category - Alerts' (Protocol in workflow.md) eaeaa54
 
-## Phase 3: Pilot Category - Buttons [x]
+## Phase 3: Pilot Category - Buttons [x] [checkpoint: 8f2fdf1]
 - [x] Task: Convert MerakiUI Button variations (1-to-1) 9106b64
   - Write Tests: `ButtonTests.cs`
   - Implement: `Buttons/PrimaryButton.razor`, `Buttons/SecondaryButton.razor`, etc. (plus code-behind, css, ts)
-- [ ] Task: Conductor - User Manual Verification 'Pilot Category - Buttons' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Pilot Category - Buttons' (Protocol in workflow.md) 8f2fdf1
 
 ## Phase 4: Pilot Category - Inputs [x] [checkpoint: ccc241f]
 - [x] Task: Convert MerakiUI Input variations (1-to-1) f15a502
