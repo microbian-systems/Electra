@@ -101,6 +101,66 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
             return View(sites);
         }
 
+        // --- Sites Management ---
+
+        [Route("site/add")]
+        public IActionResult AddSite()
+        {
+            return View("EditSite", new SiteDocument());
+        }
+
+        [Route("site/{siteId}/edit")]
+        public async Task<IActionResult> EditSite(string siteId)
+        {
+            var site = await _session.LoadAsync<SiteDocument>(siteId);
+            if (site == null) return NotFound();
+            return View(site);
+        }
+
+        [HttpPost]
+        [Route("site/{siteId}/save")]
+        public async Task<IActionResult> SaveSite(string siteId, [FromForm] SiteDocument model, [FromForm] string hostnamesRaw)
+        {
+            SiteDocument site;
+            var hostnames = (hostnamesRaw ?? "").Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                .Select(h => h.Trim()).ToList();
+
+            if (string.IsNullOrEmpty(siteId) || siteId == "new")
+            {
+                site = model;
+                site.Id = "sites/";
+                site.Hostnames = hostnames;
+                await _session.StoreAsync(site);
+            }
+            else
+            {
+                site = await _session.LoadAsync<SiteDocument>(siteId);
+                if (site == null) return NotFound();
+
+                site.Name = model.Name;
+                site.DefaultCulture = model.DefaultCulture;
+                site.Theme = model.Theme;
+                site.Hostnames = hostnames;
+                site.Version++;
+            }
+
+            await _session.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [Route("site/{siteId}/delete")]
+        public async Task<IActionResult> DeleteSite(string siteId)
+        {
+            var site = await _session.LoadAsync<SiteDocument>(siteId);
+            if (site != null)
+            {
+                _session.Delete(site);
+                await _session.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
         // --- Pages Management ---
 
         [Route("site/{siteId}/pages")]
@@ -246,7 +306,7 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
             {
                 User = new ElectraUser { UserName = "", Email = "" },
                 UserRoles = new List<string>(),
-                AllRoles = allRoles.Where(x=> !string.IsNullOrEmpty(x.Name) == false)
+                AllRoles = allRoles.Where(x => !string.IsNullOrEmpty(x.Name))
                     .Select(x => x.Name!).AsEnumerable()
             });
         }
@@ -361,6 +421,134 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
 
             await _userManager.DeleteAsync(user);
             return RedirectToAction("Users");
+        }
+
+        // --- Role Management ---
+
+        [Route("roles")]
+        public async Task<IActionResult> Roles()
+        {
+            var roles = await _roleManager.Roles.ToListAsync();
+            return View(roles);
+        }
+
+        [Route("role/add")]
+        public IActionResult AddRole()
+        {
+            return View("EditRole", new ElectraRole());
+        }
+
+        [Route("role/{roleId}/edit")]
+        public async Task<IActionResult> EditRole(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null) return NotFound();
+            return View(role);
+        }
+
+        [HttpPost]
+        [Route("role/{roleId}/save")]
+        public async Task<IActionResult> SaveRole(string roleId, [FromForm] ElectraRole model)
+        {
+            if (string.IsNullOrEmpty(roleId) || roleId == "new")
+            {
+                var result = await _roleManager.CreateAsync(new ElectraRole { Name = model.Name });
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View("EditRole", model);
+                }
+            }
+            else
+            {
+                var role = await _roleManager.FindByIdAsync(roleId);
+                if (role == null) return NotFound();
+
+                role.Name = model.Name;
+                var result = await _roleManager.UpdateAsync(role);
+                if (!result.Succeeded)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View("EditRole", role);
+                }
+            }
+
+            return RedirectToAction("Roles");
+        }
+
+        [HttpPost]
+        [Route("role/{roleId}/delete")]
+        public async Task<IActionResult> DeleteRole(string roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role != null)
+            {
+                await _roleManager.DeleteAsync(role);
+            }
+            return RedirectToAction("Roles");
+        }
+
+        // --- My Settings ---
+
+        [Route("my-settings")]
+        public async Task<IActionResult> MySettings()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login");
+
+            return View(user);
+        }
+
+        [HttpPost]
+        [Route("my-settings/save")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveMySettings([FromForm] ElectraUser model, [FromForm] string? currentPassword, [FromForm] string? newPassword)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login");
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.UserName = model.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return View("MySettings", user);
+            }
+
+            if (!string.IsNullOrEmpty(newPassword))
+            {
+                if (string.IsNullOrEmpty(currentPassword))
+                {
+                    ModelState.AddModelError("currentPassword", "Current password is required to change password.");
+                    return View("MySettings", user);
+                }
+
+                var changePasswordResult = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+                if (!changePasswordResult.Succeeded)
+                {
+                    foreach (var error in changePasswordResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View("MySettings", user);
+                }
+            }
+
+            ViewData["StatusMessage"] = "Your profile has been updated.";
+            return View("MySettings", user);
         }
     }
 }
