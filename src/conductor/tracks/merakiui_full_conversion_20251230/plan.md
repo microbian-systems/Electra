@@ -24,7 +24,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Conductor - User Manual Verification 'Content Sections' (Protocol in workflow.md) a2a97b7
 
 ## Phase 3: Layout & Navigation (Heroes, Sidebars, Footers) [ ]
-- [ ] Task: Convert MerakiUI Hero variations
+- [x] Task: Convert MerakiUI Hero variations 1d9b01d
   - Write Tests: `HeroTests.cs`
   - Implement: `Heroes/HeroWithImage.razor`, `Heroes/HeroWithForm.razor`, etc.
 - [ ] Task: Convert MerakiUI Sidebar variations
