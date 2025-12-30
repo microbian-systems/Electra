@@ -33,13 +33,13 @@ Demo components used for displaying data and providing information.
 - [x] Task: Update `MerakiShowcaseTests.cs` to verify content component rendering a5ece7a
 - [x] Task: Conductor - User Manual Verification 'Content & Messaging Demos' (Protocol in workflow.md) a5ece7a
 
-## Phase 5: Interactive & Marketing Demos
+## Phase 5: Interactive & Marketing Demos [x] [checkpoint: 317c8d0]
 Demo complex interactive components and marketing-focused sections.
 
-- [~] Task: Demo Dropdowns, Modals, and Tabs
-- [~] Task: Demo CTA, Feature, and Pricing sections
-- [ ] Task: Update `MerakiShowcaseTests.cs` to verify interactive component rendering
-- [ ] Task: Conductor - User Manual Verification 'Interactive & Marketing Demos' (Protocol in workflow.md)
+- [x] Task: Demo Dropdowns, Modals, and Tabs 317c8d0
+- [x] Task: Demo CTA, Feature, and Pricing sections 317c8d0
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify interactive component rendering 317c8d0
+- [x] Task: Conductor - User Manual Verification 'Interactive & Marketing Demos' (Protocol in workflow.md) 317c8d0
 
 ## Phase 6: Specialized & Identity Demos
 Demo auth forms, email templates, and other specialized layouts.
