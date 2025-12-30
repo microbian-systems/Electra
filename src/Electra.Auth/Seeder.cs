@@ -21,7 +21,7 @@ public class Seeder
         // Create database and apply migrations if EF is used
         if (context != null)
         {
-            await context.Database.MigrateAsync();
+            //await context.Database.MigrateAsync();
         }
 
         // Seed roles

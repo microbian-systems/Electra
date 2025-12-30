@@ -70,10 +70,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Blog\" />
-    <Folder Include="Areas\Organization\Data\" />
-    <Folder Include="Areas\Organization\Models\" />
-    <Folder Include="Areas\Users\Data\" />
-    <Folder Include="Areas\Users\Models\" />
   </ItemGroup>
 
 </Project>

@@ -129,7 +129,7 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
                 Template = "default",
                 PublishedState = PagePublishedState.Draft,
                 Metadata = new PageMetadata(),
-                Blocks = new List<BlockDocument>()
+                Blocks = []
             };
 
             return View("Edit", new PageEditViewModel
@@ -161,12 +161,12 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
         public async Task<IActionResult> Save(string pageId, [FromForm] PageDocument model, [FromForm] string blocksRaw)
         {
             PageDocument page;
-            List<BlockDocument> blocks = new List<BlockDocument>();
+            List<BlockDocument> blocks = [];
             
             if (!string.IsNullOrEmpty(blocksRaw))
             {
                 try {
-                    blocks = System.Text.Json.JsonSerializer.Deserialize<List<BlockDocument>>(blocksRaw) ?? new List<BlockDocument>();
+                    blocks = System.Text.Json.JsonSerializer.Deserialize<List<BlockDocument>>(blocksRaw) ?? [];
                 } catch {
                     ModelState.AddModelError("blocksRaw", "Invalid JSON format for blocks.");
                 }
@@ -230,20 +230,24 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
         [Route("users")]
         public async Task<IActionResult> Users()
         {
-            var users = _userManager.Users.ToList();
+            var users =  await _userManager.Users.ToListAsync();
             return View(new UserListViewModel { Users = users });
         }
 
         [Route("user/add")]
         public async Task<IActionResult> AddUser()
         {
-            var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
+            var allRoles = await _roleManager.Roles
+                // .Select(r => r.Name)
+                // .Where(n => string.IsNullOrEmpty(n) == false )
+                .ToListAsync() ?? [];
 
             return View("EditUser", new UserEditViewModel
             {
                 User = new ElectraUser { UserName = "", Email = "" },
                 UserRoles = new List<string>(),
-                AllRoles = allRoles
+                AllRoles = allRoles.Where(x=> !string.IsNullOrEmpty(x.Name) == false)
+                    .Select(x => x.Name!).AsEnumerable()
             });
         }
 
@@ -254,7 +258,8 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
             if (user == null) return NotFound();
 
             var userRoles = await _userManager.GetRolesAsync(user);
-            var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
+            var allRoles = await _roleManager.Roles.Select(r => r.Name)
+                .Where(n => n != null).Select(n => n!).ToListAsync();
 
             return View(new UserEditViewModel
             {
@@ -276,8 +281,8 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
                 if (string.IsNullOrEmpty(password))
                 {
                     ModelState.AddModelError("Password", "Password is required for new users.");
-                    var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
-                    return View("EditUser", new UserEditViewModel { User = model, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles });
+                    var allRoles = await _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToListAsync();
+                    return View("EditUser", new UserEditViewModel { User = model, UserRoles = selectedRoles ?? [], AllRoles = allRoles });
                 }
 
                 user = new ElectraUser
@@ -295,8 +300,8 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
                     {
                         ModelState.AddModelError("", error.Description);
                     }
-                    var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
-                    return View("EditUser", new UserEditViewModel { User = model, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles, Password = password });
+                    var allRoles = await _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToListAsync();
+                    return View("EditUser", new UserEditViewModel { User = model, UserRoles = selectedRoles ?? [], AllRoles = allRoles, Password = password });
                 }
             }
             else
@@ -316,8 +321,8 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
                     {
                         ModelState.AddModelError("", error.Description);
                     }
-                    var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
-                    return View("EditUser", new UserEditViewModel { User = user, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles });
+                    var allRoles = await _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToListAsync();
+                    return View("EditUser", new UserEditViewModel { User = user, UserRoles = selectedRoles ?? [], AllRoles = allRoles });
                 }
 
                 if (!string.IsNullOrEmpty(password))
@@ -330,8 +335,8 @@ namespace Electra.Cms.Areas.CmsAdmin.Controllers
                         {
                             ModelState.AddModelError("", error.Description);
                         }
-                        var allRoles = _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToList();
-                        return View("EditUser", new UserEditViewModel { User = user, UserRoles = selectedRoles ?? new string[0], AllRoles = allRoles });
+                        var allRoles = await _roleManager.Roles.Select(r => r.Name).Where(n => n != null).Select(n => n!).ToListAsync();
+                        return View("EditUser", new UserEditViewModel { User = user, UserRoles = selectedRoles ?? [], AllRoles = allRoles });
                     }
                 }
             }
