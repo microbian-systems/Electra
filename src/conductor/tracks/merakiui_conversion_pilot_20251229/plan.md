@@ -30,7 +30,7 @@
   - Implement: `Navbars/SimpleNavbar.razor`, `Navbars/NavbarWithSearch.razor`, etc. (plus code-behind, css, ts)
 - [x] Task: Conductor - User Manual Verification 'Pilot Category - Navbars' (Protocol in workflow.md) 09edfa2
 
-## Phase 6: Finalization & Documentation [ ]
+## Phase 6: Finalization & Documentation [x] [checkpoint: 017dc15]
 - [x] Task: Update project documentation with the component conversion pattern 50706d1
 - [x] Task: Final project build and linting check 174044
-- [ ] Task: Conductor - User Manual Verification 'Finalization & Documentation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Finalization & Documentation' (Protocol in workflow.md) 017dc15
