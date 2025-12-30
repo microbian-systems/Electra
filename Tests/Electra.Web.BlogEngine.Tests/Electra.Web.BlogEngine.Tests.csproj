@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\..\src\Electra.Cms\Electra.Cms.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Electra.Web.BlogEngine\Electra.Web.BlogEngine.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>
