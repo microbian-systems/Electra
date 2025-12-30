@@ -1,0 +1,23 @@
+@inherits MerakiComponentBase
+
+<div x-data="{ activeTab: 0 }" class="@Class" id="@Id" @attributes="AdditionalAttributes">
+    <div class="flex overflow-x-auto overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
+        @for (int i = 0; i < Items.Count; i++)
+        {
+            var index = i;
+            var item = Items[i];
+            <button @@click="activeTab = @index"
+                    :class="{ 'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300': activeTab === @index, 'text-gray-500 border-transparent dark:text-gray-300': activeTab !== @index }"
+                    class="inline-flex items-center h-10 px-4 -mb-px text-sm text-center text-transparent border-b-2 sm:text-base whitespace-nowrap focus:outline-none hover:border-gray-400">
+                @((MarkupString)item.Icon)
+                <span class="mx-1 text-sm sm:text-base">
+                    @item.Title
+                </span>
+            </button>
+        }
+    </div>
+
+    <div class="p-4">
+        @ChildContent
+    </div>
+</div>
