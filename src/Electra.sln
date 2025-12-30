@@ -121,6 +121,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Cms.Tests", "..\Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.MerakiUI", "Electra.MerakiUI\Electra.MerakiUI.csproj", "{44DA88D6-CF43-480F-9637-FA42DF3E3D68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.MerakiUI.Tests", "..\Tests\Electra.MerakiUI.Tests\Electra.MerakiUI.Tests.csproj", "{5A11B567-5338-42E3-930D-FCB26078DECE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -623,6 +625,18 @@ Global
 		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|x64.Build.0 = Release|Any CPU
 		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|x86.ActiveCfg = Release|Any CPU
 		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|x86.Build.0 = Release|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Debug|x64.Build.0 = Debug|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Debug|x86.Build.0 = Debug|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Release|x64.ActiveCfg = Release|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Release|x64.Build.0 = Release|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Release|x86.ActiveCfg = Release|Any CPU
+		{5A11B567-5338-42E3-930D-FCB26078DECE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
