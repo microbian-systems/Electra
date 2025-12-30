@@ -36,7 +36,7 @@ These components require the 4-file pattern with Scoped TypeScript for state/DOM
 - [x] Task: Conductor - User Manual Verification 'Layout & Navigation' (Protocol in workflow.md) 809eb68
 
 ## Phase 4: Complex Forms & Marketing Sections [ ]
-- [ ] Task: Convert MerakiUI Complex Form variations
+- [x] Task: Convert MerakiUI Complex Form variations b83e62c
   - Write Tests: `FormTests.cs`
   - Implement: `Forms/ContactForm.razor`, `Forms/NewsletterForm.razor`, etc.
 - [ ] Task: Convert MerakiUI Marketing Section variations
