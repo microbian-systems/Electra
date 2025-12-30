@@ -1,4 +1,4 @@
-# Implementation Plan: MerakiUI Blazor Conversion (Phase 1 - Pilot) [checkpoint: eaeaa54]
+# Implementation Plan: MerakiUI Blazor Conversion (Phase 1 - Pilot) [checkpoint: ccc241f]
 
 ## Phase 1: Environment Setup & Infrastructure [x]
 - [x] Task: Project Structure Verification & Namespace Setup dcefd04
@@ -11,19 +11,18 @@
   - Write Tests: `AlertTests.cs` (Verify CSS switches for Success, Warning, Info)
   - Implement: `Alert.razor`, `Alert.razor.cs`, `Alert.razor.css`, `Alert.razor.ts`
 - [x] Task: Conductor - User Manual Verification 'Pilot Category - Alerts' (Protocol in workflow.md) eaeaa54
-- [ ] Task: Conductor - User Manual Verification 'Pilot Category - Alerts' (Protocol in workflow.md)
 
-## Phase 3: Pilot Category - Buttons [ ]
+## Phase 3: Pilot Category - Buttons [x]
 - [x] Task: Convert MerakiUI Button variations (1-to-1) 9106b64
   - Write Tests: `ButtonTests.cs`
   - Implement: `Buttons/PrimaryButton.razor`, `Buttons/SecondaryButton.razor`, etc. (plus code-behind, css, ts)
 - [ ] Task: Conductor - User Manual Verification 'Pilot Category - Buttons' (Protocol in workflow.md)
 
-## Phase 4: Pilot Category - Inputs [ ]
+## Phase 4: Pilot Category - Inputs [x] [checkpoint: ccc241f]
 - [x] Task: Convert MerakiUI Input variations (1-to-1) f15a502
   - Write Tests: `InputTests.cs`
   - Implement: `Inputs/TextInput.razor`, `Inputs/PasswordInput.razor`, etc. (plus code-behind, css, ts)
-- [ ] Task: Conductor - User Manual Verification 'Pilot Category - Inputs' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Pilot Category - Inputs' (Protocol in workflow.md) ccc241f
 
 ## Phase 5: Pilot Category - Navbars [ ]
 - [ ] Task: Convert MerakiUI Navbar variations (1-to-1)
