@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": ".",
+    "rootDir": ".",
+    "allowJs": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "bin", "obj"]
+}
