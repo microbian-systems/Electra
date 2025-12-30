@@ -9,6 +9,8 @@
 @using Electra.MerakiUI.Sidebars
 @using Electra.MerakiUI.Footers
 @using Electra.MerakiUI.Pagination
+@using Electra.MerakiUI.Skeletons
+@using Electra.MerakiUI.Tooltips
 
 <div class="space-y-16">
     <!-- Navbars Section -->
@@ -107,6 +109,43 @@
 
         <div class="p-8 border border-slate-800 rounded-xl bg-slate-900/50">
             <PaginationControl CurrentPage="3" TotalPages="10" />
+        </div>
+    </section>
+
+    <!-- Skeletons Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Skeletons</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+        </div>
+    </section>
+
+    <!-- Tooltips Section -->
+    <section>
+        <div class="flex items-center gap-4 mb-8">
+            <h2 class="text-2xl font-bold text-white">Tooltips</h2>
+            <div class="h-px flex-1 bg-slate-800"></div>
+        </div>
+
+        <div class="p-16 border border-slate-800 rounded-xl bg-slate-900/50 flex flex-wrap justify-center gap-12">
+            <Tooltip Text="Tooltip on Top" Position="TooltipPosition.Top">
+                <PrimaryButton>Top</PrimaryButton>
+            </Tooltip>
+            <Tooltip Text="Tooltip on Right" Position="TooltipPosition.Right">
+                <PrimaryButton>Right</PrimaryButton>
+            </Tooltip>
+            <Tooltip Text="Tooltip on Bottom" Position="TooltipPosition.Bottom">
+                <PrimaryButton>Bottom</PrimaryButton>
+            </Tooltip>
+            <Tooltip Text="Tooltip on Left" Position="TooltipPosition.Left">
+                <PrimaryButton>Left</PrimaryButton>
+            </Tooltip>
         </div>
     </section>
 

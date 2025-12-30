@@ -19,8 +19,8 @@ Demo components related to site structure and movement.
 ## Phase 3: Basic UI Elements Demos
 Demo fundamental building blocks.
 
-- [ ] Task: Demo Buttons and Avatars
-- [ ] Task: Demo Alerts, Skeletons, and Tooltips
+- [~] Task: Demo Buttons and Avatars
+- [~] Task: Demo Alerts, Skeletons, and Tooltips
 - [ ] Task: Update `MerakiShowcaseTests.cs` to verify basic element rendering
 - [ ] Task: Conductor - User Manual Verification 'Basic UI Elements Demos' (Protocol in workflow.md)
 

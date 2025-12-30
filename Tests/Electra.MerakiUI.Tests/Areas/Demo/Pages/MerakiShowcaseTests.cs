@@ -19,5 +19,7 @@ public class MerakiShowcaseTests : BunitContext
         Assert.Contains("Footers", cut.Markup);
         Assert.Contains("Breadcrumbs", cut.Markup);
         Assert.Contains("Pagination", cut.Markup);
+        Assert.Contains("Skeletons", cut.Markup);
+        Assert.Contains("Tooltips", cut.Markup);
     }
 }
