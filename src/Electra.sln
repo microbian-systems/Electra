@@ -119,6 +119,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Blog", "Electra.Blo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.Cms.Tests", "..\Tests\Electra.Cms.Tests\Electra.Cms.Tests.csproj", "{A702334A-AFB0-4AD2-BC61-93F2BE748F11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Electra.MerakiUI", "Electra.MerakiUI\Electra.MerakiUI.csproj", "{44DA88D6-CF43-480F-9637-FA42DF3E3D68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -609,6 +611,18 @@ Global
 		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|x64.Build.0 = Release|Any CPU
 		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|x86.ActiveCfg = Release|Any CPU
 		{A702334A-AFB0-4AD2-BC61-93F2BE748F11}.Release|x86.Build.0 = Release|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Debug|x64.Build.0 = Debug|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Debug|x86.Build.0 = Debug|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|x64.ActiveCfg = Release|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|x64.Build.0 = Release|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|x86.ActiveCfg = Release|Any CPU
+		{44DA88D6-CF43-480F-9637-FA42DF3E3D68}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
