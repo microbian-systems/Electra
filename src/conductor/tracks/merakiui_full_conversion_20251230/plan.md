@@ -3,7 +3,7 @@
 ## Phase 1: Interactive Elements (Dropdowns, Modals, Tabs) [ ]
 These components require the 4-file pattern with Scoped TypeScript for state/DOM management.
 
-- [ ] Task: Convert MerakiUI Dropdown variations
+- [x] Task: Convert MerakiUI Dropdown variations 122d1b5
   - Write Tests: `DropdownTests.cs`
   - Implement: `Dropdowns/SimpleDropdown.razor`, `Dropdowns/DropdownWithIcons.razor`, etc.
 - [ ] Task: Convert MerakiUI Modal variations
