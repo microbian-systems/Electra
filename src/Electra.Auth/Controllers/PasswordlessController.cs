@@ -66,15 +66,16 @@ public class PasswordlessController : ElectraWebBaseController
             return BadRequest(ModelState);
         }
 
-        var result = await _authenticationCeremonyService.BeginCeremonyAsync(
-            HttpContext,
-            model.ToBeginCeremonyRequest(applicationUser.UserHandle),
-            cancellationToken);
-        await _authenticationCeremonyHandleService.SaveAsync(
-            HttpContext,
-            result.AuthenticationCeremonyId,
-            cancellationToken);
-        return Ok(result.Options);
+        //var result = await _authenticationCeremonyService.BeginCeremonyAsync(
+        //    HttpContext,
+        //    //model.ToBeginCeremonyRequest(applicationUser.UserHandle),
+        //    cancellationToken);
+        //await _authenticationCeremonyHandleService.SaveAsync(
+        //    HttpContext,
+        //    result.AuthenticationCeremonyId,
+        //    cancellationToken);
+        // todo - finish passkey impl
+        return Ok();
     }
 
     [HttpPost]

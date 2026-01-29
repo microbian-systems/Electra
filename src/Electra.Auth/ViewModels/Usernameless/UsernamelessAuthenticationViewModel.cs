@@ -12,17 +12,20 @@ public class UsernamelessAuthenticationViewModel(Dictionary<string, JsonElement>
 
     public BeginAuthenticationCeremonyRequest ToBeginCeremonyRequest()
     {
-        return new(
-            null,
-            null,
-            null,
-            32,
-            120000,
-            AuthenticationCeremonyIncludeCredentials.AllExisting(),
-            null,
-            null,
-            null,
-            null,
-            Extensions);
+
+        throw new NotImplementedException();
+
+        //return new(
+        //    null,
+        //    null,
+        //    null,
+        //    32,
+        //    120000,
+        //    AuthenticationCeremonyIncludeCredentials.AllExisting(),
+        //    null,
+        //    null,
+        //    null,
+        //    null,
+        //    Extensions);
     }
 }

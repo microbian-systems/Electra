@@ -31,20 +31,4 @@ public class PasswordlessAuthenticationViewModel(
     [JsonPropertyName("extensions")]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public Dictionary<string, JsonElement>? Extensions { get; } = extensions;
-
-    public BeginAuthenticationCeremonyRequest ToBeginCeremonyRequest(byte[] userHandle)
-    {
-        return new(
-            null,
-            null,
-            userHandle,
-            32,
-            120_000,
-            AuthenticationCeremonyIncludeCredentials.AllExisting(),
-            UserVerification.RemapUnsetValue<UserVerificationRequirement>(),
-            null,
-            Attestation.RemapUnsetValue<AttestationConveyancePreference>(),
-            null,
-            Extensions);
-    }
 }
