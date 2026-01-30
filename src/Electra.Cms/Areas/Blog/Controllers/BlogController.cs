@@ -10,7 +10,7 @@ namespace Electra.Cms.Areas.Blog.Controllers;
 
 [Area("Blog")]
 [AllowAnonymous]
-[Route("[controller]")]
+[Route("blog")]
 public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseController> log) : ElectraWebBaseController(log)
 {
     [HttpGet]
