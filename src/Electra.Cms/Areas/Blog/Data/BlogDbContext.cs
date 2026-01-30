@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Electra.Web.BlogEngine.Entities;
+using Electra.Cms.Areas.Blog.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Electra.Web.BlogEngine.Data;
+namespace Electra.Cms.Areas.Blog.Data;
 
 /// <summary>
 /// Database context for blog functionality

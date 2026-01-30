@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
+using Electra.Cms.Areas.Blog.Enums;
 using Electra.Core.Entities;
-using Electra.Web.BlogEngine.Enums;
 
-namespace Electra.Web.BlogEngine.Entities;
+namespace Electra.Cms.Areas.Blog.Entities;
 
 /// <summary>
 /// Blog entity representing a blog post

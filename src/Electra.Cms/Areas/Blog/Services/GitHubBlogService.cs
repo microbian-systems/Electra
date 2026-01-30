@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Octokit;
 using ZiggyCreatures.Caching.Fusion;
 
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 public class GitHubBlogService
 {

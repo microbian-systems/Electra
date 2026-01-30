@@ -1,6 +1,6 @@
 using Electra.Core.Entities;
 
-namespace Electra.Web.BlogEngine.Entities;
+namespace Electra.Cms.Areas.Blog.Entities;
 
 public class BlogSeries : Entity
 {

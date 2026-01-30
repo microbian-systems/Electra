@@ -1,13 +1,8 @@
-using Electra.Web.BlogEngine.Data;
-using Electra.Web.BlogEngine.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Electra.Cms.Areas.Blog.Data;
+using Electra.Cms.Areas.Blog.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Raven.Client.Documents;
-using Raven.Client.Documents.Session;
-using Raven.Embedded;
 
-namespace Electra.Web.BlogEngine.Extensions;
+namespace Electra.Cms.Areas.Blog.Extensions;
 
 /// <summary>
 /// Extension methods for registering blog services

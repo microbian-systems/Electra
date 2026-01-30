@@ -1,8 +1,8 @@
+using Electra.Cms.Areas.Blog.Models;
 using Electra.Core.Http;
-using Electra.Web.BlogEngine.Models;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 public interface IForemApiClientBase
 {

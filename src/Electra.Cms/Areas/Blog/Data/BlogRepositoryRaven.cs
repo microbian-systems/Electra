@@ -1,12 +1,12 @@
+using Electra.Cms.Areas.Blog.Entities;
 using Electra.Models;
 using Electra.Persistence.RavenDB;
-using Electra.Web.BlogEngine.Entities;
 using LanguageExt;
 using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 
-namespace Electra.Web.BlogEngine.Data;
+namespace Electra.Cms.Areas.Blog.Data;
 
 public class BlogRepositoryRaven : RavenDbRepositoryBase<BlogPost>, IBlogRepository
 {

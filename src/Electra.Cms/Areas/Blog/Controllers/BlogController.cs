@@ -1,12 +1,12 @@
-using Electra.Web.BlogEngine.Entities;
-using Electra.Web.BlogEngine.Models;
-using Electra.Web.BlogEngine.Services;
+using Electra.Cms.Areas.Blog.Entities;
+using Electra.Cms.Areas.Blog.Models;
+using Electra.Cms.Areas.Blog.Services;
 using Electra.Web.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Web.BlogEngine.Controllers;
+namespace Electra.Cms.Areas.Blog.Controllers;
 
 [AllowAnonymous]
 [Area("Blog")]
@@ -30,7 +30,7 @@ public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseCont
             PageSize = pagedResult.PageSize,
             FeaturedArticle = featured != null ? MapToViewModel(featured) : null,
             Articles = pagedResult.Items.Select(MapToViewModel).ToList(),
-            MetaTitle = "Blog - Microbians.io",
+            MetaTitle = "Blog - Microbians.io", // todo - pull blog name from settings
             MetaDescription = "Read our latest thoughts, tutorials and updates."
         };
 
@@ -73,7 +73,7 @@ public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseCont
             Slug = blog.Slug,
             Content = blog.Content, 
             Excerpt = blog.Description,
-            Author = blog.Authors.FirstOrDefault() ?? "Unknown",
+            Author = blog.Authors.FirstOrDefault() ?? "",
             PublishedDate = blog.PublishDate,
             ThumbnailUrl = blog.ImageUrl,
             Tags = blog.Tags,

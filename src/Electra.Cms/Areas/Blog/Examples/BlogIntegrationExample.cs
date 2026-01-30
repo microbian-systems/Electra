@@ -1,10 +1,9 @@
-using Electra.Web.BlogEngine.Entities;
-using Electra.Web.BlogEngine.Enums;
-using Electra.Web.BlogEngine.Extensions;
-using Electra.Web.BlogEngine.Services;
+using Electra.Cms.Areas.Blog.Entities;
+using Electra.Cms.Areas.Blog.Enums;
+using Electra.Cms.Areas.Blog.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Electra.Web.BlogEngine.Examples;
+namespace Electra.Cms.Areas.Blog.Examples;
 
 /// <summary>
 /// Example demonstrating how to integrate the blog system into an ASP.NET Core application

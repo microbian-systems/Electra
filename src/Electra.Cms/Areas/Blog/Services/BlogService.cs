@@ -1,11 +1,11 @@
+using Electra.Cms.Areas.Blog.Data;
+using Electra.Cms.Areas.Blog.Entities;
 using Electra.Models;
-using Electra.Web.BlogEngine.Data;
-using Electra.Web.BlogEngine.Entities;
 using LanguageExt;
-using Microsoft.Extensions.Logging;
 using Markdig;
+using Microsoft.Extensions.Logging;
 
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 /// <summary>
 /// Service for managing blog operations

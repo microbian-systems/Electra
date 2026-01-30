@@ -1,12 +1,12 @@
+using Electra.Cms.Areas.Blog.Entities;
+using Electra.Cms.Areas.Blog.Enums;
 using Electra.Models;
-using Electra.Web.BlogEngine.Entities;
-using Electra.Web.BlogEngine.Enums;
+using LanguageExt;
+using Markdig;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Markdig;
-using LanguageExt;
 
-namespace Electra.Web.BlogEngine.Data;
+namespace Electra.Cms.Areas.Blog.Data;
 
 public class BlogRepositoryEfCore : IBlogRepository
 {

@@ -1,12 +1,11 @@
-using Electra.Web.BlogEngine.Entities;
-using Electra.Web.BlogEngine.Services;
+using Electra.Cms.Areas.Blog.Entities;
+using Electra.Cms.Areas.Blog.Services;
 using Electra.Web.Core.Controllers;
-using LanguageExt;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Web.BlogEngine.Controllers;
+namespace Electra.Cms.Areas.Blog.Controllers;
 
 /// <summary>
 /// Controller for blog operations

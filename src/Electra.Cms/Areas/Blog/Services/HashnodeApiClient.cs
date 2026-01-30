@@ -1,6 +1,6 @@
 ﻿
 
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 public class HashnodeApiClient : IHashnodeApiClient
 {

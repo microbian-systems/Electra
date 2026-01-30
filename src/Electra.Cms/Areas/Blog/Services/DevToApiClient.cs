@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 
 public interface IDevToApiClient : IForemApiClientBase; 

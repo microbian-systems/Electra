@@ -1,4 +1,4 @@
-namespace Electra.Web.BlogEngine.Enums;
+namespace Electra.Cms.Areas.Blog.Enums;
 
 /// <summary>
 /// Specifies the content type format for blog posts

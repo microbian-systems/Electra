@@ -1,6 +1,6 @@
-﻿using Electra.Web.BlogEngine.Entities;
+﻿using Electra.Cms.Areas.Blog.Entities;
 
-namespace Electra.Web.BlogEngine.Models;
+namespace Electra.Cms.Areas.Blog.Models;
 
 public class BlogArticleViewModel : BlogPost
 {

@@ -1,8 +1,8 @@
+using Electra.Cms.Areas.Blog.Entities;
 using Electra.Models;
-using Electra.Web.BlogEngine.Entities;
 using LanguageExt;
 
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 /// <summary>
 /// Interface for blog service operations

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Electra.Core.Entities;
 
-namespace Electra.Web.BlogEngine.Entities;
+namespace Electra.Cms.Areas.Blog.Entities;
 
 /// <summary>
 /// Entity representing a comment on a blog post

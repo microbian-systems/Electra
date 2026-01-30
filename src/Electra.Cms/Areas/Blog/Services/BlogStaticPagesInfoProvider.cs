@@ -1,7 +1,7 @@
 using AspNetStatic;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 public class BlogStaticPagesInfoProvider : StaticResourcesInfoProviderBase, IStaticResourcesInfoProvider
 {

@@ -1,4 +1,4 @@
-namespace Electra.Web.BlogEngine.Services;
+namespace Electra.Cms.Areas.Blog.Services;
 
 public interface IGitHubContentService
 {

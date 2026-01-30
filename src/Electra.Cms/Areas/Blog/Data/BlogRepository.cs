@@ -1,8 +1,8 @@
+using Electra.Cms.Areas.Blog.Entities;
 using Electra.Models;
-using Electra.Web.BlogEngine.Entities;
 using LanguageExt;
 
-namespace Electra.Web.BlogEngine.Data;
+namespace Electra.Cms.Areas.Blog.Data;
 
 
 // todo - add cancellation token support in IBlogRepository interface methods

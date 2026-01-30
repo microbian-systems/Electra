@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Electra.Web.BlogEngine.Models;
+namespace Electra.Cms.Areas.Blog.Models;
 
 public record ArticleFlareTag
 {
