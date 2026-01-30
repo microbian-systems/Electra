@@ -19,7 +19,7 @@ public class CreateRegistrationOptionsViewModel(
     [JsonPropertyName("username")]
     [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
     [Required]
-    public string UserName { get; } = userName;
+    public string UserName { get; set; } = userName;
 
     [JsonPropertyName("registrationParameters")]
     [JsonIgnore(Condition = JsonIgnoreCondition.Never)]
