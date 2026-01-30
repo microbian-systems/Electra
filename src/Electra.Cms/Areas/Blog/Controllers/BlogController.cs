@@ -8,9 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Electra.Cms.Areas.Blog.Controllers;
 
-[AllowAnonymous]
 [Area("Blog")]
-[Route("/blog")]
+[AllowAnonymous]
+[Route("[controller]")]
 public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseController> log) : ElectraWebBaseController(log)
 {
     [HttpGet]
@@ -37,7 +37,7 @@ public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseCont
         return View(viewModel);
     }
 
-    [HttpGet("{slug}")]
+    [Route("{slug}")]
     public async Task<IActionResult> Article(string slug)
     {
         if (string.IsNullOrEmpty(slug))
