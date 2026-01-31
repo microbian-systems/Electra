@@ -79,7 +79,8 @@ public class BlogController(IBlogService blogService, ILogger<ElectraWebBaseCont
             Tags = blog.Tags,
             Categories = new string[] { }, 
             MetaTitle = blog.Title,
-            MetaDescription = blog.Description
+            MetaDescription = blog.Description,
+            References = blog.References
         };
     }
 }

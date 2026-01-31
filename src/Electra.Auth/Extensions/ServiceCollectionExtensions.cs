@@ -261,6 +261,16 @@ public static class ServiceCollectionExtensions
             });
         }
 
+        // Passkey Authentication
+        // authBuilder.AddPasskey(options =>
+        // {
+        //     options.RelyingPartyId = config["Passkey:RelyingPartyId"] ?? "localhost";
+        //     options.RelyingPartyName = config["Passkey:RelyingPartyName"] ?? "Microbians.io";
+        //     // options.UserVerificationRequirement = UserVerificationRequirement.Required;
+        //     // options.AuthenticatorAttachment = AuthenticatorAttachment.Platform;
+        //     // options.RequireResidentKey = true;
+        // });
+
         // Note: Apple authentication requires additional setup and certificate management
         // Uncomment and configure when Apple authentication is properly set up
         /*

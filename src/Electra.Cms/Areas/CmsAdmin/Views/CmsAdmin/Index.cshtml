@@ -6,9 +6,14 @@
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold">CMS Administration</h1>
-        <a asp-action="AddSite" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add New Site
-        </a>
+        <div class="space-x-2">
+            <a asp-action="ImportBlogs" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Import Blogs
+            </a>
+            <a asp-action="AddSite" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Add New Site
+            </a>
+        </div>
     </div>
 
     <div class="bg-white shadow-md rounded my-6 overflow-hidden">
