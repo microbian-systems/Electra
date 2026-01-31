@@ -34,10 +34,6 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="ThrowGuard" Version="1.2.0" />
-    <PackageReference Include="WebAuthn.Net" Version="2.0.0" />
-    <PackageReference Include="WebAuthn.Net.OpenTelemetry" Version="2.0.0" />
-    <PackageReference Include="WebAuthn.Net.Storage.InMemory" Version="2.0.0" />
-    <PackageReference Include="WebAuthn.Net.Storage.PostgreSql" Version="2.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />

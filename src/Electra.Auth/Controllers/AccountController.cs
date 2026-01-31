@@ -1,6 +1,4 @@
-﻿using System.Threading;
-using Electra.Models.Entities;
-using Electra.Web.Core.Controllers;
+﻿using Electra.Web.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

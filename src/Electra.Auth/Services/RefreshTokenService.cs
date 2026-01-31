@@ -1,7 +1,4 @@
 using System.Security.Cryptography;
-using System.Text;
-using Electra.Auth.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Auth.Services;
 

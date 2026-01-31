@@ -1,18 +1,16 @@
 using System.Security.Cryptography;
-using System.Text;
-using Electra.Auth.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using Electra.Models.Entities;
 
 namespace Electra.Auth.Services;
 
 /// <summary>
 /// Production-grade JWT signing key store with rotation support.
-/// Keys are persisted in the database for durability and can be rotated without downtime.
+/// Keys are persisted via abstracted persistence layer for flexibility (RavenDB, EF Core, etc).
+/// Can be rotated without downtime, with in-memory caching for performance.
 /// </summary>
 public class JwtSigningKeyStore : IJwtSigningKeyStore
 {
-    private readonly IDbContextFactory<DbContext> _contextFactory;
+    private readonly IJwtSigningKeyPersistence _persistence;
     private readonly ILogger<JwtSigningKeyStore> _logger;
     private readonly IMemoryCache _cache;
     private const string CurrentKeyIdCacheKey = "jwt:current_key_id";
@@ -20,41 +18,38 @@ public class JwtSigningKeyStore : IJwtSigningKeyStore
     private const int CacheDurationMinutes = 5;
 
     public JwtSigningKeyStore(
-        IDbContextFactory<DbContext> contextFactory,
+        IJwtSigningKeyPersistence persistence,
         ILogger<JwtSigningKeyStore> logger,
         IMemoryCache cache)
     {
-        _contextFactory = contextFactory;
-        _logger = logger;
-        _cache = cache;
+        _persistence = persistence ?? throw new ArgumentNullException(nameof(persistence));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _cache = cache ?? throw new ArgumentNullException(nameof(cache));
     }
 
     public async Task<SecurityKey> GetCurrentSigningKeyAsync(CancellationToken cancellationToken = default)
     {
-        var keyId = await GetCurrentKeyIdAsync(cancellationToken);
-        var key = await GetKeyByIdAsync(keyId, cancellationToken);
+        var key = await _persistence.GetCurrentSigningKeyAsync(cancellationToken);
 
         if (key == null)
         {
-            throw new InvalidOperationException($"Current signing key not found: {keyId}");
+            throw new InvalidOperationException(
+                "No current signing key found. Initialize keys first.");
         }
 
-        return key;
+        return new SymmetricSecurityKey(Convert.FromBase64String(key.KeyMaterial));
     }
 
     public async Task<string> GetCurrentKeyIdAsync(CancellationToken cancellationToken = default)
     {
         // Try cache first
-        if (_cache.TryGetValue(CurrentKeyIdCacheKey, out string cachedKeyId))
+        if (_cache.TryGetValue(CurrentKeyIdCacheKey, out string? cachedKeyId))
         {
-            return cachedKeyId;
+            return cachedKeyId!;
         }
 
-        // Query database
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        var currentKey = await context.Set<JwtSigningKey>()
-            .AsNoTracking()
-            .FirstOrDefaultAsync(k => k.IsCurrentSigningKey && k.IsValid, cancellationToken);
+        // Query persistence layer
+        var currentKey = await _persistence.GetCurrentSigningKeyAsync(cancellationToken);
 
         if (currentKey == null)
         {
@@ -70,21 +65,16 @@ public class JwtSigningKeyStore : IJwtSigningKeyStore
     public async Task<IEnumerable<SecurityKey>> GetValidationKeysAsync(CancellationToken cancellationToken = default)
     {
         // Try cache first
-        if (_cache.TryGetValue(AllKeysCacheKey, out IEnumerable<SecurityKey> cachedKeys))
+        if (_cache.TryGetValue(AllKeysCacheKey, out IEnumerable<SecurityKey>? cachedKeys))
         {
-            return cachedKeys;
+            return cachedKeys!;
         }
 
-        // Query database
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        var keys = await context.Set<JwtSigningKey>()
-            .AsNoTracking()
-            .Where(k => k.IsValid)
-            .ToListAsync(cancellationToken);
+        // Query persistence layer
+        var keys = await _persistence.GetValidSigningKeysAsync(cancellationToken);
 
         var securityKeys = keys
-            .Select(k => new SymmetricSecurityKey(Convert.FromBase64String(k.KeyMaterial)))
-            .Cast<SecurityKey>()
+            .Select(k => (SecurityKey)new SymmetricSecurityKey(Convert.FromBase64String(k.KeyMaterial)))
             .ToList();
 
         // Cache result
@@ -101,16 +91,11 @@ public class JwtSigningKeyStore : IJwtSigningKeyStore
 
     public async Task<string> RotateSigningKeyAsync(CancellationToken cancellationToken = default)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
-
-        // Mark current signing key as no longer current
-        var currentKey = await context.Set<JwtSigningKey>()
-            .FirstOrDefaultAsync(k => k.IsCurrentSigningKey && k.IsValid, cancellationToken);
-
-        if (currentKey != null)
+        // Deactivate current signing key
+        var deactivated = await _persistence.DeactivateCurrentKeyAsync(cancellationToken);
+        if (!deactivated)
         {
-            currentKey.IsCurrentSigningKey = false;
-            _logger.LogInformation("Rotated out key: {KeyId}", currentKey.KeyId);
+            _logger.LogWarning("Failed to deactivate current signing key during rotation");
         }
 
         // Create new signing key
@@ -121,46 +106,58 @@ public class JwtSigningKeyStore : IJwtSigningKeyStore
             KeyMaterial = Convert.ToBase64String(GenerateRandomKey(32)),
             CreatedOn = DateTimeOffset.UtcNow,
             IsCurrentSigningKey = true,
-            Algorithm = "HS256"
+            Algorithm = SecurityAlgorithms.HmacSha256
         };
 
-        context.Set<JwtSigningKey>().Add(newKey);
-        await context.SaveChangesAsync(cancellationToken);
+        // Add new key to persistence
+        var added = await _persistence.AddKeyAsync(newKey, cancellationToken);
+        if (!added)
+        {
+            throw new InvalidOperationException("Failed to add new signing key during rotation");
+        }
+
+        // Save changes
+        var saved = await _persistence.SaveChangesAsync(cancellationToken);
+        if (!saved)
+        {
+            _logger.LogWarning("Failed to persist signing key rotation to store");
+        }
 
         // Invalidate cache
         _cache.Remove(CurrentKeyIdCacheKey);
         _cache.Remove(AllKeysCacheKey);
 
-        _logger.LogInformation("Created new signing key: {KeyId}", newKey.KeyId);
+        _logger.LogInformation("Successfully rotated signing key. New KeyId: {KeyId}", newKey.KeyId);
 
         return newKey.KeyId;
     }
 
     public async Task RevokeKeyAsync(string keyId, CancellationToken cancellationToken = default)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        ArgumentException.ThrowIfNullOrEmpty(keyId, nameof(keyId));
 
-        var key = await context.Set<JwtSigningKey>()
-            .FirstOrDefaultAsync(k => k.KeyId == keyId, cancellationToken);
-
-        if (key != null)
+        var revoked = await _persistence.RevokeKeyAsync(keyId, cancellationToken);
+        if (!revoked)
         {
-            key.RevokedAt = DateTimeOffset.UtcNow;
-            await context.SaveChangesAsync(cancellationToken);
-
-            // Invalidate cache
-            _cache.Remove(AllKeysCacheKey);
-            _logger.LogInformation("Revoked key: {KeyId}", keyId);
+            throw new InvalidOperationException($"Failed to revoke signing key: {keyId}");
         }
+
+        var saved = await _persistence.SaveChangesAsync(cancellationToken);
+        if (!saved)
+        {
+            _logger.LogWarning("Failed to persist key revocation to store");
+        }
+
+        // Invalidate cache
+        _cache.Remove(AllKeysCacheKey);
+        _logger.LogInformation("Revoked signing key: {KeyId}", keyId);
     }
 
     public async Task<SecurityKey?> GetKeyByIdAsync(string keyId, CancellationToken cancellationToken = default)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        ArgumentException.ThrowIfNullOrEmpty(keyId, nameof(keyId));
 
-        var key = await context.Set<JwtSigningKey>()
-            .AsNoTracking()
-            .FirstOrDefaultAsync(k => k.KeyId == keyId && k.IsValid, cancellationToken);
+        var key = await _persistence.GetKeyByIdAsync(keyId, cancellationToken);
 
         if (key == null)
         {

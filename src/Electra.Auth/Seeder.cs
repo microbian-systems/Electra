@@ -1,5 +1,4 @@
 using Electra.Core.Identity;
-using Electra.Models.Entities;
 using Electra.Persistence;
 
 namespace Electra.Auth;

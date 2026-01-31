@@ -1,6 +1,4 @@
-using Electra.Auth.Models;
 using Electra.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Auth.Extensions;
 

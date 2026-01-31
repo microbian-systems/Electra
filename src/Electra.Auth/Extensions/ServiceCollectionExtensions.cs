@@ -1,17 +1,11 @@
 using Electra.Core.Identity;
-using Electra.Models.Entities;
 using Electra.Persistence;
+using Electra.Auth.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Routing;
 using ThrowGuard;
-using WebAuthn.Net.Configuration.DependencyInjection;
-using WebAuthn.Net.Storage.InMemory.Models;
-using WebAuthn.Net.Storage.InMemory.Services.ContextFactory;
-using WebAuthn.Net.Storage.PostgreSql.Models;
-using WebAuthn.Net.Storage.PostgreSql.Services.ContextFactory;
-using Electra.Persistence.RavenDB;
 using Electra.Persistence.RavenDB.Identity;
-using Electra.Auth.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Electra.Auth.Extensions;
 
@@ -75,27 +69,6 @@ public static class ServiceCollectionExtensions
             identityBuilder.AddEntityFrameworkStores<ElectraDbContext>();
         }
 
-        // identityBuilder.AddDefaultTokenProviders()
-        //     .AddPasswordlessLoginProvider(); // Add passkey support
-
-        // Register WebAuthn/Passkey services
-        if (env.IsDevelopment())
-        {
-            services.AddWebAuthnCore<DefaultInMemoryContext>()
-                .AddDefaultStorages()
-                .AddContextFactory<DefaultInMemoryContext, DefaultInMemoryContextFactory>()
-                //.AddCredentialStorage<DefaultInMemoryContext, DefaultCookieCredentialStorage<DefaultInMemoryContext>>()
-                ;
-        }
-        else
-        {
-            services.AddWebAuthnCore<DefaultPostgreSqlContext>()
-                .AddDefaultStorages()
-                .AddContextFactory<DefaultPostgreSqlContext, DefaultPostgreSqlContextFactory>()
-                //.AddCredentialStorage<DefaultPostgreSqlContext, DefaultCookieCredentialStorage<DefaultPostgreSqlContext>>()
-                ;
-        }
-        
         // services.AddOpenTelemetry()
         //     .WithMetrics(metrics =>
         //     {
@@ -177,9 +150,35 @@ public static class ServiceCollectionExtensions
         //     });
 
         // Add production-grade token services
+        // Register persistence based on configuration
+        if (useRavenDb)
+        {
+            services.AddScoped<IJwtSigningKeyPersistence, RavenDbJwtSigningKeyPersistence>();
+        }
+        else
+        {
+            // For now, use a fallback in-memory or config-based implementation
+            // This will be replaced with EF Core implementation when created
+            services.AddScoped<IJwtSigningKeyPersistence>(provider =>
+            {
+                // Temporary: Use in-memory JWT key store
+                // TODO: Replace with EF Core implementation
+                var logger = provider.GetRequiredService<ILogger<JwtSigningKeyStore>>();
+                var cache = provider.GetRequiredService<IMemoryCache>();
+                return new InMemoryJwtSigningKeyPersistence();
+            });
+        }
+
         services.AddScoped<IJwtSigningKeyStore, JwtSigningKeyStore>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+        // Add DbContextFactory<DbContext> for EF Core based services (RefreshTokenService)
+        services.AddScoped<IDbContextFactory<DbContext>>(provider => 
+        {
+            var context = provider.GetRequiredService<ElectraDbContext>();
+            return new DbContextFactoryAdapter(context);
+        });
 
         // Add memory cache for token store caching
         services.AddMemoryCache();

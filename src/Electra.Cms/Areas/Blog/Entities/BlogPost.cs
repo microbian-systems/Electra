@@ -90,6 +90,8 @@ public class BlogPost : Entity
     [MaxLength(250)]
     public string Slug { get; set; } = string.Empty;
 
+    public string[] References = [];
+
     /// <summary>
     /// View count for the blog post
     /// </summary>

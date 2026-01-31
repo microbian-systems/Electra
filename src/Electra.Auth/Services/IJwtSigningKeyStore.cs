@@ -1,5 +1,3 @@
-using Microsoft.IdentityModel.Tokens;
-
 namespace Electra.Auth.Services;
 
 /// <summary>

@@ -37,4 +37,5 @@ public class ArticleViewModel
     // SEO
     public string? MetaTitle { get; set; }
     public string? MetaDescription { get; set; }
+    public string[] References { get; internal set; }
 }
