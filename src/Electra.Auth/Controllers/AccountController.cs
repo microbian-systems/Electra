@@ -58,7 +58,7 @@ public class AccountController(UserManager<ElectraUser> userManager, ILogger<Acc
     [HttpGet("list")]
     public async Task<IActionResult> ListPasskeys()
     {
-        var userId = User.FindFirst(Claims.Subject)?.Value;
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (string.IsNullOrEmpty(userId))
         {
             return Unauthorized();
@@ -82,7 +82,7 @@ public class AccountController(UserManager<ElectraUser> userManager, ILogger<Acc
     [HttpDelete("{credentialId}")]
     public async Task<IActionResult> DeletePasskey(string credentialId)
     {
-        var userId = User.FindFirst(Claims.Subject)?.Value;
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (string.IsNullOrEmpty(userId))
         {
             return Unauthorized();

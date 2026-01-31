@@ -11,6 +11,7 @@ using WebAuthn.Net.Storage.PostgreSql.Models;
 using WebAuthn.Net.Storage.PostgreSql.Services.ContextFactory;
 using Electra.Persistence.RavenDB;
 using Electra.Persistence.RavenDB.Identity;
+using Electra.Auth.Services;
 
 namespace Electra.Auth.Extensions;
 
@@ -174,6 +175,14 @@ public static class ServiceCollectionExtensions
         //             IssuerSigningKey = new SymmetricSecurityKey(key)
         //         };
         //     });
+
+        // Add production-grade token services
+        services.AddScoped<IJwtSigningKeyStore, JwtSigningKeyStore>();
+        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+
+        // Add memory cache for token store caching
+        services.AddMemoryCache();
 
         // Add social authentication providers (optional)
         services.AddSocialAuthentication(config);
