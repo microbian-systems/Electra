@@ -1,26 +1,16 @@
-using Electra.Auth.Passkey;
-using Electra.Auth.Services.Abstractions.AuthenticationCeremonyHandle;
-using Electra.Auth.Services.Abstractions.RegistrationCeremonyHandle;
-using Electra.Auth.Services.Abstractions.User;
-using Electra.Auth.Services.Implementation;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
 using Electra.Persistence;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using ThrowGuard;
 using WebAuthn.Net.Configuration.DependencyInjection;
 using WebAuthn.Net.Storage.InMemory.Models;
 using WebAuthn.Net.Storage.InMemory.Services.ContextFactory;
 using WebAuthn.Net.Storage.PostgreSql.Models;
 using WebAuthn.Net.Storage.PostgreSql.Services.ContextFactory;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Electra.Persistence.RavenDB;
+using Electra.Persistence.RavenDB.Identity;
 
 namespace Electra.Auth.Extensions;
 
@@ -57,9 +47,6 @@ public static class ServiceCollectionExtensions
                 Throw.InvalidOpIfNullOrEmpty(connectionString, "Connection string 'DefaultConnection' null or empty.");
                 opts.UseNpgsql(connectionString);
             }
-
-            // Register the entity sets needed by OpenIddict
-            opts.UseOpenIddict();
         });
 
         // Configure ASP.NET Core Identity
@@ -87,11 +74,8 @@ public static class ServiceCollectionExtensions
             identityBuilder.AddEntityFrameworkStores<ElectraDbContext>();
         }
 
-        identityBuilder.AddDefaultTokenProviders()
-            .AddPasswordlessLoginProvider(); // Add passkey support
-
-        // Add JWT Authentication with OpenIddict
-        services.AddJwtAuthentication(config);
+        // identityBuilder.AddDefaultTokenProviders()
+        //     .AddPasswordlessLoginProvider(); // Add passkey support
 
         // Register WebAuthn/Passkey services
         if (env.IsDevelopment())
@@ -99,14 +83,16 @@ public static class ServiceCollectionExtensions
             services.AddWebAuthnCore<DefaultInMemoryContext>()
                 .AddDefaultStorages()
                 .AddContextFactory<DefaultInMemoryContext, DefaultInMemoryContextFactory>()
-                .AddCredentialStorage<DefaultInMemoryContext, DefaultCookieCredentialStorage<DefaultInMemoryContext>>();
+                //.AddCredentialStorage<DefaultInMemoryContext, DefaultCookieCredentialStorage<DefaultInMemoryContext>>()
+                ;
         }
         else
         {
             services.AddWebAuthnCore<DefaultPostgreSqlContext>()
                 .AddDefaultStorages()
                 .AddContextFactory<DefaultPostgreSqlContext, DefaultPostgreSqlContextFactory>()
-                .AddCredentialStorage<DefaultPostgreSqlContext, DefaultCookieCredentialStorage<DefaultPostgreSqlContext>>();
+                //.AddCredentialStorage<DefaultPostgreSqlContext, DefaultCookieCredentialStorage<DefaultPostgreSqlContext>>()
+                ;
         }
         
         // services.AddOpenTelemetry()
@@ -115,14 +101,14 @@ public static class ServiceCollectionExtensions
         //         metrics.AddWebAuthnNet();
         //         metrics.AddPrometheusExporter();
         //     });
-        services.AddSingleton<IRegistrationCeremonyHandleService, DefaultRegistrationCeremonyHandleService>();
-        services.AddSingleton<IAuthenticationCeremonyHandleService, DefaultAuthenticationCeremonyHandleService>();
-        services.AddSingleton<IUserService, DefaultUserService>();
+        // services.AddSingleton<IRegistrationCeremonyHandleService, DefaultRegistrationCeremonyHandleService>();
+        // services.AddSingleton<IAuthenticationCeremonyHandleService, DefaultAuthenticationCeremonyHandleService>();
+        // services.AddSingleton<IUserService, DefaultUserService>();
 
         // Register Passkey/WebAuthn service implementations
-        services.AddScoped<IUserService, DefaultUserService>();
-        services.AddScoped<IRegistrationCeremonyHandleService, DefaultRegistrationCeremonyHandleService>();
-        services.AddScoped<IAuthenticationCeremonyHandleService, DefaultAuthenticationCeremonyHandleService>();
+        // services.AddScoped<IUserService, DefaultUserService>();
+        // services.AddScoped<IRegistrationCeremonyHandleService, DefaultRegistrationCeremonyHandleService>();
+        // services.AddScoped<IAuthenticationCeremonyHandleService, DefaultAuthenticationCeremonyHandleService>();
 
         // Add Data Protection for cookie encryption
         services.AddDataProtection();

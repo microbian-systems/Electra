@@ -38,8 +38,6 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
     {
         base.OnModelCreating(builder);
         
-        builder.UseOpenIddict();
-        
         ConfigureIdentityTables(builder);
         ConfigureDecimalPrecision(builder);
         ModelApiAuth(builder);

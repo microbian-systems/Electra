@@ -1,8 +1,7 @@
 using Electra.Models.Entities;
-using Microsoft.AspNetCore.Identity;
 using Raven.Client.Documents.Indexes;
 
-namespace Electra.Persistence.RavenDB;
+namespace Electra.Persistence.RavenDB.Identity;
 
 /// <summary>
 /// Index to user when querying users.
@@ -47,11 +46,10 @@ public class IdentityUserIndex<TUser> : AbstractIndexCreationTask<TUser, Identit
         Map = (IEnumerable<TUser> users) => from u in users
             select new Result
             {
-                UserName = u.UserName,
-                Email = u.Email,
+                UserName = u.UserName!,
+                Email = u.Email!,
                 LoginProviderIdentifiers = u.Logins.Select(x => x.LoginProvider + "|" + x.ProviderKey).ToList(),
                 Roles = u.Roles.ToList(),
-                WebAuthnCredentialIds = u.WebAuthnCredentials.Select(x => x.CredentialId).ToList()
             };
     }
 

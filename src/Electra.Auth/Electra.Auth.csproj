@@ -11,6 +11,8 @@
   <InternalsVisibleTo Include="Electra.Auth.Tests" />
 </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="10.0.0" />
+    <PackageReference Include="AspNet.Security.OAuth.Coinbase" Version="10.0.0" />
     <PackageReference Include="FluentResults" Version="4.0.0" />
     <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.9" />
@@ -19,7 +21,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="10.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="10.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.9" />
@@ -28,15 +29,6 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="10.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
-    <PackageReference Include="OpenIddict" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Abstractions" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.EntityFramework.Models" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Server" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="7.2.0" />
     <PackageReference Include="SecretSharingDotNet" Version="0.14.0" />
     <PackageReference Include="SnowflakeGuid" Version="1.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
@@ -68,10 +60,6 @@
   <ItemGroup>
     <Compile Remove="Program.cs" />
     <Compile Remove="Controllers\PasskeyController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Abstractions\User\Models\" />
   </ItemGroup>
 
 </Project>
