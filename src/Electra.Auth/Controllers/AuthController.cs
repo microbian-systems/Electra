@@ -2,8 +2,8 @@ using Electra.Web.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Electra.Auth.Models.ViewModels;
-using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Electra.Auth.Controllers;
 
@@ -50,6 +50,7 @@ public partial class AuthController(
         {
             return LocalRedirect(returnUrl ?? "/");
         }
+        
         ViewBag.ReturnUrl = returnUrl;
         return View("Login", new LoginViewModel { ReturnUrl = returnUrl });
     }

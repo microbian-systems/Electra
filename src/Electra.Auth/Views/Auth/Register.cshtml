@@ -39,6 +39,19 @@
     <div class="mt-3 text-center">
         <a asp-action="LoginPage">Already have an account? Sign in</a>
     </div>
+
+    <hr />
+    
+    <div class="social-login text-center">
+        <p>Or register with</p>
+        <div class="d-grid gap-2">
+            <a href="/login-passkey?returnUrl=@ViewBag.ReturnUrl" class="d-block mb-2 btn btn-outline-primary">Register with Passkey</a>
+            <a href="/api/auth/external/challenge/Google?returnUrl=@ViewBag.ReturnUrl" class="d-block mb-2">Register with Google</a>
+            <a href="/api/auth/external/challenge/Microsoft?returnUrl=@ViewBag.ReturnUrl" class="d-block mb-2">Register with Microsoft</a>
+            <a href="/api/auth/external/challenge/Facebook?returnUrl=@ViewBag.ReturnUrl" class="d-block mb-2">Register with Facebook</a>
+            <a href="/api/auth/external/challenge/Twitter?returnUrl=@ViewBag.ReturnUrl" class="d-block mb-2">Register with Twitter</a>
+        </div>
+    </div>
 </form>
 
 @section Scripts {
