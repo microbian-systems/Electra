@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .AddApplicationPart(typeof(AccountController).Assembly);
+    .AddApplicationPart(typeof(AuthController).Assembly);
 builder.Services.AddLogging();
 builder.Services.AddHttpContextAccessor();
 

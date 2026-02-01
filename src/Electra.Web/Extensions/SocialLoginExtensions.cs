@@ -6,7 +6,7 @@ public static class SocialLoginExtensions
 {
     public static AuthenticationBuilder AddSocialLogins(this IServiceCollection services)
     {
-        var sp = services.BuildServiceProvider();
+        var sp = services.BuildServiceProvider(); 
         var config = sp.GetRequiredService<IConfiguration>();
 
         var authBuidler = services.AddAuthentication();

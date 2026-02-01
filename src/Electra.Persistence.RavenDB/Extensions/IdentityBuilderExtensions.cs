@@ -1,9 +1,10 @@
 ﻿using Electra.Core.Identity;
 using Electra.Models.Entities;
+using Electra.Persistence.RavenDB.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Electra.Persistence.RavenDB.Identity;
+namespace Electra.Persistence.RavenDB.Extensions;
 
 /// <summary>
 /// Extends <see cref="IdentityBuilder"/> so that RavenDB services can be registered through it.

@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Embedded;
 
-namespace Electra.Persistence.RavenDB;
+namespace Electra.Persistence.RavenDB.Extensions;
 
 public static class RavenDbExtensions
 {

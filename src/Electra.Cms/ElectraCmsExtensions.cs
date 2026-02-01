@@ -40,7 +40,7 @@ public static class ElectraCmsExtensions
     {
         app.UseMiddleware<SiteResolutionMiddleware>();
         app.UseMiddleware<PageRoutingMiddleware>();
-        //app.UseMiddleware<CmsOutputCachingMiddleware>();
+        app.UseMiddleware<CmsOutputCachingMiddleware>();
             
         return app;
     }

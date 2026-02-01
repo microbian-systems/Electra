@@ -802,12 +802,26 @@ public partial class AuthController(
         [FromQuery] string? returnUrl = null,
         [FromQuery] string clientType = "web")
     {
+        // Determine the callback action based on client type
+        var callbackAction = clientType == "web" 
+            ? nameof(ExternalLoginCallback) 
+            : nameof(ExternalLoginCallbackApp);
+    
+        // Build the full callback URL
         var redirectUrl = Url.Action(
-            clientType == "web" ? "ExternalLoginCallback" : "ExternalLoginCallbackApp",
+            callbackAction,
             "Auth",
-            new { returnUrl });
+            new { returnUrl },
+            protocol: Request.Scheme); // ✅ Include protocol for absolute URL
 
-        var properties = new AuthenticationProperties { RedirectUri = redirectUrl };
+        // Use SignInManager to configure properties correctly
+        var properties = signInManager.ConfigureExternalAuthenticationProperties(
+            provider,
+            redirectUrl);
+    
+        // Store clientType in authentication properties for callback
+        properties.Items["clientType"] = clientType;
+    
         return Challenge(properties, provider);
     }
 
@@ -831,7 +845,7 @@ public partial class AuthController(
         var info = await signInManager.GetExternalLoginInfoAsync();
         if (info == null)
         {
-            return Redirect("/auth/login?error=external_login_failed");
+            return Redirect("/login?error=external_login_failed");
         }
 
         // Sign in or create user
@@ -851,7 +865,7 @@ public partial class AuthController(
         var email = info.Principal.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
         if (string.IsNullOrEmpty(email))
         {
-            return Redirect("/auth/login?error=email_required");
+            return Redirect("/login?error=email_required");
         }
 
         var user = new ElectraUser
@@ -873,7 +887,7 @@ public partial class AuthController(
             }
         }
 
-        return Redirect("/auth/login?error=user_creation_failed");
+        return Redirect("/login?error=user_creation_failed");
     }
 
     /// <summary>
