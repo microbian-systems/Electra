@@ -19,9 +19,10 @@ using Markdig.Syntax;
 
 namespace Electra.Cms.Areas.CmsAdmin.Controllers;
 
+[AllowAnonymous]
 [Area("CmsAdmin")]
 [Route("cms/admin")]
-[Authorize(Roles = CmsRoles.Admin)]
+//[Authorize(Roles = CmsRoles.Admin)]
 public class CmsAdminController : Controller
 {
     private readonly IAsyncDocumentSession _session;
