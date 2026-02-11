@@ -1,0 +1,60 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Tests/">
+    <Project Path="../Tests/Electra.MerakiUI.Tests/Electra.MerakiUI.Tests.csproj" />
+    <Project Path="../Tests/Electra.Web.BlogEngine.Tests/Electra.Web.BlogEngine.Tests.csproj" />
+    <Project Path="Electra.Auth.Tests.WebHost/Electra.Auth.Tests.WebHost.csproj" />
+    <Project Path="Electra.Auth.Tests/Electra.Auth.Tests.csproj" />
+    <Project Path="Electra.Common.Tests/Electra.Common.Tests.csproj" />
+    <Project Path="Electra.DataStructures.Tests/Electra.DataStructures.Tests.csproj" />
+    <Project Path="Electra.Persistence.RavenDB.Tests/Electra.Persistence.RavenDB.Tests.csproj" />
+    <Project Path="Electra.SendGrid.Tests/Electra.SendGrid.Tests.csproj" />
+    <Project Path="Electra.Validators.Tests/Electra.Validators.Tests.csproj" />
+  </Folder>
+  <Folder Name="/__Misc__/">
+    <File Path="../CLAUDE.md" />
+    <File Path="../clean.cs" />
+    <File Path="../README.md" />
+    <File Path="../submod.cs" />
+    <File Path="../upgrade.cs" />
+    <File Path=".gitignore" />
+    <File Path="D:/proj/microbians/Electra/GEMINI.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="garnet.conf.dev" />
+    <File Path="nuget-publish.sh" />
+    <File Path="nuget-update.sh" />
+    <File Path="pack.sh" />
+    <File Path="run-migrations.ps1" />
+    <File Path="upgrade-packages.ps1" />
+    <File Path="upgrade.ps1" />
+  </Folder>
+  <Project Path="../Tests/Electra.Cms.Tests/Electra.Cms.Tests.csproj" />
+  <Project Path="Electra.Actors/Electra.Actors.csproj" />
+  <Project Path="Electra.Auth/Electra.Auth.csproj" />
+  <Project Path="Electra.Caching/Electra.Caching.csproj" />
+  <Project Path="Electra.Cms/Electra.Cms.csproj" />
+  <Project Path="Electra.Common/Electra.Common.csproj" />
+  <Project Path="Electra.Components/Electra.Components.csproj" />
+  <Project Path="Electra.Core.Ai/Electra.Core.Ai.csproj" />
+  <Project Path="Electra.Core/Electra.Core.csproj" />
+  <Project Path="Electra.DataStructures/Electra.DataStructures.csproj" />
+  <Project Path="Electra.Events/Electra.Events.csproj" />
+  <Project Path="Electra.MerakiUI/Electra.MerakiUI.csproj" />
+  <Project Path="Electra.Models/Electra.Models.csproj" />
+  <Project Path="Electra.Persistence.Core/Electra.Persistence.Core.csproj" />
+  <Project Path="Electra.Persistence.EfCore/Electra.Persistence.EfCore.csproj" />
+  <Project Path="Electra.Persistence.Elastic/Electra.Persistence.Elastic.csproj" />
+  <Project Path="Electra.Persistence.Marten/Electra.Persistence.Marten.csproj" />
+  <Project Path="Electra.Persistence.RavenDB/Electra.Persistence.RavenDB.csproj" />
+  <Project Path="Electra.Persistence/Electra.Persistence.csproj" />
+  <Project Path="Electra.Services/Electra.Services.csproj" />
+  <Project Path="Electra.SignalR/Electra.SignalR.csproj" />
+  <Project Path="Electra.Social/Electra.Social.csproj" />
+  <Project Path="Electra.Validators/Electra.Validators.csproj" />
+  <Project Path="Electra.Web.Core/Electra.Web.Core.csproj" />
+  <Project Path="Electra.Web/Electra.Web.csproj" />
+</Solution>
