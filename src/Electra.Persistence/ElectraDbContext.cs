@@ -21,7 +21,7 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
     {
     }
 
-    public ElectraDbContext(DbContextOptions options) : base(options)
+    protected ElectraDbContext(DbContextOptions options) : base(options)
     {
     }
 
@@ -34,6 +34,10 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
     public DbSet<ElectraUserProfile> UserProfiles { get; set; }   
     public DbSet<UserPasskeys> UserPasskeys { get; set; }
     
+    // Authentication token management
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<JwtSigningKey> JwtSigningKeys { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -42,6 +46,7 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
         ConfigureDecimalPrecision(builder);
         ModelApiAuth(builder);
         ModelUserProfile(builder);
+        ConfigureAuthenticationTokens(builder);
     }
 
     private void ConfigureIdentityTables(ModelBuilder builder)
@@ -72,11 +77,11 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
             entity.ToTable("Roles", schema: Schemas.Auth);
         });
         
-        builder.Entity<IdentityUserRole<long>>().ToTable("UserRoles", schema: Schemas.Auth);
-        builder.Entity<IdentityUserClaim<long>>().ToTable("UserClaims", schema: Schemas.Auth);
-        builder.Entity<IdentityUserLogin<long>>().ToTable("UserLogins", schema: Schemas.Auth);
-        builder.Entity<IdentityRoleClaim<long>>().ToTable("RoleClaims", schema: Schemas.Auth);
-        builder.Entity<IdentityUserToken<long>>().ToTable("UserTokens", schema: Schemas.Auth);
+        builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles", schema: Schemas.Auth);
+        builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims", schema: Schemas.Auth);
+        builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins", schema: Schemas.Auth);
+        builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims", schema: Schemas.Auth);
+        builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens", schema: Schemas.Auth);
     }
 
     private void ConfigureDecimalPrecision(ModelBuilder builder)
@@ -143,6 +148,32 @@ public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, stri
                 .WithMany(m => m.Claims)
                 .HasForeignKey(m => m.AccountId);
             
+        });
+    }
+
+    private void ConfigureAuthenticationTokens(ModelBuilder builder)
+    {
+        // Refresh tokens for session management
+        builder.Entity<RefreshToken>(entity =>
+        {
+            entity.ToTable("RefreshTokens", schema: Schemas.Auth);
+            entity.HasKey(rt => rt.Id);
+            entity.HasIndex(rt => rt.UserId);
+            entity.HasIndex(rt => rt.TokenHash).IsUnique();
+            entity.HasIndex(rt => rt.ExpiresAt);
+            entity.HasIndex(rt => rt.RevokedAt);
+            entity.Property(rt => rt.CreatedOn).ValueGeneratedOnAdd();
+        });
+
+        // JWT signing keys for key rotation
+        builder.Entity<JwtSigningKey>(entity =>
+        {
+            entity.ToTable("JwtSigningKeys", schema: Schemas.Auth);
+            entity.HasKey(jsk => jsk.Id);
+            entity.HasIndex(jsk => jsk.KeyId).IsUnique();
+            // Unique constraint: only one key can be current
+            entity.HasIndex(jsk => jsk.IsCurrentSigningKey).IsUnique();
+            entity.Property(jsk => jsk.CreatedOn).ValueGeneratedOnAdd();
         });
     }
 

@@ -1,0 +1,89 @@
+@model UserEditViewModel
+@{
+    bool isNew = string.IsNullOrEmpty(Model.User.Id) || Model.User.Id == "new";
+    ViewData["Title"] = isNew ? "Add User" : $"Edit User - {Model.User.Email}";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-6">
+        <nav class="text-sm font-medium mb-2" aria-label="Breadcrumb">
+            <ol class="list-none p-0 inline-flex">
+                <li class="flex items-center">
+                    <a asp-action="Index" class="text-blue-600 hover:text-blue-900">Sites</a>
+                    <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                </li>
+                <li class="flex items-center">
+                    <a asp-action="Users" class="text-blue-600 hover:text-blue-900">Users</a>
+                    <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                </li>
+                <li>
+                    <span class="text-gray-500">@(isNew ? "Add User" : "Edit User")</span>
+                </li>
+            </ol>
+        </nav>
+        <h1 class="text-3xl font-bold">@(isNew ? "Add New User" : $"Edit User: {Model.User.Email}")</h1>
+    </div>
+
+    <form asp-action="SaveUser" asp-route-userId="@(isNew ? "new" : Model.User.Id)" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div asp-validation-summary="All" class="text-red-500 text-xs italic mb-4"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="FirstName">
+                    First Name
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                       id="FirstName" name="FirstName" type="text" value="@Model.User.FirstName" required>
+            </div>
+            <div>
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="LastName">
+                    Last Name
+                </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                       id="LastName" name="LastName" type="text" value="@Model.User.LastName" required>
+            </div>
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="Email">
+                Email
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                   id="Email" name="Email" type="email" value="@Model.User.Email" required>
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="Password">
+                Password @(isNew ? "" : "(leave blank to keep current)")
+            </label>
+            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                   id="Password" name="Password" type="password" @(isNew ? "required" : "")>
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+                Roles
+            </label>
+            <div class="flex flex-wrap gap-4 mt-2">
+                @foreach (var role in Model.AllRoles)
+                {
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="selectedRoles" value="@role" 
+                               class="form-checkbox h-5 w-5 text-blue-600"
+                               @(Model.UserRoles.Contains(role) ? "checked" : "")>
+                        <span class="ml-2 text-gray-700">@role</span>
+                    </label>
+                }
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Save User
+            </button>
+            <a asp-action="Users" class="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>

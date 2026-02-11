@@ -18,7 +18,7 @@ public static class KestrelExtensions
             opts.ListenAnyIP(port, o =>
             {
                 o.UseHttps();
-                o.Protocols = HttpProtocols.Http1AndHttp2AndHttp3;
+                o.Protocols = HttpProtocols.Http1AndHttp2AndHttp3; // todo - try adn only use Http3
             });
             opts.ConfigureHttpsDefaults(opts =>
             {

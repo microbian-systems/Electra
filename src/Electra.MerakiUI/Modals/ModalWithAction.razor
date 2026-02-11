@@ -1,0 +1,46 @@
+@inherits MerakiComponentBase
+
+<div x-data="{ isOpen: false }" class="relative flex justify-center @Class" id="@Id" @attributes="AdditionalAttributes">
+    <button @@click="isOpen = true" class="px-6 py-2 mx-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-80">
+        @TriggerText
+    </button>
+
+    <div x-show="isOpen" 
+         x-transition:enter="transition duration-300 ease-out"
+         x-transition:enter-start="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
+         x-transition:enter-end="translate-y-0 opacity-100 sm:scale-100"
+         x-transition:leave="transition duration-150 ease-in"
+         x-transition:leave-start="translate-y-0 opacity-100 sm:scale-100"
+         x-transition:leave-end="translate-y-4 opacity-0 sm:translate-y-0 sm:scale-95"
+         class="fixed inset-0 z-10 overflow-y-auto" 
+         aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div class="relative inline-block px-4 pt-5 pb-4 overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl dark:bg-gray-900 sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                <div>
+                    <div class="flex items-center justify-center w-12 h-12 mx-auto bg-green-100 rounded-full dark:bg-green-900">
+                        <svg class="w-6 h-6 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    
+                    <div class="mt-3 text-center sm:mt-5">
+                        <div class="mt-2">
+                            @ChildContent
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+                    <button type="button" @@click="isOpen = false" class="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm">
+                        Deactivate
+                    </button>
+                    <button type="button" @@click="isOpen = false" class="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

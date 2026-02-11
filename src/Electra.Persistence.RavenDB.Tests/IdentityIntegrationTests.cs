@@ -1,6 +1,7 @@
 using Electra.Core;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
+using Electra.Persistence.RavenDB.Extensions;
 using Electra.Persistence.RavenDB.Identity;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;

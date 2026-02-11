@@ -1,0 +1,57 @@
+# Track Plan: MerakiUI Showcase Migration
+
+## Phase 1: Migration & Page Setup [x] [checkpoint: 1abf21c]
+Move the existing showcase files and prepare the layout for categorized sections.
+
+- [x] Task: Migrate `meraki-showcase.cshtml` and its model to `Electra.MerakiUI` RCL 1abf21c
+- [x] Task: Migrate `MerakiShowcase.razor` to `Electra.MerakiUI` RCL and update namespaces 1abf21c
+- [x] Task: Create `MerakiShowcaseTests.cs` to verify initial rendering 1abf21c
+- [x] Task: Conductor - User Manual Verification 'Migration & Page Setup' (Protocol in workflow.md) 1abf21c
+
+## Phase 2: Navigation & Footer Demos [x] [checkpoint: 3b62ed6]
+Demo components related to site structure and movement.
+
+- [x] Task: Demo Navbars and Sidebars 3b62ed6
+- [x] Task: Demo Footers, Breadcrumbs, and Pagination 3b62ed6
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify navigation component rendering 3b62ed6
+- [x] Task: Conductor - User Manual Verification 'Navigation & Footer Demos' (Protocol in workflow.md) 3b62ed6
+
+## Phase 3: Basic UI Elements Demos [x] [checkpoint: 790399c]
+Demo fundamental building blocks.
+
+- [x] Task: Demo Buttons and Avatars 790399c
+- [x] Task: Demo Alerts, Skeletons, and Tooltips 790399c
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify basic element rendering 790399c
+- [x] Task: Conductor - User Manual Verification 'Basic UI Elements Demos' (Protocol in workflow.md) 790399c
+
+## Phase 4: Content & Messaging Demos [x] [checkpoint: a5ece7a]
+Demo components used for displaying data and providing information.
+
+- [x] Task: Demo Article and Product Cards a5ece7a
+- [x] Task: Demo Blog and Portfolio sections a5ece7a
+- [x] Task: Demo Testimonials, FAQ, and Cookie banners a5ece7a
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify content component rendering a5ece7a
+- [x] Task: Conductor - User Manual Verification 'Content & Messaging Demos' (Protocol in workflow.md) a5ece7a
+
+## Phase 5: Interactive & Marketing Demos [x] [checkpoint: 317c8d0]
+Demo complex interactive components and marketing-focused sections.
+
+- [x] Task: Demo Dropdowns, Modals, and Tabs 317c8d0
+- [x] Task: Demo CTA, Feature, and Pricing sections 317c8d0
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify interactive component rendering 317c8d0
+- [x] Task: Conductor - User Manual Verification 'Interactive & Marketing Demos' (Protocol in workflow.md) 317c8d0
+
+## Phase 6: Specialized & Identity Demos [x] [checkpoint: 398c159]
+Demo auth forms, email templates, and other specialized layouts.
+
+- [x] Task: Demo Auth (Sign In/Up) and Forms 398c159
+- [x] Task: Demo Email Layouts, Error Pages (404s), Heroes, and Teams 398c159
+- [x] Task: Update `MerakiShowcaseTests.cs` to verify specialized component rendering 398c159
+- [x] Task: Conductor - User Manual Verification 'Specialized & Identity Demos' (Protocol in workflow.md) 398c159
+
+## Phase 7: Final Verification [x] [checkpoint: 6320b27]
+Final sweep and project-wide stability check.
+
+- [x] Task: Perform a final visual audit of the showcase page on mobile and desktop 6320b27
+- [x] Task: Run all MerakiUI tests and verify build integrity 6320b27
+- [x] Task: Conductor - User Manual Verification 'Final Verification' (Protocol in workflow.md) 6320b27

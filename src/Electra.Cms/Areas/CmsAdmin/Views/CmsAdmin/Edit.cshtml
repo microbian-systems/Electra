@@ -1,0 +1,269 @@
+@model PageEditViewModel
+@using System.Text.Json
+@{
+    ViewData["Title"] = $"Edit Page - {Model.Page.Metadata.Title}";
+    var isNew = string.IsNullOrEmpty(Model.Page.Id) || Model.Page.Id == "new";
+    var blocksJson = JsonSerializer.Serialize(Model.Page.Blocks, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+    var availableBlocksJson = JsonSerializer.Serialize(Model.AvailableBlocks, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+}
+
+<div class="container mx-auto px-4 py-8" x-data="blockEditor()">
+    <div class="mb-6 flex justify-between items-center">
+        <div>
+            <nav class="text-sm font-medium mb-2" aria-label="Breadcrumb">
+                <ol class="list-none p-0 inline-flex">
+                    <li class="flex items-center">
+                        <a asp-action="Index" class="text-blue-600 hover:text-blue-900">Sites</a>
+                        <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                    </li>
+                    <li class="flex items-center">
+                        <a asp-action="Pages" asp-route-siteId="@Model.Site.Id" class="text-blue-600 hover:text-blue-900">@Model.Site.Name Pages</a>
+                        <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                    </li>
+                    <li>
+                        <span class="text-gray-500">@(isNew ? "New Page" : "Edit Page")</span>
+                    </li>
+                </ol>
+            </nav>
+            <h1 class="text-3xl font-bold">@(isNew ? "Create New Page" : $"Edit: {Model.Page.Metadata.Title}")</h1>
+        </div>
+        <div class="flex space-x-3">
+            @if (!isNew)
+            {
+                <a asp-action="Preview" asp-route-pageId="@Model.Page.Id" target="_blank" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    Preview
+                </a>
+            }
+            <button @@click="submitForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded shadow">
+                Save Changes
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+            <!-- Block Editor -->
+            <div class="bg-white shadow rounded-lg p-6 mb-6">
+                <h2 class="text-xl font-bold mb-4 border-b pb-2">Page Content Blocks</h2>
+                
+                <div id="blocks-container" class="space-y-4 mb-6">
+                    <template x-for="(block, index) in blocks" :key="index">
+                        <div class="border border-gray-200 rounded-md bg-gray-50 overflow-hidden shadow-sm hover:shadow transition-shadow">
+                            <!-- Block Header -->
+                            <div class="bg-gray-100 px-4 py-2 flex justify-between items-center border-b border-gray-200">
+                                <div class="flex items-center">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded" x-text="block.type"></span>
+                                    <span class="font-bold text-gray-700" x-text="getBlockName(block.type)"></span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button @@click="moveBlockUp(index)" type="button" class="text-gray-500 hover:text-gray-700" :disabled="index === 0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                                    </button>
+                                    <button @@click="moveBlockDown(index)" type="button" class="text-gray-500 hover:text-gray-700" :disabled="index === blocks.length - 1">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                    <button @@click="removeBlock(index)" type="button" class="text-red-500 hover:text-red-700 ml-2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Block Fields -->
+                            <div class="p-4 bg-white">
+                                <div class="grid grid-cols-1 gap-4">
+                                    <template x-for="field in getBlockFields(block.type)" :key="field.name">
+                                        <div>
+                                            <label class="block text-gray-700 text-xs font-bold mb-1" x-text="field.label"></label>
+                                            
+                                            <template x-if="field.type === 'Text' || field.type === 'Url' || field.type === 'Image'">
+                                                <input type="text" x-model="block.data[field.name]" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm">
+                                            </template>
+                                            
+                                            <template x-if="field.type === 'RichText'">
+                                                <textarea x-model="block.data[field.name]" rows="4" class="shadow-sm appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"></textarea>
+                                            </template>
+                                            
+                                            <template x-if="field.type === 'Boolean'">
+                                                <div class="flex items-center mt-1">
+                                                    <input type="checkbox" x-model="block.data[field.name]" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+                                                    <span class="ml-2 text-sm text-gray-600" x-text="field.label"></span>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Add Block UI -->
+                <div class="mt-8 border-t pt-6">
+                    <h3 class="text-lg font-bold mb-4">Add Content Block</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                        <template x-for="def in availableBlocks" :key="def.type">
+                            <button @@click="addBlock(def)" type="button" class="flex flex-col items-center justify-center p-4 border border-dashed border-gray-300 rounded-lg hover:border-blue-500 hover:bg-blue-50 group transition-colors">
+                                <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mb-2 group-hover:bg-blue-100">
+                                    <svg class="w-6 h-6 text-gray-500 group-hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                </div>
+                                <span class="text-xs font-bold text-gray-600 group-hover:text-blue-700 text-center" x-text="def.name"></span>
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-1">
+            <!-- Settings Sidebar -->
+            <form id="cms-page-form" asp-action="Save" asp-route-pageId="@(isNew ? "new" : Model.Page.Id)" method="post">
+                <input type="hidden" name="SiteId" value="@Model.Page.SiteId" />
+                <textarea x-model="blocksRaw" name="blocksRaw" class="hidden"></textarea>
+
+                <div class="bg-white shadow rounded-lg p-6 mb-6">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">Page Settings</h2>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="Title">
+                                Page Title
+                            </label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                   id="Title" name="Metadata.Title" type="text" value="@Model.Page.Metadata.Title" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="Slug">
+                                Slug
+                            </label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                   id="Slug" name="Slug" type="text" value="@Model.Page.Slug" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="FullUrl">
+                                URL Path
+                            </label>
+                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                   id="FullUrl" name="FullUrl" type="text" value="@Model.Page.FullUrl" placeholder="/my-page" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="Template">
+                                Template
+                            </label>
+                            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                    id="Template" name="Template">
+                                <option value="default" selected="@(Model.Page.Template == "default")">Default</option>
+                                <option value="fullwidth" selected="@(Model.Page.Template == "fullwidth")">Full Width</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="PublishedState">
+                                Status
+                            </label>
+                            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                    id="PublishedState" name="PublishedState">
+                                <option value="Draft" selected="@(Model.Page.PublishedState == PagePublishedState.Draft)">Draft</option>
+                                <option value="Published" selected="@(Model.Page.PublishedState == PagePublishedState.Published)">Published</option>
+                                <option value="Archived" selected="@(Model.Page.PublishedState == PagePublishedState.Archived)">Archived</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white shadow rounded-lg p-6">
+                    <h2 class="text-xl font-bold mb-4 border-b pb-2">SEO</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="SeoDescription">
+                                Meta Description
+                            </label>
+                            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-1 focus:ring-blue-500" 
+                                      id="SeoDescription" name="Metadata.SeoDescription" rows="4">@Model.Page.Metadata.SeoDescription</textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function blockEditor() {
+        return {
+            blocks: @Html.Raw(blocksJson),
+            availableBlocks: @Html.Raw(availableBlocksJson),
+            blocksRaw: '',
+            
+            init() {
+                this.updateRaw();
+            },
+            
+            getBlockName(type) {
+                const def = this.availableBlocks.find(b => b.type === type);
+                return def ? def.name : type;
+            },
+            
+            getBlockFields(type) {
+                const def = this.availableBlocks.find(b => b.type === type);
+                return def ? def.fields : [];
+            },
+            
+            addBlock(def) {
+                const newData = {};
+                if (def.fields) {
+                    def.fields.forEach(f => {
+                        newData[f.name] = f.type === 'Boolean' ? false : '';
+                    });
+                }
+                
+                this.blocks.push({
+                    type: def.type,
+                    version: 1,
+                    data: newData
+                });
+                this.updateRaw();
+            },
+            
+            removeBlock(index) {
+                if (confirm('Are you sure you want to remove this block?')) {
+                    this.blocks.splice(index, 1);
+                    this.updateRaw();
+                }
+            },
+            
+            moveBlockUp(index) {
+                if (index > 0) {
+                    const block = this.blocks.splice(index, 1)[0];
+                    this.blocks.splice(index - 1, 0, block);
+                    this.updateRaw();
+                }
+            },
+            
+            moveBlockDown(index) {
+                if (index < this.blocks.length - 1) {
+                    const block = this.blocks.splice(index, 1)[0];
+                    this.blocks.splice(index + 1, 0, block);
+                    this.updateRaw();
+                }
+            },
+            
+            updateRaw() {
+                this.blocksRaw = JSON.stringify(this.blocks);
+            },
+            
+            submitForm() {
+                this.updateRaw();
+                // We need to wait a tick for the hidden textarea to update
+                this.$nextTick(() => {
+                    document.getElementById('cms-page-form').submit();
+                });
+            }
+        }
+    }
+</script>

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Electra.Persistence.RavenDB;
+namespace Electra.Persistence.RavenDB.Identity;
 
 /// <summary>
 /// A authorization token created by a login provider.

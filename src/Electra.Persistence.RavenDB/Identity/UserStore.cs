@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Security.Claims;
+using Electra.Core;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
 using JasperFx.Core.Reflection;
@@ -94,7 +95,15 @@ public class UserStore<TUser, TRole> :
     #region IUserStore implementation
 
     /// <inheritdoc />
-    public virtual Task<string> GetUserIdAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.Id.ToString()!);
+    public virtual Task<string> GetUserIdAsync(TUser user, CancellationToken cancellationToken)
+    {
+        if(user == null)
+        {
+            throw new ArgumentNullException(nameof(user));
+        }
+        var id = user.Id?.ToString() ?? Snowflake.NewId();
+        return Task.FromResult(id);
+    }
 
     /// <inheritdoc />
     public virtual Task<string?> GetUserNameAsync(TUser user, CancellationToken cancellationToken) => Task.FromResult(user.UserName);
@@ -282,7 +291,7 @@ public class UserStore<TUser, TRole> :
         this.DbSession.LoadAsync<TUser>(userId, cancellationToken);
 
     /// <inheritdoc />
-    public virtual  Task<TUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
+    public virtual Task<TUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
     {
         return UserQuery()
             .SingleOrDefaultAsync(u => u.UserName == normalizedUserName, cancellationToken);
@@ -313,13 +322,13 @@ public class UserStore<TUser, TRole> :
     public virtual async Task RemoveLoginAsync(TUser user, string loginProvider, string providerKey, CancellationToken cancellationToken)
     {
         ThrowIfNullDisposedCancelled(user, cancellationToken);
-        
+
         var login = user.Logins.FirstOrDefault(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey);
         if (login != null)
         {
             user.Logins.Remove(login);
         }
-        
+
         await SaveChangesAsync();
     }
 
@@ -774,9 +783,9 @@ public class UserStore<TUser, TRole> :
     /// <inheritdoc />
     public virtual async Task RemoveTokenAsync(TUser user, string loginProvider, string name, CancellationToken cancellationToken)
     {
-        if(user.Tokens is List<IdentityUserToken<string>> tokens)
+        if (user.Tokens is List<IdentityUserToken<string>> tokens)
             tokens.RemoveAll(t => t.LoginProvider == loginProvider && t.Name == name);
-        
+
         await SaveChangesAsync();
     }
 

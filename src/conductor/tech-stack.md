@@ -2,18 +2,21 @@
 
 ## Core Environment
 - **Language:** C#
-- **Runtime:** .NET 9.0+
+- **Runtime:** .NET 10.0+
 - **Project Type:** Modular Library Collection / Microservices
 
 ## Frameworks & Libraries
 - **Web API:** ASP.NET Core
-- **Authentication & Identity:**
-  - OpenIddict (OpenID Connect/OAuth2)
-  - ASP.NET Core Identity
-  - WebAuthn.Net (Passkeys)
+  - **Authentication & Identity:**
+    - OpenIddict (OpenID Connect/OAuth2)
+    - ASP.NET Core Identity
+    - WebAuthn.Net (Passkeys)
+- **UI & Frontend:**
+  - Blazor (Server & WASM)
+  - Electra.MerakiUI (Tailwind CSS + AlpineJS)
+  - TypeScript
 - **Persistence & Data:**
-  - Entity Framework Core (PostgreSQL)
-  - Marten (Event Sourcing / Document DB on Postgres)
+  - Entity Framework Core (PostgreSQL)  - Marten (Event Sourcing / Document DB on Postgres)
   - RavenDB (NoSQL Document Store)
 - **Utilities & Logic:**
   - Serilog (Structured Logging)

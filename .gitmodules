@@ -10,3 +10,6 @@
 [submodule "Solnet.Metaplex"]
 	path = Solnet.Metaplex
 	url = git@github.com:microbian-systems/Solnet.Metaplex.git
+[submodule "MerakiUI"]
+	path = MerakiUI
+	url = git@github.com:merakiuilabs/merakiui.git
