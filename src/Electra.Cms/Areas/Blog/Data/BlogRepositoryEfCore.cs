@@ -10,26 +10,26 @@ namespace Electra.Cms.Areas.Blog.Data;
 
 public class BlogRepositoryEfCore : IBlogRepository
 {
-    private readonly BlogDbContext context;
     private readonly ILogger<BlogRepositoryEfCore> log;
     private readonly MarkdownPipeline _markdownPipeline;
 
-    public BlogRepositoryEfCore(BlogDbContext context, ILogger<BlogRepositoryEfCore> log)
+    public BlogRepositoryEfCore(BlogRepositoryEfCore db, ILogger<BlogRepositoryEfCore> log)
     {
-        this.context = context;
+        
         this.log = log;
         _markdownPipeline = new MarkdownPipelineBuilder()
             .UseAdvancedExtensions()
             .Build();
     }
 
-    public async Task<IEnumerable<BlogPost>> GetLatestBlogsAsync(int count)
+    public async Task<IEnumerable<BlogPost>> GetLatestBlogsAsync(int count) 
     {
-        return await context.Blogs
+        var result = await context.Blogs
             .Where(b => b.IsPublished)
             .OrderByDescending(b => b.PublishDate)
             .Take(count)
-            .ToListAsync();
+            //.ToListAsync()
+            ;
     }
 
     public async Task<PagedResult<BlogPost>> GetPaginatedBlogsAsync(int pageNumber = 1, int pageSize = 10, bool publishedOnly = true)

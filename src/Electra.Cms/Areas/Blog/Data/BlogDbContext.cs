@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Electra.Cms.Areas.Blog.Entities;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Electra.Cms.Areas.Blog.Data;

@@ -27,9 +27,9 @@
         <PackageReference Include="Elsa.Scripting.JavaScript" Version="2.16.0" />
         <PackageReference Include="Elsa.Scripting.Liquid" Version="2.16.0" />
         <PackageReference Include="Elsa.WorkflowDesigner" Version="1.5.5.1943" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
-        <PackageReference Include="Stateless" Version="5.20.0" />
-        <PackageReference Include="System.Drawing.Common" Version="10.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+        <PackageReference Include="Stateless" Version="5.20.1" />
+        <PackageReference Include="System.Drawing.Common" Version="10.0.3" />
         <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     </ItemGroup>
     <ItemGroup>

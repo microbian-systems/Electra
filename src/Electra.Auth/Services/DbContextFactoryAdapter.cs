@@ -1,5 +1,7 @@
 
 
+using Microsoft.EntityFrameworkCore;
+
 namespace Electra.Auth.Services;
 
 /// <summary>

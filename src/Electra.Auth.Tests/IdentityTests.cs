@@ -6,8 +6,9 @@ using Electra.Persistence;
 using Electra.Persistence.EfCore;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Raven.Client.Documents.Session;
 
 namespace Electra.Auth.Tests;
 
@@ -17,14 +18,14 @@ public class IdentityTests : IClassFixture<TestWebAppFactory>, IDisposable
     private readonly UserManager<ElectraUser> userManager;
     private readonly IServiceScope scope;
     readonly Faker faker = new();
-    private readonly ElectraDbContext db;
+    private readonly IAsyncDocumentSession db;
 
     public IdentityTests(TestWebAppFactory factory)
     {
         scope = factory.Services.CreateScope();
         client = factory.CreateClient(); 
         userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
-        db = scope.ServiceProvider.GetRequiredService<ElectraDbContext>();
+        db = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
     }
 
     [Fact]
@@ -71,8 +72,9 @@ public class IdentityTests : IClassFixture<TestWebAppFactory>, IDisposable
 
         var saved = await userManager.FindByEmailAsync(user.Email);
         var saved2 = await userManager.FindByIdAsync(user.Id.ToString());
-        var efuser = await db.Users.FindAsync(saved?.Id);
-        var efuseremail = await db.Users.Where(x => x.Email == user.Email).FirstOrDefaultAsync();
+        var efuser = await db.LoadAsync<ElectraUser>(saved?.Id);
+        var efuseremail = await db.Query<ElectraUser>()
+            .Where(x => x.Email == user.Email).FirstOrDefaultAsync();
         
     }
 
