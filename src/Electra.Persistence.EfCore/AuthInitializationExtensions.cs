@@ -1,10 +1,9 @@
 using Electra.Models.Entities;
-using Electra.Persistence.EfCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Auth.Extensions;
+namespace Electra.Persistence.EfCore;
 
 /// <summary>
 /// Helper to initialize authentication infrastructure on app startup

@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using Electra.Core.Extensions;
 
 namespace Electra.Core.Encryption;
 

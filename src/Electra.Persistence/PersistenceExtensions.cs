@@ -1,10 +1,12 @@
+using Electra.Models.Entities;
 using Electra.Persistence.Core;
-using Electra.Persistence.EfCore;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Electra.Persistence;
+
 
 public static class PersistenceExtensions
 {
@@ -29,15 +31,8 @@ public static class PersistenceExtensions
         //             .UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
 
         log.LogInformation($"configuring generic repositories");
-        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericEntityFrameworkRepository<>));
-        services.AddScoped(typeof(IGenericEntityFrameworkRepository<>), typeof(GenericEntityFrameworkRepository<>));
-        services.AddScoped(typeof(IGenericEntityFrameworkRepository<,>), typeof(GenericEntityFrameworkRepository<,>));
-        services.AddScoped<IElectraUserProfileRepository, ElectraUserProfileRepository>(); 
-        services.AddScoped<IAiUsageLogRepository, AiUsageLogsRepository>();
-        services.AddScoped<IApiAuthRepository, ApiAuthRepository>();
-        services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<IElectraUserProfileRepository, ElectraUserProfileRepository>();
-        services.AddScoped<IElectraUnitOfWork, ElectraUnitOfWork>();
+
+
 
         return services;
     }

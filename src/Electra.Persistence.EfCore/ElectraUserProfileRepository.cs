@@ -1,11 +1,12 @@
 using Electra.Models.Entities;
+using Electra.Persistence.Core;
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.EfCore;
 
-public interface IElectraUserProfileRepository : IGenericEntityFrameworkRepository<ElectraUserProfile>{}
 
-public class ElectraUserProfileRepository(
+
+public class ElectraUserProfileEfCoreRepository(
     ElectraDbContext context,
-    ILogger<ElectraUserProfileRepository> log)
+    ILogger<ElectraUserProfileEfCoreRepository> log)
     : GenericEntityFrameworkRepository<ElectraUserProfile>(context, log), IElectraUserProfileRepository;

@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using Electra.Core.Entities;
 using Electra.Models.Entities;
 using Electra.Persistence.Core;
-using Electra.Persistence.EfCore;
 
 namespace Electra.Services;
 
