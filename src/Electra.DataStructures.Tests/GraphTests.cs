@@ -1,10 +1,6 @@
-using Xunit;
 using FluentAssertions;
 using Electra.DataStructures.Graphs;
 using Bogus;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Electra.DataStructures.Tests;
 

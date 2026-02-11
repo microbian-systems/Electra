@@ -1,12 +1,8 @@
 using System.Security.Claims;
 using Electra.Core.Identity;
 using Electra.Persistence.RavenDB.Identity;
-using FakeItEasy;
 using FluentAssertions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
-using Raven.Client.Documents;
-using Xunit;
 
 namespace Electra.Persistence.RavenDB.Tests;
 

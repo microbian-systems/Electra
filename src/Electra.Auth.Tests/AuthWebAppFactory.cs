@@ -1,17 +1,11 @@
 // Fixtures/TestWebAppFactory.cs
 
-using Electra.Persistence;
-using Electra.Persistence.EfCore;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Org.BouncyCastle.Utilities.Collections;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using Raven.TestDriver;
-using System.Linq;
 
 namespace Electra.Auth.Tests;
 

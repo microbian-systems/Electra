@@ -1,8 +1,6 @@
 // Basic Account Controller tests - main tests are in ElectraAuthIntegrationTests.cs
 using System.Net;
-using System.Net.Http;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Electra.Auth.Tests;
 

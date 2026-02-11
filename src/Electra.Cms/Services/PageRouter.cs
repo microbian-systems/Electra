@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Electra.Cms.Indexes;
 using Electra.Cms.Models;
 using Raven.Client.Documents;

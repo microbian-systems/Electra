@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Electra.Core.Json.Converters;
+﻿namespace Electra.Core.Json.Converters;
 
 public class TimeOnlyConverter : JsonConverter<TimeOnly>
 {

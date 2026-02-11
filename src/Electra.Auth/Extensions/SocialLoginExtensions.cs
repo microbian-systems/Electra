@@ -1,21 +1,8 @@
 using System.IO;
 using Electra.Core.Identity;
-using Electra.Persistence;
-using Electra.Auth.Services;
-using Electra.Models.Entities;
 using Electra.Persistence.RavenDB.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Routing;
-using ThrowGuard;
-using Electra.Persistence.RavenDB.Identity;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.Win32;
 
 namespace Electra.Auth.Extensions;
 

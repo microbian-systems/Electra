@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Xunit;
 using Electra.Cms.Models; // This will fail initially
 
 namespace Electra.Cms.Tests

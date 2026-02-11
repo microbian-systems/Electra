@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Sections;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Sections;
 

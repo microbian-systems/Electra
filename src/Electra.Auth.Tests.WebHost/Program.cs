@@ -2,10 +2,7 @@ using Electra.Auth.Controllers;
 using Electra.Auth.Extensions;
 using Electra.Models;
 using Electra.Models.Entities;
-using Electra.Persistence;
 using Microsoft.AspNetCore.Identity;
-
-using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 

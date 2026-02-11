@@ -1,7 +1,5 @@
 using Bunit;
-using Electra.MerakiUI;
 using Microsoft.AspNetCore.Components;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests;
 

@@ -1,4 +1,3 @@
-using System.Linq;
 using Electra.Cms.Models;
 using Raven.Client.Documents.Indexes;
 

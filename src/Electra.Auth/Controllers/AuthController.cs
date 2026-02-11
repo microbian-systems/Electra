@@ -2,8 +2,6 @@ using Electra.Web.Core.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Electra.Auth.Models.ViewModels;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
 
 namespace Electra.Auth.Controllers;
 

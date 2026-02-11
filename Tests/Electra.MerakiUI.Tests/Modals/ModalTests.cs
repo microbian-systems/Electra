@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Modals;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Modals;
 

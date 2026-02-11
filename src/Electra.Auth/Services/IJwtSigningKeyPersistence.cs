@@ -1,5 +1,3 @@
-using Electra.Models.Entities;
-
 namespace Electra.Auth.Services;
 
 /// <summary>

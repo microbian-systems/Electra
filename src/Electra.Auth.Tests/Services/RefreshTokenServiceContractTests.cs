@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Electra.Auth.Services;
-using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using Raven.TestDriver;
 

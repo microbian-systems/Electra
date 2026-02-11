@@ -1,8 +1,5 @@
 using System.Net;
-using System.Net.Http;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Xunit;
 
 namespace Electra.Auth.Tests;
 

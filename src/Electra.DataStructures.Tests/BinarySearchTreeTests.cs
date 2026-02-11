@@ -1,9 +1,6 @@
-using Xunit;
 using FluentAssertions;
 using Electra.DataStructures.Trees;
 using Bogus;
-using System;
-using System.Linq;
 
 namespace Electra.DataStructures.Tests;
 
