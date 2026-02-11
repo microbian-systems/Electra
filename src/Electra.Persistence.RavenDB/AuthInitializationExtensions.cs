@@ -1,6 +1,4 @@
 using Electra.Models.Entities;
-using Electra.Persistence;
-using Electra.Persistence.EfCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 

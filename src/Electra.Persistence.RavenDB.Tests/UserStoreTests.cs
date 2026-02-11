@@ -8,8 +8,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Raven.Client.Documents;
-using Xunit;
 
 namespace Electra.Persistence.RavenDB.Tests;
 

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 
 namespace Electra.MerakiUI.Tabs;
 

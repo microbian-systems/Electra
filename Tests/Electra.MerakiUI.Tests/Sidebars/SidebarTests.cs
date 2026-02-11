@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Sidebars;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Sidebars;
 

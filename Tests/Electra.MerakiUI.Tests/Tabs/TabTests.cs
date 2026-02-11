@@ -1,7 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Tabs;
-using Xunit;
-using System.Collections.Generic;
 
 namespace Electra.MerakiUI.Tests.Tabs;
 

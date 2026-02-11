@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Cookies;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Cookies;
 

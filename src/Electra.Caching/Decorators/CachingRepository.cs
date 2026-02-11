@@ -2,7 +2,6 @@
 using System.Linq.Expressions;
 using Electra.Core.Entities;
 using Electra.Persistence.Core;
-using LanguageExt;
 
 namespace Electra.Caching.Decorators;
 

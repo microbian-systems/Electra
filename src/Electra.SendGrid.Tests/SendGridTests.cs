@@ -1,6 +1,5 @@
 using Electra.Core.Configuration;
 using FakeItEasy;
-using Xunit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

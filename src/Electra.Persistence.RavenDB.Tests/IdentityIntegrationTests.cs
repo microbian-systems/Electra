@@ -2,13 +2,10 @@ using Electra.Core;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
 using Electra.Persistence.RavenDB.Extensions;
-using Electra.Persistence.RavenDB.Identity;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Raven.Client.Documents.Session;
-using Xunit;
 
 namespace Electra.Persistence.RavenDB.Tests;
 

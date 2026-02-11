@@ -1,8 +1,5 @@
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using Electra.Core.Entities;
-using Electra.Core.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Models.Entities;

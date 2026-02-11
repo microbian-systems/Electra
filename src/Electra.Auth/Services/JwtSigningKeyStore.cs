@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using Electra.Models.Entities;
 
 namespace Electra.Auth.Services;
 

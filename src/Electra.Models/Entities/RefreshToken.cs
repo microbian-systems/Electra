@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Electra.Core.Entities;
 
 namespace Electra.Models.Entities;

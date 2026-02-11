@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Teams;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Teams;
 

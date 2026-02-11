@@ -1,7 +1,5 @@
 using System.Linq.Expressions;
-using Electra.Core.Entities;
 using Electra.Models.Entities;
-using Electra.Persistence.Core.Functional;
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.RavenDB;

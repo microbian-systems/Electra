@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Pagination;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Pagination;
 
