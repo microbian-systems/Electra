@@ -1,3 +1,4 @@
+using Raven.Client.Documents.Session;
 using System.Security.Cryptography;
 
 namespace Electra.Auth.Services;
@@ -9,20 +10,20 @@ namespace Electra.Auth.Services;
 /// </summary>
 public class RefreshTokenService : IRefreshTokenService
 {
-    private readonly IDbContextFactory<DbContext> _contextFactory;
-    private readonly ILogger<RefreshTokenService> _logger;
-    private readonly IConfiguration _config;
-    private readonly int _refreshTokenLifetimeDays;
+    private readonly IAsyncDocumentSession session;
+    readonly ILogger<RefreshTokenService> logger;
+    readonly IConfiguration config;
+    readonly int refreshTokenLifetimeDays;
 
     public RefreshTokenService(
-        IDbContextFactory<DbContext> contextFactory,
+        IAsyncDocumentSession session,
         ILogger<RefreshTokenService> logger,
         IConfiguration config)
     {
-        _contextFactory = contextFactory;
-        _logger = logger;
-        _config = config;
-        _refreshTokenLifetimeDays = _config.GetValue("Auth:RefreshTokenLifetimeDays", 30);
+        this.session = session;
+        this.logger = logger;
+        this.config = config;
+        refreshTokenLifetimeDays = config.GetValue("Auth:RefreshTokenLifetimeDays", 30);
     }
 
     public async Task<string> GenerateRefreshTokenAsync(
@@ -41,17 +42,17 @@ public class RefreshTokenService : IRefreshTokenService
             UserId = userId,
             TokenHash = tokenHash,
             CreatedOn = DateTimeOffset.UtcNow,
-            ExpiresAt = DateTimeOffset.UtcNow.AddDays(_refreshTokenLifetimeDays),
+            ExpiresAt = DateTimeOffset.UtcNow.AddDays(refreshTokenLifetimeDays),
             ClientType = clientType,
             IssuedFromIpAddress = ipAddress,
             UserAgent = userAgent
         };
 
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        context.Set<RefreshToken>().Add(refreshToken);
-        await context.SaveChangesAsync(cancellationToken);
+        
+        await session.StoreAsync(refreshToken);
+        await session.SaveChangesAsync(cancellationToken);
 
-        _logger.LogInformation(
+        logger.LogInformation(
             "Generated refresh token for user {UserId} from {IpAddress} ({ClientType})",
             userId, ipAddress ?? "unknown", clientType);
 
@@ -64,25 +65,24 @@ public class RefreshTokenService : IRefreshTokenService
     {
         if (string.IsNullOrEmpty(token))
         {
-            _logger.LogWarning("Empty refresh token provided");
+            logger.LogWarning("Empty refresh token provided");
             return null;
         }
 
         var tokenHash = HashToken(token);
 
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        var refreshToken = await context.Set<RefreshToken>()
+        var refreshToken = await session.Query<RefreshToken>()
             .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, cancellationToken);
 
         if (refreshToken == null)
         {
-            _logger.LogWarning("Refresh token not found (invalid or already rotated)");
+            logger.LogWarning("Refresh token not found (invalid or already rotated)");
             return null;
         }
 
         if (!refreshToken.IsActive)
         {
-            _logger.LogWarning("Refresh token is not active for user {UserId}", refreshToken.UserId);
+            logger.LogWarning("Refresh token is not active for user {UserId}", refreshToken.UserId);
             return null;
         }
 
@@ -105,9 +105,9 @@ public class RefreshTokenService : IRefreshTokenService
 
         // Mark old token as rotated
         var oldTokenHash = HashToken(oldToken);
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        
 
-        var oldTokenRecord = await context.Set<RefreshToken>()
+        var oldTokenRecord = await session.Query<RefreshToken>()
             .FirstOrDefaultAsync(rt => rt.TokenHash == oldTokenHash, cancellationToken);
 
         if (oldTokenRecord != null)
@@ -119,7 +119,7 @@ public class RefreshTokenService : IRefreshTokenService
                 UserId = userId,
                 TokenHash = HashToken(newToken),
                 CreatedOn = DateTimeOffset.UtcNow,
-                ExpiresAt = DateTimeOffset.UtcNow.AddDays(_refreshTokenLifetimeDays),
+                ExpiresAt = DateTimeOffset.UtcNow.AddDays(refreshTokenLifetimeDays),
                 ClientType = clientType,
                 IssuedFromIpAddress = ipAddress,
                 UserAgent = userAgent,
@@ -127,10 +127,10 @@ public class RefreshTokenService : IRefreshTokenService
             };
 
             oldTokenRecord.ReplacedByTokenId = newRefreshToken.Id;
-            context.Set<RefreshToken>().Add(newRefreshToken);
-            await context.SaveChangesAsync(cancellationToken);
+            await session.StoreAsync(newRefreshToken);
+            await session.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation(
+            logger.LogInformation(
                 "Rotated refresh token for user {UserId}",
                 userId);
 
@@ -146,16 +146,16 @@ public class RefreshTokenService : IRefreshTokenService
     {
         var tokenHash = HashToken(token);
 
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
-        var refreshToken = await context.Set<RefreshToken>()
+        
+        var refreshToken = await session.Query<RefreshToken>()
             .FirstOrDefaultAsync(rt => rt.TokenHash == tokenHash, cancellationToken);
 
         if (refreshToken != null)
         {
             refreshToken.RevokedAt = DateTimeOffset.UtcNow;
-            await context.SaveChangesAsync(cancellationToken);
+            await session.SaveChangesAsync(cancellationToken);
 
-            _logger.LogInformation("Revoked refresh token for user {UserId}", refreshToken.UserId);
+            logger.LogInformation("Revoked refresh token for user {UserId}", refreshToken.UserId);
         }
     }
 
@@ -163,9 +163,9 @@ public class RefreshTokenService : IRefreshTokenService
         string userId,
         CancellationToken cancellationToken = default)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        
 
-        var activeTokens = await context.Set<RefreshToken>()
+        var activeTokens = await session.Query<RefreshToken>()
             .Where(rt => rt.UserId == userId && rt.RevokedAt == null)
             .ToListAsync(cancellationToken);
 
@@ -176,8 +176,8 @@ public class RefreshTokenService : IRefreshTokenService
 
         if (activeTokens.Count > 0)
         {
-            await context.SaveChangesAsync(cancellationToken);
-            _logger.LogInformation("Revoked all refresh tokens for user {UserId} ({Count} tokens)", userId, activeTokens.Count);
+            await session.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("Revoked all refresh tokens for user {UserId} ({Count} tokens)", userId, activeTokens.Count);
         }
     }
 
@@ -185,9 +185,8 @@ public class RefreshTokenService : IRefreshTokenService
         string userId,
         CancellationToken cancellationToken = default)
     {
-        await using var context = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
-        var tokens = await context.Set<RefreshToken>()
+        var tokens = await session.Query<RefreshToken>()
             .Where(rt => rt.UserId == userId && rt.IsActive)
             .Select(rt => new { rt.Id, rt.ClientType, rt.CreatedOn, rt.IssuedFromIpAddress })
             .ToListAsync(cancellationToken);
@@ -202,11 +201,10 @@ public class RefreshTokenService : IRefreshTokenService
         return Convert.ToBase64String(hashedBytes);
     }
 
-    private static string GenerateRandomToken(int length)
+    private static string GenerateRandomToken(uint length)
     {
-        using var rng = new RNGCryptoServiceProvider();
         var randomBytes = new byte[length];
-        rng.GetBytes(randomBytes);
+        RandomNumberGenerator.Fill(randomBytes);
         return Convert.ToBase64String(randomBytes);
     }
 }
