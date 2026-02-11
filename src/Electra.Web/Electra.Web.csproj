@@ -13,6 +13,12 @@
   <ItemGroup>
     <None Include="Extensions\IdentityServerExtensions.cs" />
     <None Include="Identity\IdentityServerSettings.cs" />
+    <Compile Remove="Services\ApiKeyService.cs" />
+    <None Include="Services\ApiKeyService.cs" />
+    <Compile Remove="Extensions\ApiKeyExtensions.cs" />
+    <None Include="Extensions\ApiKeyExtensions.cs" />
+    <Compile Remove="Controllers\JwtAuthController.cs" />
+    <None Include="Controllers\JwtAuthController.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Boxed.AspNetCore" Version="9.0.1" />

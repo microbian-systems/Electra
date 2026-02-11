@@ -1,5 +1,4 @@
 using System.Text.Json;
-using Electra.Cms.Areas.Blog.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -97,38 +96,5 @@ public class BlogDbContext(DbContextOptions<BlogDbContext> options) : DbContext(
         }
 
         return await base.SaveChangesAsync(cancellationToken);
-    }
-
-    private static string GenerateSlug(string title)
-    {
-        if (string.IsNullOrEmpty(title))
-            return Guid.NewGuid().ToString()[..8];
-
-        // Basic slug generation
-        var slug = title.ToLowerInvariant()
-            .Replace(" ", "-")
-            .Replace(".", "")
-            .Replace(",", "")
-            .Replace("!", "")
-            .Replace("?", "")
-            .Replace("'", "")
-            .Replace("\"", "");
-
-        // Remove multiple dashes
-        while (slug.Contains("--"))
-        {
-            slug = slug.Replace("--", "-");
-        }
-
-        // Trim dashes from start and end
-        slug = slug.Trim('-');
-
-        // Limit length
-        if (slug.Length > 200)
-        {
-            slug = slug[..200].TrimEnd('-');
-        }
-
-        return string.IsNullOrEmpty(slug) ? Guid.NewGuid().ToString()[..8] : slug;
     }
 }

@@ -45,7 +45,6 @@
     <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
     <ProjectReference Include="..\Electra.Common\Electra.Common.csproj" />
     <ProjectReference Include="..\Electra.Persistence.Core\Electra.Persistence.Core.csproj" />
-    <ProjectReference Include="..\Electra.Persistence.EfCore\Electra.Persistence.EfCore.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Morgue\ElectraDbContext.cs" />

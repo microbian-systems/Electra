@@ -1,6 +1,5 @@
 ﻿using Electra.Common.Web.Infrastructure;
 using Electra.Common.Web.Jwt;
-using Electra.Persistence.EfCore;
 using Scalar.AspNetCore;
 
 namespace Electra.Common.Web.Extensions;
@@ -18,7 +17,6 @@ public static class ApiServiceExtensions
     {
         services.AddTransient<IJwtFactory, JwtFactory>();
         services.AddTransient<IClaimsPrincipalFactory, ClaimsPrincipalFactory>();
-        services.AddScoped<IApiAuthRepository, ApiAuthRepository>();
         services.AddScoped<IApiKeyFactory, DefaultApiKeyFactory>();
         
         return services;

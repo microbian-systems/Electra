@@ -1,7 +1,7 @@
 using Electra.Persistence.Core;
-using Electra.Persistence.EfCore;
+using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.EfCore;
 
 /// <summary>
 /// Interface for Electra-specific unit of work operations
