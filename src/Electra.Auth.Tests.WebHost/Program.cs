@@ -4,18 +4,18 @@ using Electra.Models;
 using Electra.Models.Entities;
 using Electra.Persistence;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews()
-    .AddApplicationPart(typeof(AccountController).Assembly);
+    .AddApplicationPart(typeof(AuthController).Assembly);
 builder.Services.AddLogging();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddDbContext<ElectraDbContext>(o => { o.UseInMemoryDatabase("ElectraAuthTestsDb"); });
+
 var env = builder.Environment;
 var config = builder.Configuration;
 builder.Services.AddElectraAuthentication(env, config);

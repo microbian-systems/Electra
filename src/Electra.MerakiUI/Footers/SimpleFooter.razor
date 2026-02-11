@@ -1,0 +1,15 @@
+@inherits MerakiComponentBase
+
+<footer class="bg-white dark:bg-gray-900 @Class" id="@Id" @attributes="AdditionalAttributes">
+    <div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
+        <a href="#">
+            <span class="text-2xl font-bold text-gray-800 dark:text-white">@BrandName</span>
+        </a>
+
+        <p class="text-sm text-gray-600 dark:text-gray-300">© Copyright @DateTime.Now.Year. All Rights Reserved.</p>
+
+        <div class="flex -mx-2">
+            @ChildContent
+        </div>
+    </div>
+</footer>

@@ -11,9 +11,8 @@ namespace Electra.Models.Entities;
 // {
 // }
 
-public interface IElectraUser
+public interface IElectraUser : IEntity
 {
-    string Id { get; set; }
     string? UserName { get; set; }
     string? NormalizedUserName { get; set; }
     string? Email { get; set; }
@@ -37,9 +36,6 @@ public interface IElectraUser
     // todo - remove data attribute -> ModelBuilding (EF)
     string ProfilePictureDataUrl { get; set; }
 
-    DateTimeOffset CreatedOn { get; set; }
-    string ModifiedBy { get; set; }
-    DateTimeOffset? ModifiedOn { get; set; }
     bool IsDeleted { get; set; }
     DateTimeOffset? DeletedOn { get; set; }
     bool IsActive { get; set; }
@@ -147,9 +143,6 @@ public class ElectraUser<TKey>
     public virtual List<string> TwoFactorRecoveryCodes { get; set; } = new();
 
     public virtual string? TwoFactorAuthenticatorKey { get; set; }
-
-    // For Passkeys (WebAuthn)
-    public virtual List<IdentityUserPasskey<string>> WebAuthnCredentials { get; set; } = new();
 
     public virtual List<string> GetRolesList() => RoleNames;
 }

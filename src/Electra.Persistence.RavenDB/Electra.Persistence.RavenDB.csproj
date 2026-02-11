@@ -14,8 +14,9 @@
 
     <ItemGroup>
       <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
-      <PackageReference Include="RavenDB.Client" Version="7.1.5" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+      <PackageReference Include="RavenDB.Client" Version="7.2.0" />
+      <PackageReference Include="RavenDB.Embedded" Version="7.2.0" />
     </ItemGroup>
 
 </Project>

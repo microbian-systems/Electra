@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Electra.Web.Core.Controllers;
 
 [Authorize]
-[ValidateAntiForgeryToken]
+[AutoValidateAntiforgeryToken]
 public abstract class ElectraWebBaseController(ILogger<ElectraWebBaseController> log)
     : Controller
 {

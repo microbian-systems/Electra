@@ -1,5 +1,6 @@
 using Electra.Persistence.Core;
 using Electra.Models.Entities;
+using Electra.Persistence.EfCore;
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence;
@@ -25,7 +26,7 @@ public class ElectraUnitOfWork(
     IElectraUserProfileRepository userProfileRepo,
     IUserRepository userRepository,
     ILogger<ElectraUnitOfWork> log)
-    : UnitOfWorkEfCore(context), IElectraUnitOfWork
+    : UnitEfCoreOfWorkEfCore(context), IElectraUnitOfWork
 {
     public new ElectraDbContext Context { get; } = context;
 

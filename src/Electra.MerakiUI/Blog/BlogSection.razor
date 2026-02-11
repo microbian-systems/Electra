@@ -1,0 +1,20 @@
+@inherits MerakiComponentBase
+
+<section class="bg-white dark:bg-gray-900 @Class" id="@Id" @attributes="AdditionalAttributes">
+    <div class="container px-6 py-10 mx-auto">
+        <div class="@GetHeaderAlignmentClass()">
+            <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">@Title</h1>
+
+            @if (!string.IsNullOrEmpty(Description))
+            {
+                <p class="max-w-lg mt-4 text-gray-500 @(IsCentered ? "mx-auto" : "")">
+                    @Description
+                </p>
+            }
+        </div>
+
+        <div class="grid grid-cols-1 gap-8 mt-8 @GetGridColsClass() @(IsCentered ? "" : "md:mt-16")">
+            @ChildContent
+        </div>
+    </div>
+</section>

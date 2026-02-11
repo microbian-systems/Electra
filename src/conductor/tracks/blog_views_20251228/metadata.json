@@ -1,0 +1,8 @@
+{
+  "track_id": "blog_views_20251228",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2025-12-28T17:24:00Z",
+  "updated_at": "2025-12-28T17:24:00Z",
+  "description": "Add MVC Views and Supporting logic for Blog Engine with MSBuild automation for view copying."
+}

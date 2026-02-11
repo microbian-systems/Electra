@@ -1,0 +1,21 @@
+@inherits MerakiComponentBase
+
+<div class="max-w-2xl overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 @Class" id="@Id" @attributes="AdditionalAttributes">
+    <div class="p-6">
+        <div>
+            <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">@Category</span>
+            <a href="@Href" class="block mt-2 text-xl font-semibold text-gray-800 transition-colors duration-300 transform dark:text-white hover:text-gray-600 hover:underline" role="link">@Title</a>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">@Description</p>
+        </div>
+
+        <div class="mt-4">
+            <div class="flex items-center">
+                <div class="flex items-center">
+                    <img class="object-cover h-10 rounded-full" src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=230&q=80" alt="Avatar">
+                    <a href="#" class="mx-2 font-semibold text-gray-700 dark:text-gray-200" role="link">Jone Doe</a>
+                </div>
+                <span class="mx-1 text-xs text-gray-600 dark:text-gray-300">@Date</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,7 +14,7 @@ public class ElectraUserProfile : Entity
     /// Foreign key to the Electra Identity table
     /// </summary>
     [JsonPropertyName("user_id")]
-    public long Userid { get; set; } // todo - make this generic so the type can vary for pkey
+    public string Userid { get; set; } // todo - make this generic so the type can vary for pkey
 
     [MinLength(4)] // todo - remove data annotations and use FluentValidation
     [MaxLength(256)]

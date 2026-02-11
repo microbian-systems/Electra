@@ -5,23 +5,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Include="EfCore\MultipleResultSetHelper.cs" />
-      <None Include="EfCore\MultipleResultSetWrapper.cs" />
       <Compile Remove="EfCore\MultipleResultSetWrapper.cs" />
-      <None Include="EfCore\MultipleResultSetWrapper.cs" />
       <Compile Remove="EfCore\MultipleResultSetHelper.cs" />
-      <None Include="EfCore\MultipleResultSetHelper.cs" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
-      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
       <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Electra.Core\Electra.Core.csproj" />
+      <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
     </ItemGroup>
 
 </Project>

@@ -7,6 +7,7 @@ public interface IRavenDbUnitOfWork : IAsyncUnitOfWork
 {
     // Add your repository property here
     IElectraUserRepository Users { get; }
+    IAsyncDocumentSession Session { get; }
 }
 
 
@@ -28,6 +29,8 @@ public class RavenDbUnitOfWork : IRavenDbUnitOfWork
         _log = log;
         _loggerFactory = loggerFactory;
     }
+
+    public IAsyncDocumentSession Session => _session;
 
     // Lazy initialization ensures the repo is only created when accessed
     // and guarantees it uses the UoW's specific session.

@@ -1,0 +1,134 @@
+@model Electra.Auth.Models.ViewModels.PasskeyViewModel
+@{
+    ViewData["Title"] = "Sign in with Passkey";
+    Layout = "_AuthLayout";
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h1>Sign in with Passkey</h1>
+        <p class="subtitle">Use your device's biometric authentication</p>
+        
+        <div id="passkey-status" class="alert" style="display: none;"></div>
+        
+        <div id="passkey-support-check">
+            <p>Checking passkey support...</p>
+        </div>
+        
+        <div id="passkey-login-form" style="display: none;">
+            <button type="button" id="passkey-login-btn" class="btn btn-primary btn-lg w-100">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                </svg>
+                Sign in with Passkey
+            </button>
+            
+            <div class="text-center mt-4">
+                <a href="/login" class="text-muted">Use password instead</a>
+            </div>
+        </div>
+        
+        <div id="passkey-unsupported" style="display: none;">
+            <div class="alert alert-warning">
+                <strong>Passkeys not supported</strong>
+                <p>Your browser doesn't support passkeys. Please use a modern browser or sign in with your password.</p>
+            </div>
+            <a href="/login" class="btn btn-secondary w-100">Sign in with Password</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Check for passkey support
+        (async function() {
+            const supportsPasskeys = window.PublicKeyCredential !== undefined &&
+                                   typeof window.PublicKeyCredential.isConditionalMediationAvailable === 'function';
+            
+            if (!supportsPasskeys) {
+                document.getElementById('passkey-support-check').style.display = 'none';
+                document.getElementById('passkey-unsupported').style.display = 'block';
+                return;
+            }
+            
+            const conditionalMediationAvailable = await PublicKeyCredential.isConditionalMediationAvailable();
+            
+            document.getElementById('passkey-support-check').style.display = 'none';
+            document.getElementById('passkey-login-form').style.display = 'block';
+            
+            // Handle passkey login
+            document.getElementById('passkey-login-btn').addEventListener('click', async () => {
+                try {
+                    showStatus('Preparing authentication...', 'info');
+                    
+                    // Request challenge from server
+                    const challengeResponse = await fetch('/api/auth/passkey/login-challenge', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email: '@Model.Email',
+                            isRegistration: false
+                        })
+                    });
+                    
+                    if (!challengeResponse.ok) {
+                        throw new Error('Failed to get authentication challenge');
+                    }
+                    
+                    const challengeData = await challengeResponse.json();
+                    
+                    showStatus('Authenticate with your device...', 'info');
+                    
+                    // Get credential from authenticator
+                    const credential = await navigator.credentials.get({
+                        publicKey: challengeData.publicKey,
+                        mediation: conditionalMediationAvailable ? 'conditional' : 'required'
+                    });
+                    
+                    // Send credential to server for verification
+                    const verifyResponse = await fetch('/api/auth/passkey/login-callback?returnUrl=@ViewBag.ReturnUrl', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            id: credential.id,
+                            rawId: bufferToBase64(credential.rawId),
+                            type: credential.type,
+                            response: {
+                                authenticatorData: bufferToBase64(credential.response.authenticatorData),
+                                clientDataJSON: bufferToBase64(credential.response.clientDataJSON),
+                                signature: bufferToBase64(credential.response.signature),
+                                userHandle: bufferToBase64(credential.response.userHandle)
+                            }
+                        })
+                    });
+                    
+                    const result = await verifyResponse.json();
+                    
+                    if (result.success) {
+                        showStatus('Login successful! Redirecting...', 'success');
+                        setTimeout(() => {
+                            window.location.href = '@ViewBag.ReturnUrl' || '/';
+                        }, 1000);
+                    } else {
+                        throw new Error(result.message || 'Authentication failed');
+                    }
+                    
+                } catch (error) {
+                    console.error('Passkey login error:', error);
+                    showStatus('Authentication failed: ' + error.message, 'danger');
+                }
+            });
+            
+            function showStatus(message, type) {
+                const statusDiv = document.getElementById('passkey-status');
+                statusDiv.className = `alert alert-${type}`;
+                statusDiv.textContent = message;
+                statusDiv.style.display = 'block';
+            }
+            
+            function bufferToBase64(buffer) {
+                return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+            }
+        })();
+    </script>
+}

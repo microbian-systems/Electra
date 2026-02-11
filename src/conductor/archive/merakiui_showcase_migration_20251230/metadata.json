@@ -1,0 +1,8 @@
+{
+  "track_id": "merakiui_showcase_migration_20251230",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2025-12-30T09:15:00Z",
+  "updated_at": "2025-12-30T09:15:00Z",
+  "description": "Move the meraki-showcase.cshtml file from src/microbians.io.web/microbians.io.web/Pages/meraki-showcase.cshtml to src/Electra.MerakiUI/Areas/Demo/Pages and demo each of the components on that page."
+}

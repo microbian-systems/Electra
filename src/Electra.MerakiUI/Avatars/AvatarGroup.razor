@@ -1,0 +1,9 @@
+@inherits MerakiComponentBase
+
+<div class="flex items-center @Class" id="@Id" @attributes="AdditionalAttributes">
+    <CascadingValue Value="true" Name="IsGrouped">
+        <CascadingValue Value="GroupSize" Name="GroupSize">
+            @ChildContent
+        </CascadingValue>
+    </CascadingValue>
+</div>

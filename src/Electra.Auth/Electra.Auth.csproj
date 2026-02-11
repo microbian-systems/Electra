@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <Description>Electra Authentication Microservice</Description>
@@ -6,50 +6,41 @@
     <Title>Electra.Auth</Title>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <OutputType>Library</OutputType>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\**\*.cshtml" />
+  </ItemGroup>
+
 <ItemGroup>
   <InternalsVisibleTo Include="Electra.Auth.Tests" />
 </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.Apple" Version="10.0.0" />
+    <PackageReference Include="AspNet.Security.OAuth.Coinbase" Version="10.0.0" />
     <PackageReference Include="FluentResults" Version="4.0.0" />
     <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="10.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
-    <PackageReference Include="OpenIddict" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Abstractions" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.AspNetCore" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.EntityFramework.Models" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.EntityFrameworkCore.Models" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Server" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Server.AspNetCore" Version="7.2.0" />
-    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.3.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.3.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.9" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
     <PackageReference Include="SecretSharingDotNet" Version="0.14.0" />
     <PackageReference Include="SnowflakeGuid" Version="1.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="ThrowGuard" Version="1.2.0" />
-    <PackageReference Include="WebAuthn.Net" Version="1.3.4" />
-    <PackageReference Include="WebAuthn.Net.OpenTelemetry" Version="1.3.4" />
-    <PackageReference Include="WebAuthn.Net.Storage.InMemory" Version="1.3.4" />
-    <PackageReference Include="WebAuthn.Net.Storage.PostgreSql" Version="1.3.4" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -67,10 +58,6 @@
   <ItemGroup>
     <Compile Remove="Program.cs" />
     <Compile Remove="Controllers\PasskeyController.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Abstractions\User\Models\" />
   </ItemGroup>
 
 </Project>

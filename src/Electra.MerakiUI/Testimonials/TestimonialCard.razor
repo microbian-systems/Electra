@@ -1,0 +1,18 @@
+@inherits MerakiComponentBase
+
+<div class="p-8 @GetBackgroundClass() border @GetBorderClass() rounded-lg @Class" id="@Id" @attributes="AdditionalAttributes">
+    <p class="leading-loose @GetTextClass()">
+        “@Content”.
+    </p>
+
+    <div class="flex items-center mt-8 -mx-2">
+        <img class="object-cover mx-2 rounded-full w-14 shrink-0 h-14 ring-4 @GetImageRingClass()" 
+             src="@AuthorImageUrl" 
+             alt="@AuthorName">
+
+        <div class="mx-2">
+            <h1 class="font-semibold @GetAuthorNameClass()">@AuthorName</h1>
+            <span class="text-sm @GetAuthorRoleClass()">@AuthorRole</span>
+        </div>
+    </div>
+</div>
