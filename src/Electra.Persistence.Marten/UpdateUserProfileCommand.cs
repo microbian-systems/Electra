@@ -1,8 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using Electra.Common.Commands;
 using Electra.Common.Extensions;
-using Electra.Models;
 using Electra.Models.Entities;
 using Electra.Persistence.Core;
 using Microsoft.Extensions.Logging;

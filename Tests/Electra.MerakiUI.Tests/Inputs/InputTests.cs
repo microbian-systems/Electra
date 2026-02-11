@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Inputs;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Inputs;
 

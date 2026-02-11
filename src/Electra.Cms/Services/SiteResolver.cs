@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Electra.Cms.Indexes;
 using Electra.Cms.Models;
 using Microsoft.AspNetCore.Http;

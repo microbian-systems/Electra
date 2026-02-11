@@ -2,8 +2,6 @@ using Bogus;
 using Electra.Core;
 using Electra.Models;
 using Electra.Models.Entities;
-using Electra.Persistence;
-using Electra.Persistence.EfCore;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

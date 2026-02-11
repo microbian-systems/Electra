@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Avatars;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Avatars;
 

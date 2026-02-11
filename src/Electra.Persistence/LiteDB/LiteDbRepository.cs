@@ -1,7 +1,6 @@
 using Electra.Core.Entities;
 using Electra.Persistence.Core;
 using LiteDB;
-using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.LiteDB;
 

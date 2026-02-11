@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Breadcrumbs;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Breadcrumbs;
 

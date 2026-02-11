@@ -1,7 +1,5 @@
 using Electra.Persistence.Core;
-using Electra.Models.Entities;
 using Electra.Persistence.EfCore;
-using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence;
 

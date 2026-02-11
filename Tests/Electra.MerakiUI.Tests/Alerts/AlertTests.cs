@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Alerts;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Alerts;
 

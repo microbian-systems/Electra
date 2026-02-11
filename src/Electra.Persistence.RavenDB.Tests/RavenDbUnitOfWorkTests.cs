@@ -1,12 +1,9 @@
 using Electra.Core;
 using Electra.Models.Entities;
-using Electra.Persistence.RavenDB;
 using FakeItEasy;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
-using Xunit;
 
 namespace Electra.Persistence.RavenDB.Tests;
 

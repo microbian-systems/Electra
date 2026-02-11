@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Electra.Cms.Models
 {
     public static class BlockExtensions

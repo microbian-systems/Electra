@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.ErrorPages;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.ErrorPages;
 

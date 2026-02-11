@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Electra.Cms.Blocks
 {
     public abstract class BlockDefinition

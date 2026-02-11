@@ -1,5 +1,3 @@
-using System;
-
 namespace Electra.Persistence.Elastic;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]

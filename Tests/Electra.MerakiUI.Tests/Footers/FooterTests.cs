@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Footers;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Footers;
 

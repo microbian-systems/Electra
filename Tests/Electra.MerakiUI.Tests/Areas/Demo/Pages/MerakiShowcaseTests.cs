@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Areas.Demo.Pages;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Areas.Demo.Pages;
 

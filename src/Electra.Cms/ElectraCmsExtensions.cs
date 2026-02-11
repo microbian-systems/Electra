@@ -1,4 +1,3 @@
-using System;
 using Electra.Cms.Areas.Cms.Controllers;
 using Electra.Cms.Blocks;
 using Electra.Cms.Indexes;
@@ -13,7 +12,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
 
 namespace Electra.Cms;

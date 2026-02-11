@@ -1,6 +1,5 @@
 using Electra.DataStructures.Graphs;
 using FluentAssertions;
-using Xunit;
 
 namespace Electra.DataStructures.Tests;
 

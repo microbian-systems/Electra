@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Heroes;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Heroes;
 
