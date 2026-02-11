@@ -1,0 +1,53 @@
+@model Electra.Auth.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Sign In";
+    Layout = "_AuthLayout";
+}
+
+<h1>Sign In</h1>
+
+<form asp-action="LoginForm" asp-controller="Auth" method="post" asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    
+    <div class="form-group">
+        <label asp-for="Email">Email Address</label>
+        <input asp-for="Email" type="email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label>
+            <input asp-for="RememberMe" /> Remember me
+        </label>
+    </div>
+    
+    <button type="submit">Sign In</button>
+    
+    <div class="mt-3 text-center">
+        <a asp-action="ForgotPasswordPage">Forgot password?</a> | 
+        <a asp-action="RegisterPage">Register</a>
+    </div>
+
+    <hr />
+    
+    <div class="social-login text-center">
+        <p>Or continue with</p>
+        <div class="d-grid gap-2">
+            <a href="/login-passkey?returnUrl=@Model.ReturnUrl" class="d-block mb-2 btn btn-outline-primary">Sign in with Passkey</a>
+            <a href="/api/auth/external/challenge/Google?returnUrl=@Model.ReturnUrl" class="d-block mb-2">Sign in with Google</a>
+            <a href="/api/auth/external/challenge/Microsoft?returnUrl=@Model.ReturnUrl" class="d-block mb-2">Sign in with Microsoft</a>
+            <a href="/api/auth/external/challenge/Facebook?returnUrl=@Model.ReturnUrl" class="d-block mb-2">Sign in with Facebook</a>
+            <a href="/api/auth/external/challenge/Twitter?returnUrl=@Model.ReturnUrl" class="d-block mb-2">Sign in with Twitter</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

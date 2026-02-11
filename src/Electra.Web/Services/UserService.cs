@@ -1,7 +1,6 @@
 using FluentEmail.Core;
 using Electra.Common.Web.Extensions;
 using Electra.Core.Identity;
-using Electra.Models;
 using Electra.Models.Entities;
 using Electra.Services;
 using Electra.Services.Geo;

@@ -10,7 +10,4 @@ global using System.Threading.Tasks;
 global using Electra.Core.Identity;
 global using Electra.Models;
 global using Microsoft.AspNetCore.Identity;
-global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-global using Microsoft.EntityFrameworkCore;
-// global using Microsoft.EntityFrameworkCore;
 global using Microsoft.Extensions.Logging;

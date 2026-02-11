@@ -150,7 +150,7 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
 
     public override async Task<ApiAccountModel?> GetAccountById(string id)
     {
-        var account = await uow.AuthRepo.GetByApiKey(id);
+        var account = await uow.AuthRepo.FindByIdAsync(id);
 
         return account!;
     }

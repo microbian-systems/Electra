@@ -1,19 +1,15 @@
 using Electra.Common.Web.Exceptions;
 using Electra.Common.Web.Middleware;
 using Electra.Services;
-using Electra.Common.Web.Performance;
 using Electra.Common.Web.Services;
-using Electra.Core.Encryption;
 using Electra.Core.Extensions;
-using Electra.Persistence.Extensions;
+using Electra.Persistence;
 using Electra.Services.Geo;
 using Electra.Services.Mail;
 using Electra.Web.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using OwaspHeaders.Core.Extensions;
-using Serilog;
 
 namespace Electra.Common.Web.Extensions;
 

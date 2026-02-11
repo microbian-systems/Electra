@@ -1,7 +1,4 @@
 ﻿using Electra.Caching.Decorators;
-using Electra.Caching.Extensions;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Electra.Web.Extensions;
 

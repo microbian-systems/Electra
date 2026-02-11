@@ -1,0 +1,28 @@
+@inherits MerakiComponentBase
+
+<div x-data="{ isOpen: @(IsInitiallyOpen ? "true" : "false") }" class="@Class" id="@Id" @attributes="AdditionalAttributes">
+    <button @@click="isOpen = !isOpen" class="flex items-center focus:outline-none">
+        <template x-if="isOpen">
+            <svg class="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+            </svg>
+        </template>
+        <template x-if="!isOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" class="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+        </template>
+
+        <h1 class="mx-4 text-xl text-gray-700 dark:text-white">@Question</h1>
+    </button>
+
+    <div x-show="isOpen" x-collapse class="flex mt-8 md:mx-10">
+        <span class="border border-blue-500"></span>
+
+        <p class="max-w-3xl px-4 text-gray-500 dark:text-gray-300">
+            @Answer
+        </p>
+    </div>
+    
+    <hr class="my-8 border-gray-200 dark:border-gray-700">
+</div>

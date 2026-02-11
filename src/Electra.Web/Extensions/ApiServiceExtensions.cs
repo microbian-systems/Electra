@@ -1,6 +1,6 @@
 ﻿using Electra.Common.Web.Infrastructure;
 using Electra.Common.Web.Jwt;
-using Electra.Persistence;
+using Electra.Persistence.EfCore;
 using Scalar.AspNetCore;
 
 namespace Electra.Common.Web.Extensions;

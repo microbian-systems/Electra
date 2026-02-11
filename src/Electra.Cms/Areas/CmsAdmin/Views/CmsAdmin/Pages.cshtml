@@ -1,0 +1,59 @@
+@model PageListViewModel
+@{
+    ViewData["Title"] = $"Pages - {Model.Site.Name}";
+}
+
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <nav class="text-sm font-medium mb-2" aria-label="Breadcrumb">
+            <ol class="list-none p-0 inline-flex">
+                <li class="flex items-center">
+                    <a asp-action="Index" class="text-blue-600 hover:text-blue-900">Sites</a>
+                    <svg class="fill-current w-3 h-3 mx-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M285.476 272.971L91.132 467.314c-9.373 9.373-24.569 9.373-33.941 0l-22.667-22.667c-9.357-9.357-9.375-24.522-.04-33.901L188.505 256 34.484 101.255c-9.335-9.379-9.317-24.544.04-33.901l22.667-22.667c9.373-9.373 24.569-9.373 33.941 0L285.475 239.03c9.373 9.372 9.373 24.568.001 33.941z"/></svg>
+                </li>
+                <li>
+                    <span class="text-gray-500">@Model.Site.Name Pages</span>
+                </li>
+            </ol>
+        </nav>
+        <a asp-action="AddPage" asp-route-siteId="@Model.Site.Id" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Add New Page
+        </a>
+    </div>
+
+    <h1 class="text-3xl font-bold mb-6">Pages for @Model.Site.Name</h1>
+
+    <div class="bg-white shadow-md rounded my-6">
+        <table class="text-left w-full border-collapse">
+            <thead>
+                <tr>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Title</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">URL</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Status</th>
+                    <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Pages)
+                {
+                    <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">@item.Metadata.Title</td>
+                        <td class="py-4 px-6 border-b border-grey-light">@item.FullUrl</td>
+                        <td class="py-4 px-6 border-b border-grey-light">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full @(item.PublishedState == PagePublishedState.Published ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800")">
+                                @item.PublishedState
+                            </span>
+                        </td>
+                        <td class="py-4 px-6 border-b border-grey-light flex space-x-2">
+                            <a asp-action="Edit" asp-route-pageId="@item.Id" class="text-blue-600 hover:text-blue-900 font-bold py-1 px-3 rounded text-xs bg-blue-100 hover:bg-blue-200">Edit</a>
+                            <a asp-action="Preview" asp-route-pageId="@item.Id" class="text-gray-600 hover:text-gray-900 font-bold py-1 px-3 rounded text-xs bg-gray-100 hover:bg-gray-200">Preview</a>
+                            <form asp-action="DeletePage" asp-route-pageId="@item.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this page?');">
+                                <button type="submit" class="text-red-600 hover:text-red-900 font-bold py-1 px-3 rounded text-xs bg-red-100 hover:bg-red-200">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

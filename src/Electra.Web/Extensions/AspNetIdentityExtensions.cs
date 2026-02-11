@@ -1,8 +1,7 @@
 ﻿using Electra.Core.Identity;
-using Electra.Models;
 using Electra.Models.Entities;
 using Electra.Persistence;
-using Electra.Persistence.Extensions;
+using Electra.Persistence.EfCore;
 using Electra.Services;
 using Microsoft.AspNetCore.Identity;
 

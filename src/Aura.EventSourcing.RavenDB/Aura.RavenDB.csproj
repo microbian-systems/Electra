@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Authors>Your Name</Authors>
+    <Company>Your Company</Company>
+    <Description>A production-ready event sourcing library for .NET applications using RavenDB</Description>
+    <Copyright>Copyright © 2025</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/yourorg/eventsourcing-ravendb</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yourorg/eventsourcing-ravendb</RepositoryUrl>
+    <PackageTags>eventsourcing;cqrs;ddd;ravendb;nosql;patterns</PackageTags>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- RavenDB Client -->
+    <PackageReference Include="RavenDB.Client" Version="6.0.102" />
+    
+    <!-- Dependency Injection -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    
+    <!-- JSON Serialization -->
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- For testing/example purposes only -->
+    <PackageReference Include="xunit" Version="2.6.6" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6" Condition="'$(Configuration)' == 'Debug'">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Moq" Version="4.20.70" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="RavenDB.TestDriver" Version="6.0.102" Condition="'$(Configuration)' == 'Debug'" />
+  </ItemGroup>
+
+</Project>

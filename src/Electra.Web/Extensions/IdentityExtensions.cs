@@ -1,4 +1,4 @@
-﻿using Electra.Persistence;
+﻿using Electra.Persistence.EfCore;
 using Electra.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
