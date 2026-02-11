@@ -1,18 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Electra.Cms.Areas.Blog.Controllers;
+using Electra.Cms.Areas.Blog.Entities;
+using Electra.Cms.Areas.Blog.Models;
+using Electra.Cms.Areas.Blog.Services;
 using Electra.Models;
-using Electra.Web.BlogEngine.Controllers;
-using Electra.Web.BlogEngine.Entities;
-using Electra.Web.BlogEngine.Models;
-using Electra.Web.BlogEngine.Services;
 using Electra.Web.Core.Controllers;
 using FluentAssertions;
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Xunit;
 
 namespace Electra.Web.BlogEngine.Tests.Controllers;
 

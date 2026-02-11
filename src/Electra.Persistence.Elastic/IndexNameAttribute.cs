@@ -1,6 +1,6 @@
-using Electra.Core.Entities;
+using System;
 
-namespace Electra.Persistence.Entities;
+namespace Electra.Persistence.Elastic;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
 public class IndexNameAttribute : Attribute
@@ -14,9 +14,4 @@ public class IndexNameAttribute : Attribute
 
         IndexName = indexName;
     }
-}
-    
-public abstract class ElasticEntity : Entity<string>
-{
-
 }

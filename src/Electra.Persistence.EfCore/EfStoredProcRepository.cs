@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using Electra.Persistence.Core;
 using Microsoft.EntityFrameworkCore;
 using ILogger = Serilog.ILogger;
 
-namespace Electra.Persistence.Core.EfCore;
+namespace Electra.Persistence.EfCore;
 
 // todo - impl complete logging
 public class EfStoredProcRepository(DbContext ctx, ILogger log) : IStoredProcRepository

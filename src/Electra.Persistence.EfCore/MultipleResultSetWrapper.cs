@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Data;
 using System.Data.Common;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-namespace Feeds.DataAccess.Core
+namespace Electra.Persistence.EfCore
 {
 
     public class MultipleResultSetWrapper

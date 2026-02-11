@@ -15,7 +15,7 @@ public static class DefaultApiExtensions
         builder.Services.AddHealthChecks();
         builder.AddApiKeyGenerator();
         builder.AddJwtAuthorization();
-        builder.AddApiAuthDbContext();
+        //builder.AddApiAuthDbContext();
 
         return builder;
     }

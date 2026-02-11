@@ -4,12 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Electra.Core.Entities;
 
-namespace Electra.Persistence.Core.Marten;
-
-// todo - consider placing a constraint on type TKey for the marten repositories
-public interface IDynamicMartenRepository : IDynamicRepositoryAsync<string>
-{
-}
+namespace Electra.Persistence.Core;
 
 public interface IDynamicReadOnlyRepositoryAsync<TKey> where TKey : IEquatable<TKey>
 {

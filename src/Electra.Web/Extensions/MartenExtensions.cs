@@ -1,9 +1,6 @@
-﻿using Electra.Persistence;
-using Electra.Persistence.Core.Marten;
-using Electra.Persistence.Marten;
+﻿using Electra.Persistence.Marten;
 using JasperFx;
 using Marten;
-using Weasel.Core;
 
 namespace Electra.Common.Web.Extensions;
 

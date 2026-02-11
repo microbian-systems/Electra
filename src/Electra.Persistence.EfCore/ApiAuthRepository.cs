@@ -1,7 +1,9 @@
-﻿using Electra.Models.Entities;
-using Electra.Persistence.Core.EfCore;
+﻿using System.Linq.Expressions;
+using Electra.Models.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.EfCore;
 
 public interface IApiAuthRepository : IGenericEntityFrameworkRepository<ApiAccountModel>
 {

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Blog\Data\BlogRepositoryEfCore.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
@@ -19,29 +23,22 @@
     <PackageReference Include="Mapster.Async" Version="2.0.1" />
     <PackageReference Include="Mapster.Core" Version="1.2.1" />
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
-    <PackageReference Include="Mapster.EFCore" Version="5.1.1" />
-    <PackageReference Include="Markdig" Version="0.44.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="10.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="10.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.2" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    <PackageReference Include="Markdig" Version="0.45.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Common" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.3.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.3" />
     <PackageReference Include="Octokit" Version="14.0.0" />
     <PackageReference Include="OwaspHeaders.Core" Version="10.2.0" />
-    <PackageReference Include="RavenDB.Client" Version="7.1.5" />
-    <PackageReference Include="RavenDB.Embedded" Version="7.1.5" />
-    <PackageReference Include="Scalar.AspNetCore" Version="2.12.24" />
+    <PackageReference Include="RavenDB.Client" Version="7.2.0" />
+    <PackageReference Include="RavenDB.Embedded" Version="7.2.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.12.37" />
     <PackageReference Include="ThrowGuard" Version="1.2.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
 	<PackageReference Include="Microsoft.CodeAnalysis.Common" Version="5.0.0" />
     <PackageReference Include="TinyMCE.Blazor" Version="2.2.1" />
   </ItemGroup>
@@ -71,7 +68,7 @@
 <!--  </ItemGroup>-->
 
   <ItemGroup>
-    <Folder Include="Areas\Blog\" />
+    <None Include="Areas\Blog\Data\BlogRepositoryEfCore.cs" />
   </ItemGroup>
 
 </Project>

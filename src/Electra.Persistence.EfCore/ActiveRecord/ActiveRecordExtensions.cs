@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using Electra.Core.Entities;
+using Electra.Persistence.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence.Core.ActiveRecord;
+namespace Electra.Persistence.EfCore.ActiveRecord;
 
 public static class ActiveRecordExtensions
 {
@@ -19,20 +17,8 @@ public static class ActiveRecordExtensions
 }
 
 
-public interface IActiveRecord<T, in TKey> 
-    where T: IEntity<TKey> 
-    where TKey : IComparable, IEquatable<TKey>
-{
-    Task<T> Get(TKey key);
-    Task Insert(T record);
-    Task Update(T record);
-    Task Delete(TKey id);
-    Task Delete(T record);
-    Task<IEnumerable<T>> Find(Expression<Func<T, bool>> expression);
-}
-
-public class ActiveRecord<T>(DbContext db, ILogger<ActiveRecord<T, Guid>> log) 
-    : ActiveRecord<T, Guid>(db, log) 
+public class ActiveRecordEfCore<T>(DbContext db, ILogger<ActiveRecordEfCore<T, Guid>> log) 
+    : ActiveRecordEfCore<T, Guid>(db, log) 
     where T : IEntity<Guid>
 {
     public override async Task<T> Get(Guid key)
@@ -72,10 +58,10 @@ public class ActiveRecord<T>(DbContext db, ILogger<ActiveRecord<T, Guid>> log)
     }
 }
 
-public abstract class ActiveRecord<T, TKey>(DbContext db, ILogger<ActiveRecord<T, TKey>> log) 
+public abstract class ActiveRecordEfCore<T, TKey>(DbContext db, ILogger<ActiveRecordEfCore<T, TKey>> log) 
     : IActiveRecord<T, TKey> where T : IEntity<TKey> where TKey : IEquatable<TKey>, IComparable
 {
-    protected readonly ILogger<ActiveRecord<T,TKey>> log = log;
+    protected readonly ILogger<ActiveRecordEfCore<T,TKey>> log = log;
     protected readonly DbContext db = db;
 
     public abstract Task<T> Get(TKey key);

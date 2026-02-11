@@ -1,18 +1,13 @@
 using Electra.Models;
 using Electra.Models.Entities;
-using Electra.Persistence.Core.EfCore;
+using Electra.Persistence.Core;
 using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.EfCore;
 
-public interface IUserRepository : IGenericEntityFrameworkRepository<ElectraUser>
-{
-    Task<Option<ElectraUser>> GetFullUserById(string userId);
-    Task<Option<ElectraUserProfile>> GetUserProfileAsync(string userId);
-    Task<Option<UserSettingsModel>> GetUserSettingsAsync(string userId);
-}
+
 
 public class UserRepository(ElectraDbContext context, ILogger<GenericEntityFrameworkRepository<ElectraUser>> log)
     : GenericEntityFrameworkRepository<ElectraUser>(context, log), IUserRepository

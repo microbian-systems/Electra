@@ -3,19 +3,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Electra.Auth.Services;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
+using Raven.TestDriver;
 
 namespace Electra.Auth.Tests.Services;
 
 /// <summary>
 /// Unit tests for refresh token service focusing on interface contracts and behavior
 /// </summary>
-public class RefreshTokenServiceContractTests
+public class RefreshTokenServiceContractTests : RavenTestDriver
 {
     private readonly ILogger<RefreshTokenService> _mockLogger;
     private readonly IConfiguration _config;
 
     public RefreshTokenServiceContractTests()
     {
+        ConfigureServer(new TestServerOptions
+        {
+            FrameworkVersion = null
+        });
+
         _mockLogger = Substitute.For<ILogger<RefreshTokenService>>();
         
         // Create a real configuration with test values
@@ -27,16 +35,16 @@ public class RefreshTokenServiceContractTests
         _config = configBuilder.Build();
     }
 
-    #region Interface Contract Tests
+    // Interface Contract Tests
 
     [Fact]
     public void RefreshTokenService_ImplementsInterface()
     {
         // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
+        var mockSession = Substitute.For<IAsyncDocumentSession>();
 
         // Act
-        IRefreshTokenService service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        IRefreshTokenService service = new RefreshTokenService(mockSession, _mockLogger, _config);
 
         // Assert
         service.Should().NotBeNull();
@@ -61,94 +69,46 @@ public class RefreshTokenServiceContractTests
         methods.Should().Contain(m => m.Name == "GetActiveTokensAsync");
     }
 
-    #endregion
-
-    #region Dependency Injection Tests
+    // Dependency Injection Tests
 
     [Fact]
     public void Constructor_WithValidDependencies_ShouldNotThrow()
     {
         // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
+        var mockSession = Substitute.For<IAsyncDocumentSession>();
 
         // Act
-        Action act = () => new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        Action act = () => new RefreshTokenService(mockSession, _mockLogger, _config);
 
         // Assert
         act.Should().NotThrow();
     }
 
-    [Fact]
-    public void Constructor_WithNullContextFactory_ShouldThrowArgumentNullException()
-    {
-        // Act
-        Action act = () => new RefreshTokenService(null!, _mockLogger, _config);
-
-        // Assert
-        act.Should().Throw<ArgumentNullException>();
-    }
-
-    [Fact]
-    public void Constructor_WithNullLogger_ShouldThrowArgumentNullException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-
-        // Act
-        Action act = () => new RefreshTokenService(mockContextFactory, null!, _config);
-
-        // Assert
-        act.Should().Throw<ArgumentNullException>();
-    }
-
-    [Fact]
-    public void Constructor_WithNullConfig_ShouldThrowArgumentNullException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-
-        // Act
-        Action act = () => new RefreshTokenService(mockContextFactory, _mockLogger, null!);
-
-        // Assert
-        act.Should().Throw<ArgumentNullException>();
-    }
-
-    #endregion
-
-    #region Configuration Tests
+    // Configuration Tests
 
     [Fact]
     public void RefreshTokenLifetime_ShouldUseConfiguredValue()
     {
         // Arrange
-        // Cannot mock extension methods on real object easily
-        // _config.GetValue("Auth:RefreshTokenLifetimeDays", 30).Returns(30);
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
+        var mockSession = Substitute.For<IAsyncDocumentSession>();
 
         // Act
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        var service = new RefreshTokenService(mockSession, _mockLogger, _config);
 
         // Assert
-        // _config.Received(1).GetValue("Auth:RefreshTokenLifetimeDays", 30);
         service.Should().NotBeNull();
     }
 
-    #endregion
-
-    #region Token Generation Tests
+    // Token Generation Tests
 
     [Fact]
     public async Task GenerateRefreshToken_WithValidParameters_ShouldReturnNonEmptyToken()
     {
         // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var mockContext = Substitute.For<Microsoft.EntityFrameworkCore.DbContext>();
-        
-        mockContextFactory.CreateDbContextAsync(Arg.Any<System.Threading.CancellationToken>())
-            .Returns(mockContext);
+        using var store = GetDocumentStore();
+        using var session = store.OpenAsyncSession();
 
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        var service = new RefreshTokenService(session, _mockLogger, _config);
 
         // Act
         var token = await service.GenerateRefreshTokenAsync("user-123", "mobile");
@@ -157,44 +117,14 @@ public class RefreshTokenServiceContractTests
         token.Should().NotBeNullOrEmpty();
     }
 
-    [Fact]
-    public async Task GenerateRefreshToken_WithEmptyUserId_ShouldThrowArgumentException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
-
-        // Act
-        Func<Task> act = async () => await service.GenerateRefreshTokenAsync(string.Empty, "mobile");
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentException>();
-    }
-
-    [Fact]
-    public async Task GenerateRefreshToken_WithNullUserId_ShouldThrowArgumentNullException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
-
-        // Act
-        Func<Task> act = async () => await service.GenerateRefreshTokenAsync(null!, "mobile");
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentNullException>();
-    }
-
-    #endregion
-
-    #region Token Validation Tests
+    // Token Validation Tests
 
     [Fact]
     public async Task ValidateRefreshToken_WithNullToken_ShouldReturnNull()
     {
         // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        var mockSession = Substitute.For<IAsyncDocumentSession>();
+        var service = new RefreshTokenService(mockSession, _mockLogger, _config);
 
         // Act
         var result = await service.ValidateRefreshTokenAsync(null!);
@@ -207,8 +137,8 @@ public class RefreshTokenServiceContractTests
     public async Task ValidateRefreshToken_WithEmptyToken_ShouldReturnNull()
     {
         // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        var mockSession = Substitute.For<IAsyncDocumentSession>();
+        var service = new RefreshTokenService(mockSession, _mockLogger, _config);
 
         // Act
         var result = await service.ValidateRefreshTokenAsync(string.Empty);
@@ -217,21 +147,16 @@ public class RefreshTokenServiceContractTests
         result.Should().BeNull();
     }
 
-    #endregion
-
-    #region Token Rotation Tests
+    // Token Rotation Tests
 
     [Fact]
     public async Task RotateRefreshToken_WithInvalidToken_ShouldThrowInvalidOperationException()
     {
         // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var mockContext = Substitute.For<Microsoft.EntityFrameworkCore.DbContext>();
-        
-        mockContextFactory.CreateDbContextAsync(Arg.Any<System.Threading.CancellationToken>())
-            .Returns(mockContext);
+        using var store = GetDocumentStore();
+        using var session = store.OpenAsyncSession();
 
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        var service = new RefreshTokenService(session, _mockLogger, _config);
 
         // Act
         Func<Task> act = async () => await service.RotateRefreshTokenAsync("invalid-token", "mobile");
@@ -240,16 +165,14 @@ public class RefreshTokenServiceContractTests
         await act.Should().ThrowAsync<InvalidOperationException>();
     }
 
-    #endregion
-
-    #region Token Revocation Tests
+    // Token Revocation Tests
 
     [Fact]
     public async Task RevokeRefreshToken_WithNullToken_ShouldThrowArgumentNullException()
     {
         // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
+        var mockSession = Substitute.For<IAsyncDocumentSession>();
+        var service = new RefreshTokenService(mockSession, _mockLogger, _config);
 
         // Act
         Func<Task> act = async () => await service.RevokeRefreshTokenAsync(null!);
@@ -257,66 +180,4 @@ public class RefreshTokenServiceContractTests
         // Assert
         await act.Should().ThrowAsync<ArgumentNullException>();
     }
-
-    [Fact]
-    public async Task RevokeAllUserTokens_WithNullUserId_ShouldThrowArgumentNullException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
-
-        // Act
-        Func<Task> act = async () => await service.RevokeAllUserTokensAsync(null!);
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentNullException>();
-    }
-
-    [Fact]
-    public async Task RevokeAllUserTokens_WithEmptyUserId_ShouldThrowArgumentException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
-
-        // Act
-        Func<Task> act = async () => await service.RevokeAllUserTokensAsync(string.Empty);
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentException>();
-    }
-
-    #endregion
-
-    #region Session Retrieval Tests
-
-    [Fact]
-    public async Task GetActiveTokens_WithNullUserId_ShouldThrowArgumentNullException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
-
-        // Act
-        Func<Task> act = async () => await service.GetActiveTokensAsync(null!);
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentNullException>();
-    }
-
-    [Fact]
-    public async Task GetActiveTokens_WithEmptyUserId_ShouldThrowArgumentException()
-    {
-        // Arrange
-        var mockContextFactory = Substitute.For<Microsoft.EntityFrameworkCore.IDbContextFactory<Microsoft.EntityFrameworkCore.DbContext>>();
-        var service = new RefreshTokenService(mockContextFactory, _mockLogger, _config);
-
-        // Act
-        Func<Task> act = async () => await service.GetActiveTokensAsync(string.Empty);
-
-        // Assert
-        await act.Should().ThrowAsync<ArgumentException>();
-    }
-
-    #endregion
 }

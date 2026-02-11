@@ -1,25 +1,10 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
+using Electra.Persistence.Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace Electra.Persistence.Core;
-
-public interface IUnitOfWork : IDisposable
-{
-    public int SaveChanges();
-}
-
-public interface IAsyncUnitOfWork : IDisposable
-{
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    public Task StartTransactionAsync(CancellationToken cancellationToken = default);
-    public Task CommitTransactionAsync(CancellationToken cancellationToken = default);
-    public Task RollbackTransactionAsync(CancellationToken cancellationToken = default);
-}
+namespace Electra.Persistence.EfCore;
 
 
-public abstract class UnitOfWorkEfCore(DbContext context) : IUnitOfWork, IAsyncUnitOfWork
+public abstract class UnitEfCoreOfWorkEfCore(DbContext context) : IUnitOfWork, IAsyncUnitOfWork
 {
     private Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction? _transaction;
     public DbContext Context { get; } = context;

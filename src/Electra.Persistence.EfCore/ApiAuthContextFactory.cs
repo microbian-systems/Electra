@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Design;
+﻿using Electra.Persistence.EfCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace Electra.Common.Web;
 
@@ -17,7 +20,7 @@ public class ApiAuthContextFactory : IDesignTimeDbContextFactory<ApiAuthContext>
             .Build();
         var connString = config.GetConnectionString("DefaultConnection");
         var builder = new DbContextOptionsBuilder<ApiAuthContext>();
-        builder.UseSqlite(connString, b
+        builder.UseSqlServer(connString, b
             => b.MigrationsAssembly(typeof(ApiAuthContext).Assembly.FullName));
 
         return new ApiAuthContext(builder.Options);

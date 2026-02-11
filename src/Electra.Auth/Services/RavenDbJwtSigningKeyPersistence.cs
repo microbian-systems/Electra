@@ -1,6 +1,7 @@
 using Electra.Models.Entities;
 using Electra.Persistence.RavenDB;
 using Microsoft.Extensions.Logging;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 
 namespace Electra.Auth.Services;

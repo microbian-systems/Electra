@@ -1,17 +1,15 @@
 using Electra.Persistence.Core;
-using Electra.Persistence.Core.EfCore;
+using Electra.Persistence.EfCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence.Extensions;
+namespace Electra.Persistence;
 
 public static class PersistenceExtensions
 {
-    public static IServiceCollection AddDataLayerPersistence<T>(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host)
-        where T : DbContext
+    public static IServiceCollection AddDataLayerPersistence(this IServiceCollection services, IConfiguration config, IWebHostEnvironment host)
     {
         var sp = services.BuildServiceProvider();
         var log = sp.GetRequiredService<ILogger<object>>();
@@ -19,11 +17,11 @@ public static class PersistenceExtensions
         log.LogInformation($"Adding data later persistence rules");
 
         // todo - add a configuration to choose the db provider at startup
-        services.AddDbContext<ElectraDbContext>(o =>
-        {
-            //o.UseInMemoryDatabase("Electra");
-            o.UseSqlServer(config.GetConnectionString("localdb"));
-        });
+        // services.AddDbContext<ElectraDbContext>(o =>
+        // {
+        //     //o.UseInMemoryDatabase("Electra");
+        //     o.UseSqlServer(config.GetConnectionString("localdb"));
+        // });
         // services.AddDbContext<ElectraDbContext>(o =>
         //     o.UseSqlite(
         //         config.GetConnectionString("sqlite"),
@@ -45,6 +43,6 @@ public static class PersistenceExtensions
         return services;
     }
 
-    public static IServiceCollection AddDataLayerPersistence(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment host)
-        => AddDataLayerPersistence<ElectraDbContext>(services, configuration, host);
+    // public static IServiceCollection AddDataLayerPersistence(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment host)
+    //     => AddDataLayerPersistence<ElectraDbContext>(services, configuration, host);
 }

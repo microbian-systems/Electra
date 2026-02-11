@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
 
-namespace Feeds.DataAccess.Core
+namespace Electra.Persistence.EfCore
 {
     public static partial class MultipleResultSets
     {

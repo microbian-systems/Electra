@@ -1,9 +1,12 @@
 ﻿using Elasticsearch.Net;
-using Electra.Persistence;
-using Electra.Persistence.Elastic;
+using Electra.Common;
+using Electra.Core.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Nest;
 
-namespace Electra.Common.Web.Extensions;
+namespace Electra.Persistence.Elastic;
 
 public static class ElasticExtensions
 {

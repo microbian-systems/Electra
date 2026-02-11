@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Electra.Common.Extensions;
 using Electra.Core.Entities;
+using Electra.Persistence.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence.Core.EfCore;
+namespace Electra.Persistence.EfCore;
 
 public interface IGenericEntityFrameworkRepository<T, TKey> : IGenericRepository<T, TKey>
     where T : IEntity<TKey>, new() where TKey : IEquatable<TKey>

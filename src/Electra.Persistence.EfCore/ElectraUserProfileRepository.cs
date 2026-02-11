@@ -1,7 +1,7 @@
 using Electra.Models.Entities;
-using Electra.Persistence.Core.EfCore;
+using Microsoft.Extensions.Logging;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.EfCore;
 
 public interface IElectraUserProfileRepository : IGenericEntityFrameworkRepository<ElectraUserProfile>{}
 

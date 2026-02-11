@@ -1,7 +1,7 @@
-﻿using Electra.Models;
-using Electra.Models.Entities;
+﻿using Electra.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace Electra.Common.Web;
+namespace Electra.Persistence.EfCore;
 
 public class ApiAuthContext : DbContext
 {

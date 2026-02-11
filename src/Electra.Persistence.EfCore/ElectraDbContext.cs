@@ -2,12 +2,11 @@ using Electra.Core;
 using Electra.Core.Entities;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
-using Electra.Models.Geo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Electra.Persistence;
+namespace Electra.Persistence.EfCore;
 
 
 public class ElectraDbContext : IdentityDbContext<ElectraUser, ElectraRole, string,
