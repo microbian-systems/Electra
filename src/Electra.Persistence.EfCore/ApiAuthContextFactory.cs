@@ -1,9 +1,8 @@
-﻿using Electra.Persistence.EfCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Electra.Common.Web;
+namespace Electra.Persistence.EfCore;
 
 public class ApiAuthContextFactory : IDesignTimeDbContextFactory<ApiAuthContext>
 {

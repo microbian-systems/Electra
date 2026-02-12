@@ -13,7 +13,7 @@ public static class DefaultApiExtensions
         builder.RemoveHeaders();
         builder.AddDefaultApiServices();
         builder.Services.AddHealthChecks();
-        builder.AddApiKeyGenerator();
+        //builder.AddApiKeyGenerator();
         builder.AddJwtAuthorization();
         //builder.AddApiAuthDbContext();
 

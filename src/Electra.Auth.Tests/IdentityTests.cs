@@ -4,8 +4,8 @@ using Electra.Models;
 using Electra.Models.Entities;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 
 namespace Electra.Auth.Tests;

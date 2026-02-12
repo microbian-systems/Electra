@@ -14,8 +14,10 @@
     </ItemGroup>
     
     <ItemGroup>
+      <ProjectReference Include="..\Aero.Identity\Aero.Identity.csproj" />
       <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
       <ProjectReference Include="..\Electra.Persistence.Core\Electra.Persistence.Core.csproj" />
+      <ProjectReference Include="..\Electra.Persistence\Electra.Persistence.csproj" />
     </ItemGroup>
     
     <ItemGroup>
@@ -23,6 +25,8 @@
       <None Include="MultipleResultSetWrapper.cs" />
       <Compile Remove="MultipleResultSetHelper.cs" />
       <None Include="MultipleResultSetHelper.cs" />
+      <Compile Remove="BlogDbContext.cs" />
+      <None Include="BlogDbContext.cs" />
     </ItemGroup>
 
 </Project>
