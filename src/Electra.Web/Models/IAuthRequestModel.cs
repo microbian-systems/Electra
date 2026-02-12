@@ -1,4 +1,6 @@
-﻿namespace Electra.Common.Web.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Electra.Common.Web.Models;
 
 public interface IAuthRequestModel
 {

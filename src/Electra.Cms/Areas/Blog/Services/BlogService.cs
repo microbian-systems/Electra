@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Electra.Cms.Areas.Blog.Data;
 using Electra.Cms.Areas.Blog.Entities;
 using Electra.Models;

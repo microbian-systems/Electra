@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
 using FluentEmail.Core;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Common.Web.Email;
 

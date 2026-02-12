@@ -1,0 +1,55 @@
+﻿@using ZauberCMS.Components.Editors.Settings
+@using ZauberCMS.Components.Editors.Models
+@using TinyMCE.Blazor
+@implements ZauberCMS.Core.Content.Interfaces.IContentProperty
+
+<Editor
+    Field="@(() => Value)"
+    Conf="@EditorConf"
+    Value="@Value"
+    ApiKey="@ApiKey"
+    ValueChanged="@(s => OnChange(s))"
+/>
+
+@code {
+    //https://www.tiny.cloud/docs/tinymce/latest/menus-configuration-options/
+    [Parameter] public string? Value { get; set; } = string.Empty;
+    [Parameter] public string? Settings { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public Content? Content { get; set; }
+    
+    [CascadingParameter] public IModalService? ModalService { get; set; }
+    
+    public string Name { get; set; } = "Text Editor (TinyMCE)";
+    public string Alias { get; set; } = "ZauberCMS.TinyMce";
+    public string Icon { get; set; } = "edit_note";
+    public string Description { get; set; } = "TinyMCE Rich Text Editor";
+    public Type? SettingsComponent { get; set; } = typeof(TinyMcePropertySettings);
+    public List<string> Scripts { get; set; } = [];
+    public List<string> Styles { get; set; } = [];
+    public bool FullWidth { get; set; }
+    
+    private TinyMcePropertySettingsModel SettingsModel { get; set; } = new();
+    private string? ApiKey { get; set; }
+    
+    private Dictionary<string, object> EditorConf { get; set; } = new()
+    {
+        { "plugins", "preview searchreplace autolink directionality code visualblocks visualchars fullscreen image link media codesample table charmap pagebreak nonbreaking anchor advlist lists wordcount charmap emoticons" },
+        { "image_advtab", true }
+    };
+
+    protected override void OnInitialized()
+    {
+        SettingsModel = Settings.FromJson<TinyMcePropertySettingsModel>();
+        ApiKey = SettingsModel.SelectedApiKey;
+        EditorConf.Add("menubar", SettingsModel.ShowMenuBar ? string.Join(" ", SettingsModel.SelectedMenuBar) : "false");
+        EditorConf.Add("toolbar", string.Join(" ", SettingsModel.SelectedToolBar));
+    }
+
+    void OnChange(string html)
+    {
+        Value = html;
+        ValueChanged.InvokeAsync(html);
+    }
+}
+

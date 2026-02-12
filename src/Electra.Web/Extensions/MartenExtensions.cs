@@ -1,6 +1,10 @@
 ﻿using Electra.Persistence.Marten;
 using JasperFx;
 using Marten;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Electra.Common.Web.Extensions;
 

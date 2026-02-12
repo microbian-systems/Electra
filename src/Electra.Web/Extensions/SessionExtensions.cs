@@ -1,3 +1,6 @@
+using System.Text.Json;
+using Microsoft.AspNetCore.Http;
+
 namespace Electra.Common.Web.Extensions;
 
 public static class SessionExtensions

@@ -1,6 +1,10 @@
-﻿using Electra.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Electra.Core;
 using Electra.Models.Entities;
 using Electra.Persistence.RavenDB.Identity;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Commands;
 using Raven.Client.Documents.Operations.CompareExchange;
 

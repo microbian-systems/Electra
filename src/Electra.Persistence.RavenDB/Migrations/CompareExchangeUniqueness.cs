@@ -1,4 +1,7 @@
-﻿using Raven.Client.Documents.Operations;
+﻿using System;
+using System.Linq;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Operations;
 using Raven.Client.Documents.Operations.CompareExchange;
 
 namespace Electra.Persistence.RavenDB.Migrations;

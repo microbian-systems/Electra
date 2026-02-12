@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
 using Scalar.AspNetCore;
 
 namespace Electra.Common.Web.Extensions;

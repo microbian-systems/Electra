@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Electra.Cms.Areas.Blog.Services;
 
 public interface IGitHubContentService

@@ -1,3 +1,4 @@
+using System;
 using Electra.Common.Web.Exceptions;
 using Electra.Common.Web.Middleware;
 using Electra.Services;
@@ -7,9 +8,16 @@ using Electra.Persistence;
 using Electra.Services.Geo;
 using Electra.Services.Mail;
 using Electra.Web.Extensions;
+using Mapster;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Electra.Common.Web.Extensions;
 

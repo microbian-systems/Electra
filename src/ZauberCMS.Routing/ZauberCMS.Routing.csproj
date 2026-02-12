@@ -1,0 +1,96 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>ZauberCMS.Routing</PackageId>
+        <Version>4.1.0</Version>
+        <Authors>Lee Messenger</Authors>
+        <Description>ZauberCMS routing package</Description>
+        <PackageTags>Web</PackageTags>
+        <LocalNugetSource>$(MSBuildProjectDirectory)\..\NugetSource</LocalNugetSource>
+        <PackageProjectUrl>https://github.com/YodasMyDad/ZauberCMS</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/YodasMyDad/ZauberCMS</RepositoryUrl>
+        <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <SupportedPlatform Include="browser" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.3" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\ZauberCMS.Components\ZauberCMS.Components.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Shared\Components\RenderCustomContent\Default.cshtml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="ProxyViewDataFeature.cs" />
+      <Compile Remove="CmsPageResult.cs" />
+    </ItemGroup>
+
+    <Target Name="CopyNuGetPackage" AfterTargets="Pack">
+        <PropertyGroup>
+            <PackageOutputDir>$(OutputPath)..\</PackageOutputDir>
+            <GeneratedPackage>$(PackageOutputDir)\$(PackageId).$(Version).nupkg</GeneratedPackage>
+        </PropertyGroup>
+        <Copy SourceFiles="$(GeneratedPackage)" DestinationFolder="$(LocalNugetSource)" />
+    </Target>
+    
+</Project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

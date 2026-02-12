@@ -1,0 +1,32 @@
+﻿
+<div class="flex items-center justify-center">
+    @foreach (var extData in ExtendedData)
+    {
+        <div class="w-full bg-white shadow-md rounded-md flex">
+            <div class="flex-1 p-4">
+                <div class="mb-4">
+                    <RadzenTextBox Value="@extData.Key" ValueChanged="@((string e) => {  })" />
+                </div>
+                <div>
+                    <RadzenTextArea Value="@extData.Key" ValueChanged="@((string e) => {  })" />
+                </div>
+            </div>
+            <div class="flex flex-col items-center justify-center p-4 space-y-2">
+                <button class="material-icons text-2xl text-gray-600 hover:text-gray-900">remove</button>
+            </div>
+        </div>
+    }
+    
+</div>
+
+
+@code {
+    [Parameter] public Dictionary<string, object> ExtendedData { get; set; } = [];
+    [Parameter] public EventCallback<Dictionary<string, object>> ValueChanged { get; set; }
+
+    private async Task Changed()
+    {
+        await ValueChanged.InvokeAsync(ExtendedData);
+    }
+
+}

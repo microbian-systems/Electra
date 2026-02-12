@@ -1,0 +1,89 @@
+﻿@using ZauberCMS.Core.Data.Parameters
+@using ZauberCMS.Core.Membership.Models
+@implements ZauberCMS.Core.Sections.Interfaces.ISectionDashboard
+
+<RadzenDataGrid AllowFiltering="true"
+                FilterPopupRenderMode="PopupRenderMode.Initial"
+                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                AllowPaging="true"
+                PageSize="@AmountPerPage"
+                AllowSorting="true"
+                LoadData="@LoadData"
+                IsLoading="@IsLoading"
+                Count="@Count"
+                Data="@Users"
+                SelectionMode="DataGridSelectionMode.Single"
+                RowSelect="@((User value) => OnRowSelect(value))"
+                PagerHorizontalAlign="HorizontalAlign.Center">
+    @*@bind-Value="@SelectedContent"*@
+    <Columns>
+        <RadzenDataGridColumn Property="Username" Title="Username"/>
+        <RadzenDataGridColumn Property="Email" Title="Email"/>
+        <RadzenDataGridColumn Property="DateUpdated" Title="Last Updated">
+            <Template Context="data">
+                @data.DateUpdated.Humanize()
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    [Parameter] public int AmountPerPage { get; set; } = 20;
+    [Parameter] public bool RefreshPage { get; set; }
+    
+    public string TabName => "Latest Users";
+    public int SortOrder => 0;
+    public string SectionAlias => Constants.Sections.UsersSection;
+
+    private IEnumerable<User> Users { get; set; } = [];
+    private int Count { get; set; } 
+    private bool IsLoading { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData(new LoadDataArgs {Top = AmountPerPage});
+    }
+    
+    async Task LoadData(LoadDataArgs args)
+    {
+        IsLoading = true;
+
+        await Task.Yield();
+
+        var command = new DataGridParameters<User>();
+        
+        if (args.Top != null && args.Top != 0)
+        {
+            command.Take = args.Top.Value;
+        }
+
+        if (args.Skip != null)
+        {
+            command.Skip = args.Skip.Value;
+        }
+
+        if (!string.IsNullOrEmpty(args.Filter))
+        {
+            // Filter via the Where method
+            command.Filter = args.Filter;
+        }
+
+        // Sort via the OrderBy method
+        command.OrderBy = !string.IsNullOrEmpty(args.OrderBy) ? args.OrderBy : "DateCreated desc";
+
+        var result = await DataService.GetDataGridAsync(command);
+        Count = result.Count;
+        Users = result.Items;
+
+        IsLoading = false;
+    }
+
+    private void OnRowSelect(object value)
+    {
+        if (value is User selectedRow)
+        {
+            NavigationManager.NavigateTo($"{Urls.AdminUsersEdit}/{selectedRow.Id}", RefreshPage);
+        }
+    }
+
+}

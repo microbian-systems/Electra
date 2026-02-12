@@ -1,3 +1,5 @@
+using System;
+
 namespace Electra.Core.Extensions;
 
 public static class SlugGenerator

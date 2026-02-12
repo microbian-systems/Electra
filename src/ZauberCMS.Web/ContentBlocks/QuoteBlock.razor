@@ -1,0 +1,19 @@
+﻿@using RenderMode = Microsoft.AspNetCore.Mvc.Rendering.RenderMode
+@implements ZauberCMS.Core.Content.Interfaces.IContentBlockView
+@if (Content != null)
+{
+    <figure class="text-end">
+        <blockquote class="blockquote">
+            <p>@(Content.GetValue<string>("Quote"))</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            @(Content.GetValue<string>("Cite"))
+        </figcaption>
+    </figure>
+}
+
+@code{
+    [Parameter] public Content? Content { get; set; }
+    public string ContentTypeAlias => "Quote";
+    public RenderMode RenderMode => RenderMode.Static;
+}

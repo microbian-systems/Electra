@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using FluentEmail.Core;
 using Electra.Common.Web.Extensions;
 using Electra.Core.Identity;
@@ -5,7 +7,9 @@ using Electra.Models.Entities;
 using Electra.Services;
 using Electra.Services.Geo;
 using Electra.Services.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 using ThrowGuard;
 
 namespace Electra.Common.Web.Services;

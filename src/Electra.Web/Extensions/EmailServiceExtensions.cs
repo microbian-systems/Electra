@@ -1,4 +1,8 @@
-﻿namespace Electra.Common.Web.Extensions;
+﻿using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Electra.Common.Web.Extensions;
 
 public static class EmailServiceExtensions
 {

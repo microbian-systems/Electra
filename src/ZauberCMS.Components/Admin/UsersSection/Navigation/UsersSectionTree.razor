@@ -1,0 +1,106 @@
+﻿@using ZauberCMS.Core.Membership.Models
+@using ZauberCMS.Core.Membership.Parameters
+@using ZauberCMS.Core.Shared.Models
+@using ZauberCMS.Core.Shared
+@implements ZauberCMS.Core.Sections.Interfaces.ISectionNav
+
+<UsersTree
+    Data="@TreeItems"
+    OnChange="OnChange"
+    @bind-Value="@Selection" />
+
+@code {
+    public int SortOrder => 0;
+    public string SectionNavGroupAlias => Constants.Sections.SectionNavGroups.UsersNavGroup;
+    
+    [Inject] public AppState AppState { get; set; } = null!;
+    [Inject] public ContextMenuService ContextMenuService { get; set; } = null!;
+    [Inject] public NotificationService NotificationService { get; set; } = null!;
+    
+    private IEnumerable<TreeStub> TreeItems { get; set; } = [];
+    private object? Selection { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await DataRefresh();
+        AppState.OnUserChanged += HandleUsersChanged;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnUserChanged -= HandleUsersChanged;
+    }
+
+    private async Task HandleUsersChanged(User? user, string username)
+    {
+        await DataRefresh();
+        StateHasChanged();
+    }
+
+    private async Task DataRefresh()
+    {
+        var allRoles = await MembershipService.QueryRolesAsync(new QueryRolesParameters
+        {
+            OrderBy = GetRolesOrderBy.Name,
+            AmountPerPage = 100 // Should never be more than 100 roles!
+        });
+
+        var tree = new List<TreeStub>();
+        var usersTree = new TreeStub
+        {
+            Id = Constants.Guids.UsersTreeRootId,
+            Name = "Users",
+            Icon = "people",
+            SortOrder = 1
+        };
+
+
+        foreach (var role in allRoles.Items)
+        {
+            usersTree.Branches.Add(new TreeBranch
+            {
+                Icon = "people",
+                Id = role.Id,
+                Name = role.Name,
+                Url = $"{Urls.AdminUsersList}/{role.Id}",
+                BranchType = typeof(User)
+            });
+        }
+
+        var rolesTree = new TreeStub
+        {
+            Id = Constants.Guids.RolesTreeRootId,
+            Name = "Roles",
+            Icon = "person_add",
+            SortOrder = 2
+        };
+
+        foreach (var role in allRoles.Items)
+        {
+            rolesTree.Branches.Add(new TreeBranch
+            {
+                Icon = "person_add",
+                Id = role.Id,
+                Name = role.Name,
+                Url = $"{Urls.AdminUsersEditRole}/{role.Id}",
+                BranchType = typeof(Role)
+            });
+        }
+
+        tree.Add(usersTree);
+        tree.Add(rolesTree);
+        TreeItems = tree;
+    }
+
+    private void OnChange()
+    {
+        switch (Selection)
+        {
+            case TreeBranch branch:
+                if (branch.Url != null) NavigationManager.NavigateTo(branch.Url);
+                break;
+        }
+    }
+
+
+}

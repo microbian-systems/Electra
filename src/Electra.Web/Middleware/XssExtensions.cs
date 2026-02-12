@@ -1,4 +1,7 @@
+using System;
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Electra.Common.Web.Middleware;
 

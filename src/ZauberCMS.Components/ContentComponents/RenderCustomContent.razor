@@ -1,0 +1,46 @@
+﻿@using ZauberCMS.Core.Content.Interfaces
+@using ZauberCMS.Core.Plugins
+
+@if (CustomContentComponents.Any() && CustomComponents != null && CustomComponents.Any())
+{
+    @foreach (var customComponentName in CustomComponents.Where(x => !x.IsNullOrWhiteSpace()))
+    {
+        if (CustomContentComponents.TryGetValue(customComponentName, out var customContentComponent))
+        {
+            @RenderCustomComponent(customContentComponent)
+        }
+    }
+}
+
+@code {
+    [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
+
+    [Parameter] public List<string>? CustomComponents { get; set; }
+    [Parameter] public Content? Content { get; set; }
+
+    Dictionary<string, ICustomContentComponent> CustomContentComponents { get; set; } = new();
+
+    private Dictionary<string, object> GetParameters()
+    {
+        return new Dictionary<string, object>
+        {
+            [nameof(ICustomContentComponent.Content)] = Content!
+        };
+    }
+
+    protected override void OnInitialized()
+    {
+        CustomContentComponents = ExtensionManager.GetInstances<ICustomContentComponent>(true);
+    }
+
+    private RenderFragment RenderCustomComponent(ICustomContentComponent customContentComponent) => builder =>
+    {
+        var customComponentType = customContentComponent.GetType();
+        builder.OpenComponent(0, customComponentType);
+        foreach (var parameter in GetParameters())
+        {
+            builder.AddAttribute(1, parameter.Key, parameter.Value);
+        }
+        builder.CloseComponent();
+    };
+}

@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 namespace Electra.Services;
 
 public interface ISmsService

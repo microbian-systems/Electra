@@ -1,6 +1,11 @@
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Electra.Models.Entities;
+using LanguageExt;
 using Microsoft.Extensions.Logging;
+using Raven.Client.Documents.Session;
 
 namespace Electra.Persistence.RavenDB;
 
@@ -33,5 +38,15 @@ public class ElectraUserRepository : RavenDbRepositoryBase<ElectraUser>, IElectr
     public ElectraUserRepository(IAsyncDocumentSession session, ILogger<ElectraUserRepository> log) : base(session, log)
     {
         session.Advanced.WaitForIndexesAfterSaveChanges(TimeSpan.FromSeconds(1));
+    }
+
+    public override async Task<IEnumerable<ElectraUser>> GetByIdsAsync(IEnumerable<string> ids)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override async Task<IEnumerable<ElectraUser>> FindAsync(Expression<Func<ElectraUser, bool>> predicate)
+    {
+        throw new NotImplementedException();
     }
 }

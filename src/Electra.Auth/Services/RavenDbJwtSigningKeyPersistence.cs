@@ -1,5 +1,6 @@
 using Electra.Persistence.RavenDB;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 
 namespace Electra.Auth.Services;

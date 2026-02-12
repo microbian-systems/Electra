@@ -1,9 +1,16 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Electra.Core.Entities;
 using Electra.Persistence.Core.Functional;
+using LanguageExt;
 using Microsoft.Extensions.Logging;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using static System.GC;
-
+using static LanguageExt.Prelude;
 
 namespace Electra.Persistence.RavenDB;
 

@@ -1,4 +1,6 @@
-﻿namespace Electra.Common.Web.Models;
+﻿using System;
+
+namespace Electra.Common.Web.Models;
 
 public class AuthResponse
 {

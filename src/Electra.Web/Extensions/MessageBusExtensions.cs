@@ -1,4 +1,6 @@
-﻿namespace Electra.Common.Web.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace Electra.Common.Web.Extensions;
 
 public static class MessageBusExtensions
 {

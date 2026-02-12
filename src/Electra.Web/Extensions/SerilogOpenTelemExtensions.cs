@@ -1,5 +1,10 @@
+using System;
+using System.Collections.Generic;
 using Honeycomb.OpenTelemetry;
 using Honeycomb.Serilog.Sink;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Enrichers.Span;
 using Serilog.Exceptions;

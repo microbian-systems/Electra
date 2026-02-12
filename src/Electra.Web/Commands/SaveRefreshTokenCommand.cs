@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Electra.Persistence.Entities;
 using Electra.Common.Commands;
 using Electra.Core.Entities;

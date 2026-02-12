@@ -1,0 +1,58 @@
+﻿@using ZauberCMS.Components.Editors.Models
+@using ZauberCMS.Core.Content.Parameters
+@implements ZauberCMS.Core.Content.Interfaces.IContentPropertySettings<ContentPickerSettings>
+
+<EditorRow>
+    <LeftColumn>
+        <PropertyInfo Name="Max Allowed Items" Description="The maximum allowed items to be picked"/>
+    </LeftColumn>
+    <CentreColumn>
+        <RadzenNumeric @bind-Value="@Settings.MaxAllowed" Style="width: 100%;" InputAttributes="@(new Dictionary<string, object> { { "aria-label", "enter max allowed" } })"/>
+    </CentreColumn>
+</EditorRow>
+
+<EditorRow>
+    <LeftColumn>
+        <PropertyInfo Name="Content Types" Description="Select the allowed content types for this picker"/>
+    </LeftColumn>
+    <CentreColumn>
+        <RadzenCheckBoxList Orientation="Orientation.Vertical" Data="@Data" @bind-Value="@Settings.AllowedContentTypes" TValue="Guid" TextProperty="Name" ValueProperty="Id"/>
+    </CentreColumn>
+</EditorRow>
+
+<EditorRow>
+    <LeftColumn>
+        <PropertyInfo Name="Root Content Only" Description="Only allow the user to pick content that is in the root of the tree"/>
+    </LeftColumn>
+    <CentreColumn>
+        <RadzenSwitch @bind-Value="@Settings.OnlyRootContent" />
+    </CentreColumn>
+</EditorRow>
+
+<RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Right" AlignItems="AlignItems.Center" class="rz-mt-3">
+    <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Text="Store Settings" Click="Save"/>
+</RadzenStack>
+
+@code {
+    [Parameter] public string? SettingsModel { get; set; }
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    public ContentPickerSettings Settings { get; set; } = new();
+    private IEnumerable<ContentType> Data { get; set; } = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        var contentTypes = await ContentService.QueryContentTypesAsync(new QueryContentTypesParameters
+        {
+            OrderBy = GetContentTypesOrderBy.Name,
+            AmountPerPage = 200
+        });
+        Data = contentTypes.Items;
+
+        Settings = this.GetPropertySettings();
+    }
+
+    private async Task Save()
+    {
+        await this.SavePropertySettings(Settings);
+    }
+}

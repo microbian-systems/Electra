@@ -1,4 +1,7 @@
-﻿namespace Electra.Common.Web.Models;
+﻿using System.Collections.Generic;
+using System.Net;
+
+namespace Electra.Common.Web.Models;
 
 
 public interface IWebResponseModel 

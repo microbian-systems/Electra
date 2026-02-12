@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Electra.Models.Entities;
 
 namespace Electra.Cms.Areas.CmsAdmin.Models

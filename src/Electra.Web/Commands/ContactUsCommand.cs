@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Electra.Persistence.Entities;
 using Electra.Models;
 using Electra.Common.Commands;

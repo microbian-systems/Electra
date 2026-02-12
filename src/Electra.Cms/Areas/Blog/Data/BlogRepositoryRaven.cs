@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Electra.Cms.Areas.Blog.Entities;
 using Electra.Models;
 using Electra.Persistence.RavenDB;
@@ -5,6 +6,7 @@ using LanguageExt;
 using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
+using System.Linq;
 
 namespace Electra.Cms.Areas.Blog.Data;
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Electra.Core.Extensions;
 
 namespace Electra.Common.Extensions;
 
@@ -13,19 +14,8 @@ public static class ObjectExtensions
     /// </summary>
     /// <param name="obj">the object to serialize</param>
     /// <returns>a json string</returns>
-    public static string Dump(this object obj) => ToJson(obj);
-        
-    /// <summary>
-    /// Converts an object to Json (max 3 levels)
-    /// </summary>
-    /// <param name="obj">the object to serialize</param>
-    /// <returns>a json string</returns>
-    public static string ToJson(this object obj)
-    {
-        var json = JsonSerializer.Serialize(obj);
-        return json;
-    }
-        
+    public static string Dump(this object obj) => obj.ToJson();
+    
     public static string ToQueryString(this object obj)
     {
         if (obj == null)

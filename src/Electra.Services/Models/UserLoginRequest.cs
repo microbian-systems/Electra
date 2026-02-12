@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Electra.Services.Models;
 
 public record UserLoginRequest

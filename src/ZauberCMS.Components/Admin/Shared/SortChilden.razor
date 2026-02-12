@@ -1,0 +1,37 @@
+﻿@using TupleExtensions = ZauberCMS.Core.Extensions.TupleExtensions
+@typeparam T where T : ZauberCMS.Core.Shared.Interfaces.IBaseItem
+
+<SortableList Id="SortContentItems" Items="@Items" OnUpdate="@SortList" Context="item">
+    <SortableItemTemplate>
+        <div>
+            <PickerItem Text="@item.Name"/>
+        </div>
+    </SortableItemTemplate>
+</SortableList>
+
+<RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Right" AlignItems="AlignItems.Center" class="rz-mt-3">
+    <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Icon="save" Text="Save" Click="Save"/>
+</RadzenStack>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
+    [Parameter] public Guid ItemId { get; set; }
+    [Parameter] public List<T> Items { get; set; } = [];
+    
+    private void SortList((int oldIndex, int newIndex) indices)
+    {
+        TupleExtensions.SortList(indices, Items);
+        StateHasChanged();
+    }
+
+    private async Task Save()
+    {
+        @for (var i = 0; i < Items.Count; i++)
+        {
+            var content = Items[i];
+            content.SortOrder = i + 1;
+        }
+        
+        await BlazoredModal.CloseAsync(ModalResult.Ok(Items));
+    }
+}

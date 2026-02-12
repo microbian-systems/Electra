@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Electra.Models;
 using Electra.Models.Entities;
 using Electra.Persistence.Core;

@@ -1,4 +1,8 @@
-﻿namespace Electra.Core.Json.Converters;
+﻿using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace Electra.Core.Json.Converters;
 
 public class StringToIntConverter : JsonConverter<int>
 {

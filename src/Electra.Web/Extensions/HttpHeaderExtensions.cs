@@ -1,4 +1,7 @@
-﻿namespace Electra.Common.Web.Extensions;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+
+namespace Electra.Common.Web.Extensions;
 
 public static class HttpHeaderExtensions
 {

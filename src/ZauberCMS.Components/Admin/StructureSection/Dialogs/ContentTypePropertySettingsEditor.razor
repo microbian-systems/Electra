@@ -1,0 +1,54 @@
+﻿@using ZauberCMS.Core.Content.Interfaces
+@using ZauberCMS.Core.Shared.Models
+@using ZauberCMS.Core.Plugins
+
+@if (SettingsComponent != null)
+{
+    <DynamicComponent Type="@SettingsComponent" Parameters="@SettingsParams" />
+}
+else
+{
+    @Message
+}
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
+    [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
+    
+    [Parameter] public PropertyType PropertyType { get; set; } = null!;
+    
+    private Dictionary<string, IContentProperty> AllContentTypeProperties { get; set; } = new();
+    private Type? SettingsComponent { get; set; }
+    private Dictionary<string, object> SettingsParams { get; set; } = new();
+    private string? Message { get; set; }
+    
+    protected override void OnInitialized()
+    {
+        AllContentTypeProperties = ExtensionManager.GetInstances<IContentProperty>(true);
+        if(PropertyType.Component != null && AllContentTypeProperties.TryGetValue(PropertyType.Component, out var contentProperty))
+        {
+            if (contentProperty.SettingsComponent != null)
+            {
+                SettingsComponent = contentProperty.SettingsComponent;
+                SettingsParams = new Dictionary<string, object>
+                {
+                    ["SettingsModel"] = PropertyType.Settings ?? string.Empty,
+                    ["ValueChanged"] = EventCallback.Factory.Create<string>(this, OnSettingsValueChanged)
+                };   
+            }
+            else
+            {
+                Message = "No settings available for this property";
+            }
+        }
+        else
+        {
+            Message = "Can't find content property?";
+        }
+    }
+
+    private async Task OnSettingsValueChanged(string newSettings)
+    {
+        await BlazoredModal.CloseAsync(ModalResult.Ok(newSettings));
+    }
+}

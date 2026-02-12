@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Electra.Cms.Models
 {
     public class BlockDocument

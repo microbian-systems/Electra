@@ -1,0 +1,8 @@
+﻿
+<div class="font-semibold">@Content?.Name</div>
+<div class="text-slate-500 text-sm">@ContentType?.Name</div>
+        
+@code {
+    [Parameter] public Content? Content { get; set; }
+    [Parameter] public ContentType? ContentType { get; set; }
+}

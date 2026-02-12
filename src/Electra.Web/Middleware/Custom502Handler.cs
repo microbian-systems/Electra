@@ -1,4 +1,9 @@
-﻿namespace Electra.Common.Web.Middleware;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+
+namespace Electra.Common.Web.Middleware;
 
 public class Custom502Handler(RequestDelegate next)
 {

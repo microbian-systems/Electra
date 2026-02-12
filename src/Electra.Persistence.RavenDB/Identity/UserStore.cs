@@ -1,4 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading;
+using System.Threading.Tasks;
 using Electra.Core;
 using Electra.Core.Identity;
 using Electra.Models.Entities;
@@ -6,8 +11,10 @@ using JasperFx.Core.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Operations.CompareExchange;
+using Raven.Client.Documents.Session;
 
 namespace Electra.Persistence.RavenDB.Identity;
 
@@ -342,13 +349,11 @@ public class UserStore<TUser, TRole> :
         if (options.Value.UseStaticIndexes)
         {
             var key = loginProvider + "|" + providerKey;
-            return await DbSession.Query<TUser, IdentityUserIndex<TUser>>()
-                .Where(u => u.Logins.Any(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey))
+            return await RavenQueryableExtensions.Where(DbSession.Query<TUser, IdentityUserIndex<TUser>>(), u => u.Logins.Any(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey))
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
-        var usersWithProviderKey = await DbSession.Query<TUser>()
-            .Where(p => p.Logins.Any(l => l.ProviderKey == providerKey))
+        var usersWithProviderKey = await RavenQueryableExtensions.Where(DbSession.Query<TUser>(), p => p.Logins.Any(l => l.ProviderKey == providerKey))
             .ToListAsync(cancellationToken);
         return usersWithProviderKey.FirstOrDefault(p => p.Logins.Any(l => l.LoginProvider == loginProvider));
     }
@@ -414,8 +419,7 @@ public class UserStore<TUser, TRole> :
             throw new ArgumentNullException(nameof(claim));
         }
 
-        var list = await UserQuery()
-            .Where(u => u.Claims.Any(c => c.ClaimType == claim.Type && c.ClaimValue == claim.Value))
+        var list = await RavenQueryableExtensions.Where(UserQuery(), u => u.Claims.Any(c => c.ClaimType == claim.Type && c.ClaimValue == claim.Value))
             .ToListAsync(cancellationToken);
 
         return list;
@@ -504,8 +508,7 @@ public class UserStore<TUser, TRole> :
             throw new ArgumentNullException(nameof(roleName));
         }
 
-        var users = await UserQuery()
-            .Where(u => u.RoleNames.Contains(roleName))
+        var users = await RavenQueryableExtensions.Where(UserQuery(), u => u.RoleNames.Contains(roleName))
             .ToListAsync(cancellationToken);
 
         return users;

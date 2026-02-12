@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Electra.Core.Entities;
 
 namespace Electra.Models.Entities;

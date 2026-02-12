@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using System.Text.Json.Serialization;
 using Electra.Core.Entities;
 
 namespace Electra.Services.Models;

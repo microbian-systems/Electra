@@ -1,4 +1,6 @@
-﻿namespace Electra.Core.Extensions;
+﻿using System;
+
+namespace Electra.Core.Extensions;
 
 public static class Numbers
 {

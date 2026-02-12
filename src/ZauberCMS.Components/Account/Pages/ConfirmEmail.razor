@@ -1,0 +1,58 @@
+﻿@page "/Account/ConfirmEmail"
+@using Microsoft.Extensions.Options
+@using ZauberCMS.Core
+@using ZauberCMS.Core.Membership.Parameters
+@using ZauberCMS.Core.Settings
+@using ZauberCMS.Core.Plugins
+@using ZauberCMS.Core.Shared.Models
+@attribute [ExcludeFromInteractiveRouting]
+
+<LayoutView Layout="LayoutType">
+    <PageTitle>Confirm email</PageTitle>
+    <div style="width: 100%; max-width: 700px;">
+        <StatusMessage ResultMessages="@ResultMessages"/>
+        <p>Go to the <a href="@Urls.Account.Login">Login Page</a></p>
+    </div>
+</LayoutView>
+
+@code {
+    [Inject] public IOptions<ZauberSettings> Settings { get; set; } = null!;
+    [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
+
+    [SupplyParameterFromQuery] private string? UserId { get; set; }
+    [SupplyParameterFromQuery] private string? Code { get; set; }
+    [SupplyParameterFromQuery] private bool? Change { get; set; }
+
+    private Type LayoutType { get; set; } = null!;
+    private List<ResultMessage> ResultMessages { get; set; } = [];
+
+    protected override void OnParametersSet()
+    {
+        var allLayouts = ExtensionManager.GetImplementations<IAccountLayout>(true);
+        if (allLayouts.TryGetValue(Settings.Value.Identity.AccountLayout!, out var accountLayout))
+        {
+            LayoutType = accountLayout;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (UserId == null || Code == null)
+        {
+            ResultMessages.Add(new ResultMessage("Unable to check User Id or Confirmation Code", ResultMessageType.Error));
+        }
+        else
+        {
+            var confirmEmailCommand = new ConfirmEmailParameters
+            {
+                Code = Code,
+                UserId = UserId,
+                IsEmailUpdate = Change ?? false
+            };
+
+            var result = await MembershipService.ConfirmEmailAsync(confirmEmailCommand);
+            ResultMessages = result.Messages;
+        }
+    }
+
+}

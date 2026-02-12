@@ -1,0 +1,137 @@
+﻿@attribute [Route(Urls.AdminSettingsLanguages)]
+@using ZauberCMS.Core.Data.Parameters
+@using ZauberCMS.Core.Languages.Parameters
+@using ZauberCMS.Core.Languages.Models
+@layout SectionLayout
+
+<PageTitle>Languages</PageTitle>
+
+<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Reverse="true" Gap="5" Style="margin-top: 0; padding-top: 0; padding-bottom: 10px;">
+    <RadzenButton Variant="Variant.Filled" Text="Create Language" Click="@CreateLanguage"/>
+</RadzenStack>
+
+<RadzenPanel Class="rz-mx-auto">
+    <RadzenDataGrid AllowFiltering="true"
+                    FilterPopupRenderMode="PopupRenderMode.Initial"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    AllowPaging="true"
+                    PageSize="@AmountPerPage"
+                    AllowSorting="true"
+                    LoadData="@LoadData"
+                    IsLoading="@IsLoading"
+                    Count="@Count"
+                    Data="@AllLanguages"
+                    SelectionMode="DataGridSelectionMode.Single"
+                    RowSelect="@((Language value) => OnRowSelect(value))"
+                    PagerHorizontalAlign="HorizontalAlign.Center">
+
+        <Columns>
+            <RadzenDataGridColumn Property="LanguageCultureName" Title="Name"/>
+            <RadzenDataGridColumn Property="LanguageIsoCode" Title="ISO Code"/>
+            <RadzenDataGridColumn Property="DateCreated" Title="Created">
+                <Template Context="data">
+                    @data.DateCreated.Humanize()
+                </Template>
+            </RadzenDataGridColumn>
+            <RadzenDataGridColumn Property="Id" Title="Delete">
+                <Template Context="data">
+                    <RadzenButton Variant="Variant.Text" Size="ButtonSize.Small" Text="Delete" Click="@(() => Delete(data.Id))"/>
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+</RadzenPanel>
+
+
+@code {
+    [Inject] public IModalService DialogService { get; set; } = null!;
+    [Inject] public NotificationService NotificationService { get; set; } = null!;
+    [Parameter] public int AmountPerPage { get; set; } = 20;
+    [Parameter] public bool RefreshPage { get; set; }
+    
+    [CascadingParameter] protected SectionLayout? Layout { get; set; }
+    
+    private IEnumerable<Language> AllLanguages { get; set; } = [];
+    private int Count { get; set; } 
+    private bool IsLoading { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        Layout?.SetSection(Constants.Sections.SettingsSection);
+        await LoadData(new LoadDataArgs {Top = AmountPerPage});
+    }
+    
+    async Task LoadData(LoadDataArgs args)
+    {
+        IsLoading = true;
+
+        await Task.Yield();
+
+        var command = new DataGridParameters<Language>();
+        
+        if (args.Top != null && args.Top != 0)
+        {
+            command.Take = args.Top.Value;
+        }
+
+        if (args.Skip != null)
+        {
+            command.Skip = args.Skip.Value;
+        }
+
+        if (!string.IsNullOrEmpty(args.Filter))
+        {
+            // Filter via the Where method
+            command.Filter = args.Filter;
+        }
+
+        // Sort via the OrderBy method
+        command.OrderBy = !string.IsNullOrEmpty(args.OrderBy) ? args.OrderBy : "DateCreated desc";
+
+        var result = await DataService.GetDataGridAsync(command);
+        Count = result.Count;
+        AllLanguages = result.Items;
+
+        IsLoading = false;
+    }
+
+    private async Task CreateLanguage()
+    {
+        var dialog = DialogService.OpenSidePanel<CreateLanguage>("Create Language");
+        var result = await dialog.Result;
+        if (result is { Confirmed: true })
+        {
+            await LoadData(new LoadDataArgs {Top = AmountPerPage});       
+        }       
+    }
+
+    private async Task Delete(Guid id)
+    {
+        var result = await LanguageService.DeleteLanguageAsync(new DeleteLanguageParameters {Id = id});
+        if (result.Success)
+        {
+            await LoadData(new LoadDataArgs {Top = AmountPerPage});
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Success, Summary = "Deleted", Duration = 4000 });
+        }
+        else
+        {
+            NotificationService.Notify(new NotificationMessage { Severity = NotificationSeverity.Error, Summary = "Error", Detail = result.Messages.MessagesAsString(), Duration = 4000 });
+        }
+    }
+    
+    private async Task OnRowSelect(object value)
+    {
+        if (value is Language selectedRow)
+        {
+            var dialog = DialogService.OpenSidePanel<CreateLanguage>("Create Language", new Dictionary<string, object>
+            {
+                { nameof(Dialogs.CreateLanguage.Language), selectedRow }
+            });
+            var result = await dialog.Result;
+            if (result is { Confirmed: true })
+            {
+                await LoadData(new LoadDataArgs {Top = AmountPerPage});      
+            }
+        }
+    }
+}

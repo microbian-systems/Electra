@@ -1,4 +1,6 @@
-﻿using Electra.Persistence.Core;
+﻿using System;
+using System.Threading.Tasks;
+using Electra.Persistence.Core;
 using Microsoft.EntityFrameworkCore;
 using ILogger = Serilog.ILogger;
 

@@ -1,4 +1,7 @@
-﻿namespace Electra.Services.Features;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Electra.Services.Features;
 
 public interface IFeaturesService
 {

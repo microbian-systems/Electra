@@ -2,7 +2,10 @@
 using Electra.Models.Entities;
 using Electra.Persistence;
 using Electra.Services;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Electra.Common.Web.Extensions;
 

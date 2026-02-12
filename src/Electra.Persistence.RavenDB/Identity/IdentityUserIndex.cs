@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Electra.Models.Entities;
 using Raven.Client.Documents.Indexes;
 

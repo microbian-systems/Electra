@@ -1,4 +1,7 @@
 ﻿using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 
 namespace Electra.Common.Web.Middleware;
 

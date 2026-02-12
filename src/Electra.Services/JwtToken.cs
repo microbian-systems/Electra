@@ -1,3 +1,6 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
+
 namespace Electra.Services;
 
 // todo - add some more properties

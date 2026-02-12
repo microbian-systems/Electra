@@ -1,7 +1,12 @@
 using Boxed.AspNetCore;
 using Electra.Common.Web.Email;
 using Electra.Services.Mail;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Electra.Common.Web.Extensions;
 

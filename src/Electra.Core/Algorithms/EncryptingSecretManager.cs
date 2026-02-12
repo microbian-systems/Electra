@@ -1,4 +1,8 @@
-﻿using Electra.Core.Encryption;
+﻿using System;
+using System.Linq;
+using System.Text;
+using Electra.Core.Encryption;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Core.Algorithms;
 

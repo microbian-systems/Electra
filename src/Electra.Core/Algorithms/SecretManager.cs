@@ -1,4 +1,7 @@
-﻿namespace Electra.Core.Algorithms;
+﻿using System;
+using System.Text;
+
+namespace Electra.Core.Algorithms;
 
 public abstract class SecretManager : ISecretManager
 {

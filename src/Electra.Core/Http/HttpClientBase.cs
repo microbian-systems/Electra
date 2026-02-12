@@ -1,4 +1,13 @@
-﻿namespace Electra.Core.Http;
+﻿using System;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+
+namespace Electra.Core.Http;
 
 public abstract class HttpClientBase(HttpClient httpClient, ILogger<HttpClientBase> log)
 {

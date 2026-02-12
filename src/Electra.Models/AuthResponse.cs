@@ -1,4 +1,6 @@
-﻿namespace Electra.Models;
+﻿using System;
+
+namespace Electra.Models;
 
 public class AuthResponse
 {

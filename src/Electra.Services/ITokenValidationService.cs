@@ -1,3 +1,9 @@
+using System.Collections.Generic;
+using System.Security.Claims;
+using Electra.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+
 namespace Electra.Services;
 
 public interface ITokenValidationService

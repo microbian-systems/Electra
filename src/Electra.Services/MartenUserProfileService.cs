@@ -1,7 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Electra.Core.Extensions;
 using Electra.Models.Entities;
 using Electra.Persistence.Core;
 using Electra.Persistence.Marten;
+using Microsoft.Extensions.Logging;
+
 
 namespace Electra.Services;
 

@@ -1,3 +1,5 @@
+using System;
+
 namespace Electra.Cms.Areas.Blog.Data;
 
 public record MarkDownContentModel(string title, DateTimeOffset publishedAt, string slug, string[] tags, string imageUrl, string content)

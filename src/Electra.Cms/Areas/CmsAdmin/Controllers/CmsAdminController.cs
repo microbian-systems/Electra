@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Electra.Cms.Areas.CmsAdmin.Models;
 using Electra.Cms.Blocks;
 using Electra.Cms.Models;
@@ -10,6 +11,7 @@ using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using Electra.Cms.Areas.Blog.Data;
 using System.IO.Compression;
+using System.Linq;
 using Markdig;
 using Markdig.Extensions.Yaml;
 using Markdig.Syntax;

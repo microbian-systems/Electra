@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
+using Microsoft.Extensions.Options;
 
 namespace Electra.Common.Web.Infrastructure;
 

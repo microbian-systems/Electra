@@ -1,11 +1,16 @@
-﻿namespace Electra.Services.Features;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Electra.Core.Extensions;
+using Microsoft.Extensions.Logging;
+
+namespace Electra.Services.Features;
 
 public abstract class FeatureServiceBase : IFeaturesService
 {
-    protected readonly ILogger log;
+    protected readonly ILogger<FeatureServiceBase> log;
     protected readonly IFeatureStore store;
 
-    protected FeatureServiceBase(IFeatureStore store, ILogger log)
+    protected FeatureServiceBase(IFeatureStore store, ILogger<FeatureServiceBase> log)
     {
         this.log = log;
         this.store = store;
@@ -39,7 +44,7 @@ public abstract class FeatureServiceBase : IFeaturesService
 
     public async Task SetFeaturesAsync(Features features)
     {
-        log.LogInformation($"setting all features {ObjectExtensions.ToJson(features)}");
+        log.LogInformation($"setting all features {features.ToJson()}");
         await store.SetFeaturesAsync(features);
     }
 

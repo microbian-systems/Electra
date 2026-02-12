@@ -1,3 +1,4 @@
+using System.Linq;
 using Electra.Cms.Areas.Blog.Entities;
 using Electra.Cms.Areas.Blog.Models;
 using Electra.Cms.Areas.Blog.Services;

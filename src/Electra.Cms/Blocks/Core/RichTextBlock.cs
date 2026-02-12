@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Electra.Cms.Blocks.Core
 {
     public class RichTextBlock : BlockDefinition

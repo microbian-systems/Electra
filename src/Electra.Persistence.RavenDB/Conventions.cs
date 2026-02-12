@@ -1,6 +1,7 @@
 ﻿using Electra.Models.Entities;
 using Electra.Persistence.RavenDB.Identity;
 using Microsoft.AspNetCore.Identity;
+using Raven.Client.Documents;
 
 namespace Electra.Persistence.RavenDB;
 

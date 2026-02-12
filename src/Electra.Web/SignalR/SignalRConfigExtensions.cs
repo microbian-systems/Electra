@@ -1,3 +1,8 @@
+using Electra.SignalR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
 namespace Electra.Common.Web.SignalR;
 
 public static class SignalRConfigExtensions

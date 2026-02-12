@@ -1,3 +1,11 @@
+using System;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Logging;
 using NetTools;
 
 // https://gist.github.com/tpeczek/f3f341df637e46ea7d077e017ea309e1

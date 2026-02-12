@@ -1,10 +1,14 @@
-﻿namespace Electra.Services.Features;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+
+namespace Electra.Services.Features;
 
 public abstract class FeatureStoreBase : IFeatureStore
 {
-    protected readonly ILogger log;
+    protected readonly ILogger<FeatureStoreBase> log;
 
-    protected FeatureStoreBase(ILogger log)
+    protected FeatureStoreBase(ILogger<FeatureStoreBase> log)
     {
         this.log = log;
     }

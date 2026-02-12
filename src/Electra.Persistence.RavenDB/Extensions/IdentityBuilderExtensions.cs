@@ -1,4 +1,5 @@
-﻿using Electra.Core.Identity;
+﻿using System;
+using Electra.Core.Identity;
 using Electra.Models.Entities;
 using Electra.Persistence.RavenDB.Identity;
 using Microsoft.AspNetCore.Identity;

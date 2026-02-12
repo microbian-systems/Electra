@@ -1,0 +1,127 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>ZauberCMS.Components</PackageId>
+        <Version>4.1.0</Version>
+        <Authors>Lee Messenger</Authors>
+        <Description>ZauberCMS components package</Description>
+        <PackageTags>Web</PackageTags>
+        <!-- Specify the local NuGet folder -->
+        <LocalNugetSource>$(MSBuildProjectDirectory)\..\NugetSource</LocalNugetSource>
+        <PackageProjectUrl>https://github.com/YodasMyDad/ZauberCMS</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/YodasMyDad/ZauberCMS</RepositoryUrl>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <StaticWebAssetBasePath>_content/$(PackageId)</StaticWebAssetBasePath>
+        <NoWarn>$(NoWarn);CS0618</NoWarn>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazored.Modal" Version="7.3.1" />
+        <PackageReference Include="BlazorMonaco" Version="3.4.0" />
+        <PackageReference Include="Humanizer" Version="3.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.1" />
+        <PackageReference Include="Radzen.Blazor" Version="8.4.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="ImageResize" Version="3.0.0" />
+        <PackageReference Include="TinyMCE.Blazor" Version="2.2.1" />
+        <PackageReference Include="ZauberCMS.RTE" Version="2.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ZauberCMS.Core\ZauberCMS.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="Resources\SharedResource.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Resources\SharedResource.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>SharedResource.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="..\..\..\Users\LeeMessenger\.nuget\packages\zaubercms.rte\1.0.0-beta9\contentFiles\any\net9.0\package-lock.json" />
+      <Content Remove="..\..\..\Users\LeeMessenger\.nuget\packages\zaubercms.rte\1.0.0-beta9\contentFiles\any\net9.0\package.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Editors\Settings\RichTextEditor\InsertMedia.razor" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Editors\Dialogs\RichTextEditor\InsertMedia.razor" />
+    </ItemGroup>
+    
+    <Target Name="CopyNuGetPackage" AfterTargets="Pack">
+        <PropertyGroup>
+            <PackageOutputDir>$(OutputPath)..\</PackageOutputDir>
+            <GeneratedPackage>$(PackageOutputDir)\$(PackageId).$(Version).nupkg</GeneratedPackage>
+        </PropertyGroup>
+        <Copy SourceFiles="$(GeneratedPackage)" DestinationFolder="$(LocalNugetSource)" />
+    </Target>
+    
+</Project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

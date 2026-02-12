@@ -1,0 +1,9 @@
+﻿@implements ZauberCMS.Core.Sections.Interfaces.ISectionNav
+
+<TreeButton Icon="settings" Name="Global Settings" Url="@(Urls.AdminSettingsGlobalSettings)" />
+
+@code {
+    public int SortOrder => 0;
+    public string SectionNavGroupAlias => Constants.Sections.SectionNavGroups.SettingsNavGroup;
+    public void Dispose(){}
+}

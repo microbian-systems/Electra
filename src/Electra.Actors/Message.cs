@@ -1,4 +1,7 @@
-﻿namespace Electra.Actors;
+﻿using System;
+using Orleans;
+
+namespace Electra.Actors;
 
 [Serializable]
 [GenerateSerializer]

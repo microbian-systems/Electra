@@ -1,4 +1,7 @@
-﻿namespace Electra.Core.Extensions;
+﻿using System;
+using System.Text;
+
+namespace Electra.Core.Extensions;
 
 public static class StringExtensions
 {

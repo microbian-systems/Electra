@@ -1,4 +1,6 @@
-﻿namespace Electra.Common.Web.Models;
+﻿using System.Collections.Generic;
+
+namespace Electra.Common.Web.Models;
 
 public record RequestResponseLogModel()
 {

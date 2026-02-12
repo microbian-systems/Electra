@@ -1,4 +1,6 @@
-﻿namespace Electra.Core.Extensions;
+﻿using System.Text.Json;
+
+namespace Electra.Core.Extensions;
 
 public static class ObjectExtensions
 {

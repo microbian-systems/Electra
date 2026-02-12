@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Electra.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Persistence.Extensions;
 

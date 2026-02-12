@@ -1,6 +1,14 @@
+using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using Electra.Common.Web.Extensions;
 using Electra.Validators;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using ObjectExtensions = Electra.Common.Extensions.ObjectExtensions;
 
 namespace Electra.Common.Web;
@@ -53,7 +61,7 @@ public static class AppSettingsExtensions
         else
         {
             log.LogInformation($"AppSettings were successfully loaded");
-            log.LogInformation("{o}", ObjectExtensions.ToJson(settings));
+            log.LogInformation("{o}", settings.ToJson());
         }
 
         services.AddSingleton(settings);

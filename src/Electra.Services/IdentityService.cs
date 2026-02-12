@@ -1,5 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
 using Electra.Core;
+using Electra.Core.Extensions;
+using Electra.Core.Identity;
 using Electra.Models.Entities;
+using Electra.Models.ViewModels;
+using Electra.Persistence.Entities;
+using Electra.Services.Geo;
+using Electra.Services.Models;
+using FluentEmail.Core;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Services;
 

@@ -1,0 +1,132 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>ZauberCMS</PackageId>
+        <Version>4.1.0</Version>
+        <Authors>Lee Messenger</Authors>
+        <Description>The main ZauberCMS nuget package</Description>
+        <PackageTags>Web</PackageTags>
+        <IsPackable>true</IsPackable>
+        <LocalNugetSource>$(MSBuildProjectDirectory)\..\NugetSource</LocalNugetSource>
+        <PackageProjectUrl>https://github.com/YodasMyDad/ZauberCMS</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/YodasMyDad/ZauberCMS</RepositoryUrl>
+        <PreserveCompilationContext>true</PreserveCompilationContext>
+        <StaticWebAssetBasePath>_content/$(PackageId)</StaticWebAssetBasePath>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <SupportedPlatform Include="browser"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Blazored.Modal" Version="7.3.1"/>
+        <PackageReference Include="Humanizer" Version="3.0.1" />
+        <PackageReference Include="MailKit" Version="4.14.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
+        <PackageReference Include="Radzen.Blazor" Version="8.4.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.3">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.3" />
+        <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+        <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Content Include="wwwroot\**" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <AdditionalFiles Include="Components\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ZauberCMS.Components\ZauberCMS.Components.csproj"/>
+        <ProjectReference Include="..\ZauberCMS.Routing\ZauberCMS.Routing.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Remove="appsettings.json" />
+        <None Include="appsettings.json">
+            <Pack>true</Pack>
+            <PackagePath>build/settings.json</PackagePath>
+        </None>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Content Include="ZauberCMS.targets">
+            <Pack>true</Pack>
+            <PackagePath>build/ZauberCMS.targets</PackagePath>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\ReadMe.md" Pack="true" PackagePath="\" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Components\Pages\Index.razor" />
+      <UpToDateCheckInput Remove="Views\Cms\Index.cshtml" />
+    </ItemGroup>
+
+    <Target Name="CopyNuGetPackage" AfterTargets="Pack">
+        <PropertyGroup>
+            <PackageOutputDir>$(OutputPath)..\</PackageOutputDir>
+            <GeneratedPackage>$(PackageOutputDir)\$(PackageId).$(Version).nupkg</GeneratedPackage>
+        </PropertyGroup>
+        <Copy SourceFiles="$(GeneratedPackage)" DestinationFolder="$(LocalNugetSource)"/>
+    </Target>
+
+</Project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

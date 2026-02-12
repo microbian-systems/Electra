@@ -1,4 +1,8 @@
-﻿namespace Electra.Common.Web.Infrastructure;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Electra.Common.Web.Infrastructure;
 
 public interface IClientsService
 {

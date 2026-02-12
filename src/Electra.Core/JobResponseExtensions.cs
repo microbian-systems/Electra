@@ -1,4 +1,7 @@
-﻿namespace Electra.Core;
+﻿using System;
+using System.Text;
+
+namespace Electra.Core;
 
 public static class JobResponseExtensions
 {

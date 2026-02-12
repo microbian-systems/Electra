@@ -1,6 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Electra.Core.Entities;
 using Electra.Persistence.Core;
 using LiteDB;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.LiteDB;
 

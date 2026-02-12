@@ -1,4 +1,7 @@
-﻿using Raven.Client.Documents.Commands;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Commands;
 
 namespace Electra.Persistence.RavenDB.Migrations;
 

@@ -1,3 +1,4 @@
+using System;
 using Electra.Core.Entities;
 
 namespace Electra.Models.Entities;

@@ -1,3 +1,6 @@
+using System;
+using System.Threading.Tasks;
+
 namespace Electra.Common.Web.Middleware;
 
 using Microsoft.AspNetCore.Http;

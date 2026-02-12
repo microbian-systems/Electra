@@ -1,4 +1,7 @@
-﻿namespace Electra.Services;
+﻿using Electra.Services.Features;
+using Microsoft.Extensions.Logging;
+
+namespace Electra.Services;
 
 public sealed class FeaturesService : FeatureServiceBase
 {

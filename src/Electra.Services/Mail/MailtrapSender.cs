@@ -1,10 +1,16 @@
+using System;
+using System.Net;
 using System.Net.Mail;
 using System.Threading;
+using System.Threading.Tasks;
+using Electra.Common;
+using FluentEmail.Core;
 using FluentEmail.Core.Interfaces;
 using FluentEmail.Core.Models;
 using FluentEmail.Smtp;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Electra.Services.Mail;
 

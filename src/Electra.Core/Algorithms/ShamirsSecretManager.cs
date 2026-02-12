@@ -1,4 +1,7 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Linq;
+using System.Numerics;
+using System.Text;
 using SecretSharingDotNet.Cryptography.ShamirsSecretSharing;
 using SecretSharingDotNet.Math;
 

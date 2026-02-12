@@ -1,3 +1,6 @@
+using System;
+using System.Net.Http;
+using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

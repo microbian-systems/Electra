@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@using ZauberCMS.Core.Membership
+@using ZauberCMS.Core.Membership.Models
+
+@inject SignInManager<User> SignInManager
+@inject IdentityRedirectManager RedirectManager
+
+@if (externalLogins.Any())
+{
+    <hr/>
+
+    <form class="form-horizontal" action="Account/PerformExternalLogin" method="post">
+        <div>
+            <AntiforgeryToken/>
+            <input type="hidden" name="ReturnUrl" value="@ReturnUrl"/>
+            <div class="row">
+                @foreach (var provider in externalLogins)
+                {
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary w-100" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </form>
+}
+
+@code {
+    private AuthenticationScheme[] externalLogins = [];
+
+    [SupplyParameterFromQuery] private string? ReturnUrl { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        externalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToArray();
+    }
+
+}

@@ -1,4 +1,6 @@
-﻿namespace Electra.Core.Algorithms;
+﻿using System.Text;
+
+namespace Electra.Core.Algorithms;
 
 public static class ShamirExtensions
 {

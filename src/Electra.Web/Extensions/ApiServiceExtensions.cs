@@ -1,5 +1,9 @@
 ﻿using Electra.Common.Web.Infrastructure;
 using Electra.Common.Web.Jwt;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Scalar.AspNetCore;
 
 namespace Electra.Common.Web.Extensions;

@@ -1,3 +1,5 @@
+using System;
+
 namespace Electra.Core.Entities;
 
     public interface IEntityInt : IEntity<int> { }

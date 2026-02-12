@@ -1,4 +1,7 @@
-﻿namespace Electra.Common.Web.Models;
+﻿using System;
+using System.Text.Json.Serialization;
+
+namespace Electra.Common.Web.Models;
 
 public record RefreshTokenResponse
 {

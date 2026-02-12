@@ -1,4 +1,6 @@
-﻿namespace Electra.Core;
+﻿using System.Collections.Generic;
+
+namespace Electra.Core;
 
 public class BlobStoragePath
 {

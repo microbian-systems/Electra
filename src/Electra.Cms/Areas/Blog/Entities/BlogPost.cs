@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 using Electra.Cms.Areas.Blog.Enums;
 using Electra.Core.Entities;

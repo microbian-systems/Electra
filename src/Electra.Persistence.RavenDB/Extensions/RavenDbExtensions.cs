@@ -1,5 +1,8 @@
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using Raven.Embedded;
 
 namespace Electra.Persistence.RavenDB.Extensions;

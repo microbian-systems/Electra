@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using ILogger = Serilog.ILogger;
 
@@ -11,7 +12,7 @@ public static class Config
     public static string GetConnString(string key) =>
         ConfigurationManager.ConnectionStrings[key]?.ConnectionString;
 
-    internal static string GetStorageConnectionString()
+    public static string GetStorageConnectionString()
     {
         return GetSetting("blobStorage");
     }

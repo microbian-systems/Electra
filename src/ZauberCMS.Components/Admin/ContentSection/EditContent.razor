@@ -1,0 +1,58 @@
+﻿@using ZauberCMS.Core.Content.Parameters
+@using ZauberCMS.Core.Plugins
+@attribute [Route(Urls.AdminCreateContent)]
+@attribute [Route($"{Urls.AdminCreateContent}/{{ParentId:guid}}")]
+@attribute [Route($"{Urls.AdminUpdateContent}/{{ContentId:guid}}")]
+@layout SectionLayout
+
+<PageTitle>Create & Update Content</PageTitle>
+
+<RadzenPanel Class="rz-mx-auto">
+    @if (ShowListView)
+    {
+        <ContentListView @key="GetCompositeKey(ContentId, ParentId)" Content="@Content" ContentId="@ContentId" ParentId="@ParentId"/>
+    }
+    else
+    {
+        <ContentEditor @key="GetCompositeKey(ContentId, ParentId)" ParentId="@ParentId" ContentId="@ContentId"/>
+    }
+</RadzenPanel>
+
+@code {
+    [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
+    [Inject] public DialogService ConfirmService { get; set; } = null!;
+
+    [Parameter] public Guid? ContentId { get; set; }
+    [Parameter] public Guid? ParentId { get; set; }
+
+    [CascadingParameter] protected SectionLayout? Layout { get; set; }
+    private Content? Content { get; set; }
+    private bool ShowListView { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Layout?.SetSection(Constants.Sections.ContentSection);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (ContentId != null)
+        {
+            // Have to get the content to see which view to show
+            Content = await ContentService.GetContentAsync(new GetContentParameters { Id = ContentId, IncludeUnpublished = true });
+            ShowListView = Content?.ContentType?.EnableListView ?? false;
+        }
+        else
+        {
+            // Reset when creating new content
+            Content = null;
+            ShowListView = false;
+        }
+    }
+
+    private static string GetCompositeKey(Guid? contentId, Guid? parentId)
+    {
+        return $"{contentId?.ToString() ?? "null"}_{parentId?.ToString() ?? "null"}";
+    }
+
+}

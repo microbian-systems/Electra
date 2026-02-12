@@ -1,4 +1,7 @@
-﻿namespace Electra.Common.Web;
+﻿using System.Net;
+using System.Text.Json.Serialization;
+
+namespace Electra.Common.Web;
 
 
 public interface IApiResponse

@@ -1,4 +1,6 @@
 using Electra.Caching.Decorators;
+using Electra.Common;
+using Microsoft.Extensions.Logging;
 
 namespace Electra.Services;
 
