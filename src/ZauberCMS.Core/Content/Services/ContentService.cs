@@ -1,7 +1,6 @@
-using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -9,7 +8,6 @@ using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Content.Models;
 using ZauberCMS.Core.Content.Parameters;
 using ZauberCMS.Core.Content.Mapping;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Languages.Interfaces;
 using ZauberCMS.Core.Plugins;
@@ -19,6 +17,8 @@ using ZauberCMS.Core.Shared.Services;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Shared;
 using System.Text.Json;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 
 namespace ZauberCMS.Core.Content.Services;
 
@@ -27,7 +27,7 @@ public class ContentService(
     ICacheService cacheService,
     IOptions<ZauberSettings> settings,
     AuthenticationStateProvider authenticationStateProvider,
-    UserManager<User> userManager,
+    UserManager<CmsUser> userManager,
     ExtensionManager extensionManager,
     AppState appState,
     ILanguageService languageService,
@@ -44,7 +44,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
         var cacheKey = query.GenerateCacheKey();
         if (parameters.Cached)
@@ -66,9 +66,9 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        User? user = await userManager.GetUserAsync(authState.User);
+        var user = await userManager.GetUserAsync(authState.User);
         var isUpdate = true;
         var handlerResult = new HandlerResult<Models.Content>();
 
@@ -91,13 +91,14 @@ public class ContentService(
 
             if (isNew)
             {
-                var dbContent = dbContext.Contents.FirstOrDefault(x => parameters.Content.Id == x.Id);
+                var dbContent = dbContext.Query<Models.Content>()
+                    .FirstOrDefault(x => parameters.Content.Id == x.Id);
                 if (dbContent != null)
                 {
                     dbContent.UnpublishedContentId = unpublishedContent.Id;
                 }
 
-                dbContext.UnpublishedContent.Add(unpublishedContent);
+                await dbContext.StoreAsync(unpublishedContent, cancellationToken);
             }
 
             var unpublishedResult = await dbContext.SaveChangesAndLog(null, handlerResult, cacheService,
@@ -149,14 +150,15 @@ public class ContentService(
 
         if (parameters.Content.ContentTypeAlias.IsNullOrWhiteSpace())
         {
-            var contentType = dbContext.ContentTypes.AsTracking()
+            var contentType = dbContext.Query<ContentType>()
                 .FirstOrDefault(x => x.Id == parameters.Content.ContentTypeId);
             parameters.Content.ContentTypeAlias = contentType?.Alias;
         }
 
-        var content = dbContext.Contents
+        var content = dbContext.Query<Models.Content>()
             .Include(x => x.PropertyData)
-            .Include(x => x.ContentRoles).ThenInclude(x => x.Role)
+            .Include(x => x.ContentRoles)
+            //.ThenInclude(x => x.Role) // todo - figure out ravendb equivalent of ThenInclude()
             .FirstOrDefault(x => x.Id == parameters.Content.Id);
 
         if (content == null)
@@ -171,7 +173,7 @@ public class ContentService(
             }
 
             content.LastUpdatedById = user!.Id;
-            dbContext.Contents.Add(content);
+            await dbContext.StoreAsync(content, cancellationToken);
         }
         else
         {
@@ -266,7 +268,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
         var cacheKey = $"{query.GenerateCacheKey(typeof(Models.Content))}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
         if (parameters.Cached)
@@ -288,7 +290,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var loggedInUser = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Models.Content>();
@@ -345,7 +347,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Models.Content>();
@@ -416,7 +418,7 @@ public class ContentService(
         handlerResult.AddMessage("Content copied successfully.", ResultMessageType.Success);
         return handlerResult;
 
-        Models.Content CreateCopy(Models.Content original, User? currentUser, Guid? parentId = null)
+        Models.Content CreateCopy(Models.Content original, CmsUser? currentUser, Guid? parentId = null)
         {
             var copy = original.MapToNew();
             copy.Id = Guid.NewGuid();
@@ -458,7 +460,7 @@ public class ContentService(
         return (await cacheService.GetSetCachedItemAsync(cacheKey, async () =>
         {
             using var scope = serviceScopeFactory.CreateScope();
-            var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
             return await FetchEntryModelAsync(parameters, dbContext, cancellationToken);
         }, 0, 5))!;
     }
@@ -473,7 +475,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         return await dbContext.ContentTypes.AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == parameters.Id, cancellationToken: cancellationToken);
     }
@@ -488,7 +490,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<ContentType>();
@@ -545,7 +547,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
 
         IQueryable<ContentType> query;
 
@@ -639,7 +641,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<ContentType>();
@@ -725,7 +727,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = dbContext.Domains.AsQueryable();
         if (parameters.AsNoTracking)
         {
@@ -757,7 +759,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Domain>();
@@ -802,7 +804,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = dbContext.Domains.AsQueryable();
         
         if (parameters.Query != null)
@@ -860,7 +862,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Domain?>();
@@ -901,7 +903,7 @@ public class ContentService(
     public async Task<bool> AnyContentAsync(CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         return await dbContext.Contents.AsNoTracking().AnyAsync(cancellationToken: cancellationToken);
     }
 
@@ -915,7 +917,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var cacheKey = parameters.GenerateCacheKey<Models.Content>("HasChild");
         if (parameters.Cached)
         {
@@ -938,7 +940,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var cacheKey = parameters.GenerateCacheKey<ContentType>("HasContentTypeChild");
         if (parameters.Cached)
         {
@@ -961,7 +963,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = dbContext.Contents.AsNoTracking()
             .Include(x => x.Language)
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -995,7 +997,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = dbContext.Domains.AsNoTracking().Include(x => x.Language);
         var cacheKey = query.GenerateCacheKey();
         return (await cacheService.GetSetCachedItemAsync(cacheKey,
@@ -1012,7 +1014,7 @@ public class ContentService(
         ClearUnpublishedContentParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var handlerResult = new HandlerResult<UnpublishedContent>();
         var content = await dbContext.Contents.FirstOrDefaultAsync(x => x.Id == parameters.ContentId,
             cancellationToken: cancellationToken);
@@ -1040,7 +1042,7 @@ public class ContentService(
         CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var result = new DataGridResult<Models.Content>();
         var query = dbContext.Contents
             .Include(x => x.ContentType)
@@ -1114,7 +1116,7 @@ public class ContentService(
     public async Task<string?> ExportContentTypeAsync(string alias, bool includeContent = false)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
 
         var contentType = await dbContext.ContentTypes
             .Include(x => x.Tabs)
@@ -1181,7 +1183,7 @@ public class ContentService(
     }
 
     private async Task<List<ContentExport>> BuildContentExportTree(List<Models.Content> contents,
-        IZauberDbContext dbContext, ContentType contentType)
+        IAsyncDocumentSession dbContext, ContentType contentType)
     {
         var exports = new List<ContentExport>();
 
@@ -1239,7 +1241,7 @@ public class ContentService(
         }
 
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
 
@@ -1356,7 +1358,7 @@ public class ContentService(
     }
 
     private static async Task ImportContentRecursive(ContentExport exp, Guid? parentId, ContentType contentType,
-        IZauberDbContext dbContext, User? user, Dictionary<string, Guid> propMap,
+        IAsyncDocumentSession dbContext, CmsUser? user, Dictionary<string, Guid> propMap,
         HandlerResult<ContentType> handlerResult)
     {
         var content = new Models.Content
@@ -1426,7 +1428,7 @@ public class ContentService(
     }
 
 
-    private IQueryable<Models.Content> BuildQuery(GetContentParameters request, IZauberDbContext dbContext)
+    private IQueryable<Models.Content> BuildQuery(GetContentParameters request, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Contents
             .Include(x => x.ContentType)
@@ -1480,7 +1482,7 @@ public class ContentService(
         return query;
     }
 
-    private IQueryable<Models.Content> BuildQuery(QueryContentParameters request, IZauberDbContext dbContext)
+    private IQueryable<Models.Content> BuildQuery(QueryContentParameters request, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Contents.Include(x => x.ContentType)
             .Include(x => x.PropertyData).AsSplitQuery().AsQueryable();
@@ -1604,7 +1606,7 @@ public class ContentService(
     }
 
     private async Task<EntryModel> FetchEntryModelAsync(GetContentFromRequestParameters request,
-        IZauberDbContext dbContext, CancellationToken cancellationToken)
+        IAsyncDocumentSession dbContext, CancellationToken cancellationToken)
     {
         var entryModel = new EntryModel();
         var contentQueryable = dbContext.Contents.AsNoTracking().Include(x => x.ContentType);
@@ -1720,7 +1722,7 @@ public class ContentService(
         });
     }
 
-    private static string GenerateUniqueUrl(IZauberDbContext dbContext, string baseSlug)
+    private static string GenerateUniqueUrl(IAsyncDocumentSession dbContext, string baseSlug)
     {
         var url = baseSlug;
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -1742,7 +1744,7 @@ public class ContentService(
         return url;
     }
 
-    private static void UpdateContentRoles(IZauberDbContext dbContext, Models.Content content,
+    private static void UpdateContentRoles(IAsyncDocumentSession dbContext, Models.Content content,
         SaveContentParameters request)
     {
         var existingRoles = dbContext.ContentRoles.Where(r => r.ContentId == content.Id).ToList();
@@ -1763,7 +1765,7 @@ public class ContentService(
         }
     }
 
-    private async Task<int> GetNextSortOrderAsync(IZauberDbContext dbContext, Guid? parentId, bool isRootContent, CancellationToken cancellationToken)
+    private async Task<int> GetNextSortOrderAsync(IAsyncDocumentSession dbContext, Guid? parentId, bool isRootContent, CancellationToken cancellationToken)
     {
         var query = parentId == null
             ? dbContext.Contents.Where(c => c.ParentId == null && c.IsRootContent && !c.Deleted)
@@ -1778,7 +1780,7 @@ public class ContentService(
         return maxSortOrder;
     }
 
-    private static void UpdateContentPropertyValues(IZauberDbContext dbContext, Models.Content content,
+    private static void UpdateContentPropertyValues(IAsyncDocumentSession dbContext, Models.Content content,
         List<ContentPropertyValue> newPropertyValues)
     {
         var deletedItems = content.PropertyData.Where(epv => newPropertyValues.All(npv => npv.Id != epv.Id)).ToList();
@@ -1801,21 +1803,21 @@ public class ContentService(
         }
     }
 
-    private static PaginatedList<ContentType> QueryContentTypesForComposition(IZauberDbContext dbContext,
+    private static PaginatedList<ContentType> QueryContentTypesForComposition(IAsyncDocumentSession dbContext,
         Guid compositionId)
     {
         var query = dbContext.ContentTypes.WhereHasCompositionsUsing(compositionId);
         return query.ToPaginatedList(1, int.MaxValue);
     }
 
-    private static async Task SaveAuditIfUser(IZauberDbContext dbContext, User? user, string? name, string action,
+    private static async Task SaveAuditIfUser(IAsyncDocumentSession dbContext, CmsUser? user, string? name, string action,
         CancellationToken cancellationToken)
     {
         if (user == null) return;
         await SaveAuditAsync(dbContext, $"{user.Name} {action} {name ?? string.Empty}", cancellationToken);
     }
 
-    private static async Task SaveAuditAsync(IZauberDbContext dbContext, string description,
+    private static async Task SaveAuditAsync(IAsyncDocumentSession dbContext, string description,
         CancellationToken cancellationToken)
     {
         // Inline minimal audit creation to avoid Mediator usage in services
@@ -1827,7 +1829,7 @@ public class ContentService(
         CleanupOrphanedRelatedContentParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var handlerResult = new HandlerResult<int>();
 
         try
@@ -1885,7 +1887,7 @@ public class ContentService(
         };
     }
 
-    private async Task ProcessBlockListEditorChangesAsync(Models.Content content, IZauberDbContext dbContext, User user,
+    private async Task ProcessBlockListEditorChangesAsync(Models.Content content, IAsyncDocumentSession dbContext, CmsUser user,
         CancellationToken cancellationToken)
     {
         // Load ContentType to identify which properties are BlockListEditor type

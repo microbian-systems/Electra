@@ -12,17 +12,17 @@ public class AppState
     // Weak event managers prevent memory leaks when Singleton AppState outlives Scoped components
     private readonly WeakEventManager<ContentType?> _contentTypeChanged = new();
     private readonly WeakEventManager<Content.Models.Content?> _contentChanged = new();
-    private readonly WeakEventManager<User?> _userChanged = new();
+    private readonly WeakEventManager<CmsUser?> _userChanged = new();
     private readonly WeakEventManager<Media.Models.Media?> _mediaChanged = new();
 
     private readonly WeakEventManager<ContentType?> _contentTypeSaved = new();
     private readonly WeakEventManager<Content.Models.Content?> _contentSaved = new();
-    private readonly WeakEventManager<User?> _userSaved = new();
+    private readonly WeakEventManager<CmsUser?> _userSaved = new();
     private readonly WeakEventManager<Media.Models.Media?> _mediaSaved = new();
 
     private readonly WeakEventManager<ContentType?> _contentTypeDeleted = new();
     private readonly WeakEventManager<Content.Models.Content?> _contentDeleted = new();
-    private readonly WeakEventManager<User?> _userDeleted = new();
+    private readonly WeakEventManager<CmsUser?> _userDeleted = new();
     private readonly WeakEventManager<Media.Models.Media?> _mediaDeleted = new();
     
     // Provide event-like interface for backward compatibility
@@ -38,7 +38,7 @@ public class AppState
         remove => _contentChanged.RemoveHandler(value!);
     }
     
-    public event Func<User?, string, Task>? OnUserChanged
+    public event Func<CmsUser?, string, Task>? OnUserChanged
     {
         add => _userChanged.AddHandler(value!);
         remove => _userChanged.RemoveHandler(value!);
@@ -62,7 +62,7 @@ public class AppState
         remove => _contentSaved.RemoveHandler(value!);
     }
     
-    public event Func<User?, string, Task>? OnUserSaved
+    public event Func<CmsUser?, string, Task>? OnUserSaved
     {
         add => _userSaved.AddHandler(value!);
         remove => _userSaved.RemoveHandler(value!);
@@ -86,7 +86,7 @@ public class AppState
         remove => _contentDeleted.RemoveHandler(value!);
     }
     
-    public event Func<User?, string, Task>? OnUserDeleted
+    public event Func<CmsUser?, string, Task>? OnUserDeleted
     {
         add => _userDeleted.AddHandler(value!);
         remove => _userDeleted.RemoveHandler(value!);
@@ -103,7 +103,7 @@ public class AppState
         await _mediaChanged.RaiseEventAsync(media, username);
     }
     
-    public async Task NotifyUserChanged(User? userObject, string username) 
+    public async Task NotifyUserChanged(CmsUser? userObject, string username) 
     {
         await _userChanged.RaiseEventAsync(userObject, username);
     }
@@ -124,7 +124,7 @@ public class AppState
         await NotifyMediaChanged(media, username);
     }
     
-    public async Task NotifyUserSaved(User? user, string username) 
+    public async Task NotifyUserSaved(CmsUser? user, string username) 
     {
         await _userSaved.RaiseEventAsync(user, username);
         await NotifyUserChanged(user, username);
@@ -148,7 +148,7 @@ public class AppState
         await NotifyMediaChanged(media, username);
     }
     
-    public async Task NotifyUserDeleted(User? userObject, string username) 
+    public async Task NotifyUserDeleted(CmsUser? userObject, string username) 
     {
         await _userDeleted.RaiseEventAsync(userObject, username);
         await NotifyUserChanged(userObject, username);

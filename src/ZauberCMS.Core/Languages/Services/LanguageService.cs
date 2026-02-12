@@ -1,11 +1,11 @@
 
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq.Dynamic.Core;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Audit.Interfaces;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Languages.Interfaces;
 using ZauberCMS.Core.Languages.Models;
@@ -34,26 +34,21 @@ public class LanguageService(
     public async Task<Language?> GetLanguageAsync(GetLanguageParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
-        var query = dbContext.Languages.AsQueryable();
-
-        if (parameters.AsNoTracking)
-        {
-            query = query.AsNoTracking();
-        }
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+        var query = dbContext.Query<Language>();
 
         if (parameters.LanguageIsoCode != null)
         {
-            return await query.FirstOrDefaultAsync(x => x.LanguageIsoCode == parameters.LanguageIsoCode, cancellationToken: cancellationToken);
+            return await query.FirstOrDefaultAsync(x => x.LanguageIsoCode == parameters.LanguageIsoCode, cancellationToken);
         }
 
         if (parameters.Id != null)
         {
-            return await query.FirstOrDefaultAsync(x => x.Id == parameters.Id, cancellationToken: cancellationToken);
+            return await query.FirstOrDefaultAsync(x => x.Id == parameters.Id, cancellationToken);
         }
 
         // Should never get here
-        return await query.FirstOrDefaultAsync(cancellationToken: cancellationToken);
+        return await query.FirstOrDefaultAsync(cancellationToken);
     }
 
     /// <summary>
@@ -65,9 +60,9 @@ public class LanguageService(
     public async Task<HandlerResult<Language>> SaveLanguageAsync(SaveLanguageParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Language>();
 
@@ -78,7 +73,7 @@ public class LanguageService(
             var language = new Language();
             if (parameters.Id != null)
             {
-                var lang = dbContext.Languages.FirstOrDefault(x => x.Id == parameters.Id);
+                var lang = dbContext.Query<Language>().FirstOrDefault(x => x.Id == parameters.Id);
                 if (lang != null)
                 {
                     if (parameters.CultureInfo.Name == lang.LanguageIsoCode)
@@ -94,7 +89,7 @@ public class LanguageService(
             }
 
             // Does this already exist
-            var existing = dbContext.Languages.FirstOrDefault(x => x.LanguageIsoCode == parameters.CultureInfo.Name);
+            var existing = dbContext.Query<Language>().FirstOrDefault(x => x.LanguageIsoCode == parameters.CultureInfo.Name);
             if (existing != null)
             {
                 handlerResult.AddMessage("Language already exists", ResultMessageType.Error);
@@ -106,7 +101,7 @@ public class LanguageService(
 
             if (!isUpdate)
             {
-                dbContext.Languages.Add(language);
+                await dbContext.StoreAsync(language, cancellationToken);
             }
             else
             {
@@ -133,8 +128,8 @@ public class LanguageService(
     public Task<PaginatedList<Language>> QueryLanguageAsync(QueryLanguageParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
-        var query = dbContext.Languages.AsQueryable();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+        var query = dbContext.Query<Language>().AsQueryable();
 
         if (parameters.Query != null)
         {
@@ -142,11 +137,6 @@ public class LanguageService(
         }
         else
         {
-            if (parameters.AsNoTracking)
-            {
-                query = query.AsNoTracking();
-            }
-
             var idCount = parameters.Ids.Count;
             if (parameters.Ids.Count != 0)
             {
@@ -187,9 +177,9 @@ public class LanguageService(
     public async Task<HandlerResult<Language?>> DeleteLanguageAsync(DeleteLanguageParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Language>();
 
@@ -197,28 +187,27 @@ public class LanguageService(
         if (parameters.Id != null)
         {
             language =
-                await dbContext.Languages.FirstOrDefaultAsync(l => l.Id == parameters.Id,
-                    cancellationToken: cancellationToken);
+                await dbContext.Query<Language>().FirstOrDefaultAsync(l => l.Id == parameters.Id, token: cancellationToken);
             if (language != null)
             {
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(language, $"Language ({language.LanguageCultureName})",
                     AuditExtensions.AuditAction.Delete, auditService,
                     cancellationToken);
-                dbContext.Languages.Remove(language);
+                dbContext.Delete(language);
             }
         }
         else
         {
-            language = await dbContext.Languages.FirstOrDefaultAsync(
-                l => l.LanguageIsoCode == parameters.LanguageIsoCode, cancellationToken: cancellationToken);
+            language = await dbContext.Query<Language>().FirstOrDefaultAsync(
+                l => l.LanguageIsoCode == parameters.LanguageIsoCode, token: cancellationToken);
             if (language != null)
             {
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(language, $"Language ({language.LanguageCultureName})",
                     AuditExtensions.AuditAction.Delete, auditService,
                     cancellationToken);
-                dbContext.Languages.Remove(language);
+                dbContext.Delete(language);
             }
         }
 
@@ -234,8 +223,8 @@ public class LanguageService(
     public async Task<HandlerResult<LanguageDictionary>> SaveLanguageDictionaryAsync(SaveLanguageDictionaryParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<LanguageDictionary>();
@@ -248,11 +237,11 @@ public class LanguageService(
 
             // Save the language dictionary first
             var langDictionary =
-                dbContext.LanguageDictionaries.FirstOrDefault(x => x.Id == parameters.LanguageDictionary.Id);
+                dbContext.Query<LanguageDictionary>().FirstOrDefault(x => x.Id == parameters.LanguageDictionary.Id);
             if (langDictionary == null)
             {
                 langDictionary = parameters.LanguageDictionary;
-                dbContext.LanguageDictionaries.Add(langDictionary);
+                await dbContext.StoreAsync(langDictionary, cancellationToken);
             }
             else
             {
@@ -269,11 +258,11 @@ public class LanguageService(
                 var langTextResult = new HandlerResult<LanguageText>();
                 foreach (var languageText in langTexts)
                 {
-                    var lt = dbContext.LanguageTexts.FirstOrDefault(x => x.Id == languageText.Id);
+                    var lt = dbContext.Query<LanguageText>().FirstOrDefault(x => x.Id == languageText.Id);
                     if (lt == null)
                     {
                         lt = languageText;
-                        dbContext.LanguageTexts.Add(lt);
+                        await dbContext.StoreAsync(lt, cancellationToken);
                     }
                     else
                     {
@@ -312,8 +301,8 @@ public class LanguageService(
     public async Task<HandlerResult<LanguageDictionary?>> DeleteLanguageDictionaryAsync(DeleteLanguageDictionaryParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
@@ -322,14 +311,14 @@ public class LanguageService(
         LanguageDictionary? langDict = null;
         if (parameters.Id != null)
         {
-            langDict = await dbContext.LanguageDictionaries.FirstOrDefaultAsync(l => l.Id == parameters.Id,
-                cancellationToken: cancellationToken);
+            langDict = await dbContext.Query<LanguageDictionary>()
+                .FirstOrDefaultAsync(l => l.Id == parameters.Id, token: cancellationToken);
             if (langDict != null)
             {
                 await user.AddAudit(langDict, $"Language Dictionary ({langDict.Key})",
                     AuditExtensions.AuditAction.Delete, auditService,
                     cancellationToken);
-                dbContext.LanguageDictionaries.Remove(langDict);
+                dbContext.Delete(langDict);
             }
         }
 
@@ -345,13 +334,14 @@ public class LanguageService(
     public async Task<Dictionary<string, Dictionary<string, string>>> GetCachedAllLanguageDictionariesAsync(GetCachedAllLanguageDictionariesParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var cacheKey = typeof(LanguageDictionary).ToCacheKey("GetCachedAllLanguageDictionaries");
         
         return (await cacheService.GetSetCachedItemAsync(cacheKey, () =>
         {
-            var allLanguages = dbContext.Languages.Include(x=>x.LanguageTexts).AsNoTracking().AsSplitQuery();
-            var allLanguageDictionaries = dbContext.LanguageDictionaries.AsNoTracking();
+            var allLanguages = dbContext.Query<Language>().Include(x=>x.LanguageTexts)
+                ;
+            var allLanguageDictionaries = dbContext.Query<LanguageDictionary>();
             var returnDict = new Dictionary<string, Dictionary<string, string>>();
             foreach (var language in allLanguages)
             {
@@ -376,15 +366,15 @@ public class LanguageService(
     public async Task<DataGridResult<LanguageDictionary>> GetDataGridLanguageDictionaryAsync(DataGridLanguageDictionaryParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         
         var result = new DataGridResult<LanguageDictionary>();
 
         // Now you have the DbSet<T> and can query it
-        var query = dbContext.LanguageDictionaries
+        var query = dbContext.Query<LanguageDictionary>()
             .Include(x => x.Texts)
-            .AsSplitQuery()
-            .AsTracking()
+            //.AsSplitQuery()
+            //.AsTracking()
             .AsQueryable();
         
         if (!string.IsNullOrEmpty(parameters.Filter))
@@ -407,7 +397,8 @@ public class LanguageService(
         result.Count = await query.CountAsync(cancellationToken);
 
         // Perform paging via Skip and Take.
-        result.Items = await query.Skip(parameters.Skip).Take(parameters.Take).ToListAsync(cancellationToken: cancellationToken);
+        result.Items = await query.Skip(parameters.Skip).Take(parameters.Take)
+            .ToListAsync(cancellationToken);
 
         return result;
     }

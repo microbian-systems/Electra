@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using ZauberCMS.Core.Membership.Models;
 
 namespace ZauberCMS.Core.Membership.Parameters;
 

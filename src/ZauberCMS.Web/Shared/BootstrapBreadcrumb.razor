@@ -23,7 +23,7 @@
 </nav>
 
 @code {
-    [Parameter] public List<Guid> Path { get; set; } = [];
+    [Parameter] public List<string> Path { get; set; } = [];
     private IEnumerable<Content> BreadcrumbItems { get; set; } = [];
 
     protected override async Task OnInitializedAsync()

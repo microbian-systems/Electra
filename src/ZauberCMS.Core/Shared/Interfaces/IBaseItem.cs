@@ -4,8 +4,8 @@ public interface IBaseItem : ITreeItem
 {
     string? Url { get; set; }
     int SortOrder { get; set; }
-    Guid? ParentId { get; set; }
+    string? ParentId { get; set; }
     DateTime DateCreated { get; set; }
     DateTime DateUpdated { get; set; }
-    List<Guid> Path { get; set; }
+    List<string> Path { get; set; }
 }

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Membership.Models;
 
@@ -6,8 +5,8 @@ namespace ZauberCMS.Core.Content.Models;
 
 public class ContentVersion
 {
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
-    public Guid ContentId { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
+    public string ContentId { get; set; }
 
     /// <summary>
     /// Version number (incremental)
@@ -42,8 +41,8 @@ public class ContentVersion
     /// <summary>
     /// User who created this version
     /// </summary>
-    public Guid? CreatedById { get; set; }
-    public User? CreatedBy { get; set; }
+    public string? CreatedById { get; set; }
+    public CmsUser? CreatedBy { get; set; }
 
     /// <summary>
     /// When this version was created
@@ -73,7 +72,7 @@ public class ContentVersion
     /// <summary>
     /// Reference to parent version (for branching/merging if needed)
     /// </summary>
-    public Guid? ParentVersionId { get; set; }
+    public string? ParentVersionId { get; set; }
     public ContentVersion? ParentVersion { get; set; }
 
     /// <summary>
@@ -105,22 +104,22 @@ public class ContentSnapshot
 {
     public string? Name { get; set; }
     public string? Url { get; set; }
-    public Guid ContentTypeId { get; set; }
+    public string ContentTypeId { get; set; }
     public string? ContentTypeAlias { get; set; }
     public DateTime DateUpdated { get; set; }
     public bool Published { get; set; }
     public bool HideFromNavigation { get; set; }
-    public Guid? LanguageId { get; set; }
-    public Guid? ParentId { get; set; }
-    public Guid? RelatedContentId { get; set; }
+    public string? LanguageId { get; set; }
+    public string? ParentId { get; set; }
+    public string? RelatedContentId { get; set; }
     public bool IsNestedContent { get; set; }
-    public List<Guid> Path { get; set; } = [];
+    public List<string> Path { get; set; } = [];
     public int SortOrder { get; set; }
 }
 
 public class ContentPropertySnapshot
 {
-    public Guid ContentTypePropertyId { get; set; }
+    public string ContentTypePropertyId { get; set; }
     public string Alias { get; set; } = string.Empty;
     public string Value { get; set; } = string.Empty;
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
@@ -132,7 +131,7 @@ public class BlockListContentSnapshot
     /// <summary>
     /// The ID of the nested content item
     /// </summary>
-    public Guid ContentId { get; set; }
+    public string ContentId { get; set; }
 
     /// <summary>
     /// Full snapshot of the nested content at this version

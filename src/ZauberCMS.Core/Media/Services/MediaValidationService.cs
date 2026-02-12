@@ -39,14 +39,14 @@ public class MediaValidationService(IMediaService mediaService, NotificationServ
         {
             var mediaIdStr = element.GetAttributeValue("data-mediaid", "");
             
-            if (!Guid.TryParse(mediaIdStr, out var mediaId))
-            {
-                continue;
-            }
+            // if (!Guid.TryParse(mediaIdStr, out var mediaId))
+            // {
+            //     continue;
+            // }
 
             var media = await mediaService.GetMediaAsync(new GetMediaParameters
             {
-                Id = mediaId,
+                Id = mediaIdStr,
                 AsNoTracking = true
             }, cancellationToken);
 

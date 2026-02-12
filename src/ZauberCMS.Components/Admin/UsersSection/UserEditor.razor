@@ -122,13 +122,13 @@
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public AppState AppState { get; set; } = null!;
     [Inject] public DialogService DialogService { get; set; } = null!;
-    [Inject] public UserManager<User> UserManager { get; set; } = null!;
+    [Inject] public UserManager<CmsUser> UserManager { get; set; } = null!;
     [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
-    [Inject] public ValidateService<User> ValidateService { get; set; } = null!;
+    [Inject] public ValidateService<CmsUser> ValidateService { get; set; } = null!;
 
     [Parameter] public Guid? UserId { get; set; }
 
-    private User? User { get; set; }
+    private CmsUser? User { get; set; }
     private string? InitialUsername { get; set; }
     private string? InitialEmail { get; set; }
     private Dictionary<string, IContentProperty> AllProperties { get; set; } = new();

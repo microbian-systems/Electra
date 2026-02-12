@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ZauberCMS.Core.Extensions;
-
-namespace ZauberCMS.Core.Media.Mapping;
+﻿namespace ZauberCMS.Core.Media.Mapping;
 
 public class MediaDbMapping : IEntityTypeConfiguration<Models.Media>
 {

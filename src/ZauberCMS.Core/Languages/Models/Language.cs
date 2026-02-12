@@ -9,7 +9,7 @@ public class Language : ITreeItem
     /// <summary>
     /// The ID
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
 
     public string? Name
     {

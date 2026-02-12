@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using ZauberCMS.Core.Seo.Interfaces;
-using ZauberCMS.Core.Seo.Models;
 using ZauberCMS.Core.Seo.Parameters;
 
 namespace ZauberCMS.Core.Middleware;

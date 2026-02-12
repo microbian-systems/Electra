@@ -1,5 +1,3 @@
-using ZauberCMS.Core.Media.Models;
-
 namespace ZauberCMS.Core.Media.Mapping;
 
 /// <summary>

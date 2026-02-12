@@ -4,7 +4,6 @@ using ImageResize.Core.Interfaces;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using ZauberCMS.Core.Data.Interfaces;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Settings;
@@ -104,7 +103,7 @@ public class DiskStorageProvider(
                     media = existingMedia;
                 }
 
-                if (media.Name.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(media.Name))
                 {
                     media.Name = file.Name;
                 }

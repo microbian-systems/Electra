@@ -9,7 +9,7 @@ public class SeoRedirect : ITreeItem
     /// <summary>
     /// Represents the unique identifier for the SEO redirect entity.
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
 
     public string? Name { get; set; }
 

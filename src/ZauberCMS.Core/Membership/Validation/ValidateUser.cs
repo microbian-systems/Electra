@@ -5,9 +5,9 @@ using ZauberCMS.Core.Shared.Validation.Models;
 
 namespace ZauberCMS.Core.Membership.Validation;
 
-public class ValidateUser : IValidate<User>
+public class ValidateUser : IValidate<CmsUser>
 {
-    public Task<ValidateResult> Validate(User item)
+    public Task<ValidateResult> Validate(CmsUser item)
     {
         var validateResult = new ValidateResult();
         if (item.UserName.IsNullOrWhiteSpace())

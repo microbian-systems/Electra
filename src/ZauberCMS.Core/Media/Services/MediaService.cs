@@ -1,11 +1,10 @@
-using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using ZauberCMS.Core.Data;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Media.Interfaces;
 using ZauberCMS.Core.Media.Parameters;
@@ -40,7 +39,7 @@ public class MediaService(
     public async Task<Models.Media?> GetMediaAsync(GetMediaParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
         var cacheKey = query.GenerateCacheKey();
 
@@ -61,11 +60,11 @@ public class MediaService(
     public async Task<HandlerResult<Models.Media>> SaveMediaAsync(SaveMediaParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
 
         var result = new HandlerResult<Models.Media>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
 
         // If we are either creating a new file or over writing the current one
@@ -95,7 +94,7 @@ public class MediaService(
             if (parameters.IsUpdate)
             {
                 // Get the DB version
-                var dbMedia = dbContext.Medias
+                var dbMedia = dbContext.Query<Models.Media>()
                     .FirstOrDefault(x => x.Id == result.Entity.Id);
                 if (dbMedia != null)
                 {
@@ -128,7 +127,7 @@ public class MediaService(
             {
                 // Calculate and set the Path property
                 result.Entity.Path = result.Entity.BuildPath(dbContext, parameters.IsUpdate, settings);
-                dbContext.Medias.Add(result.Entity);
+                await dbContext.StoreAsync(result.Entity, cancellationToken);
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(result.Entity, result.Entity.Name, AuditExtensions.AuditAction.Create, auditService,
                     cancellationToken);
@@ -156,7 +155,7 @@ public class MediaService(
     public async Task<PaginatedList<Models.Media>> QueryMediaAsync(QueryMediaParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
         var cacheKey = $"{query.GenerateCacheKey<Models.Media>()}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
 
@@ -178,17 +177,17 @@ public class MediaService(
     public async Task<HandlerResult<Models.Media>> DeleteMediaAsync(DeleteMediaParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Models.Media>();
         
-        var media = dbContext.Medias.FirstOrDefault(x => x.Id == parameters.MediaId);
+        var media = dbContext.Query<Models.Media>().FirstOrDefault(x => x.Id == parameters.MediaId);
         if (media != null)
         {
             //Check if it has children
-            var children = dbContext.Medias.AsNoTracking().Where(x => x.ParentId == media.Id);
+            var children = dbContext.Query<Models.Media>().Where(x => x.ParentId == media.Id);
             if (await children.AnyAsync(cancellationToken))
             {
                 handlerResult.AddMessage("Unable to delete media with child content, delete or move those items first", ResultMessageType.Error);
@@ -199,7 +198,7 @@ public class MediaService(
             var filePathToDelete = media.Url;
             var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
             await user.AddAudit(media, media.Name, AuditExtensions.AuditAction.Delete, auditService, cancellationToken);
-            dbContext.Medias.Remove(media);
+            dbContext.Delete(media);
             await appState.NotifyMediaDeleted(null, authState.User.Identity?.Name!);
             var result = await dbContext.SaveChangesAndLog(media, handlerResult, cacheService, extensionManager, cancellationToken);
             if (result.Success && parameters.DeleteFile)
@@ -223,8 +222,9 @@ public class MediaService(
     public async Task<bool> HasChildMediaAsync(HasChildMediaParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
-        return await dbContext.Medias.AsNoTracking().AnyAsync(c => c.ParentId == parameters.ParentId && !c.Deleted, cancellationToken: cancellationToken);
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+        return await dbContext.Query<Models.Media>()
+            .AnyAsync(c => c.ParentId == parameters.ParentId && !c.Deleted, cancellationToken);
     }
 
     /// <summary>
@@ -236,27 +236,25 @@ public class MediaService(
     public async Task<Dictionary<string, Guid>> GetRestrictedMediaUrlsAsync(GetRestrictedMediaUrlsParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(dbContext);
         var cacheKey = query.GenerateCacheKey<Models.Media>();
 
         if (parameters.Cached)
         {
-            return await cacheService.GetSetCachedItemAsync(cacheKey, async () => await query.Select(x => new { x.Url, x.Id }).ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken)) ?? new Dictionary<string, Guid>();
+            return await cacheService
+                .GetSetCachedItemAsync(cacheKey, async () => await query.Select(x => new { x.Url, x.Id })
+                    .ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken)) ?? new Dictionary<string, Guid>();
         }
 
-        return await query.Select(x => new { x.Url, x.Id }).ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken);
+        return await query.Select(x => new { x.Url, x.Id })
+            .ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken);
     }
 
-    private static IQueryable<Models.Media> BuildQuery(GetMediaParameters parameters, IZauberDbContext dbContext)
+    private static IQueryable<Models.Media> BuildQuery(GetMediaParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Medias.AsQueryable();
-
-        if (parameters.AsNoTracking)
-        {
-            query = query.AsNoTracking();
-        }
-
+        var query = dbContext.Query<Models.Media>().AsQueryable();
+        
         if (parameters.IncludeParent)
         {
             query = query.Include(x => x.Parent);
@@ -265,11 +263,6 @@ public class MediaService(
         if (parameters.IncludeChildren)
         {
             query = query.Include(x => x.Children);
-
-            if (parameters.IncludeParent)
-            {
-                query = query.AsSplitQuery();
-            }
         }
 
         if (parameters.MediaType != null)
@@ -285,9 +278,9 @@ public class MediaService(
         return query;
     }
 
-    private static IQueryable<Models.Media> BuildQuery(QueryMediaParameters parameters, IZauberDbContext dbContext)
+    private static IQueryable<Models.Media> BuildQuery(QueryMediaParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Medias.Include(x => x.Parent).AsQueryable();
+        var query = dbContext.Query<Models.Media>().Include(x => x.Parent).AsQueryable();
 
         if (parameters.Query != null)
         {
@@ -336,8 +329,8 @@ public class MediaService(
         return query;
     }
 
-    private static IQueryable<Models.Media> BuildQuery(IZauberDbContext dbContext)
+    private static IQueryable<Models.Media> BuildQuery(IAsyncDocumentSession dbContext)
     {
-        return dbContext.Medias.AsNoTracking().Where(x => x.RequiresAuthentication);
+        return dbContext.Query<Models.Media>().AsNoTracking().Where(x => x.RequiresAuthentication);
     }
 }

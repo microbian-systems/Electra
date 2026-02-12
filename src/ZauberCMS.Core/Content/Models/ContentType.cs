@@ -12,7 +12,7 @@ public class ContentType : ITreeItem
     /// <summary>
     /// Gets or sets the unique identifier of the content type.
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
 
     /// <summary>
     /// Gets or sets the name of the content type.
@@ -58,7 +58,7 @@ public class ContentType : ITreeItem
     /// The id of the last person to update the content type 
     /// </summary>
     public Guid? LastUpdatedById { get; set; }
-    public User? LastUpdatedBy { get; set; }
+    public CmsUser? LastUpdatedBy { get; set; }
     
     /// <summary>
     /// Gets or sets the date and time when the entity was created.

@@ -8,15 +8,13 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Radzen;
+using Raven.Client.Documents.Session;
 using Serilog;
 using ZauberCMS.Core.Content.ContentFinders;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Data.Interfaces;
 using ZauberCMS.Core.Email;
 using ZauberCMS.Core.Extensions;
@@ -34,7 +32,6 @@ using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Audit.Services;
 using ZauberCMS.Core.Seo.Interfaces;
 using ZauberCMS.Core.Seo.Services;
-using ZauberCMS.Core.Data.Services;
 using ZauberCMS.Core.Email.Interfaces;
 using ZauberCMS.Core.Email.Services;
 using ZauberCMS.Core.Jobs;
@@ -132,7 +129,7 @@ public static class ZauberSetup
         var databaseProvider = zauberSettings.DatabaseProvider;
         if (databaseProvider != null)
         {
-            var identityBuilder = builder.Services.AddIdentityCore<User>(options =>
+            var identityBuilder = builder.Services.AddIdentityCore<CmsUser>(options =>
             {
                 {
                     // Password settings.
@@ -159,42 +156,12 @@ public static class ZauberSetup
             
             identityBuilder.AddRoles<Role>();
             
-            switch (databaseProvider.ToLower())
-            {
-                case "sqlite":
-                    builder.Services.AddDbContext<SqliteZauberDbContext>();
-                    builder.Services.AddScoped<IZauberDbContext, SqliteZauberDbContext>();
-                    identityBuilder
-                        .AddEntityFrameworkStores<SqliteZauberDbContext>()
-                        .AddUserStore<UserStore<User, Role, SqliteZauberDbContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
-                        .AddRoleStore<RoleStore<Role, SqliteZauberDbContext, Guid, UserRole, RoleClaim>>();
-                    break;
-                case "postgresql":
-                    builder.Services.AddDbContext<PostgreSqlZauberDbContext>();
-                    builder.Services.AddScoped<IZauberDbContext, PostgreSqlZauberDbContext>();
-                    identityBuilder
-                        .AddEntityFrameworkStores<PostgreSqlZauberDbContext>()
-                        .AddUserStore<UserStore<User, Role, PostgreSqlZauberDbContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
-                        .AddRoleStore<RoleStore<Role, PostgreSqlZauberDbContext, Guid, UserRole, RoleClaim>>();
-                    break;
-                case "sqlserver":
-                    builder.Services.AddDbContext<ZauberDbContext>();
-                    builder.Services.AddScoped<IZauberDbContext, ZauberDbContext>();
-                    identityBuilder
-                        .AddEntityFrameworkStores<ZauberDbContext>()
-                        .AddUserStore<UserStore<User, Role, ZauberDbContext, Guid, UserClaim, UserRole, UserLogin, UserToken, RoleClaim>>()
-                        .AddRoleStore<RoleStore<Role, ZauberDbContext, Guid, UserRole, RoleClaim>>();
-                    break;
-                default:
-                    throw new Exception("Unable to find database provider in appSettings");
-            }
-            
             identityBuilder
                 .AddClaimsPrincipalFactory<ZauberUserClaimsPrincipalFactory>()
                 .AddSignInManager()
                 .AddDefaultTokenProviders();
 
-            builder.Services.AddScoped<IUserEmailStore<User>, UserEmailStore>();
+            builder.Services.AddScoped<IUserEmailStore<CmsUser>, UserEmailStore>();
         }
         else
         {
@@ -230,8 +197,8 @@ public static class ZauberSetup
         builder.Services.AddScoped(typeof(ValidateService<>));
         builder.Services.AddScoped<ICacheService, DefaultCacheService>();
         builder.Services.AddScoped<IHtmlSanitizerService, DefaultHtmlSanitizerService>();
-        builder.Services.AddScoped<SignInManager<User>, ZauberSignInManager>();
-        builder.Services.AddScoped<IEmailSender<User>, IdentityEmailSender>();
+        builder.Services.AddScoped<SignInManager<CmsUser>, ZauberSignInManager>();
+        builder.Services.AddScoped<IEmailSender<CmsUser>, IdentityEmailSender>();
         builder.Services.AddScoped<TreeState>();
         builder.Services.AddScoped<ContentFinderPipeline>();
 
@@ -294,7 +261,6 @@ public static class ZauberSetup
             builder.Services
                 .AddRazorComponents(c => c.DetailedErrors = true)
                 .AddInteractiveServerComponents(c => c.DetailedErrors = true);
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
         }
         else
         {
@@ -333,23 +299,24 @@ public static class ZauberSetup
     {
         using (var scope = app.Services.CreateScope())
         {
-            var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+            var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
             var extensionManager = scope.ServiceProvider.GetRequiredService<ExtensionManager>();
             var languageService = scope.ServiceProvider.GetRequiredService<ILanguageService>();
             var settings = scope.ServiceProvider.GetRequiredService<IOptions<ZauberSettings>>();
 
             try
             {
-                if (dbContext.Database.GetPendingMigrations().Any())
-                {
-                    dbContext.Database.Migrate();
-                }
+                // todo - use a ravendb construct here for seeding the db
+                // if (dbContext.Database.GetPendingMigrations().Any())
+                // {
+                //     dbContext.Database.Migrate();
+                // }
 
                 // Get any seed data
                 var seedData = extensionManager.GetInstances<ISeedData>();
                 foreach (var data in seedData)
                 {
-                    data.Value.Initialise(dbContext);
+                    //data.Value.Initialise(dbContext);
                 }
 
                 // Is this ok to use the awaiter and result here?

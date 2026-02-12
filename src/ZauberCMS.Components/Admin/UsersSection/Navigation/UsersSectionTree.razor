@@ -31,7 +31,7 @@
         AppState.OnUserChanged -= HandleUsersChanged;
     }
 
-    private async Task HandleUsersChanged(User? user, string username)
+    private async Task HandleUsersChanged(CmsUser? user, string username)
     {
         await DataRefresh();
         StateHasChanged();
@@ -63,7 +63,7 @@
                 Id = role.Id,
                 Name = role.Name,
                 Url = $"{Urls.AdminUsersList}/{role.Id}",
-                BranchType = typeof(User)
+                BranchType = typeof(CmsUser)
             });
         }
 

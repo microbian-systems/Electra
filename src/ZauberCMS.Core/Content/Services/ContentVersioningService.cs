@@ -1,9 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Content.Models;
 using ZauberCMS.Core.Content.Parameters;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Plugins;
 using ZauberCMS.Core.Shared.Models;
@@ -25,7 +26,7 @@ public class ContentVersioningService(
     public async Task<HandlerResult<ContentVersion>> CreateVersionAsync(CreateContentVersionParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = _serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var handlerResult = new HandlerResult<ContentVersion>();
 
         if (parameters.Content == null)
@@ -34,7 +35,7 @@ public class ContentVersioningService(
             return handlerResult;
         }
 
-        var content = await dbContext.Contents
+        var content = await dbContext.Query<Content>()
             .Include(c => c.PropertyData)
             .Include(c => c.ContentType)
             .FirstOrDefaultAsync(c => c.Id == parameters.Content.Id, cancellationToken);
@@ -46,7 +47,7 @@ public class ContentVersioningService(
         }
 
         // Get next version number
-        var maxVersion = await dbContext.ContentVersions
+        var maxVersion = await dbContext.Query<ContentVersion>()
             .Where(v => v.ContentId == content.Id)
             .MaxAsync(v => (int?)v.VersionNumber, cancellationToken) ?? 0;
 
@@ -101,7 +102,7 @@ public class ContentVersioningService(
             version.DatePublished = null;
         }
 
-        dbContext.ContentVersions.Add(version);
+        dbContext.Query<ContentVersion>().Add(version);
 
         // Update content if this is being published
         if (parameters.Status == ContentVersionStatus.Published)
@@ -123,10 +124,10 @@ public class ContentVersioningService(
     public async Task<HandlerResult<ContentVersion>> PublishVersionAsync(PublishContentVersionParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = _serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var handlerResult = new HandlerResult<ContentVersion>();
 
-        var version = await dbContext.ContentVersions
+        var version = await dbContext.Query<ContentVersion>()
             .FirstOrDefaultAsync(v => v.Id == parameters.VersionId, cancellationToken);
 
         if (version == null)
@@ -135,7 +136,7 @@ public class ContentVersioningService(
             return handlerResult;
         }
 
-        var content = await dbContext.Contents
+        var content = await dbContext.Query<Content>()
             .Include(c => c.PropertyData)
             .FirstOrDefaultAsync(c => c.Id == version.ContentId, cancellationToken);
 
@@ -179,9 +180,9 @@ public class ContentVersioningService(
     public async Task<PaginatedList<ContentVersion>> GetContentVersionsAsync(QueryContentVersionsParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = _serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
 
-        var query = dbContext.ContentVersions
+        var query = dbContext.Query<ContentVersion>()
             .Include(v => v.CreatedBy)
             .Where(v => v.ContentId == parameters.ContentId);
 
@@ -246,9 +247,9 @@ public class ContentVersioningService(
     public async Task<ContentVersion?> GetVersionAsync(GetContentVersionParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = _serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
 
-        return await dbContext.ContentVersions
+        return await dbContext.Query<ContentVersion>()
             .Include(v => v.CreatedBy)
             .FirstOrDefaultAsync(v => v.Id == parameters.VersionId, cancellationToken);
     }
@@ -259,10 +260,10 @@ public class ContentVersioningService(
     public async Task<HandlerResult<bool>> DeleteVersionAsync(DeleteContentVersionParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = _serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var handlerResult = new HandlerResult<bool>();
 
-        var version = await dbContext.ContentVersions
+        var version = await dbContext.Query<ContentVersion>()
             .FirstOrDefaultAsync(v => v.Id == parameters.VersionId, cancellationToken);
 
         if (version == null)
@@ -281,7 +282,7 @@ public class ContentVersioningService(
         // Prevent deletion of latest draft if it's the only draft
         if (version.IsLatestDraft)
         {
-            var otherDrafts = await dbContext.ContentVersions
+            var otherDrafts = await dbContext.Query<ContentVersion>()
                 .CountAsync(v => v.ContentId == version.ContentId && v.Status == ContentVersionStatus.Draft && v.Id != version.Id, cancellationToken);
 
             if (otherDrafts == 0)
@@ -291,7 +292,8 @@ public class ContentVersioningService(
             }
         }
 
-        dbContext.ContentVersions.Remove(version);
+        //dbContext.Query<ContentVersion>().Remove(version);
+        dbContext.Delete(version);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         handlerResult.Success = true;
@@ -325,9 +327,9 @@ public class ContentVersioningService(
 
     #region Private Methods
 
-    private async Task ClearCurrentPublishedFlagAsync(IZauberDbContext dbContext, Guid contentId, CancellationToken cancellationToken)
+    private async Task ClearCurrentPublishedFlagAsync(IAsyncDocumentSession dbContext, Guid contentId, CancellationToken cancellationToken)
     {
-        var currentPublished = await dbContext.ContentVersions
+        var currentPublished = await dbContext.Query<ContentVersion>()
             .FirstOrDefaultAsync(v => v.ContentId == contentId && v.IsCurrentPublished, cancellationToken);
 
         if (currentPublished != null)
@@ -336,9 +338,9 @@ public class ContentVersioningService(
         }
     }
 
-    private async Task ClearLatestDraftFlagAsync(IZauberDbContext dbContext, Guid contentId, CancellationToken cancellationToken)
+    private async Task ClearLatestDraftFlagAsync(IAsyncDocumentSession dbContext, Guid contentId, CancellationToken cancellationToken)
     {
-        var latestDraft = await dbContext.ContentVersions
+        var latestDraft = await dbContext.Query<ContentVersion>()
             .FirstOrDefaultAsync(v => v.ContentId == contentId && v.IsLatestDraft, cancellationToken);
 
         if (latestDraft != null)
@@ -347,7 +349,7 @@ public class ContentVersioningService(
         }
     }
 
-    private void PublishVersionToContentAsync(IZauberDbContext dbContext, ContentVersion version, Models.Content content, CancellationToken cancellationToken)
+    private void PublishVersionToContentAsync(IAsyncDocumentSession dbContext, ContentVersion version, Models.Content content, CancellationToken cancellationToken)
     {
         // Update content from snapshot
         content.Name = version.Snapshot.Name;
@@ -618,7 +620,7 @@ public class ContentVersioningService(
         }
     }
 
-    private static async Task<List<BlockListContentSnapshot>> CreateBlockListSnapshotsAsync(IZauberDbContext dbContext, Models.Content content)
+    private static async Task<List<BlockListContentSnapshot>> CreateBlockListSnapshotsAsync(IAsyncDocumentSession dbContext, Models.Content content)
     {
         var snapshots = new List<BlockListContentSnapshot>();
         var processedContentIds = new HashSet<Guid>(); // Prevent infinite recursion
@@ -628,7 +630,7 @@ public class ContentVersioningService(
         return snapshots;
     }
 
-    private static async Task CreateBlockListSnapshotsRecursiveAsync(IZauberDbContext dbContext, Models.Content content, List<BlockListContentSnapshot> snapshots, HashSet<Guid> processedContentIds)
+    private static async Task CreateBlockListSnapshotsRecursiveAsync(IAsyncDocumentSession dbContext, Models.Content content, List<BlockListContentSnapshot> snapshots, HashSet<Guid> processedContentIds)
     {
         // Find all block list properties in the content
         var blockListProperties = content.PropertyData.Where(p =>
@@ -645,7 +647,7 @@ public class ContentVersioningService(
                 if (contentIds != null && contentIds.Any())
                 {
                     // Get all the block list content items
-                    var blockListContent = await dbContext.Contents
+                    var blockListContent = await dbContext.Query<Content>()
                         .Include(c => c.PropertyData)
                         .Where(c => contentIds.Contains(c.Id))
                         .ToListAsync();
@@ -688,13 +690,13 @@ public class ContentVersioningService(
         }
     }
 
-    private async Task RestoreBlockListContentAsync(IZauberDbContext dbContext, ContentVersion version, CancellationToken cancellationToken)
+    private async Task RestoreBlockListContentAsync(IAsyncDocumentSession dbContext, ContentVersion version, CancellationToken cancellationToken)
     {
         foreach (var blockListSnapshot in version.BlockListSnapshots)
         {
             // Always restore the content from the snapshot - this ensures the block list content
             // matches exactly what was saved in the version
-            var existingContent = await dbContext.Contents
+            var existingContent = await dbContext.Query<Content>()
                 .Include(c => c.PropertyData)
                 .FirstOrDefaultAsync(c => c.Id == blockListSnapshot.ContentId, cancellationToken);
 
@@ -737,7 +739,7 @@ public class ContentVersioningService(
                     });
                 }
 
-                dbContext.Contents.Add(existingContent);
+                await dbContext.StoreAsync(existingContent, cancellationToken);
             }
             else
             {
@@ -768,7 +770,8 @@ public class ContentVersioningService(
 
                 foreach (var property in propertiesToRemove)
                 {
-                    dbContext.ContentPropertyValues.Remove(property);
+                    //dbContext.ContentPropertyValues.Remove(property);
+                    dbContext.Delete(property);
                 }
 
                 // Then update or add properties from snapshot

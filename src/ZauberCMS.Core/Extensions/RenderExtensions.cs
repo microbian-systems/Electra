@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.AspNetCore.Razor.Hosting;
+﻿using Microsoft.AspNetCore.Razor.Hosting;
 using ZauberCMS.Core.Plugins;
 using ZauberCMS.Core.Rendering;
 

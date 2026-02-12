@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ZauberCMS.Core.Seo.Models;
+﻿using ZauberCMS.Core.Seo.Models;
 
 namespace ZauberCMS.Core.Seo.Mapping;
 

@@ -13,7 +13,7 @@
                 Count="@Count"
                 Data="@Users"
                 SelectionMode="DataGridSelectionMode.Single"
-                RowSelect="@((User value) => OnRowSelect(value))"
+                RowSelect="@((CmsUser value) => OnRowSelect(value))"
                 PagerHorizontalAlign="HorizontalAlign.Center">
     @*@bind-Value="@SelectedContent"*@
     <Columns>
@@ -35,7 +35,7 @@
     public int SortOrder => 0;
     public string SectionAlias => Constants.Sections.UsersSection;
 
-    private IEnumerable<User> Users { get; set; } = [];
+    private IEnumerable<CmsUser> Users { get; set; } = [];
     private int Count { get; set; } 
     private bool IsLoading { get; set; }
 
@@ -50,7 +50,7 @@
 
         await Task.Yield();
 
-        var command = new DataGridParameters<User>();
+        var command = new DataGridParameters<CmsUser>();
         
         if (args.Top != null && args.Top != 0)
         {
@@ -80,7 +80,7 @@
 
     private void OnRowSelect(object value)
     {
-        if (value is User selectedRow)
+        if (value is CmsUser selectedRow)
         {
             NavigationManager.NavigateTo($"{Urls.AdminUsersEdit}/{selectedRow.Id}", RefreshPage);
         }

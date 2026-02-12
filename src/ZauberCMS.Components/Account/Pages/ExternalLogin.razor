@@ -16,8 +16,8 @@
 
 @code {
     [Inject] public IdentityRedirectManager RedirectManager { get; set; } = null!;
-    [Inject] public SignInManager<User> SignInManager { get; set; } = null!;
-    [Inject] public UserManager<User> UserManager { get; set; } = null!;
+    [Inject] public SignInManager<CmsUser> SignInManager { get; set; } = null!;
+    [Inject] public UserManager<CmsUser> UserManager { get; set; } = null!;
     [Inject] public IOptions<ZauberSettings> Settings { get; set; } = null!;
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;

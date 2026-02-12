@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ZauberCMS.Core.Languages.Models;
+﻿using ZauberCMS.Core.Languages.Models;
 
 namespace ZauberCMS.Core.Languages.Mapping;
 

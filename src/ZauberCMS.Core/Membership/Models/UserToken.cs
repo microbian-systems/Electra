@@ -2,7 +2,7 @@
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class UserToken : IdentityUserToken<Guid>
+public class UserToken : IdentityUserToken<string>
 {
     
 }

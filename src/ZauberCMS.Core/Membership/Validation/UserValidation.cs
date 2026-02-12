@@ -1,11 +1,10 @@
 using FluentValidation;
-using Microsoft.IdentityModel.Tokens;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Shared.Validation;
 
 namespace ZauberCMS.Core.Membership.Validation;
 
-public class UserValidation : BaseFluentValidator<User>
+public class UserValidation : BaseFluentValidator<CmsUser>
 {
     public UserValidation()
     {
@@ -15,6 +14,6 @@ public class UserValidation : BaseFluentValidator<User>
         RuleFor(p => p.Email).NotEmpty().EmailAddress().MaximumLength(100);
 
         RuleFor(p => p.PhoneNumber).MaximumLength(100).WithMessage("PhoneNumber Cannot be longer than 100 characters");
-        RuleFor(p => p.PhoneNumber).Matches("[0-9]+").When(p => !p.PhoneNumber.IsNullOrEmpty());
+        RuleFor(p => p.PhoneNumber).Matches("[0-9]+").When(p => !string.IsNullOrEmpty(p.PhoneNumber));
     }
 }

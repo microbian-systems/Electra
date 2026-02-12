@@ -1,21 +1,24 @@
-﻿using ZauberCMS.Core.Data;
+﻿using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
+using ZauberCMS.Core.Content.Models;
 using ZauberCMS.Core.Data.Interfaces;
-using ZauberCMS.Core.Extensions;
 
 namespace ZauberCMS.Core.SeedData;
 
 public class SyncTabsToUseAlias : ISeedData
 {
-    public void Initialise(IZauberDbContext dbContext)
+    public void Initialise(IDocumentStore store)
     {
+        var dbContext = store.OpenSession();
         // Get all ContentTypes
         // ReSharper disable once EntityFramework.NPlusOne.IncompleteDataQuery
-        foreach (var contentType in dbContext.ContentTypes)
+        var types = dbContext.Query<ContentType>().ToList();
+        foreach (var contentType in types)
         {
             // ReSharper disable once EntityFramework.NPlusOne.IncompleteDataUsage
             foreach (var contentProperty in contentType.ContentProperties)
             {
-                if (contentProperty.TabAlias.IsNullOrWhiteSpace())
+                if (string.IsNullOrWhiteSpace(contentProperty.TabAlias))
                 {
                     // ReSharper disable once EntityFramework.NPlusOne.IncompleteDataUsage
                     var tab = contentType.Tabs.FirstOrDefault(x => x.Id == contentProperty.TabId);

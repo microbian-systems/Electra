@@ -16,7 +16,7 @@
     [Inject] NotificationService NotificationService { get; set; } = null!;
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
     [Parameter, EditorRequired] public Guid UserId { get; set; }
-    private User? User { get; set; }
+    private CmsUser? User { get; set; }
     private IEnumerable<Role> Roles { get; set; } = [];
     private IEnumerable<Guid> UsersRoles { get; set; } = [];
     protected override async Task OnInitializedAsync()

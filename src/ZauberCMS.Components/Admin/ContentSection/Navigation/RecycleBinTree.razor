@@ -28,7 +28,7 @@
 
     private object? Selection { get; set; }
     private IEnumerable<TreeStub> TreeItems { get; set; } = [];
-    private User? CurrentUser { get; set; }
+    private CmsUser? CurrentUser { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

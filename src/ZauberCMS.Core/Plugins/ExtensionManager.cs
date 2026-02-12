@@ -1,14 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Reflection;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using ZauberCMS.Core.Data;
-using ZauberCMS.Core.Data.Interfaces;
-using ZauberCMS.Core.Settings;
 
 namespace ZauberCMS.Core.Plugins;
 

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using ZauberCMS.Core.Membership.Models;
 
 namespace ZauberCMS.Core.Membership.Parameters;
 

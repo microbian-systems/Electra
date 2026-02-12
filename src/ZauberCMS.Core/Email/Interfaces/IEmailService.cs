@@ -1,5 +1,3 @@
-using System.Threading;
-using System.Threading.Tasks;
 using ZauberCMS.Core.Email.Parameters;
 
 namespace ZauberCMS.Core.Email.Interfaces;

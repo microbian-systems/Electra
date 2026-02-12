@@ -302,7 +302,7 @@ else
     private List<PropertyType> AllProperties { get; set; } = [];
     private List<ContentType> SelectedCompositions { get; set; } = [];
     private List<Content> Breadcrumb { get; set; } = [];
-    private User? LastUpdatedBy { get; set; }
+    private CmsUser? LastUpdatedBy { get; set; }
     private bool Loading { get; set; } = true;
     private BlockListChanges? PendingBlockListChanges { get; set; }
     private Content? WorkingCopy { get; set; }

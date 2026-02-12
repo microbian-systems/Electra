@@ -3,7 +3,7 @@
 @using ZauberCMS.Core.Membership
 @using ZauberCMS.Core.Membership.Models
 
-@inject SignInManager<User> SignInManager
+@inject SignInManager<CmsUser> SignInManager
 @inject IdentityRedirectManager RedirectManager
 
 @if (externalLogins.Any())

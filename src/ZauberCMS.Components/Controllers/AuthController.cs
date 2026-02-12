@@ -7,8 +7,8 @@ namespace ZauberCMS.Components.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController(
-    UserManager<User> userManager,
-    SignInManager<User> signInManager)
+    UserManager<CmsUser> userManager,
+    SignInManager<CmsUser> signInManager)
     : ControllerBase
 {
     [HttpGet("refreshsignin")]

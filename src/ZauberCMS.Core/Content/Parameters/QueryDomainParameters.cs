@@ -6,7 +6,7 @@ namespace ZauberCMS.Core.Content.Parameters;
 public class QueryDomainParameters
 {
     public bool AsNoTracking { get; set; } = true;
-    public List<Guid> Ids { get; set; } = [];
+    public List<string> Ids { get; set; } = [];
     public int PageIndex { get; set; } = 1;
     public int AmountPerPage { get; set; } = 10;
     public bool IncludeChildren { get; set; }

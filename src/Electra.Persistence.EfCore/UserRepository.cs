@@ -4,7 +4,7 @@ using Electra.Models;
 using Electra.Models.Entities;
 using Electra.Persistence.Core;
 using LanguageExt;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.EfCore;

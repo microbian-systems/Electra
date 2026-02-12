@@ -268,7 +268,7 @@ public static class ContentExtensions
     /// <param name="propertyAlias"></param>
     /// <param name="membershipService"></param>
     /// <returns></returns>
-    public static async Task<List<User>> GetUsers(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
+    public static async Task<List<CmsUser>> GetUsers(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
     {
         if (!string.IsNullOrEmpty(propertyAlias))
         {
@@ -290,7 +290,7 @@ public static class ContentExtensions
     /// <param name="propertyAlias">The property alias to retrieve user ids</param>
     /// <param name="membershipService">The membershipService to handle user queries</param>
     /// <returns>A single user or null if no users are found</returns>
-    public static async Task<User?> GetUser(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
+    public static async Task<CmsUser?> GetUser(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
     {
         return (await content.GetUsers(propertyAlias, membershipService)).FirstOrDefault();
     }

@@ -9,7 +9,7 @@ namespace ZauberCMS.Core.Content.Models;
 
 public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
 {
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
 
     /// <summary>
     /// The name of the content
@@ -27,7 +27,7 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// ContentType ID for this content
     /// </summary>
-    public Guid ContentTypeId { get; set; }
+    public string ContentTypeId { get; set; }
 
     public ContentType? ContentType { get; set; }
     public string? ContentTypeAlias { get; set; }
@@ -36,17 +36,17 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// The id of the last person to update the content 
     /// </summary>
-    public Guid? LastUpdatedById { get; set; }
+    public string? LastUpdatedById { get; set; }
     
     /// <summary>
     /// Last updated by User object
     /// </summary>
-    public User? LastUpdatedBy { get; set; }
+    public CmsUser? LastUpdatedBy { get; set; }
     
     /// <summary>
     /// Id of any unpublished content
     /// </summary>
-    public Guid? UnpublishedContentId { get; set; }
+    public string? UnpublishedContentId { get; set; }
     
     /// <summary>
     /// The unpublished content object
@@ -57,7 +57,7 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// The path for this content in the content tree
     /// </summary>
-    public List<Guid> Path { get; set; } = [];
+    public List<string> Path { get; set; } = [];
 
     /// <summary>
     /// The sort order
@@ -93,7 +93,7 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// Redirects behind the scenes to another content node
     /// </summary>
-    public Guid? InternalRedirectId { get; set; }
+    public string? InternalRedirectId { get; set; }
 
     [NotMapped] // Prevents property from being mapped to a DB column
     public string? InternalRedirectIdAsString
@@ -103,13 +103,13 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
         {
             if (string.IsNullOrEmpty(value))
             {
-                InternalRedirectId = Guid.Empty;
+                InternalRedirectId = string.Empty;
             }
             else
             {
-                if (Guid.TryParse(value, out var guidValue))
+                //if (string.TryParse(value, out var guidValue))
                 {
-                    InternalRedirectId = guidValue;
+                    InternalRedirectId = value;
                 }
             }
         }
@@ -118,14 +118,14 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// The id of the parent content node if there is one
     /// </summary>
-    public Guid? ParentId { get; set; }
+    public string? ParentId { get; set; }
     
     public Content? Parent { get; set; }
     
     /// <summary>
     /// If this content related to another content item 
     /// </summary>
-    public Guid? RelatedContentId { get; set; }
+    public string? RelatedContentId { get; set; }
 
     /// <summary>
     /// The date and time when the content was created.
@@ -145,7 +145,7 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// Manually set language of the page
     /// </summary>
-    public Guid? LanguageId { get; set; }
+    public string? LanguageId { get; set; }
     
     /// <summary>
     /// Manually set Language of the page
@@ -195,5 +195,5 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// </summary>
     [NotMapped]
     [JsonIgnore]
-    public Dictionary<string, Dictionary<Guid, Content>> PendingBlockListChanges { get; set; } = new();
+    public Dictionary<string, Dictionary<string, Content>> PendingBlockListChanges { get; set; } = new();
 }

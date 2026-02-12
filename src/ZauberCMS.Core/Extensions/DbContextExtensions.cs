@@ -1,11 +1,10 @@
 using System.Security.Cryptography;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Options;
+using Raven.Client.Documents.Session;
 using Serilog;
-using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Content.Models;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Plugins;
 using ZauberCMS.Core.Settings;
 using ZauberCMS.Core.Shared.Interfaces;
@@ -52,10 +51,10 @@ public static class DbContextExtensions
 #pragma warning restore EF1002
     }
     
-    public static List<Guid> BuildPath<T>(this T entity, IZauberDbContext dbContext, bool isUpdate, IOptions<ZauberSettings> settings)
+    public static List<Guid> BuildPath<T>(this T entity, IAsyncDocumentSession dbContext, bool isUpdate, IOptions<ZauberSettings> settings)
         where T : class, IBaseItem
     {
-        var path = new List<Guid>();
+        var path = new List<string>();
         var urls = new List<string>();
         IBaseItem? currentEntity = entity;
 
@@ -64,8 +63,8 @@ public static class DbContextExtensions
             path.Insert(0, currentEntity.Id);
             if (currentEntity.Url != null) urls.Insert(0, currentEntity.Url);
 
-            var parentItem = currentEntity.ParentId.HasValue
-                ? dbContext.Set<T>().FirstOrDefault(e => e.Id == currentEntity.ParentId.Value)
+            var parentItem = string.IsNullOrEmpty(currentEntity.ParentId)
+                ? dbContext.Query<T>().FirstOrDefault(e => e.Id == currentEntity.ParentId)
                 : null;
 
             currentEntity = parentItem;
@@ -98,11 +97,11 @@ public static class DbContextExtensions
     }
 
     
-    public static IQueryable<T>? ToTyped<T>(this IZauberDbContext context) where T : class
+    public static IQueryable<T>? ToTyped<T>(this IAsyncDocumentSession context) where T : class
     {
         try
         {
-            var dbSet = context.Set<T>();
+            var dbSet = context.Query<T>(); //.AsQueryable();
             return dbSet.AsQueryable();
         }
         catch (Exception ex)
@@ -113,13 +112,13 @@ public static class DbContextExtensions
         return null;
     }
     
-    public static async Task<HandlerResult<T>> SaveChangesAndLog<T>(this IZauberDbContext context, T? entity,
+    public static async Task<HandlerResult<T>> SaveChangesAndLog<T>(this IAsyncDocumentSession context, T? entity,
         HandlerResult<T> crudResult, ICacheService cacheService, ExtensionManager extensionManager, CancellationToken cancellationToken)
     {
         try
         {
             var canSave = true;
-            var entityState = entity != null ? context.Entry(entity).State : EntityState.Unchanged;
+            //var entityState = entity != null ? context.Entry(entity).State : EntityState.Unchanged;
             
             // Find any before save plugins
             if (entity != null)
@@ -137,7 +136,7 @@ public static class DbContextExtensions
 
             if (canSave)
             {
-                var isSaved = await context.SaveChangesAsync(cancellationToken);
+                await context.SaveChangesAsync(cancellationToken);
                 
                 // Clear cache after successful save
                 cacheService.ClearCachedItemsWithPrefix(typeof(T).Name);

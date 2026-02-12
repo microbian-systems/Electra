@@ -1,13 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ZauberCMS.Core.Extensions;
-using ZauberCMS.Core.Membership.Models;
+﻿using ZauberCMS.Core.Membership.Models;
 
 namespace ZauberCMS.Core.Membership.Mapping;
 
-public class UserDbMapping : IEntityTypeConfiguration<User>
+public class UserDbMapping : IEntityTypeConfiguration<CmsUser>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<CmsUser> builder)
     {
         builder.Property(e => e.ExtendedData).ToJsonConversion(3500);
         builder.Property(x => x.PasswordHash).HasMaxLength(300);

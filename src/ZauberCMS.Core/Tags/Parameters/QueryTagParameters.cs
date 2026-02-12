@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using ZauberCMS.Core.Shared.Models;
 using ZauberCMS.Core.Tags.Models;
 
 namespace ZauberCMS.Core.Tags.Parameters;
@@ -11,7 +7,7 @@ public class QueryTagParameters
 {
     public bool Cached { get; set; }
     public bool AsNoTracking { get; set; } = true;
-    public List<Guid> Ids { get; set; } = [];
+    public List<string> Ids { get; set; } = [];
     public List<string> TagNames { get; set; } = [];
     public List<string> TagSlugs { get; set; } = [];
     public List<Guid> ItemIds { get; set; } = [];

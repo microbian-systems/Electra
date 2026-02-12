@@ -1,5 +1,3 @@
-using ZauberCMS.Core.Audit.Models;
-
 namespace ZauberCMS.Core.Audit.Mapping;
 
 /// <summary>

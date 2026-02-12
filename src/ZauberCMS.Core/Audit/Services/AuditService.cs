@@ -1,10 +1,10 @@
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Audit.Parameters;
 using ZauberCMS.Core.Audit.Mapping;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Plugins;
 using ZauberCMS.Core.Shared.Models;
@@ -28,7 +28,7 @@ public class AuditService(
     public async Task<HandlerResult<Models.Audit>> SaveAuditAsync(SaveAuditParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         
         var handlerResult = new HandlerResult<Models.Audit>();
 
@@ -65,7 +65,7 @@ public class AuditService(
     public Task<PaginatedList<Models.Audit>> QueryAuditsAsync(QueryAuditsParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = dbContext.Audits.AsQueryable();
 
         if (parameters.Query != null)
@@ -110,7 +110,7 @@ public class AuditService(
     public async Task<HandlerResult<int>> CleanupOldAuditsAsync(CleanupOldAuditsParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var handlerResult = new HandlerResult<int>();
 
         try

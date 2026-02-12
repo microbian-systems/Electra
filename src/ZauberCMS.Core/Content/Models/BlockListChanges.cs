@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace ZauberCMS.Core.Content.Models;
 
 public class BlockListChanges

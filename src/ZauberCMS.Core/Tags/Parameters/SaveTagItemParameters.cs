@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using ZauberCMS.Core.Shared.Models;
-using ZauberCMS.Core.Tags.Models;
-
 namespace ZauberCMS.Core.Tags.Parameters;
 
 public class SaveTagItemParameters

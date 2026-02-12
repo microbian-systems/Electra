@@ -13,7 +13,7 @@ public class QueryContentTypesParameters
     public bool AsNoTracking { get; set; } = true;
     public bool IncludeFolders { get; set; }
     public bool OnlyFolders { get; set; }
-    public List<Guid> Ids { get; set; } = [];
+    public List<string> Ids { get; set; } = [];
     public int PageIndex { get; set; } = 1;
     public int AmountPerPage { get; set; } = 10;
     public Guid? ParentId { get; set; }

@@ -12,7 +12,7 @@ using ZauberCMS.Core.Providers;
 namespace ZauberCMS.Core.Email.Services;
 
 public class EmailService(
-    UserManager<User> userManager,
+    UserManager<CmsUser> userManager,
     IHttpContextAccessor httpContextAccessor,
     ProviderService providerService)
     : IEmailService

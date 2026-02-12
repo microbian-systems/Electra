@@ -1,5 +1,4 @@
 ﻿using HtmlAgilityPack;
-using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Seo.Models;
 using ZauberCMS.Core.Shared.Models;
 

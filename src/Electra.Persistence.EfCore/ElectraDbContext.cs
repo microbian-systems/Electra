@@ -7,7 +7,7 @@ using Electra.Core.Identity;
 using Electra.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace Electra.Persistence.EfCore;
 

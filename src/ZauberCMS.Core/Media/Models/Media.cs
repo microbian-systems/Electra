@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Shared.Interfaces;
@@ -17,7 +16,7 @@ public class Media : IBaseItem
     /// <remarks>
     /// The ID property is used to uniquely identify a Media object.
     /// </remarks>
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
     
     /// <summary>
     /// Represents the URL property of a Media object.
@@ -83,19 +82,19 @@ public class Media : IBaseItem
     /// <summary>
     /// The id of the parent media node if there is one
     /// </summary>
-    public Guid? ParentId { get; set; }
+    public string? ParentId { get; set; }
     public Media? Parent { get; set; }
     
     /// <summary>
     /// The path for this media in the media tree
     /// </summary>
-    public List<Guid> Path { get; set; } = [];
+    public List<string> Path { get; set; } = [];
     
     /// <summary>
     /// The id of the last person to update the media 
     /// </summary>
-    public Guid? LastUpdatedById { get; set; }
-    public User? LastUpdatedBy { get; set; }
+    public string? LastUpdatedById { get; set; }
+    public CmsUser? LastUpdatedBy { get; set; }
     
     /// <summary>
     /// Date the file is created.

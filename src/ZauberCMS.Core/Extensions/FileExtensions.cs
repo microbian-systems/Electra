@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Media.Models;
-using ZauberCMS.Core.Providers;
-using ZauberCMS.Core.Shared.Models;
 
 namespace ZauberCMS.Core.Extensions;
 

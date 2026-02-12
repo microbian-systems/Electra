@@ -97,7 +97,7 @@
     public string TabName => "Latest Content";
     public int SortOrder => 0;
     public string SectionAlias => Constants.Sections.ContentSection;
-    private User? CurrentUser { get; set; }
+    private CmsUser? CurrentUser { get; set; }
     private int AllUserCount { get; set; }
     private int YourUserCount { get; set; }
     private List<Guid> UnpublishedContent { get; set; } = [];

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ZauberCMS.Core.Data;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Data.Interfaces;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Settings;
@@ -12,13 +12,13 @@ namespace ZauberCMS.Core.Extensions;
 public static class RoleExtensions
 {
         public static async Task<AuthenticationResult> AssignStartingRoleAsync(
-            this UserManager<User> userManager,
+            this UserManager<CmsUser> userManager,
             RoleManager<Role> roleManager,
             ILogger logger,
-            IZauberDbContext dbContext,
+            IAsyncDocumentSession dbContext,
             IOptions<ZauberSettings> settings,
             IDataService dataService,
-            User newUser,
+            CmsUser newUser,
             AuthenticationResult loginResult)
         {
             // Log new account creation

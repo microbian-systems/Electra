@@ -14,7 +14,7 @@ public static class UserMappingExtensions
     /// <param name="source">Source User entity</param>
     /// <param name="target">Target User entity to update</param>
     /// <returns>Updated target User entity</returns>
-    public static User MapTo(this User source, User target)
+    public static CmsUser MapTo(this CmsUser source, CmsUser target)
     {
         // Map all simple properties from IdentityUser
         target.Id = source.Id;
@@ -51,9 +51,9 @@ public static class UserMappingExtensions
     /// </summary>
     /// <param name="source">Source User entity</param>
     /// <returns>New User entity with mapped properties</returns>
-    public static User MapToNew(this User source)
+    public static CmsUser MapToNew(this CmsUser source)
     {
-        var target = new User();
+        var target = new CmsUser();
         return source.MapTo(target);
     }
 }

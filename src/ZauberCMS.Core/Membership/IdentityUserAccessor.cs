@@ -5,10 +5,10 @@ using ZauberCMS.Core.Membership.Models;
 namespace ZauberCMS.Core.Membership;
 
 public sealed class IdentityUserAccessor(
-    UserManager<User> userManager,
+    UserManager<CmsUser> userManager,
     AuthenticationStateProvider authenticationStateProvider)
 {
-    public async Task<User?> GetRequiredUserAsync()
+    public async Task<CmsUser?> GetRequiredUserAsync()
     {
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);

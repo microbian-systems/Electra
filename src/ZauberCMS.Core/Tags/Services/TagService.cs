@@ -1,9 +1,11 @@
+using System.Xml.Linq;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.DependencyInjection;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Audit.Interfaces;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Plugins;
@@ -33,9 +35,9 @@ public class TagService(
     public async Task<HandlerResult<Tag>> SaveTagAsync(SaveTagParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Tag>();
 
@@ -46,7 +48,7 @@ public class TagService(
             var tag = new Tag { TagName = parameters.TagName, SortOrder = parameters.SortOrder, Slug = _slugHelper.GenerateSlug(parameters.TagName)};
             if (parameters.Id != null)
             {
-                var dbTag = dbContext.Tags.FirstOrDefault(x => x.Id == parameters.Id);
+                var dbTag = dbContext.Query<Tag>().FirstOrDefault(x => x.Id == parameters.Id);
                 if (dbTag != null)
                 {
                     isUpdate = true;
@@ -58,7 +60,7 @@ public class TagService(
             }
             else
             {
-                var dbTag = dbContext.Tags.FirstOrDefault(x => x.TagName == parameters.TagName);
+                var dbTag = dbContext.Query<Tag>().FirstOrDefault(x => x.TagName == parameters.TagName);
                 if (dbTag != null)
                 {
                     if (parameters.TagName == dbTag.TagName)
@@ -72,7 +74,7 @@ public class TagService(
 
             if (!isUpdate)
             {
-                dbContext.Tags.Add(tag);
+                await dbContext.StoreAsync(tag, cancellationToken);
             }
             else
             {
@@ -100,7 +102,7 @@ public class TagService(
     public async Task<PaginatedList<Tag>> QueryTagAsync(QueryTagParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
         var cacheKey = $"{query.GenerateCacheKey<Tag>()}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
         if (parameters.Cached)
@@ -120,38 +122,38 @@ public class TagService(
     public async Task<HandlerResult<Tag?>> DeleteTagAsync(DeleteTagParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Tag>();
 
         if (parameters.Id != null)
         {
             var tag =
-                await dbContext.Tags.FirstOrDefaultAsync(l => l.Id == parameters.Id,
-                    cancellationToken: cancellationToken);
+                await dbContext.Query<Tag>().FirstOrDefaultAsync(l => l.Id == parameters.Id,
+                    cancellationToken);
             if (tag != null)
             {
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(tag, $"Tag ({tag.TagName})",
                     AuditExtensions.AuditAction.Delete, auditService,
                     cancellationToken);
-                dbContext.Tags.Remove(tag);
+                dbContext.Delete(tag);
             }
         }
         else
         {
             var tag =
-                await dbContext.Tags.FirstOrDefaultAsync(l => l.TagName == parameters.TagName,
-                    cancellationToken: cancellationToken);
+                await dbContext.Query<Tag>().FirstOrDefaultAsync(l => l.TagName == parameters.TagName,
+                    cancellationToken);
             if (tag != null)
             {
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(tag, $"Tag ({tag.TagName})",
                     AuditExtensions.AuditAction.Delete, auditService,
                     cancellationToken);
-                dbContext.Tags.Remove(tag);
+                dbContext.Delete(tag);
             }
         }
 
@@ -167,9 +169,9 @@ public class TagService(
     public async Task<HandlerResult<TagItem>> SaveTagItemAsync(SaveTagItemParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<TagItem>();
 
@@ -180,7 +182,7 @@ public class TagService(
         }
 
         // Retrieve existing TagItems for the ItemId
-        var existingTagItems = dbContext.TagItems
+        var existingTagItems = dbContext.Query<TagItem>()
             .Where(x => x.ItemId == parameters.ItemId)
             .ToList();
 
@@ -195,7 +197,7 @@ public class TagService(
         foreach (var tagId in tagIdsToAdd)
         {
             var tagItem = new TagItem { TagId = tagId, ItemId = parameters.ItemId };
-            dbContext.TagItems.Add(tagItem);
+            await dbContext.StoreAsync(tagItem, cancellationToken);
 
             var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
             await user.AddAudit(tagItem, $"Tag Item (TagId: {tagId}) added",
@@ -209,7 +211,7 @@ public class TagService(
             var tagItem = existingTagItems.FirstOrDefault(x => x.TagId == tagId);
             if (tagItem != null)
             {
-                dbContext.TagItems.Remove(tagItem);
+                dbContext.Delete(tagItem);
 
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(tagItem, $"Tag Item (TagId: {tagId}) removed",
@@ -234,10 +236,10 @@ public class TagService(
     public async Task<HandlerResult<TagItem?>> DeleteTagItemAsync(DeleteTagItemParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<TagItem>();
 
@@ -245,20 +247,20 @@ public class TagService(
         if (parameters.TagId != null)
         {
             tagItem =
-                await dbContext.TagItems.FirstOrDefaultAsync(l => l.Id == parameters.TagId,
-                    cancellationToken: cancellationToken);
+                await dbContext.Query<TagItem>().FirstOrDefaultAsync(l => l.Id == parameters.TagId,
+                    cancellationToken);
             if (tagItem != null)
             {
                 await user.AddAudit(tagItem, $"TagItem ({tagItem.TagId})",
                     AuditExtensions.AuditAction.Delete, auditService,
                     cancellationToken);
-                dbContext.TagItems.Remove(tagItem);
+                dbContext.Delete(tagItem);
             }
         }
         
         if (parameters.ItemId != null)
         {
-            var tagItems = dbContext.TagItems.Where(l => l.ItemId == parameters.ItemId).ToList();
+            var tagItems = dbContext.Query<TagItem>().Where(l => l.ItemId == parameters.ItemId).ToList();
             if (tagItems.Any())
             {
                 foreach (var ti in tagItems)
@@ -266,7 +268,7 @@ public class TagService(
                     await user.AddAudit(ti, $"TagItem ({ti.TagId})",
                         AuditExtensions.AuditAction.Delete, auditService,
                         cancellationToken);
-                    dbContext.TagItems.Remove(ti);
+                    dbContext.Delete(ti);
                 }
             }
         }
@@ -274,9 +276,9 @@ public class TagService(
         return (await dbContext.SaveChangesAndLog(tagItem, handlerResult, cacheService, extensionManager, cancellationToken))!;
     }
 
-    private static IQueryable<Tag> BuildQuery(QueryTagParameters parameters, IZauberDbContext dbContext)
+    private static IQueryable<Tag> BuildQuery(QueryTagParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Tags.AsQueryable();
+        var query = dbContext.Query<Tag>().AsQueryable();
 
         if (parameters.Query != null)
         {
@@ -284,11 +286,6 @@ public class TagService(
         }
         else
         {
-            if (parameters.AsNoTracking)
-            {
-                query = query.AsNoTracking();
-            }
-
             if (parameters.Ids.Count != 0)
             {
                 query = query.Where(x => parameters.Ids.Contains(x.Id));
@@ -308,7 +305,8 @@ public class TagService(
             {
                 query = query.Include(x => x.TagItems)
                              .Where(x => x.TagItems.Any(ti => parameters.ItemIds.Contains(ti.ItemId)))
-                             .AsSplitQuery();
+                    //         .AsSplitQuery()
+                    ;
             }
         }
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ZauberCMS.Core.Tags.Models;
+﻿using ZauberCMS.Core.Tags.Models;
 
 namespace ZauberCMS.Core.Tags.Mapping;
 

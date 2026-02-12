@@ -1,7 +1,7 @@
 ﻿using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.DependencyInjection;
 using Radzen;
 using ZauberCMS.Components.Admin.ContentSection.Dialogs;
@@ -51,7 +51,7 @@ public class RestrictAccessContextMenu(
         ContextMenuService contextMenuService, IModalService modalService)
     {
         using var scope = serviceProvider.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var currentUser = await membershipService.GetCurrentUser();
         contextMenuService.Close();
         var content = (Content)args.Value!;

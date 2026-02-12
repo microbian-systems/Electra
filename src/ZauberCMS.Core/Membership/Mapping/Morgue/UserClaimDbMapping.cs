@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ZauberCMS.Core.Membership.Models;
+﻿using ZauberCMS.Core.Membership.Models;
 
 namespace ZauberCMS.Core.Membership.Mapping;
 

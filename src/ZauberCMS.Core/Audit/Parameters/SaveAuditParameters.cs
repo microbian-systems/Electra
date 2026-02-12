@@ -1,5 +1,3 @@
-using ZauberCMS.Core.Shared.Models;
-
 namespace ZauberCMS.Core.Audit.Parameters;
 
 public class SaveAuditParameters

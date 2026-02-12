@@ -15,7 +15,7 @@
                     AllowSorting="true"
                     Data="@Users"
                     SelectionMode="DataGridSelectionMode.Single"
-                    RowSelect="@((User value) => OnRowSelect(value))">
+                    RowSelect="@((CmsUser value) => OnRowSelect(value))">
         @*@bind-Value="@SelectedContent"*@
         <Columns>
             <RadzenDataGridColumn Property="Username" Title="Username"/>
@@ -35,7 +35,7 @@
     
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
     
-    private IEnumerable<User> Users { get; set; } = [];
+    private IEnumerable<CmsUser> Users { get; set; } = [];
 
     protected override async Task OnParametersSetAsync()
     {
@@ -62,7 +62,7 @@
     
     private void OnRowSelect(object value)
     {
-        if (value is User selectedRow)
+        if (value is CmsUser selectedRow)
         {
             NavigationManager.NavigateTo($"{Urls.AdminUsersEdit}/{selectedRow.Id}");
         }

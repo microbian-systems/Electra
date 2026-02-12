@@ -1,5 +1,4 @@
 ﻿using ZauberCMS.Core.Media.Models;
-using ZauberCMS.Core.Shared.Models;
 
 namespace ZauberCMS.Core.Extensions;
 

@@ -19,7 +19,7 @@ public static class IdentityExtensions
     /// <param name="mediaService">An injected mediaService</param>
     /// <param name="fallBackUrl">Fallback url in case the media item is null</param>
     /// <returns>List on media</returns>
-    public static async Task<IEnumerable<Media.Models.Media?>> GetMedia(this User user, string alias, IMediaService mediaService, string? fallBackUrl = null)
+    public static async Task<IEnumerable<Media.Models.Media?>> GetMedia(this CmsUser user, string alias, IMediaService mediaService, string? fallBackUrl = null)
     {
         var mediaIds = user.GetValue<List<Guid>?>(alias);
         if (mediaIds != null)
@@ -48,7 +48,7 @@ public static class IdentityExtensions
     /// <param name="alias">The property alias</param>
     /// <param name="contentService">An injected contentService</param>
     /// <returns>List of Content</returns>
-    public static async Task<IEnumerable<Content.Models.Content>> GetContent(this User user, string alias, IContentService contentService)
+    public static async Task<IEnumerable<Content.Models.Content>> GetContent(this CmsUser user, string alias, IContentService contentService)
     {
         var contentIds = user.GetValue<List<Guid>?>(alias);
         if (contentIds != null)

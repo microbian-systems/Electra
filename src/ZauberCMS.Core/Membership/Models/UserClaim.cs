@@ -2,7 +2,7 @@
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class UserClaim : IdentityUserClaim<Guid>
+public class UserClaim : IdentityUserClaim<string>
 {
     
 }

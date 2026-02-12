@@ -1,5 +1,4 @@
 using ZauberCMS.Core.Shared.Interfaces;
-using ZauberCMS.Core.Shared.Models;
 
 namespace ZauberCMS.Core.Data.Parameters;
 

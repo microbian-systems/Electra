@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace ZauberCMS.Core.Content.Parameters;
@@ -8,7 +5,7 @@ namespace ZauberCMS.Core.Content.Parameters;
 public class QueryContentParameters : BaseQueryContentParameters
 {
     public bool Cached { get; set; }
-    public List<Guid> Ids { get; set; } = [];
+    public List<string> Ids { get; set; } = [];
     public List<string> TagSlugs { get; set; } = [];
     public int PageIndex { get; set; } = 1;
     public int AmountPerPage { get; set; } = 10;

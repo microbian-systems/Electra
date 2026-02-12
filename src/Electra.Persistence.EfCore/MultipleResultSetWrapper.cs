@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Data;
 using System.Data.Common;
-using Microsoft.EntityFrameworkCore;
+
 using Serilog;
 
 namespace Electra.Persistence.EfCore

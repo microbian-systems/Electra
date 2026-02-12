@@ -21,19 +21,19 @@ public class ZauberPageViewModel(Content.Models.Content content) : IHasPropertyV
         set => content.ContentTypeAlias = value;
     }
 
-    public Guid? LastUpdatedById
+    public string? LastUpdatedById
     {
         get => content.LastUpdatedById;
         set => content.LastUpdatedById = value;
     }
 
-    public User? LastUpdatedBy
+    public CmsUser? LastUpdatedBy
     {
         get => content.LastUpdatedBy;
         set => content.LastUpdatedBy = value;
     }
     
-    public List<Guid> Path
+    public List<string> Path
     {
         get => content.Path;
         set => content.Path = value;
@@ -60,7 +60,7 @@ public class ZauberPageViewModel(Content.Models.Content content) : IHasPropertyV
     /// <summary>
     /// Manually set language of the page
     /// </summary>
-    public Guid? LanguageId
+    public string? LanguageId
     {
         get => content.LanguageId;
         set => content.LanguageId = value;
@@ -75,7 +75,7 @@ public class ZauberPageViewModel(Content.Models.Content content) : IHasPropertyV
         set => content.Language = value;
     }
 
-    public Guid Id
+    public string Id
     {
         get => content.Id;
         set => content.Id = value;
@@ -93,7 +93,7 @@ public class ZauberPageViewModel(Content.Models.Content content) : IHasPropertyV
         set => content.Url = value;
     }
 
-    public Guid ContentTypeId
+    public string ContentTypeId
     {
         get => content.ContentTypeId;
         set => content.ContentTypeId = value;
@@ -111,13 +111,13 @@ public class ZauberPageViewModel(Content.Models.Content content) : IHasPropertyV
         set => content.IsRootContent = value;
     }
 
-    public Guid? InternalRedirectId
+    public string? InternalRedirectId
     {
         get => content.InternalRedirectId;
         set => content.InternalRedirectId = value;
     }
 
-    public Guid? ParentId
+    public string? ParentId
     {
         get => content.ParentId;
         set => content.ParentId = value;

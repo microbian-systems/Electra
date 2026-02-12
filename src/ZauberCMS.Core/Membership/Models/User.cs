@@ -1,19 +1,17 @@
 ﻿using System.Text.Json.Serialization;
+using Electra.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Shared.Interfaces;
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class User : IdentityUser<Guid>, ITreeItem, IHasPropertyValues
+public class CmsUser : IdentityUser<string>, IEntity, ITreeItem, IHasPropertyValues
 {
     public List<UserRole> UserRoles { get; set; } = [];
 
     //public Media? ProfileImage { get; set; }
     //public Guid? ProfileImageId { get; set; }
-    
-    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-    public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
 
     /// <summary>
     /// The content properties
@@ -41,4 +39,9 @@ public class User : IdentityUser<Guid>, ITreeItem, IHasPropertyValues
         get => this.UserName;
         set => this.UserName = value;
     }
+
+    public DateTimeOffset CreatedOn { get; set; } = DateTime.UtcNow;
+    public DateTimeOffset? ModifiedOn { get; set; } = DateTime.UtcNow;
+    public string? CreatedBy { get; set; }
+    public string? ModifiedBy { get; set; }
 }

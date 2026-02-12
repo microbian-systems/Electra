@@ -9,13 +9,13 @@ namespace ZauberCMS.Core.Membership.Claims;
 
 public class ZauberUserClaimsPrincipalFactory(
     IServiceProvider serviceProvider,
-    UserManager<User> userManager,
+    UserManager<CmsUser> userManager,
     IOptions<IdentityOptions> optionsAccessor)
-    : UserClaimsPrincipalFactory<User>(userManager, optionsAccessor)
+    : UserClaimsPrincipalFactory<CmsUser>(userManager, optionsAccessor)
 {
-    private readonly UserManager<User> _userManager = userManager;
+    private readonly UserManager<CmsUser> _userManager = userManager;
 
-    public override async Task<ClaimsPrincipal> CreateAsync(User user)
+    public override async Task<ClaimsPrincipal> CreateAsync(CmsUser user)
     {
         using var scope = serviceProvider.CreateScope();
         var principal = await base.CreateAsync(user);

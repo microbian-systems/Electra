@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using ZauberCMS.Core.Data;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Data.Interfaces;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Membership.Models;
@@ -15,20 +15,20 @@ using ZauberCMS.Core.Settings;
 namespace ZauberCMS.Core.Membership;
 
 public class ZauberSignInManager(
-    UserManager<User> userManager,
+    UserManager<CmsUser> userManager,
     IHttpContextAccessor contextAccessor,
-    IUserClaimsPrincipalFactory<User> claimsFactory,
+    IUserClaimsPrincipalFactory<CmsUser> claimsFactory,
     IOptions<IdentityOptions> optionsAccessor,
     ILogger<ZauberSignInManager> logger,
     IAuthenticationSchemeProvider schemes,
-    IUserConfirmation<User> confirmation,
+    IUserConfirmation<CmsUser> confirmation,
     IOptions<ZauberSettings> options,
     IDataService dataService,
-    IZauberDbContext dbContext,
+    IAsyncDocumentSession dbContext,
     RoleManager<Role> roleManager)
-    : SignInManager<User>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
+    : SignInManager<CmsUser>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
 {
-    private readonly UserManager<User> _userManager = userManager;
+    private readonly UserManager<CmsUser> _userManager = userManager;
     
     public override async Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey,
         bool isPersistent, bool bypassTwoFactor)
@@ -51,7 +51,7 @@ public class ZauberSignInManager(
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             var username = info.Principal.FindFirstValue(ClaimTypes.Name) ?? GenerateUsernameFromEmail(email);
 
-            user = new User
+            user = new CmsUser
             {
                 UserName = username,
                 Email = email

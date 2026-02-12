@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.DependencyInjection;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Audit.Interfaces;
-using ZauberCMS.Core.Data;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Plugins;
@@ -32,8 +33,8 @@ public class SeoService(
     public async Task<HandlerResult<SeoRedirect>> SaveRedirectAsync(SaveRedirectParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         
@@ -42,13 +43,13 @@ public class SeoService(
         if (parameters.Redirect != null)
         {
             // Get the DB version
-            var redirect = dbContext.Redirects
+            var redirect = dbContext.Query<SeoRedirect>()
                 .FirstOrDefault(x => x.Id == parameters.Redirect.Id);
 
             if (redirect == null)
             {
                 redirect = parameters.Redirect;
-                dbContext.Redirects.Add(redirect);
+                await dbContext.StoreAsync(redirect, cancellationToken);
             }
             else
             {
@@ -75,16 +76,16 @@ public class SeoService(
     public async Task<List<SeoRedirect>> QueryRedirectsAsync(QueryRedirectsParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
         var cacheKey = query.GenerateCacheKey<SeoRedirect>();
         
         if (parameters.Cached)
         {
-            return await cacheService.GetSetCachedItemAsync(cacheKey, async () => await query.ToListAsync(cancellationToken: cancellationToken)) ?? new List<SeoRedirect>();
+            return await cacheService.GetSetCachedItemAsync(cacheKey, async () => await query.ToListAsync(cancellationToken)) ?? new List<SeoRedirect>();
         }
 
-        return await query.ToListAsync(cancellationToken: cancellationToken);
+        return await query.ToListAsync(cancellationToken);
     }
 
     /// <summary>
@@ -96,9 +97,9 @@ public class SeoService(
     public async Task<HandlerResult<SeoRedirect?>> DeleteRedirectAsync(DeleteRedirectParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<IZauberDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<SeoRedirect>();
 
@@ -106,34 +107,29 @@ public class SeoService(
         if (parameters.Id != null)
         {
             redirect =
-                await dbContext.Redirects.FirstOrDefaultAsync(l => l.Id == parameters.Id,
-                    cancellationToken: cancellationToken);
+                await dbContext.Query<SeoRedirect>().FirstOrDefaultAsync(l => l.Id == parameters.Id,
+                    cancellationToken);
             if (redirect != null)
             {
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(redirect, $"Redirect ({redirect.FromUrl} -> {redirect.ToUrl})",
                     AuditExtensions.AuditAction.Delete, auditService,
                     cancellationToken);
-                dbContext.Redirects.Remove(redirect);
+                dbContext.Delete(redirect);
             }
         }
 
         return (await dbContext.SaveChangesAndLog(redirect, handlerResult, cacheService, extensionManager, cancellationToken))!;
     }
 
-    private static IQueryable<SeoRedirect> BuildQuery(QueryRedirectsParameters parameters, IZauberDbContext dbContext)
+    private static IQueryable<SeoRedirect> BuildQuery(QueryRedirectsParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Redirects.AsQueryable();
+        var query = dbContext.Query<SeoRedirect>().AsQueryable();
 
         if (parameters.Query != null)
         {
             query = parameters.Query.Invoke();
             return query;
-        }
-
-        if (parameters.AsNoTracking)
-        {
-            query = query.AsNoTracking();
         }
         
         if (parameters.Ids.Count > 0)

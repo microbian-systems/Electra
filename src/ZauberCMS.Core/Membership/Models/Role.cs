@@ -5,7 +5,7 @@ using ZauberCMS.Core.Shared.Models;
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class Role : IdentityRole<Guid>, ITreeItem
+public class Role : IdentityRole<string>, ITreeItem
 {
     public string? Description { get; set; }
     public string? Icon { get; set; }

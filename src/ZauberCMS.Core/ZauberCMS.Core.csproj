@@ -22,43 +22,94 @@
         <PackageReference Include="Blazored.Modal" Version="7.3.1" />
         <PackageReference Include="FluentValidation" Version="12.1.1" />
         <PackageReference Include="HtmlAgilityPack" Version="1.12.4" />
-        <PackageReference Include="HtmlSanitizer" Version="9.0.889" />
+        <PackageReference Include="HtmlSanitizer" Version="9.0.892" />
         <PackageReference Include="MailKit" Version="4.14.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="10.0.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.1" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="10.7.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.1" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.1" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="10.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Localization" Version="10.0.3" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.3" />
         <PackageReference Include="Radzen.Blazor" Version="8.4.0" />
+        <PackageReference Include="RavenDB.Client" Version="7.2.0" />
+        <PackageReference Include="RavenDB.Embedded" Version="7.2.0" />
         <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
         <PackageReference Include="ImageResize" Version="3.0.0" />
         <PackageReference Include="ZauberCMS.RTE" Version="2.1.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Data\Migrations\PostgreSql\" />
-      <Folder Include="Data\Migrations\SqLite\" />
-      <Folder Include="Data\Migrations\SqlServer\" />
+      <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Remove="Data\Migrations\SqlServer\ZauberDbContextModelSnapshot.cs" />
+      <Compile Remove="Membership\Mapping\MediaRoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\ContentRoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\RoleClaimDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\ContentRoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\MediaRoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\RoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\RoleClaimDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\UserClaimDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\RoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserClaimDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserMappingExtensions.cs" />
+      <None Include="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserRoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserTokenDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\UserDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\UserLoginDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\UserMappingExtensions.cs" />
+      <Compile Remove="Membership\Mapping\UserPropertyValueDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\UserRoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\UserTokenDbMapping.cs" />
+      <Compile Remove="Tags\Mapping\TagItemDbMapping.cs" />
+      <None Include="Tags\Mapping\Morgue\TagDbMapping.cs" />
+      <Compile Remove="Tags\Mapping\TagDbMapping.cs" />
+      <None Include="Tags\Mapping\Morgue\TagItemDbMapping.cs" />
+      <Compile Remove="Shared\Interfaces\IAfterEntitySave.cs" />
+      <None Include="Shared\Interfaces\IAfterEntitySave.cs" />
+      <Compile Remove="Shared\Interfaces\IBeforeEntitySave.cs" />
+      <None Include="Shared\Interfaces\IBeforeEntitySave.cs" />
+      <Compile Remove="Seo\Mapping\SeoRedirectDbMapping.cs" />
+      <None Include="Seo\Mapping\SeoRedirectDbMapping.cs" />
+      <Compile Remove="Languages\Mapping\LanguageDbMapping.cs" />
+      <None Include="Languages\Mapping\LanguageDbMapping.cs" />
+      <Compile Remove="Languages\Mapping\LanguageDictionaryDbMapping.cs" />
+      <None Include="Languages\Mapping\LanguageDictionaryDbMapping.cs" />
+      <Compile Remove="Languages\Mapping\LanguageTextDbMapping.cs" />
+      <None Include="Languages\Mapping\LanguageTextDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\ContentRoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\ContentRoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\MediaRoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\MediaRoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\RoleClaimDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\RoleClaimDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\RoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\RoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\UserClaimDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserClaimDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\UserDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\UserMappingExtensions.cs" />
+      <None Include="Membership\Mapping\Morgue\UserMappingExtensions.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\UserRoleDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserRoleDbMapping.cs" />
+      <Compile Remove="Membership\Mapping\Morgue\UserTokenDbMapping.cs" />
+      <None Include="Membership\Mapping\Morgue\UserTokenDbMapping.cs" />
+      <Compile Remove="Tags\Mapping\Morgue\TagItemDbMapping.cs" />
+      <None Include="Tags\Mapping\Morgue\TagItemDbMapping.cs" />
+      <Compile Remove="Tags\Mapping\Morgue\TagDbMapping.cs" />
+      <None Include="Tags\Mapping\Morgue\TagDbMapping.cs" />
+      <Compile Remove="Media\Mapping\MediaDbMapping.cs" />
+      <None Include="Media\Mapping\MediaDbMapping.cs" />
     </ItemGroup>
 
     <Target Name="CopyNuGetPackage" AfterTargets="Pack">

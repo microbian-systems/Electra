@@ -24,11 +24,11 @@ public sealed class IdentityRevalidatingAuthenticationStateProvider(
     {
         // Get the user manager from a new scope to ensure it fetches fresh data
         await using var scope = scopeFactory.CreateAsyncScope();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
         return await ValidateSecurityStampAsync(userManager, authenticationState.User);
     }
 
-    private async Task<bool> ValidateSecurityStampAsync(UserManager<User> userManager,
+    private async Task<bool> ValidateSecurityStampAsync(UserManager<CmsUser> userManager,
         ClaimsPrincipal principal)
     {
         var user = await userManager.GetUserAsync(principal);
