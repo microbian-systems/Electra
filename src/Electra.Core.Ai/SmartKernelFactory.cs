@@ -1,7 +1,7 @@
 using Electra.Core.Encryption;
 using Electra.Models.Entities;
 using Electra.Persistence;
-using Microsoft.EntityFrameworkCore;
+using Electra.Persistence.EfCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

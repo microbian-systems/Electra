@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Electra.Core.Entities;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace Electra.Persistence.Core;
 
 public abstract class ReadOnlyRepositoryBase<T, Tkey> : IReadOnlyRepository<T, Tkey> where T : IEntity<Tkey> where Tkey : IEquatable<Tkey>
 {
-    public DbContext Context { get; }
     public abstract Task<long> CountAsync();
     public abstract Task<bool> ExistsAsync(Tkey id);
     public abstract Task<IEnumerable<T>> GetAllAsync();

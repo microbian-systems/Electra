@@ -1,6 +1,4 @@
-using System.Threading;
 using LanguageExt;
-using Microsoft.Extensions.Logging;
 using ZiggyCreatures.Caching.Fusion;
 
 namespace Electra.Caching;

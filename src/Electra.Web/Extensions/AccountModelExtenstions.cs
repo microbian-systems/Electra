@@ -1,5 +1,4 @@
-﻿using Electra.Models;
-using Electra.Models.Entities;
+﻿using Electra.Models.Entities;
 
 namespace Electra.Common.Web.Extensions;
 

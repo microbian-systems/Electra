@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Text.Json.Serialization;
 
 namespace Electra.Core.Json.Converters;
 

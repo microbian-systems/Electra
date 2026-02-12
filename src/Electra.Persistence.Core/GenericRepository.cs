@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Electra.Core.Entities;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.Core;
@@ -82,7 +82,6 @@ public abstract class GenericRepository<T, TKey>(ILogger log) : IGenericReposito
 
     public IEnumerable<T> GetAll() => GetAllAsync().GetAwaiter().GetResult();
 
-    public DbContext Context { get; }
     public abstract Task<long> CountAsync();
 
     public abstract Task<bool> ExistsAsync(TKey id);

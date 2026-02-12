@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Security.Claims;
 using Electra.Core;
 using Electra.Core.Identity;
@@ -7,10 +6,8 @@ using JasperFx.Core.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Operations.CompareExchange;
-using ThrowGuard;
 
 namespace Electra.Persistence.RavenDB.Identity;
 

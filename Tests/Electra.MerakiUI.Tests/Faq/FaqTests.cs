@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Faq;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Faq;
 

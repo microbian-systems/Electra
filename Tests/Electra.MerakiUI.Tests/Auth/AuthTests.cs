@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Auth;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Auth;
 

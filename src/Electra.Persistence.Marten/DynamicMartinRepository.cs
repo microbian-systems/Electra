@@ -6,11 +6,16 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Electra.Core.Entities;
-using Electra.Persistence.Core.Marten;
+using Electra.Persistence.Core;
 using Marten;
 using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.Marten;
+
+// todo - consider placing a constraint on type TKey for the marten repositories
+public interface IDynamicMartenRepository : IDynamicRepositoryAsync<string>
+{
+}
 
 public class DynamicMartinRepository(IDocumentSession db, ILogger<DynamicMartinRepository> log)
     : IDynamicMartenRepository

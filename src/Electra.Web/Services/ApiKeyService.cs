@@ -15,18 +15,18 @@ public class ApiKeyService : ApiServiceBase<ApiKeyAuthRequestModel, string>, IAp
     private readonly IClaimsPrincipalFactory claimsFactory;
     private readonly IJwtFactory jwtFactory;
     private readonly JwtOptions jwtOptions;
-    private readonly IElectraUnitOfWork uow;
+    //private readonly IElectraUnitOfWork uow;
 
     public ApiKeyService(
         IApiKeyFactory factory,
         IJwtFactory jwtFactory,
         IClaimsPrincipalFactory claimsFactory,
-        IElectraUnitOfWork uow,
+        //IElectraUnitOfWork uow,
         IOptions<JwtOptions> jwtOptions,
         ILogger<ApiKeyService> log)
         : base(log)
     {
-        this.uow = uow;
+        //this.uow = uow;
         this.apiKeyFactory = factory;
         this.claimsFactory = claimsFactory;
         this.jwtFactory = jwtFactory;

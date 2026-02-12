@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Portfolio;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Portfolio;
 

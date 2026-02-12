@@ -1,5 +1,3 @@
-using ThrowGuard;
-
 namespace Electra.Social.Forem;
 
 public class ForemApiKeyHandler : DelegatingHandler

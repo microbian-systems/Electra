@@ -1,7 +1,4 @@
-using Xunit;
-using Electra.Web.BlogEngine.Models;
-using System;
-using System.Collections.Generic;
+using Electra.Cms.Areas.Blog.Models;
 
 namespace Electra.Web.BlogEngine.Tests.Models;
 

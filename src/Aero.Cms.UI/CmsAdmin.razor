@@ -1,0 +1,77 @@
+@page "/cms/admin"
+@layout AdminLayout
+@rendermode InteractiveWebAssembly
+@using Microsoft.AspNetCore.Authorization
+@using microbians.io.web.Client.Services
+@using microbians.io.web.Client.Models
+@using Syncfusion.Blazor.Charts
+@inject CmsAdminService AdminService
+@attribute [Authorize]
+
+<PageTitle>CMS Admin - Dashboard</PageTitle>
+
+<h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-white">Dashboard</h1>
+
+@if (Stats == null)
+{
+    <p class="text-gray-500">Loading statistics...</p>
+}
+else
+{
+    <div class="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-3">
+        <div class="w-full px-4 py-5 bg-white rounded-lg shadow dark:bg-gray-800">
+            <div class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                Total Users
+            </div>
+            <div class="mt-1 text-3xl font-semibold text-gray-900 dark:text-white">
+                @Stats.TotalUsers.ToString("N0")
+            </div>
+        </div>
+        <div class="w-full px-4 py-5 bg-white rounded-lg shadow dark:bg-gray-800">
+            <div class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                Active Users
+            </div>
+            <div class="mt-1 text-3xl font-semibold text-gray-900 dark:text-white">
+                @Stats.ActiveUsers.ToString("N0")
+            </div>
+        </div>
+        <div class="w-full px-4 py-5 bg-white rounded-lg shadow dark:bg-gray-800">
+            <div class="text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                Errors (24h)
+            </div>
+            <div class="mt-1 text-3xl font-semibold text-gray-900 dark:text-white">
+                @Stats.Errors24h.ToString("N0")
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white mb-2">Most Accessed Pages</h5>
+            <SfChart Title="Page Views">
+                <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" />
+                <ChartPrimaryYAxis Title="Views" />
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@Stats.MostAccessedPages" XName="Title" YName="Views" Type="ChartSeriesType.Column">
+                    </ChartSeries>
+                </ChartSeriesCollection>
+            </SfChart>
+        </div>
+    </div>
+}
+
+@code {
+    private CmsDashboardStats? Stats { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Stats = await AdminService.GetDashboardStatsAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching stats: {ex.Message}");
+        }
+    }
+}

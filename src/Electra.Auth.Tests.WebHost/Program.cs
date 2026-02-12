@@ -2,10 +2,7 @@ using Electra.Auth.Controllers;
 using Electra.Auth.Extensions;
 using Electra.Models;
 using Electra.Models.Entities;
-using Electra.Persistence;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +16,7 @@ builder.Services.AddHttpContextAccessor();
 var env = builder.Environment;
 var config = builder.Configuration;
 builder.Services.AddElectraAuthentication(env, config);
-builder.Services.AddDbContext<ElectraDbContext>(o =>
-{
-    //o.UseInMemoryDatabase("ElectraAuthTestsDb");
-    o.UseSqlServer(config.GetConnectionString("localdb"));
-});
+
 
 var app = builder.Build();
 

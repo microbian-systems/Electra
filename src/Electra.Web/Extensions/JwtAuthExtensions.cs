@@ -42,7 +42,7 @@ public static class JwtAuthExtensions
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 //options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
             })
-            .AddApplicationPart(typeof(JwtAuthController).Assembly)
+            //.AddApplicationPart(typeof(JwtAuthController).Assembly)
             ;
 
         // todo - disabling jwt until front-end team is ready for jwt

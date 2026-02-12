@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Emails;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Emails;
 

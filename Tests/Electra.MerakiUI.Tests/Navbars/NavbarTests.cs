@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Navbars;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Navbars;
 

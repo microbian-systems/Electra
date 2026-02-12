@@ -1,9 +1,7 @@
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Electra.Auth.Tests;
 

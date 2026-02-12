@@ -1,6 +1,5 @@
 using Bunit;
 using Electra.MerakiUI.Dropdowns;
-using Xunit;
 
 namespace Electra.MerakiUI.Tests.Dropdowns;
 

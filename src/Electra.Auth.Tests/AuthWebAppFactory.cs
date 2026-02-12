@@ -1,42 +1,47 @@
 // Fixtures/TestWebAppFactory.cs
 
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Electra.Persistence;
-using System.Linq;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
+using Raven.TestDriver;
 
 namespace Electra.Auth.Tests;
 
 public class TestWebAppFactory : WebApplicationFactory<Program>
 {
-    
+    protected readonly RavenDriver driver = new();
+    protected IDocumentStore store;
+    protected class RavenDriver : RavenTestDriver
+    {
+        internal IDocumentStore GetDocumentStore()
+        {
+            var store = GetDocumentStore();
+            return store;
+        }
+    }
+
+
     protected override IHost CreateHost(IHostBuilder builder)
     {
+        // 1. Initialize a clean, isolated document store for this test run
+        store = driver.GetDocumentStore();
+
         // Optionally configure additional DI for test overrides
-        builder.ConfigureServices((ctx , services)=>
+        builder.ConfigureServices((ctx, services) =>
         {
             var env = ctx.HostingEnvironment;
             var config = ctx.Configuration;
-            
-            // Remove existing DbContextOptions
-            var optionsDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ElectraDbContext>));
-            if (optionsDescriptor != null) services.Remove(optionsDescriptor);
-
-            // Remove existing DbContext to be safe
-            var contextDescriptor = services.SingleOrDefault(d => d.ServiceType == typeof(ElectraDbContext));
-            if (contextDescriptor != null) services.Remove(contextDescriptor);
-
-            // Ensure generic DbContextOptions is also cleaned if needed, though usually bound to the specific context options
-            // But sometimes AddDbContext adds multiple things. 
-            
-            services.AddDbContext<ElectraDbContext>(options =>
+            services.AddSingleton<IDocumentStore>(store);
+            services.AddScoped<IAsyncDocumentSession>(sp =>
             {
-                options.UseInMemoryDatabase("InMemoryDbForTesting");
+                var session = store.OpenAsyncSession();
+                return session;
             });
         });
+
+            
 
         return base.CreateHost(builder);
     }

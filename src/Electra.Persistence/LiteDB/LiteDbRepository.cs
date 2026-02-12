@@ -9,7 +9,7 @@ public class LiteDbRepository<T> : GenericRepository<T, string> where T : Entity
     private readonly ILiteDatabase store;
     private readonly ILiteCollection<T> db;
 
-    public LiteDbRepository(ILiteDatabase store, ILogger log) : base(log)
+    public LiteDbRepository(ILiteDatabase store, ILogger<LiteDbRepository<T>> log) : base(log)
     {
         this.store = store;
         this.db = store.GetCollection<T>();
