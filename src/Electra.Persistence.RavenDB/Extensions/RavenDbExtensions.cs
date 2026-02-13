@@ -1,7 +1,11 @@
 using System.Linq;
+using System.Reflection;
+using Electra.Persistence.RavenDB.Indexes;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Indexes;
 using Raven.Client.Documents.Session;
 using Raven.Embedded;
 
@@ -77,5 +81,20 @@ public static class RavenDbExtensions
             ctx.GetRequiredService<IRavenDbUnitOfWork>().Users);
 
         return services;
+    }
+
+    // todo - ensure to call RegisterRavenIndexes()
+    public static WebApplication RegisterRavenIndexes(this WebApplication app)
+        => RegisterRavenIndexes(app, typeof(Users_ByRoleName).Assembly);
+    
+    public static WebApplication RegisterRavenIndexes(this WebApplication app, params Assembly[] assemblies)
+    {
+        var sp = app.Services;
+        var store = sp.GetRequiredService<IDocumentStore>();
+        
+        foreach (var ass in assemblies)
+            IndexCreation.CreateIndexes(ass, store);
+        
+        return app;
     }
 }

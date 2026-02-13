@@ -7,7 +7,7 @@ using ZauberCMS.Core.Shared.Interfaces;
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class CmsUser : ElectraUser, IEntity, ITreeItem, IHasPropertyValues
+public class CmsUser : ElectraUser, ITreeItem, IHasPropertyValues
 {
     //public Media? ProfileImage { get; set; }
     //public Guid? ProfileImageId { get; set; }

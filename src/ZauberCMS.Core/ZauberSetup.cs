@@ -328,6 +328,8 @@ public static class ZauberSetup
         var languageService = sp.GetRequiredService<ILanguageService>();
         var settings = sp.GetRequiredService<IOptions<ZauberSettings>>();
 
+        app.RegisterRavenIndexes();
+        
         try
         {
             Seeder.Initialize(app.Services, app.Configuration)
