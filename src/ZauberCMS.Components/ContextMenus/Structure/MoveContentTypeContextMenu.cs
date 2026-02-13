@@ -52,9 +52,9 @@ public class MoveContentTypeContextMenu(NotificationService notificationService,
         Modal = modalService.OpenSidePanel<MoveContentType>("Move Content Type", parameters);
         var result = await Modal.Result;
 
-        if (result is { Confirmed: true, Data: Guid parentId })
+        if (result is { Confirmed: true, Data: string parentId })
         {
-            if (parentId == Guid.Empty)
+            if (parentId == string.Empty)
             {
                 baseItem.ParentId = null;
             }

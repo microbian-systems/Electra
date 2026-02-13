@@ -2,6 +2,6 @@ namespace ZauberCMS.Core.Tags.Parameters;
 
 public class DeleteTagItemParameters
 {
-    public Guid? TagId { get; set; }
-    public Guid? ItemId { get; set; }
+    public string? TagId { get; set; }
+    public string? ItemId { get; set; }
 }

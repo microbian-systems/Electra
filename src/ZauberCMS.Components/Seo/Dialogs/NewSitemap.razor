@@ -67,10 +67,10 @@
     private string? SelectedRootContentIdAsString { get; set; }
     private List<ContentType> ContentTypes { get; set; } = [];
 
-    private async Task ContentSelected(string e)
+    private async Task ContentSelected(string contentId)
     {
-        SelectedRootContentIdAsString = e;
-        if (Guid.TryParse(e, out var contentId))
+        SelectedRootContentIdAsString = contentId;
+        //if (string.TryParse(e, out var contentId))
         {
             SeoSitemap!.RootContentId = contentId;
             SeoSitemap.RootContent = await ContentService.GetContent(contentId);

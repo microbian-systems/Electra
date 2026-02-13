@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Extensions;
@@ -78,7 +79,7 @@ public class SeoService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
-        var cacheKey = query.GenerateCacheKey<SeoRedirect>();
+        var cacheKey = query.GenerateCacheKey(typeof(SeoRedirect));
         
         if (parameters.Cached)
         {
@@ -122,14 +123,14 @@ public class SeoService(
         return (await dbContext.SaveChangesAndLog(redirect, handlerResult, cacheService, extensionManager, cancellationToken))!;
     }
 
-    private static IQueryable<SeoRedirect> BuildQuery(QueryRedirectsParameters parameters, IAsyncDocumentSession dbContext)
+    private static IRavenQueryable<SeoRedirect> BuildQuery(QueryRedirectsParameters parameters, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Query<SeoRedirect>().AsQueryable();
 
         if (parameters.Query != null)
         {
             query = parameters.Query.Invoke();
-            return query;
+            return (IRavenQueryable<SeoRedirect>)query;
         }
         
         if (parameters.Ids.Count > 0)
@@ -146,6 +147,6 @@ public class SeoService(
             _ => query.OrderByDescending(p => p.FromUrl)
         };
 
-        return query.Take(parameters.Amount);
+        return (IRavenQueryable<SeoRedirect>)query.Take(parameters.Amount);
     }
 }

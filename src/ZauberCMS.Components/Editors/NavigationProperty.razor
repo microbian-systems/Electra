@@ -55,7 +55,7 @@
             {
                 if (navItem.ContentId != null)
                 {
-                    var content = await ContentService.GetContent(navItem.ContentId.Value);
+                    var content = await ContentService.GetContent(navItem.ContentId);
                     if (content != null)
                     {
                         // Re-sync url's in case those have been changed.

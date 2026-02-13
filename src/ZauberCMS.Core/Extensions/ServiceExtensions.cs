@@ -81,11 +81,11 @@ public static class ServiceExtensions
     /// <param name="id">The unique identifier of the user to retrieve. If null, no user will be returned.</param>
     /// <param name="cached">Indicates whether to use cached data. Default value is true.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains an instance of User, or null if no user is found.</returns>
-    public static async Task<CmsUser?> GetUser(this IMembershipService membershipService, Guid? id, bool cached = true)
+    public static async Task<CmsUser?> GetUser(this IMembershipService membershipService, string? id, bool cached = true)
     {
         if (id != null)
         {
-            return await membershipService.GetUserAsync(new GetUserParameters { Id = id.Value, Cached = cached});
+            return await membershipService.GetUserAsync(new GetUserParameters { Id = id, Cached = cached});
         }
 
         return null;
@@ -98,11 +98,11 @@ public static class ServiceExtensions
     /// <param name="id">The ID of the media to retrieve.</param>
     /// <param name="cached">A boolean value indicating whether the cached version should be retrieved if available.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains an instance of Media or null if the ID is null or the media is not found.</returns>
-    public static async Task<Media.Models.Media?> GetMedia(this IMediaService mediaService, Guid? id, bool cached = true)
+    public static async Task<Media.Models.Media?> GetMedia(this IMediaService mediaService, string? id, bool cached = true)
     {
         if (id != null)
         {
-            return await mediaService.GetMediaAsync(new GetMediaParameters { Id = id.Value, Cached = cached });
+            return await mediaService.GetMediaAsync(new GetMediaParameters { Id = id, Cached = cached });
         }
 
         return null;
@@ -115,11 +115,11 @@ public static class ServiceExtensions
     /// <param name="id">The unique identifier of the content to retrieve.</param>
     /// <param name="cached">Indicates whether to use cached content data or not.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains an instance of Content if found; otherwise, null.</returns>
-    public static async Task<Content.Models.Content?> GetContent(this IContentService contentService, Guid? id, bool cached = true)
+    public static async Task<Content.Models.Content?> GetContent(this IContentService contentService, string? id, bool cached = true)
     {
         if (id != null)
         {
-            return await contentService.GetContentAsync(new GetContentParameters { Id = id.Value, Cached = cached });
+            return await contentService.GetContentAsync(new GetContentParameters { Id = id, Cached = cached });
         }
 
         return null;

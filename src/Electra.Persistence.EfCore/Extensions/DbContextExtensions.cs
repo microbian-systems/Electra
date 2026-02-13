@@ -1,8 +1,6 @@
 ﻿using System.Reflection;
 using Aero.Identity;
 using Electra.Core.Identity;
-using Electra.Models.Entities;
-using Electra.Persistence.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

@@ -1,10 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Electra.Models.Entities;
-
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.EfCore;
 

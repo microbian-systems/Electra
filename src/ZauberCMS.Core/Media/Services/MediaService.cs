@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Media.Interfaces;
@@ -41,7 +42,7 @@ public class MediaService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
-        var cacheKey = query.GenerateCacheKey();
+        var cacheKey = query.GenerateCacheKey(typeof(Models.Media));
 
         if (parameters.Cached)
         {
@@ -109,7 +110,7 @@ public class MediaService(
                     }
 
                     // Calculate and set the Path property
-                    dbMedia.Path = result.Entity.BuildPath(dbContext, parameters.IsUpdate, settings);
+                    dbMedia.Path = await result.Entity.BuildPath(dbContext, parameters.IsUpdate, settings);
                     var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                     await user.AddAudit(result.Entity, result.Entity.Name, AuditExtensions.AuditAction.Update, auditService,
                         cancellationToken);
@@ -126,7 +127,7 @@ public class MediaService(
             else
             {
                 // Calculate and set the Path property
-                result.Entity.Path = result.Entity.BuildPath(dbContext, parameters.IsUpdate, settings);
+                result.Entity.Path = await result.Entity.BuildPath(dbContext, parameters.IsUpdate, settings);
                 await dbContext.StoreAsync(result.Entity, cancellationToken);
                 var auditService = scope.ServiceProvider.GetRequiredService<IAuditService>();
                 await user.AddAudit(result.Entity, result.Entity.Name, AuditExtensions.AuditAction.Create, auditService,
@@ -157,14 +158,14 @@ public class MediaService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
-        var cacheKey = $"{query.GenerateCacheKey<Models.Media>()}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
+        var cacheKey = $"{query.GenerateCacheKey(typeof(Models.Media))}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
 
         if (parameters.Cached)
         {
-            return (await cacheService.GetSetCachedItemAsync(cacheKey, async () => query.ToPaginatedList(parameters.PageIndex, parameters.AmountPerPage)))!;
+            return (await cacheService.GetSetCachedItemAsync(cacheKey, async () => await query.ToPaginatedListAsync(parameters.PageIndex, parameters.AmountPerPage)))!;
         }
 
-        return query.ToPaginatedList(parameters.PageIndex, parameters.AmountPerPage);
+        return await query.ToPaginatedListAsync(parameters.PageIndex, parameters.AmountPerPage);
     }
 #pragma warning restore CS1998
 
@@ -187,7 +188,7 @@ public class MediaService(
         if (media != null)
         {
             //Check if it has children
-            var children = dbContext.Query<Models.Media>().Where(x => x.ParentId == media.Id);
+            var children = Queryable.Where(dbContext.Query<Models.Media>(), x => x.ParentId == media.Id);
             if (await children.AnyAsync(cancellationToken))
             {
                 handlerResult.AddMessage("Unable to delete media with child content, delete or move those items first", ResultMessageType.Error);
@@ -233,27 +234,27 @@ public class MediaService(
     /// <param name="parameters">Caching flag.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Dictionary URL -> MediaId.</returns>
-    public async Task<Dictionary<string, Guid>> GetRestrictedMediaUrlsAsync(GetRestrictedMediaUrlsParameters parameters, CancellationToken cancellationToken = default)
+    public async Task<Dictionary<string, string>> GetRestrictedMediaUrlsAsync(GetRestrictedMediaUrlsParameters parameters, CancellationToken cancellationToken = default)
     {
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(dbContext);
-        var cacheKey = query.GenerateCacheKey<Models.Media>();
+        var cacheKey = query.GenerateCacheKey(typeof(Models.Media));
 
         if (parameters.Cached)
         {
             return await cacheService
                 .GetSetCachedItemAsync(cacheKey, async () => await query.Select(x => new { x.Url, x.Id })
-                    .ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken)) ?? new Dictionary<string, Guid>();
+                    .ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken)) ?? new Dictionary<string, string>();
         }
 
         return await query.Select(x => new { x.Url, x.Id })
             .ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken);
     }
 
-    private static IQueryable<Models.Media> BuildQuery(GetMediaParameters parameters, IAsyncDocumentSession dbContext)
+    private static IRavenQueryable<Models.Media> BuildQuery(GetMediaParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Query<Models.Media>().AsQueryable();
+        var query = dbContext.Query<Models.Media>();
         
         if (parameters.IncludeParent)
         {
@@ -267,70 +268,65 @@ public class MediaService(
 
         if (parameters.MediaType != null)
         {
-            query = query.Where(x => x.MediaType == parameters.MediaType);
+            query = Queryable.Where(query, x => x.MediaType == parameters.MediaType);
         }
 
         if (parameters.Id != null)
         {
-            query = query.Where(x => x.Id == parameters.Id);
+            query = Queryable.Where(query, x => x.Id == parameters.Id);
         }
 
         return query;
     }
 
-    private static IQueryable<Models.Media> BuildQuery(QueryMediaParameters parameters, IAsyncDocumentSession dbContext)
+    private static IRavenQueryable<Models.Media> BuildQuery(QueryMediaParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Query<Models.Media>().Include(x => x.Parent).AsQueryable();
+        var query = dbContext.Query<Models.Media>().Include(x => x.Parent);
 
         if (parameters.Query != null)
         {
-            query = parameters.Query.Invoke();
+            query = (IRavenQueryable<Models.Media>)parameters.Query.Invoke();
         }
         else
         {
             if (parameters.IncludeChildren)
             {
-                query = query.Include(x => x.Children).AsSplitQuery();
-            }
-
-            if (parameters.AsNoTracking)
-            {
-                query = query.AsNoTracking();
+                query = query.Include(x => x.Children);
             }
 
             if (parameters.Ids.Count != 0)
             {
-                query = query.Where(x => parameters.Ids.Contains(x.Id));
+                query = Queryable.Where(query, x => parameters.Ids.Contains(x.Id));
                 parameters.AmountPerPage = parameters.Ids.Count;
             }
 
             if (parameters.MediaTypes.Count != 0)
             {
-                query = query.Where(x => parameters.MediaTypes.Contains(x.MediaType));
+                query = Queryable.Where(query, x => parameters.MediaTypes.Contains(x.MediaType));
             }
         }
 
         if (parameters.WhereClause != null)
         {
-            query = query.Where(parameters.WhereClause);
+            query = Queryable.Where(query, parameters.WhereClause);
         }
 
         query = parameters.OrderBy switch
         {
-            GetMediaOrderBy.DateUpdated => query.OrderBy(p => p.DateUpdated),
-            GetMediaOrderBy.DateUpdatedDescending => query.OrderByDescending(p => p.DateUpdated),
-            GetMediaOrderBy.DateCreated => query.OrderBy(p => p.DateCreated),
-            GetMediaOrderBy.DateCreatedDescending => query.OrderByDescending(p => p.DateCreated),
-            GetMediaOrderBy.Name => query.OrderBy(p => p.Name),
-            GetMediaOrderBy.NameDescending => query.OrderByDescending(p => p.Name),
-            _ => query.OrderByDescending(p => p.DateUpdated)
+            GetMediaOrderBy.DateUpdated => Queryable.OrderBy(query, p => p.DateUpdated),
+            GetMediaOrderBy.DateUpdatedDescending => Queryable.OrderByDescending(query, p => p.DateUpdated),
+            GetMediaOrderBy.DateCreated => Queryable.OrderBy(query, p => p.DateCreated),
+            GetMediaOrderBy.DateCreatedDescending => Queryable.OrderByDescending(query, p => p.DateCreated),
+            GetMediaOrderBy.Name => Queryable.OrderBy(query, p => p.Name),
+            GetMediaOrderBy.NameDescending => Queryable.OrderByDescending(query, p => p.Name),
+            _ => Queryable.OrderByDescending(query, p => p.DateUpdated)
         };
 
         return query;
     }
 
-    private static IQueryable<Models.Media> BuildQuery(IAsyncDocumentSession dbContext)
+    private static IRavenQueryable<Models.Media> BuildQuery(IAsyncDocumentSession dbContext)
     {
-        return dbContext.Query<Models.Media>().AsNoTracking().Where(x => x.RequiresAuthentication);
+        return Queryable.Where(dbContext.Query<Models.Media>(), x => x.RequiresAuthentication);
     }
 }

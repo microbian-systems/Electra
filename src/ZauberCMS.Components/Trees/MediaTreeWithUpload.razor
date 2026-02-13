@@ -19,8 +19,8 @@
 
     private int SelectedIndex { get; set; }
     private int PreviousSelectedIndex { get; set; } = -1;
-    private Guid? SelectedMediaId { get; set; }
-    private Guid? SelectedFolderId { get; set; }
+    private string? SelectedMediaId { get; set; }
+    private string? SelectedFolderId { get; set; }
     private MediaTree? MediaTreeRef { get; set; }
     
     private async Task OnValueChangedHandler(object value)

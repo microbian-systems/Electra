@@ -30,6 +30,7 @@ using ZauberCMS.Core.Tags.Interfaces;
 using ZauberCMS.Core.Tags.Services;
 using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Audit.Services;
+using ZauberCMS.Core.Data.Services;
 using ZauberCMS.Core.Seo.Interfaces;
 using ZauberCMS.Core.Seo.Services;
 using ZauberCMS.Core.Email.Interfaces;

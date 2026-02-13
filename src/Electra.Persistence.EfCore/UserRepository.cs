@@ -1,11 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Electra.Models;
-using Electra.Models.Entities;
-using Electra.Persistence.Core;
 using LanguageExt;
-
-using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.EfCore;
 

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Components;
 
 using Microsoft.Extensions.DependencyInjection;
 using Radzen;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using ZauberCMS.Components.Admin.ContentSection.Dialogs;
 using ZauberCMS.Core;
 using ZauberCMS.Core.Content.Interfaces;
@@ -72,8 +74,11 @@ public class RestrictAccessContextMenu(
             {
                 while (parentId != null)
                 {
-                    var parent = await dbContext.Contents.Include(x => x.ContentRoles).AsSplitQuery().FirstOrDefaultAsync(c => c.Id == parentId);
-                    if (parent is { ContentRoles.Count: > 0 })
+                    var parent = await dbContext.Query<Content>()
+                        .Include(x => x.ContentRoles)
+                        .FirstOrDefaultAsync(c => c.Id == parentId);
+                    
+                    if(parent is { ContentRoles.Count: > 0 })
                     {
                         ancestorHasRoles = true;
                         break;
@@ -92,10 +97,9 @@ public class RestrictAccessContextMenu(
             else
             {
                 // Fetch all descendants and the original content, as these need to be added or removed too
-                var descendants = dbContext.Contents
+                var descendants = dbContext.Query<Content>()
                     .WherePathLike(content.Id)
                     .Include(x => x.ContentRoles)
-                    .AsSplitQuery()
                     .ToList();
 
                 if (alreadyHadContentRoles && selectedRoles.Count == 0)

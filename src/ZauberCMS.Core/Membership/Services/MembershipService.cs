@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Data.Interfaces;
 using ZauberCMS.Core.Email.Interfaces;
@@ -51,7 +51,7 @@ public class MembershipService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
-        var cacheKey = query.GenerateCacheKey<CmsUser>();
+        var cacheKey = query.GenerateCacheKey(typeof(CmsUser));
 
         if (parameters.Cached)
         {
@@ -399,7 +399,7 @@ public class MembershipService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
-        var cacheKey = $"{query.GenerateCacheKey<CmsUser>()}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
+        var cacheKey = $"{query.GenerateCacheKey(typeof(CmsUser))}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
 
         if (parameters.Cached)
         {
@@ -421,10 +421,8 @@ public class MembershipService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         
-        var query = dbContext.Query<Role>()
-            .Include(x => x.UserRoles)
-            //.ThenInclude(x => x.User) // todo - figure out what ThenInclude() translates to in RavenDB
-            .Where(x => x.Id == parameters.Id);
+        var query = Queryable.Where(dbContext.Query<Role>()
+                .Include(x => x.UserRoles), x => x.Id == parameters.Id);
 
         return await query.FirstOrDefaultAsync(cancellationToken);
     }
@@ -978,21 +976,20 @@ public class MembershipService(
         return await userManager.GetUserAsync(authState.User);
     }
 
-    private static IQueryable<CmsUser> BuildQuery(GetUserParameters parameters, IAsyncDocumentSession dbContext)
+    private static IRavenQueryable<CmsUser> BuildQuery(GetUserParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Query<CmsUser>()
-            .Include(x => x.UserRoles)
-            //.ThenInclude(x => x.Role) // todo - figure out what ThenInclude() translates to in RavenDB
-            .Include(x => x.PropertyData)
-            .Where(x => x.Id == parameters.Id);
+        var query = Queryable.Where(dbContext.Query<CmsUser>()
+                .Include(x => x.UserRoles)
+                //.ThenInclude(x => x.Role) // todo - figure out what ThenInclude() translates to in RavenDB
+                .Include(x => x.PropertyData), x => x.Id == parameters.Id);
 
         return query;
     }
 
-    private static IQueryable<CmsUser> BuildQuery(QueryUsersParameters parameters, IAsyncDocumentSession dbContext)
+    private static IRavenQueryable<CmsUser> BuildQuery(QueryUsersParameters parameters, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Query<CmsUser>()
-            .Include(x => x.UserRoles).AsQueryable();
+            .Include(x => x.UserRoles);
 
         if (parameters.Query != null)
         {
@@ -1003,31 +1000,31 @@ public class MembershipService(
             if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
             {
                 var searchTermLower = parameters.SearchTerm.ToLower();
-                query = query.Where(x => x.UserName != null && x.UserName.ToLower().Contains(searchTermLower));
+                query = Queryable.Where(query, x => x.UserName != null && x.UserName.ToLower().Contains(searchTermLower));
             }
 
             if (parameters.Roles.Count != 0)
             {
-                query = query.Where(x => x.UserRoles.Any(ur => ur.Role.Name != null && parameters.Roles.Contains(ur.Role.Name)));
+                query = Queryable.Where(query, x => x.UserRoles.Any(ur => ur.Role.Name != null && parameters.Roles.Contains(ur.Role.Name)));
             }
 
             if (parameters.Ids.Count != 0)
             {
-                query = query.Where(x => parameters.Ids.Contains(x.Id));
+                query = Queryable.Where(query, x => parameters.Ids.Contains(x.Id));
                 parameters.AmountPerPage = parameters.Ids.Count;
             }
         }
 
         if (parameters.WhereClause != null)
         {
-            query = query.Where(parameters.WhereClause);
+            query = Queryable.Where(query, parameters.WhereClause);
         }
 
         query = parameters.OrderBy switch
         {
-            GetUsersOrderBy.DateUpdated => query.OrderBy(p => p.CreatedOn),
-            GetUsersOrderBy.DateCreatedDescending => query.OrderByDescending(p => p.CreatedOn),
-            _ => query.OrderByDescending(p => p.CreatedOn)
+            GetUsersOrderBy.DateUpdated => Queryable.OrderBy(query, p => p.CreatedOn),
+            GetUsersOrderBy.DateCreatedDescending => Queryable.OrderByDescending(query, p => p.CreatedOn),
+            _ => Queryable.OrderByDescending(query, p => p.CreatedOn)
         };
 
         return query;

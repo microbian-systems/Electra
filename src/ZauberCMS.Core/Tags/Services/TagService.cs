@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Extensions;
@@ -104,7 +105,7 @@ public class TagService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = BuildQuery(parameters, dbContext);
-        var cacheKey = $"{query.GenerateCacheKey<Tag>()}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
+        var cacheKey = $"{query.GenerateCacheKey(typeof(Tag))}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
         if (parameters.Cached)
         {
             return (await cacheService.GetSetCachedItemAsync(cacheKey, async () => query.ToPaginatedList(parameters.PageIndex, parameters.AmountPerPage)))!;
@@ -175,7 +176,7 @@ public class TagService(
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<TagItem>();
 
-        if (parameters.ItemId == Guid.Empty)
+        if (parameters.ItemId == Guid.Empty.ToString())
         {
             handlerResult.AddMessage("ItemId is empty", ResultMessageType.Error);
             return handlerResult;
@@ -276,13 +277,13 @@ public class TagService(
         return (await dbContext.SaveChangesAndLog(tagItem, handlerResult, cacheService, extensionManager, cancellationToken))!;
     }
 
-    private static IQueryable<Tag> BuildQuery(QueryTagParameters parameters, IAsyncDocumentSession dbContext)
+    private static IRavenQueryable<Tag> BuildQuery(QueryTagParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = dbContext.Query<Tag>().AsQueryable();
+        var query = dbContext.Query<Tag>();
 
         if (parameters.Query != null)
         {
-            query = parameters.Query.Invoke();
+            query = (IRavenQueryable<Tag>)parameters.Query.Invoke();
         }
         else
         {

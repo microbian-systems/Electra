@@ -47,7 +47,6 @@ public class MediaValidationService(IMediaService mediaService, NotificationServ
             var media = await mediaService.GetMediaAsync(new GetMediaParameters
             {
                 Id = mediaIdStr,
-                AsNoTracking = true
             }, cancellationToken);
 
             if (media == null)

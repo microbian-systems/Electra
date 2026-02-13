@@ -5,10 +5,10 @@ namespace ZauberCMS.Core.Shared;
 public class TreeState
 {
     // ConcurrentDictionary to store the IDs of expanded nodes
-    private readonly ConcurrentDictionary<Guid, byte> _expandedNodeIds = new();
+    private readonly ConcurrentDictionary<string, byte> _expandedNodeIds = new();
 
     // Initialize the cache
-    public readonly ConcurrentDictionary<Guid, bool> HasChildrenCache = new();
+    public readonly ConcurrentDictionary<string, bool> HasChildrenCache = new();
 
     public event Action<object?>? OnTreeValueChanged;
 
@@ -28,19 +28,19 @@ public class TreeState
     }
 
     // Method to expand a node
-    public void NodeExpanded(Guid nodeId)
+    public void NodeExpanded(string nodeId)
     {
         _expandedNodeIds[nodeId] = 0;
     }
 
     // Method to collapse a node
-    public void NodeCollapsed(Guid nodeId)
+    public void NodeCollapsed(string nodeId)
     {
         _expandedNodeIds.TryRemove(nodeId, out _);
     }
 
     // Method to check if a node is expanded
-    public bool IsNodeExpanded(Guid nodeId)
+    public bool IsNodeExpanded(string nodeId)
     {
         return _expandedNodeIds.ContainsKey(nodeId);
     }
@@ -51,21 +51,21 @@ public class TreeState
         _expandedNodeIds.Clear();
     }
 
-    public bool HasChildren(Guid nodeId)
+    public bool HasChildren(string nodeId)
     {
         return HasChildrenCache.TryGetValue(nodeId, out var hasChildren) && hasChildren;
     }
     
-    public void SetChildren(Guid nodeId, bool hasChildren)
+    public void SetChildren(string nodeId, bool hasChildren)
     {
         HasChildrenCache[nodeId] = hasChildren;
     }
 
-    public void ClearChildCache(Guid? contentId)
+    public void ClearChildCache(string? contentId)
     {
         if (contentId != null)
         {
-            HasChildrenCache.TryRemove(contentId.Value, out _);
+            HasChildrenCache.TryRemove(contentId, out _);
         }
         else
         {

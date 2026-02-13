@@ -9,7 +9,7 @@ namespace ZauberCMS.Components.Editors.Models;
 public record BlockListState
 {
     public List<Content> Items { get; init; } = [];
-    public Dictionary<Guid, ContentType> ContentTypes { get; init; } = [];
+    public Dictionary<string, ContentType> ContentTypes { get; init; } = [];
     
     // Change tracking - store actual Content objects to preserve in-memory modifications
     public List<Content> AddedItems { get; init; } = [];
@@ -104,7 +104,7 @@ public record BlockListState
     /// <summary>
     /// Delete a content item
     /// </summary>
-    public BlockListState DeleteItem(Guid contentId)
+    public BlockListState DeleteItem(string contentId)
     {
         var itemToDelete = Items.FirstOrDefault(x => x.Id == contentId);
         if (itemToDelete == null) return this;
@@ -250,7 +250,7 @@ public record BlockListState
     /// </summary>
     public BlockListState SetContentType(ContentType contentType)
     {
-        var newContentTypes = new Dictionary<Guid, ContentType>(ContentTypes)
+        var newContentTypes = new Dictionary<string, ContentType>(ContentTypes)
         {
             [contentType.Id] = contentType
         };
@@ -261,6 +261,6 @@ public record BlockListState
     /// <summary>
     /// Get serialized IDs for storage
     /// </summary>
-    public List<Guid> GetSerializedIds() => Items.Select(x => x.Id).ToList();
+    public List<string> GetSerializedIds() => Items.Select(x => x.Id).ToList();
 }
 

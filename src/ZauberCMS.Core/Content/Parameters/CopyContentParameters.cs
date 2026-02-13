@@ -2,7 +2,7 @@ namespace ZauberCMS.Core.Content.Parameters;
 
 public class CopyContentParameters
 {
-    public Guid ContentToCopy { get; set; }
+    public string ContentToCopy { get; set; }
     public bool IncludeDescendants { get; set; }
-    public Guid? CopyTo { get; set; }
+    public string? CopyTo { get; set; }
 }

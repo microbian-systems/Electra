@@ -9,12 +9,12 @@ public class Domain
     /// <summary>
     /// The ID
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string? Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
 
     /// <summary>
     /// The content ID
     /// </summary>
-    public Guid ContentId { get; set; }
+    public string ContentId { get; set; }
     
     /// <summary>
     /// The domain name to match
@@ -24,7 +24,7 @@ public class Domain
     /// <summary>
     /// Language associated with this domain
     /// </summary>
-    public Guid LanguageId { get; set; }
+    public string LanguageId { get; set; }
     
     /// <summary>
     /// The Language object

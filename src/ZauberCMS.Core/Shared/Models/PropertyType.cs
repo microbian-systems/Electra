@@ -4,7 +4,7 @@ namespace ZauberCMS.Core.Shared.Models;
 
 public class PropertyType
 {
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string? Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
     public string? Name { get; set; }
     public string? Alias { get; set; }
     public string? Description { get; set; }
@@ -14,7 +14,7 @@ public class PropertyType
     public bool IsRequired { get; set; }
     public bool FullWidth { get; set; }
     public int SortOrder { get; set; }
-    public Guid? TabId { get; set; }
+    public string? TabId { get; set; }
     public string? TabAlias { get; set; }
     public bool ShowAlias { get; set; } = true;
     public bool IsFromComposition { get; set; }

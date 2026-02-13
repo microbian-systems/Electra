@@ -1,6 +1,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Audit.Parameters;
@@ -35,13 +36,13 @@ public class AuditService(
         if (parameters.Audit != null)
         {
             // Get the DB version
-            var audit = dbContext.Audits
+            var audit = dbContext.Query<Models.Audit>()
                 .FirstOrDefault(x => x.Id == parameters.Audit.Id);
 
             if (audit == null)
             {
                 audit = parameters.Audit;
-                dbContext.Audits.Add(audit);
+                await dbContext.StoreAsync(audit, cancellationToken);
             }
             else
             {
@@ -66,18 +67,11 @@ public class AuditService(
     {
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
-        var query = dbContext.Audits.AsQueryable();
+        var query = dbContext.Query<Models.Audit>().AsQueryable();
 
         if (parameters.Query != null)
         {
             query = parameters.Query.Invoke();
-        }
-        else
-        {
-            if (parameters.AsNoTracking)
-            {
-                query = query.AsNoTracking();
-            }
         }
 
         /*if (parameters.Username != null)
@@ -117,7 +111,7 @@ public class AuditService(
         {
             var cutoffDate = DateTime.UtcNow.AddDays(-parameters.DaysToKeep);
             
-            var oldAudits = dbContext.Audits
+            var oldAudits = dbContext.Query<Models.Audit>()
                 .Where(a => a.DateCreated < cutoffDate);
             
             var auditCount = await oldAudits.CountAsync(cancellationToken);
@@ -126,7 +120,8 @@ public class AuditService(
             {
                 logger.LogInformation("Deleting {AuditCount} audit records older than {DaysToKeep} days", auditCount, parameters.DaysToKeep);
                 
-                dbContext.RemoveRange(oldAudits);
+                var res = await oldAudits.ToListAsync(cancellationToken);
+                dbContext.Delete(res);
                 await dbContext.SaveChangesAsync(cancellationToken);
                 
                 logger.LogInformation("Successfully deleted {AuditCount} old audit records", auditCount);

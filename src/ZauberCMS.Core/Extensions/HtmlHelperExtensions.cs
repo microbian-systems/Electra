@@ -55,7 +55,7 @@ public static class HtmlHelperExtensions
 
             if (metaData.OpenGraphImage != null)
             {
-                var result = await mediaService.GetMedia(metaData.OpenGraphImage.Value);
+                var result = await mediaService.GetMedia(metaData.OpenGraphImage);
                 if (result != null)
                 {
                     AddOpenGraphTag(sb, "og:image", $"{domain}/{result.Url}?width=1200&height=630&mode=stretch");

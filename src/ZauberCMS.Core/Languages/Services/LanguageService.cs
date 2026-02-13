@@ -348,7 +348,8 @@ public class LanguageService(
                 var langTextDict = new Dictionary<string, string>();
                 foreach (var languageDictionary in allLanguageDictionaries)
                 {
-                    langTextDict.Add(languageDictionary.Key, language.LanguageTexts.FirstOrDefault(x => x.LanguageDictionaryId == languageDictionary.Id)?.Value ?? string.Empty);
+                    langTextDict.Add(languageDictionary.Key, language.LanguageTexts
+                        .FirstOrDefault(x => x.LanguageDictionaryId == languageDictionary.Id)?.Value ?? string.Empty);
                 }
 
                 if (language.LanguageIsoCode != null) returnDict.Add(language.LanguageIsoCode, langTextDict);

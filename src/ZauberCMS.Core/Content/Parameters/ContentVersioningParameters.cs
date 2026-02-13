@@ -10,21 +10,21 @@ public class CreateContentVersionParameters
     public string? Comments { get; set; }
     public List<string> Tags { get; set; } = [];
     public bool IsAutoSave { get; set; }
-    public Guid? ParentVersionId { get; set; }
-    public Guid? CreatedByUserId { get; set; }
+    public string? ParentVersionId { get; set; }
+    public string? CreatedByUserId { get; set; }
 }
 
 public class PublishContentVersionParameters
 {
-    public required Guid VersionId { get; set; }
-    public Guid? PublishedByUserId { get; set; }
+    public required string VersionId { get; set; }
+    public string? PublishedByUserId { get; set; }
 }
 
 public class QueryContentVersionsParameters
 {
-    public required Guid ContentId { get; set; }
+    public required string ContentId { get; set; }
     public ContentVersionStatus? Status { get; set; }
-    public Guid? CreatedById { get; set; }
+    public string? CreatedById { get; set; }
     public string? VersionName { get; set; }
     public DateTime? DateFrom { get; set; }
     public DateTime? DateTo { get; set; }
@@ -43,18 +43,18 @@ public enum ContentVersionOrderBy
 
 public class GetContentVersionParameters
 {
-    public required Guid VersionId { get; set; }
+    public required string VersionId { get; set; }
 }
 
 public class DeleteContentVersionParameters
 {
-    public required Guid VersionId { get; set; }
+    public required string VersionId { get; set; }
 }
 
 public class CompareContentVersionsParameters
 {
-    public required Guid VersionId1 { get; set; }
-    public required Guid VersionId2 { get; set; }
+    public required string VersionId1 { get; set; }
+    public required string VersionId2 { get; set; }
 }
 
 public class ContentVersionComparison
@@ -100,5 +100,5 @@ public class BlockListContentChange
     public required string ContentName { get; set; }
     public required string ContentTypeAlias { get; set; }
     public List<PropertyDifference>? PropertyChanges { get; set; }
-    public Guid? ContentId { get; set; }
+    public string? ContentId { get; set; }
 }

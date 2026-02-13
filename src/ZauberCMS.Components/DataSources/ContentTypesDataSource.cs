@@ -18,7 +18,6 @@ public class ContentTypesDataSource(IContentService contentService) : IDataListS
         {
             OrderBy = GetContentTypesOrderBy.Name,
             AmountPerPage = 300,
-            AsNoTracking = true
         }).GetAwaiter().GetResult();
         
         return contentTypes.Items.Select(x => new DataListItem

@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text;
+using Raven.Client.Documents.Linq;
 
 
 namespace ZauberCMS.Core.Extensions;
@@ -16,14 +17,14 @@ public static class CacheExtensions
         return $"{item.Name}-{identifier}";
     }
     
-    public static string ToCacheKey(this Type item, List<string> identifier)
+    public static string ToCacheKey(this Type item, List<Guid> identifier)
     {
         // need to order the items and CSV them to keep them consistent
         var cacheKey = string.Join("-", identifier.OrderBy(x => x));
         return $"{item.Name}-{cacheKey}";
     }
     
-    public static string ToCacheKey(this Type item, List<Guid> identifier)
+    public static string ToCacheKey(this Type item, List<string> identifier)
     {
         // need to order the items and CSV them to keep them consistent
         var cacheKey = string.Join("-", identifier.OrderBy(x => x));
@@ -38,9 +39,21 @@ public static class CacheExtensions
     /// <returns>Cache key in format: TypeName-Hash</returns>
     public static string GenerateCacheKey<T>(this IQueryable<T> query)
     {
-        var queryString = query.ToQueryString();
+        var queryString = query.ToString();
         var hash = SHA256.HashData(Encoding.UTF8.GetBytes(queryString));
         return typeof(T).ToCacheKey(Convert.ToBase64String(hash));
+    }
+    
+    public static string GenerateCacheKey<T>(this IQueryable<T> query, Type cacheType)
+    {
+        // Get the query string
+        var queryString = query.ToString();
+
+        // Generate a SHA256 hash of the query string
+        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(queryString));
+
+        // Return the cache key by combining the type and the hashed query string
+        return cacheType.ToCacheKey(Convert.ToBase64String(hash));
     }
 
     /// <summary>

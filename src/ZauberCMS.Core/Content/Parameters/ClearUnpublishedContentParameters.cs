@@ -2,5 +2,5 @@ namespace ZauberCMS.Core.Content.Parameters;
 
 public class ClearUnpublishedContentParameters
 {
-    public Guid ContentId { get; set; }
+    public string ContentId { get; set; }
 }

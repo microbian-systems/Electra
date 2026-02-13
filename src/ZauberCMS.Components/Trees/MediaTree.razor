@@ -36,13 +36,13 @@
     [CascadingParameter] public IModalService? ModalService { get; set; }
 
     // Dictionary to cache HasChildren results
-    private ConcurrentDictionary<Guid, bool>? _hasChildrenCache;
+    private ConcurrentDictionary<string, bool>? _hasChildrenCache;
 
     protected override void OnInitialized()
     {
         AppState.OnMediaChanged += HandleMediaChanged;
         // Initialize the cache
-        _hasChildrenCache = new ConcurrentDictionary<Guid, bool>();
+        _hasChildrenCache = new ConcurrentDictionary<string, bool>();
     }
 
     protected override async Task OnParametersSetAsync()

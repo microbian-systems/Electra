@@ -43,23 +43,24 @@
     protected override async Task OnInitializedAsync()
     {
         SettingsModel = Settings.FromJson<ContentPickerSettings>();
-        
-        if (!Value.IsNullOrWhiteSpace())
-        {
-            if (Guid.TryParse(Value, out var singleId)) 
-            {
-                // Value is a single guid
-                var contentItem = await ContentService.QueryContentAsync(new QueryContentParameters
-                {
-                    Ids = [singleId]
-                });
 
-                ContentItems = contentItem.Items.ToList();
-            } 
-            else 
+        var singleId = Value;
+        if (!singleId.IsNullOrWhiteSpace())
+        {
+            //if (string.TryParse(Value, out var singleId)) 
+
+            // Value is a single guid
+            var contentItem = await ContentService.QueryContentAsync(new QueryContentParameters
             {
-                // Value might be a list of guids
-                var contentIds = JsonSerializer.Deserialize<List<Guid>>(Value);
+                Ids = [singleId]
+            });
+
+            ContentItems = contentItem.Items.ToList();
+        }
+        else
+        {
+            // Value might be a list of guids
+                var contentIds = JsonSerializer.Deserialize<List<string>>(Value);
                 if (contentIds != null && contentIds.Any())
                 {
                     var contentItems = await ContentService.QueryContentAsync(new QueryContentParameters
@@ -71,7 +72,7 @@
                 }
             }
         }
-    }
+    
     
     private void SortList((int oldIndex, int newIndex) indices)
     {

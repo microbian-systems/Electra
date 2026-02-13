@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Electra.Persistence.Core;
-
 using ILogger = Serilog.ILogger;
 
 namespace Electra.Persistence.EfCore;

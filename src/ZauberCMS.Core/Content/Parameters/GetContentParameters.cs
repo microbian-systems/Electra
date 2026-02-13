@@ -9,6 +9,5 @@ public class GetContentParameters
     public bool IncludeChildren { get; set; }
     public bool IncludeParent { get; set; }
     public bool IncludeUnpublished { get; set; }
-    public bool AsNoTracking { get; set; } = true;
     public string ContentTypeAlias { get; set; } = string.Empty;
 }

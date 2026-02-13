@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Electra.Core.Entities;
-using Electra.Persistence.Core;
-
-using Microsoft.Extensions.Logging;
 
 namespace Electra.Persistence.EfCore.ActiveRecord;
 
@@ -20,11 +17,11 @@ public static class ActiveRecordExtensions
 }
 
 
-public class ActiveRecordEfCore<T>(DbContext db, ILogger<ActiveRecordEfCore<T, Guid>> log) 
-    : ActiveRecordEfCore<T, Guid>(db, log) 
-    where T : IEntity<Guid>
+public class ActiveRecordEfCore<T>(DbContext db, ILogger<ActiveRecordEfCore<T, long>> log) 
+    : ActiveRecordEfCore<T, long>(db, log) 
+    where T : IEntity<long>
 {
-    public override async Task<T> Get(Guid key)
+    public override async Task<T> Get(long key)
     {
         await Task.CompletedTask;
         throw new NotImplementedException();
@@ -42,9 +39,8 @@ public class ActiveRecordEfCore<T>(DbContext db, ILogger<ActiveRecordEfCore<T, G
         throw new NotImplementedException();
     }
 
-    public override async Task Delete(Guid id)
+    public override async Task Delete(long id)
     {
-        await Task.CompletedTask;
         throw new NotImplementedException();
     }
 

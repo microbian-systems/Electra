@@ -1,7 +1,3 @@
-using Electra.Models.Entities;
-using Electra.Persistence.Core;
-using Microsoft.Extensions.Logging;
-
 namespace Electra.Persistence.EfCore;
 
 

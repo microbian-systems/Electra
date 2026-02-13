@@ -7,12 +7,12 @@ public class LanguageText
     /// <summary>
     /// The ID
     /// </summary>
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string? Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
     
     /// <summary>
     /// ID of the parent Language Dictionary
     /// </summary>
-    public Guid LanguageDictionaryId { get; set; }
+    public string LanguageDictionaryId { get; set; }
     
     /// <summary>
     /// Parent Language Dictionary

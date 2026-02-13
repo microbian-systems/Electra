@@ -56,7 +56,7 @@
     [Inject] public AppState AppState { get; set; } = null!;
     [Inject] public TreeState TreeState { get; set; } = null!;
     
-    [Parameter] public Guid? ParentId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
     [Parameter] public int MaxAllowedFiles { get; set; } = 30; // Only allow 30 max at a time, should be setting
     [Parameter] public bool OnlyImages { get; set; }
     [Parameter] public bool EnableFolderSelection { get; set; }
@@ -74,13 +74,13 @@
     private List<ResultMessage> ErrorMessages { get; set; } = [];
     private Media? ParentFolder { get; set; }
     private IModalReference? Modal { get; set; }
-    private ConcurrentDictionary<Guid, bool>? HasChildrenCache { get; set; } = new();
+    private ConcurrentDictionary<string, bool>? HasChildrenCache { get; set; } = new();
 
     protected override async Task OnParametersSetAsync()
     {
         if (ParentId != null)
         {
-            var media = await MediaService.GetMediaAsync(new GetMediaParameters { Id = ParentId.Value });
+            var media = await MediaService.GetMediaAsync(new GetMediaParameters { Id = ParentId });
             if (media is { MediaType: MediaType.Folder })
             {
                 ParentFolder = media;

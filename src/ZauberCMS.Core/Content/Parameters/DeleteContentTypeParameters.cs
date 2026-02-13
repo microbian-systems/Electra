@@ -2,5 +2,5 @@ namespace ZauberCMS.Core.Content.Parameters;
 
 public class DeleteContentTypeParameters
 {
-    public Guid ContentTypeId { get; set; }
+    public string ContentTypeId { get; set; } = string.Empty;
 }

@@ -22,7 +22,7 @@ public class SeoRedirect : ITreeItem
     /// <summary>
     /// Represents the unique identifier for the associated domain of the SEO redirect entity.
     /// </summary>
-    public Guid? DomainId { get; set; }
+    public string? DomainId { get; set; }
 
     /// <summary>
     /// Represents the source URL from which the SEO redirect originates.

@@ -35,7 +35,7 @@ public class ContentVersioningService(
             return handlerResult;
         }
 
-        var content = await dbContext.Query<Content>()
+        var content = await dbContext.Query<Models.Content>()
             .Include(c => c.PropertyData)
             .Include(c => c.ContentType)
             .FirstOrDefaultAsync(c => c.Id == parameters.Content.Id, cancellationToken);
@@ -102,7 +102,7 @@ public class ContentVersioningService(
             version.DatePublished = null;
         }
 
-        dbContext.Query<ContentVersion>().Add(version);
+        await dbContext.StoreAsync(version);
 
         // Update content if this is being published
         if (parameters.Status == ContentVersionStatus.Published)
@@ -136,7 +136,7 @@ public class ContentVersioningService(
             return handlerResult;
         }
 
-        var content = await dbContext.Query<Content>()
+        var content = await dbContext.Query<Models.Content>()
             .Include(c => c.PropertyData)
             .FirstOrDefaultAsync(c => c.Id == version.ContentId, cancellationToken);
 
@@ -192,9 +192,9 @@ public class ContentVersioningService(
             query = query.Where(v => v.Status == parameters.Status.Value);
         }
 
-        if (parameters.CreatedById.HasValue)
+        if (!string.IsNullOrEmpty(parameters.CreatedById))
         {
-            query = query.Where(v => v.CreatedById == parameters.CreatedById.Value);
+            query = query.Where(v => v.CreatedById == parameters.CreatedById);
         }
 
         if (!string.IsNullOrWhiteSpace(parameters.VersionName))
@@ -327,7 +327,7 @@ public class ContentVersioningService(
 
     #region Private Methods
 
-    private async Task ClearCurrentPublishedFlagAsync(IAsyncDocumentSession dbContext, Guid contentId, CancellationToken cancellationToken)
+    private async Task ClearCurrentPublishedFlagAsync(IAsyncDocumentSession dbContext, string contentId, CancellationToken cancellationToken)
     {
         var currentPublished = await dbContext.Query<ContentVersion>()
             .FirstOrDefaultAsync(v => v.ContentId == contentId && v.IsCurrentPublished, cancellationToken);
@@ -338,7 +338,7 @@ public class ContentVersioningService(
         }
     }
 
-    private async Task ClearLatestDraftFlagAsync(IAsyncDocumentSession dbContext, Guid contentId, CancellationToken cancellationToken)
+    private async Task ClearLatestDraftFlagAsync(IAsyncDocumentSession dbContext, string contentId, CancellationToken cancellationToken)
     {
         var latestDraft = await dbContext.Query<ContentVersion>()
             .FirstOrDefaultAsync(v => v.ContentId == contentId && v.IsLatestDraft, cancellationToken);
@@ -392,7 +392,7 @@ public class ContentVersioningService(
         var propertiesToRemove = content.PropertyData.Where(p => !propertyIdsInVersion.Contains(p.ContentTypePropertyId)).ToList();
         foreach (var property in propertiesToRemove)
         {
-            dbContext.ContentPropertyValues.Remove(property);
+            dbContext.Delete(property);
         }
     }
 
@@ -608,11 +608,11 @@ public class ContentVersioningService(
         return changes;
     }
 
-    private List<Guid> ParseContentIds(string jsonValue)
+    private List<string> ParseContentIds(string jsonValue)
     {
         try
         {
-            return System.Text.Json.JsonSerializer.Deserialize<List<Guid>>(jsonValue) ?? [];
+            return System.Text.Json.JsonSerializer.Deserialize<List<string>>(jsonValue) ?? [];
         }
         catch
         {
@@ -623,14 +623,14 @@ public class ContentVersioningService(
     private static async Task<List<BlockListContentSnapshot>> CreateBlockListSnapshotsAsync(IAsyncDocumentSession dbContext, Models.Content content)
     {
         var snapshots = new List<BlockListContentSnapshot>();
-        var processedContentIds = new HashSet<Guid>(); // Prevent infinite recursion
+        var processedContentIds = new HashSet<string>(); // Prevent infinite recursion
 
         await CreateBlockListSnapshotsRecursiveAsync(dbContext, content, snapshots, processedContentIds);
 
         return snapshots;
     }
 
-    private static async Task CreateBlockListSnapshotsRecursiveAsync(IAsyncDocumentSession dbContext, Models.Content content, List<BlockListContentSnapshot> snapshots, HashSet<Guid> processedContentIds)
+    private static async Task CreateBlockListSnapshotsRecursiveAsync(IAsyncDocumentSession dbContext, Models.Content content, List<BlockListContentSnapshot> snapshots, HashSet<string> processedContentIds)
     {
         // Find all block list properties in the content
         var blockListProperties = content.PropertyData.Where(p =>
@@ -643,11 +643,11 @@ public class ContentVersioningService(
             try
             {
                 // Parse the JSON array of content IDs
-                var contentIds = System.Text.Json.JsonSerializer.Deserialize<List<Guid>>(blockListProperty.Value);
+                var contentIds = System.Text.Json.JsonSerializer.Deserialize<List<string>>(blockListProperty.Value);
                 if (contentIds != null && contentIds.Any())
                 {
                     // Get all the block list content items
-                    var blockListContent = await dbContext.Query<Content>()
+                    var blockListContent = await dbContext.Query<Models.Content>()
                         .Include(c => c.PropertyData)
                         .Where(c => contentIds.Contains(c.Id))
                         .ToListAsync();
@@ -696,7 +696,7 @@ public class ContentVersioningService(
         {
             // Always restore the content from the snapshot - this ensures the block list content
             // matches exactly what was saved in the version
-            var existingContent = await dbContext.Query<Content>()
+            var existingContent = await dbContext.Query<Models.Content>()
                 .Include(c => c.PropertyData)
                 .FirstOrDefaultAsync(c => c.Id == blockListSnapshot.ContentId, cancellationToken);
 

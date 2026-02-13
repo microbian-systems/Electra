@@ -1,7 +1,4 @@
-﻿using Electra.Models.Entities;
-
-
-namespace Electra.Persistence.EfCore;
+﻿namespace Electra.Persistence.EfCore;
 
 public class ApiAuthContext : DbContext
 {

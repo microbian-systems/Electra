@@ -7,21 +7,23 @@ public static class Constants
 
     public static readonly List<string> InternalContentViews = ["MissingView", "NewSite", "NotFound404"];
     
-    public static class Guids
+    // todo - rename class to someething more descriptive and give better more identifying Id names
+    public static class Ids
     {
-        public static readonly Guid ContentTypeSystemTabId = new("8282a912-408f-49dd-ab84-b19600d55aef");
-        public static readonly Guid ContentTypeTreeRootId = new("bdff0832-1b3d-43b9-b546-1db5ade35b8b");
-        public static readonly Guid ElementTypeTreeRootId = new("88e68720-fb1e-40b0-8735-35c5666235e1");
-        public static readonly Guid AuditTreeRootId = new("4eb614c6-f399-4a50-8e36-6e3d1d716879");
-        public static readonly Guid SitemapTreeRootId = new("02648d85-5dab-4dfd-a0d8-750c9fd2d35b");
-        public static readonly Guid SeoPageCheckerTreeRootId = new("6c168aeb-7a7d-4507-a9e9-6b9273129667");
-        public static readonly Guid SeoRedirectsRootId = new("dffecd82-58b8-49d7-b6b1-1ca771c6de3e");
-        public static readonly Guid LanguageTreeRootId = new("b8f3582d-fa55-4448-88b6-6389413bfcd2");
-        public static readonly Guid LanguageDictionaryTreeRootId = new("72bffd18-ec43-4e85-8569-596fcd60a14c");
-        public static readonly Guid UsersTreeRootId = new("86000c41-647d-49d2-9de5-e481b7b4a1c1");
-        public static readonly Guid RolesTreeRootId = new("b30e0814-d163-40d3-8913-65225cfa3652");
-        public static readonly Guid RecycleBinRootId = new("97a0c80e-cbf2-4a70-a185-5a199f4cb8e2");
+        public static readonly string ContentTypeSystemTabId = new("8282a912-408f-49dd-ab84-b19600d55aef");
+        public static readonly string ContentTypeTreeRootId = new("bdff0832-1b3d-43b9-b546-1db5ade35b8b");
+        public static readonly string ElementTypeTreeRootId = new("88e68720-fb1e-40b0-8735-35c5666235e1");
+        public static readonly string AuditTreeRootId = new("4eb614c6-f399-4a50-8e36-6e3d1d716879");
+        public static readonly string SitemapTreeRootId = new("02648d85-5dab-4dfd-a0d8-750c9fd2d35b");
+        public static readonly string SeoPageCheckerTreeRootId = new("6c168aeb-7a7d-4507-a9e9-6b9273129667");
+        public static readonly string SeoRedirectsRootId = new("dffecd82-58b8-49d7-b6b1-1ca771c6de3e");
+        public static readonly string LanguageTreeRootId = new("b8f3582d-fa55-4448-88b6-6389413bfcd2");
+        public static readonly string LanguageDictionaryTreeRootId = new("72bffd18-ec43-4e85-8569-596fcd60a14c");
+        public static readonly string UsersTreeRootId = new("86000c41-647d-49d2-9de5-e481b7b4a1c1");
+        public static readonly string RolesTreeRootId = new("b30e0814-d163-40d3-8913-65225cfa3652");
+        public static readonly string RecycleBinRootId = new("97a0c80e-cbf2-4a70-a185-5a199f4cb8e2");
     }
+    
     
     public static List<string> UserAgents { get; } =
     [

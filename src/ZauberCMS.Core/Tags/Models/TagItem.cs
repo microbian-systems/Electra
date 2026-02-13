@@ -4,10 +4,10 @@ namespace ZauberCMS.Core.Tags.Models;
 
 public class TagItem
 {
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string? Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
-    public Guid TagId { get; set; }
+    public string TagId { get; set; }
     public Tag? Tag { get; set; }
-    public Guid ItemId { get; set; }
+    public string ItemId { get; set; }
 }

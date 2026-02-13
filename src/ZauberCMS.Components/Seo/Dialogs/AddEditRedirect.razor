@@ -6,7 +6,7 @@
         <PropertyInfo Name="Domain" Description="Optional domain to restrict the redirect to"/>
     </LeftColumn>
     <CentreColumn>
-        <RadzenDropDown TValue="Guid" @bind-Value="@SelectedDomainId" Data="@Domains" TextProperty="Text" ValueProperty="Id" Style="width: 100%;" />
+        <RadzenDropDown TValue="string" @bind-Value="@SelectedDomainId" Data="@Domains" TextProperty="Text" ValueProperty="Id" Style="width: 100%;" />
     </CentreColumn>
 </EditorRow>
 
@@ -51,7 +51,7 @@
     [Inject] public NotificationService NotificationService { get; set; } = null!;
 
     private List<DomainChoice> Domains { get; set; } = [];
-    private Guid SelectedDomainId { get; set; }
+    private string SelectedDomainId { get; set; }
     protected override async Task OnInitializedAsync()
     {
         var domains = await ContentService.QueryDomainAsync(new QueryDomainParameters 
@@ -67,7 +67,7 @@
             Id = x.Id
         }).ToList();
         
-        Domains.Insert(0, new DomainChoice{Text = "Any", Id = Guid.Empty });
+        Domains.Insert(0, new DomainChoice{Text = "Any", Id = Guid.Empty.ToString() });
     }
         
     private async Task Save()
@@ -92,7 +92,7 @@
         }
 
         // Set to null if any selected
-        if (SelectedDomainId == Guid.Empty)
+        if (SelectedDomainId == Guid.Empty.ToString())
         {
             Redirect.DomainId = null;
         }
@@ -135,7 +135,7 @@
     public class DomainChoice
     {
         public string Text { get; set; } = string.Empty;
-        public Guid Id { get; set; }
+        public string Id { get; set; }
     }
     
 }

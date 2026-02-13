@@ -16,7 +16,7 @@
         <PropertyInfo Name="Content Types" Description="Select the allowed content types for this picker"/>
     </LeftColumn>
     <CentreColumn>
-        <RadzenCheckBoxList Orientation="Orientation.Vertical" Data="@Data" @bind-Value="@Settings.AllowedContentTypes" TValue="Guid" TextProperty="Name" ValueProperty="Id"/>
+        <RadzenCheckBoxList Orientation="Orientation.Vertical" Data="@Data" @bind-Value="@Settings.AllowedContentTypes" TValue="string" TextProperty="Name" ValueProperty="Id"/>
     </CentreColumn>
 </EditorRow>
 

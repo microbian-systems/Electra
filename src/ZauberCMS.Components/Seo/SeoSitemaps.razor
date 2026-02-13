@@ -73,7 +73,7 @@
         await LoadData(new LoadDataArgs());
     }
 
-    private async Task Delete(Guid rootContentId)
+    private async Task Delete(string rootContentId)
     {
         var existingSitemap = Sitemaps.FirstOrDefault(x => x.RootContentId == rootContentId);
         if (existingSitemap != null)

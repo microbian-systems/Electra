@@ -57,7 +57,7 @@ public class ContentType : ITreeItem
     /// <summary>
     /// The id of the last person to update the content type 
     /// </summary>
-    public Guid? LastUpdatedById { get; set; }
+    public string? LastUpdatedById { get; set; }
     public CmsUser? LastUpdatedBy { get; set; }
     
     /// <summary>
@@ -83,7 +83,7 @@ public class ContentType : ITreeItem
     /// <summary>
     /// List of optionally allowed child content types
     /// </summary>
-    public List<Guid> AllowedChildContentTypes { get; set; } = [];
+    public List<string> AllowedChildContentTypes { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the list of tabs associated with the content type.
@@ -92,7 +92,7 @@ public class ContentType : ITreeItem
     /// Tabs are used to organize the properties of a content type into separate sections.
     /// Each tab represents a logical grouping of properties.
     /// </remarks>
-    public List<Tab> Tabs { get; set; } = [new() {Id = Constants.Guids.ContentTypeSystemTabId, IsSystemTab = true, SortOrder = 100, Name = "System"}];
+    public List<Tab> Tabs { get; set; } = [new() {Id = Constants.Ids.ContentTypeSystemTabId, IsSystemTab = true, SortOrder = 100, Name = "System"}];
     
     // ReSharper disable once CollectionNeverUpdated.Global
     /// <summary>
@@ -104,7 +104,7 @@ public class ContentType : ITreeItem
     /// <summary>
     /// Parent element ID
     /// </summary>
-    public Guid? ParentId { get; set; }
+    public string? ParentId { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether the content type is treated as a folder.
@@ -119,29 +119,22 @@ public class ContentType : ITreeItem
     /// <summary>
     /// Gets or sets the list of compositions associated with the content type.
     /// </summary>
-    public List<Guid> CompositionIds { get; set; } = [];
+    public List<string> CompositionIds { get; set; } = [];
     
     /// <summary>
     /// Optional Image 
     /// </summary>
-    public Guid? MediaId { get; set; }
+    public string? MediaId { get; set; }
     
     [NotMapped] // Prevents property from being mapped to a DB column
     public string? MediaIdAsString
     {
-        get => MediaId.ToString();
+        get => MediaId;
         set
         {
             if (string.IsNullOrEmpty(value))
             {
-                MediaId = Guid.Empty;
-            }
-            else
-            {
-                if (Guid.TryParse(value, out var guidValue))
-                {
-                    MediaId = guidValue;
-                }
+                MediaId = string.Empty;
             }
         }
     }

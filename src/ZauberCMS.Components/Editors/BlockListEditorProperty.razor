@@ -117,10 +117,10 @@
     
     private async Task LoadContentItems()
     {
-        List<Guid> contentIds;
+        List<string> contentIds;
         try
         {
-            contentIds = JsonSerializer.Deserialize<List<Guid>>(Value!) ?? [];
+            contentIds = JsonSerializer.Deserialize<List<string>>(Value!) ?? [];
         }
         catch (JsonException)
         {
@@ -271,7 +271,7 @@
             // Deep-copy pending block list changes for nested content preview support
             foreach (var kvp in savedContent.PendingBlockListChanges)
             {
-                contentToStore.PendingBlockListChanges[kvp.Key] = new Dictionary<Guid, Content>(kvp.Value);
+                contentToStore.PendingBlockListChanges[kvp.Key] = new Dictionary<string, Content>(kvp.Value);
             }
             
             // Ensure ContentType is loaded

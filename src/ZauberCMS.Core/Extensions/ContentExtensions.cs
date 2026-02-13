@@ -50,7 +50,7 @@ public static class ContentExtensions
     private static async Task ProcessNavigationItems(List<NavigationItem> navItems, IContentService contentService)
     {
         // Collect all ContentIds from this level
-        var navWithContent = navItems.Where(x => x.ContentId != null).Select(x => x.ContentId!.Value).ToList();
+        var navWithContent = navItems.Where(x => x.ContentId != null).Select(x => x.ContentId!).ToList();
     
         // Process this level's ContentIds
         if (navWithContent.Count > 0)
@@ -67,7 +67,7 @@ public static class ContentExtensions
             {
                 if (navigationItem.ContentId != null)
                 {
-                    if (dictContentItems.TryGetValue(navigationItem.ContentId.Value, out var newContent))
+                    if (dictContentItems.TryGetValue(navigationItem.ContentId, out var newContent))
                     {
                         navigationItem.Url = newContent.Url();
                     }
@@ -118,7 +118,7 @@ public static class ContentExtensions
         IContentService contentService)
     {
         // Original efficient path - direct database query with zero overhead
-        var ids = content.GetValue<List<Guid>>(alias);
+        var ids = content.GetValue<List<string>>(alias);
         if (ids != null && ids.Count != 0)
         {
             var blockList =
@@ -152,7 +152,7 @@ public static class ContentExtensions
         }
         
         // Admin preview path - check for pending changes first
-        var ids = content.GetValue<List<Guid>>(alias);
+        var ids = content.GetValue<List<string>>(alias);
         if (ids == null || ids.Count == 0)
         {
             return [];
@@ -189,7 +189,7 @@ public static class ContentExtensions
             {
                 if (valueString.Contains('['))
                 {
-                    var mediaIds = content.GetValue<List<Guid>>(alias);
+                    var mediaIds = content.GetValue<List<string>>(alias);
                     if (mediaIds != null && mediaIds.Count != 0)
                     {
                         var result = await mediaService.QueryMediaAsync(new QueryMediaParameters { Ids = mediaIds, AmountPerPage = mediaIds.Count, Cached = true });
@@ -198,8 +198,8 @@ public static class ContentExtensions
                 }
                 else
                 {
-                    var mediaId = content.GetValue<Guid>(alias);
-                    if (mediaId != Guid.Empty)
+                    var mediaId = content.GetValue<string>(alias);
+                    if (!string.IsNullOrEmpty(mediaId))
                     {
                         var media = await mediaService.GetMediaAsync(new GetMediaParameters {Id = mediaId});
                         if (media != null)
@@ -236,7 +236,7 @@ public static class ContentExtensions
             {
                 if (valueString.Contains('['))
                 {
-                    var ids = content.GetValue<List<Guid>>(propertyAlias);
+                    var ids = content.GetValue<List<string>>(propertyAlias);
                     if (ids != null && ids.Count != 0)
                     {
                         var result = await contentService.QueryContentAsync(new QueryContentParameters { Ids = ids, AmountPerPage = ids.Count, Cached = true});
@@ -245,8 +245,8 @@ public static class ContentExtensions
                 }
                 else
                 {
-                    var id = content.GetValue<Guid>(propertyAlias);
-                    if (id != Guid.Empty)
+                    var id = content.GetValue<string>(propertyAlias);
+                    if (id != Guid.Empty.ToString())
                     {
                         var media = await contentService.GetContent(id);
                         if (media != null)
@@ -272,7 +272,7 @@ public static class ContentExtensions
     {
         if (!string.IsNullOrEmpty(propertyAlias))
         {
-            var ids = content.GetValue<List<Guid>>(propertyAlias);
+            var ids = content.GetValue<List<string>>(propertyAlias);
             if (ids != null && ids.Count != 0)
             {
                 var result = await membershipService.QueryUsersAsync(new QueryUsersParameters { Ids = ids, AmountPerPage = ids.Count, Cached = true});

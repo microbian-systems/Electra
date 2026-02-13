@@ -21,7 +21,7 @@ public static class IdentityExtensions
     /// <returns>List on media</returns>
     public static async Task<IEnumerable<Media.Models.Media?>> GetMedia(this CmsUser user, string alias, IMediaService mediaService, string? fallBackUrl = null)
     {
-        var mediaIds = user.GetValue<List<Guid>?>(alias);
+        var mediaIds = user.GetValue<List<string>?>(alias);
         if (mediaIds != null)
         {
             var mediaCount = mediaIds.Count;
@@ -50,7 +50,7 @@ public static class IdentityExtensions
     /// <returns>List of Content</returns>
     public static async Task<IEnumerable<Content.Models.Content>> GetContent(this CmsUser user, string alias, IContentService contentService)
     {
-        var contentIds = user.GetValue<List<Guid>?>(alias);
+        var contentIds = user.GetValue<List<string>?>(alias);
         if (contentIds != null)
         {
             var contentCount = contentIds.Count;

@@ -29,7 +29,7 @@ public class DeleteAllContentContextMenu(
     public bool CanShowContextMenu(TreeItemContextMenuEventArgs args)
     {
         // Only show on the root recycle bin node
-        return args.Value is TreeStub stub && stub.Id == Constants.Guids.RecycleBinRootId;
+        return args.Value is TreeStub stub && stub.Id == Constants.Ids.RecycleBinRootId;
     }
 
     public async Task ContextMenuAction(TreeItemContextMenuEventArgs args, MenuItemEventArgs e, 

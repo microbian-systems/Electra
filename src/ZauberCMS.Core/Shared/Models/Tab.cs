@@ -1,8 +1,10 @@
-﻿namespace ZauberCMS.Core.Shared.Models;
+﻿using ZauberCMS.Core.Extensions;
+
+namespace ZauberCMS.Core.Shared.Models;
 
 public class Tab
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public string? Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
     public string Name { get; set; } = string.Empty;
     public string Alias => Name.ToLowerInvariant().Replace(" ", "-");
     public int SortOrder { get; set; }

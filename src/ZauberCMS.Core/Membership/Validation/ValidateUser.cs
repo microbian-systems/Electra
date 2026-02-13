@@ -22,8 +22,8 @@ public class ValidateUser : IValidate<CmsUser>
         foreach (var p in contentProperties.Where(x => x.IsRequired))
         {
             
-            valuesInDict.TryGetValue(p.Id, out var contentValue);
-            if (contentValue != null && contentValue.Value.IsNullOrWhiteSpace())
+            //valuesInDict.TryGetValue(p.Id, out var contentValue);
+            if (string.IsNullOrWhiteSpace(p.Id))
             {
                 validateResult.ErrorMessages.Add($"{p.Name} is required");
             }

@@ -32,9 +32,9 @@
         <Columns>
             <RadzenDataGridColumn Property="DomainId" Title="Domain">
                 <Template Context="data">
-                    @if (data.DomainId.HasValue)
+                    @if (!string.IsNullOrEmpty(data.DomainId))
                     {
-                        if (Domains.TryGetValue(data.DomainId.Value, out var domain))
+                        if (Domains.TryGetValue(data.DomainId, out var domain))
                         {
                             @domain.Url
                         }
@@ -83,7 +83,7 @@
     private int Count { get; set; } 
     private bool IsLoading { get; set; } = false;
     private IEnumerable<SeoRedirect> SeoRedirectsList { get; set; } = [];
-    private Dictionary<Guid, Domain> Domains { get; set; } = [];
+    private Dictionary<string, Domain> Domains { get; set; } = [];
     private RadzenDataGrid<SeoRedirect> Grid { get; set; } = null!;
     
     protected override async Task OnInitializedAsync()
@@ -163,7 +163,7 @@
         }        
     }
     
-    private async Task Delete(Guid id)
+    private async Task Delete(string id)
     {
         var deleteRedirectResult = await SeoService.DeleteRedirectAsync(new DeleteRedirectParameters { Id = id });
         if (!deleteRedirectResult.Success)

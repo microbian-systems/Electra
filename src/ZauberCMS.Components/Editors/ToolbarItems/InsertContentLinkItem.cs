@@ -81,7 +81,7 @@ public class InsertContentLinkItem(IModalService modalService) : ToolbarItemBase
         await api.InsertHtmlAsync(html);
     }
 
-    private async Task InsertManualLink(IEditorApi api, string url, string text, string? title, string? target, string? rel, Guid? contentId = null)
+    private async Task InsertManualLink(IEditorApi api, string url, string text, string? title, string? target, string? rel, string? contentId = null)
     {
         var attrs = new Dictionary<string, string>
         {
@@ -104,9 +104,9 @@ public class InsertContentLinkItem(IModalService modalService) : ToolbarItemBase
         }
         
         // Add data-contentid if link originated from content selection
-        if (contentId.HasValue)
+        if (!string.IsNullOrEmpty(contentId))
         {
-            attrs["data-contentid"] = contentId.Value.ToString();
+            attrs["data-contentid"] = contentId;
         }
 
         // Build the link HTML

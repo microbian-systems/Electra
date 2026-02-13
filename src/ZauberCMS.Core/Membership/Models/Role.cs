@@ -32,5 +32,5 @@ public class Role : IdentityRole<string>, ITreeItem
     /// Tabs are used to organize the properties into separate sections.
     /// Each tab represents a logical grouping of properties.
     /// </remarks>
-    public List<Tab> Tabs { get; set; } = [new() {Id = Constants.Guids.ContentTypeSystemTabId, IsSystemTab = true, SortOrder = 100, Name = "System"}];
+    public List<Tab> Tabs { get; set; } = [new() {Id = Constants.Ids.ContentTypeSystemTabId, IsSystemTab = true, SortOrder = 100, Name = "System"}];
 }

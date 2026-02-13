@@ -118,13 +118,12 @@
             foreach (var node in mediaNodes)
             {
                 var mediaIdStr = node.GetAttributeValue("data-mediaid", string.Empty);
-                if (!Guid.TryParse(mediaIdStr, out var mediaId)) continue;
+                //if (!Guid.TryParse(mediaIdStr, out var mediaId)) continue;
                 
                 // Query media service
                 var media = await MediaService.GetMediaAsync(new GetMediaParameters 
                 { 
-                    Id = mediaId, 
-                    AsNoTracking = true 
+                    Id = mediaIdStr
                 });
                 
                 if (media == null)
@@ -158,13 +157,12 @@
             foreach (var node in contentLinkNodes)
             {
                 var contentIdStr = node.GetAttributeValue("data-contentid", string.Empty);
-                if (!Guid.TryParse(contentIdStr, out var contentId)) continue;
+                //if (!Guid.TryParse(contentIdStr, out var contentId)) continue;
                 
                 // Query content service
                 var content = await ContentService.GetContentAsync(new GetContentParameters
                 {
-                    Id = contentId,
-                    AsNoTracking = true
+                    Id = contentIdStr,
                 });
                 
                 if (content == null)

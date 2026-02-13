@@ -28,7 +28,7 @@ public static class RoleExtensions
             
             // Determine starting role name
             var startingRoleName = settings.Value.NewUserStartingRole ?? Constants.Roles.StandardRoleName;
-            if (dbContext.Users.Count() == 1 || 
+            if (dbContext.Query<CmsUser>().Count() == 1 || 
                 globalSettings.AdminEmailAddresses.Count != 0 && 
                 globalSettings.AdminEmailAddresses.Contains(newUser.Email!))
             {

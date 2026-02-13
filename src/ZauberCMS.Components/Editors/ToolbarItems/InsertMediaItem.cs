@@ -14,7 +14,7 @@ namespace ZauberCMS.Components.Editors.ToolbarItems;
 public class InsertMediaItem(IModalService modalService) : ToolbarItemBase
 {
     private Media? SelectedMedia { get; set; }
-    private Guid? SelectedMediaId { get; set; }
+    private string? SelectedMediaId { get; set; }
     private IModalReference? Modal { get; set; }
 
     public override string Id => "insertMedia";

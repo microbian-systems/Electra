@@ -137,15 +137,15 @@
         Enum.GetValues(typeof(SeoSitemapChangeFrequency)).Cast<SeoSitemapChangeFrequency>().ToArray();
 
     
-    private async Task SetOpenGraphMedia(string? e)
+    private async Task SetOpenGraphMedia(string? ogi)
     {
-        if (e.IsNullOrWhiteSpace())
+        if (ogi.IsNullOrWhiteSpace())
         {
             Meta.OpenGraphImage = null;
         }
         else
         {
-            if (Guid.TryParse(e, out var ogi))
+            //if (Guid.TryParse(e, out var ogi))
             {
                 Meta.OpenGraphImage = ogi;
             }

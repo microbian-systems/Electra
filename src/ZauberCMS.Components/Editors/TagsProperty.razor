@@ -42,17 +42,17 @@
     
     private TagPropertySettingsModel SettingsModel { get; set; } = new();
     private List<Tag> Tags { get; set; } = [];
-    private IEnumerable<Guid> SelectedValues { get; set; } = [];
+    private IEnumerable<string> SelectedValues { get; set; } = [];
 
     protected override async Task OnParametersSetAsync()
     {
         if (!Value.IsNullOrWhiteSpace())
         {
-            SelectedValues = JsonSerializer.Deserialize<IEnumerable<Guid>>(Value) ?? [];
+            SelectedValues = JsonSerializer.Deserialize<IEnumerable<string>>(Value) ?? [];
         }
         
         // We do this to make sure the tags stay in sync
-        var selectedValues = SelectedValues as Guid[] ?? SelectedValues.ToArray();
+        var selectedValues = SelectedValues as string[] ?? SelectedValues.ToArray();
         if (selectedValues.Any())
         {
             var result = await TagService.SaveTagItemAsync(new SaveTagItemParameters { ItemId = Content!.Id, TagIds = selectedValues.ToList()});

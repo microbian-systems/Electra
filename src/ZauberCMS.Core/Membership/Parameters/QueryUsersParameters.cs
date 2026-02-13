@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Raven.Client.Documents.Linq;
 using ZauberCMS.Core.Membership.Models;
 
 namespace ZauberCMS.Core.Membership.Parameters;
@@ -7,14 +8,14 @@ public class QueryUsersParameters
 {
     public bool Cached { get; set; }
     public List<string> Roles { get; set; } = [];
-    public bool AsNoTracking { get; set; } = true;
+    
     public List<string> Ids { get; set; } = [];
     public int PageIndex { get; set; } = 1;
     public int AmountPerPage { get; set; } = 10;
     public string? SearchTerm { get; set; }
     public GetUsersOrderBy OrderBy { get; set; } = GetUsersOrderBy.DateUpdatedDescending;
     public Expression<Func<CmsUser, bool>>? WhereClause { get; set; }
-    public Func<IQueryable<CmsUser>>? Query { get; set; }
+    public Func<IRavenQueryable<CmsUser>>? Query { get; set; }
 }
 
 public enum GetUsersOrderBy

@@ -70,10 +70,6 @@
       <None Include="Tags\Mapping\Morgue\TagDbMapping.cs" />
       <Compile Remove="Tags\Mapping\TagDbMapping.cs" />
       <None Include="Tags\Mapping\Morgue\TagItemDbMapping.cs" />
-      <Compile Remove="Shared\Interfaces\IAfterEntitySave.cs" />
-      <None Include="Shared\Interfaces\IAfterEntitySave.cs" />
-      <Compile Remove="Shared\Interfaces\IBeforeEntitySave.cs" />
-      <None Include="Shared\Interfaces\IBeforeEntitySave.cs" />
       <Compile Remove="Seo\Mapping\SeoRedirectDbMapping.cs" />
       <None Include="Seo\Mapping\SeoRedirectDbMapping.cs" />
       <Compile Remove="Languages\Mapping\LanguageDbMapping.cs" />
@@ -110,6 +106,22 @@
       <None Include="Tags\Mapping\Morgue\TagDbMapping.cs" />
       <Compile Remove="Media\Mapping\MediaDbMapping.cs" />
       <None Include="Media\Mapping\MediaDbMapping.cs" />
+      <Compile Remove="Content\Mapping\ContentDbMapping.cs" />
+      <None Include="Content\Mapping\ContentDbMapping.cs" />
+      <Compile Remove="Content\Mapping\ContentPropertyValueDbMapping.cs" />
+      <None Include="Content\Mapping\ContentPropertyValueDbMapping.cs" />
+      <Compile Remove="Content\Mapping\ContentTypeDbMapping.cs" />
+      <None Include="Content\Mapping\ContentTypeDbMapping.cs" />
+      <Compile Remove="Content\Mapping\ContentVersionDbMapping.cs" />
+      <None Include="Content\Mapping\ContentVersionDbMapping.cs" />
+      <Compile Remove="Content\Mapping\DomainDbMapping.cs" />
+      <None Include="Content\Mapping\DomainDbMapping.cs" />
+      <Compile Remove="Content\Mapping\UnpublishedContentDbMapping.cs" />
+      <None Include="Content\Mapping\UnpublishedContentDbMapping.cs" />
+      <Compile Remove="Audit\Mapping\AuditDbMapper.cs" />
+      <None Include="Audit\Mapping\AuditDbMapper.cs" />
+      <Compile Remove="Extensions\ValueConversionExtensions.cs" />
+      <None Include="Extensions\ValueConversionExtensions.cs" />
     </ItemGroup>
 
     <Target Name="CopyNuGetPackage" AfterTargets="Pack">

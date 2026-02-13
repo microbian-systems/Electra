@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Raven.Client.Documents.Linq;
 
 namespace ZauberCMS.Core.Content.Parameters;
 
@@ -16,17 +17,18 @@ public class QueryContentParameters : BaseQueryContentParameters
     public bool? IsDeleted { get; set; } = false;
     public bool RootContentOnly { get; set; }
     public Expression<Func<Content.Models.Content, bool>>? WhereClause { get; set; }
-    public Func<IQueryable<Content.Models.Content>>? Query { get; set; }
+    public Func<IRavenQueryable<Content.Models.Content>>? Query { get; set; }
+    public GetContentsOrderBy OrderBy { get; set; }
 }
 
 public class BaseQueryContentParameters
 {
     public string ContentTypeAlias { get; set; } = string.Empty;
-    public Guid? ContentTypeId { get; set; }
-    public bool AsNoTracking { get; set; } = true;
+    public string? ContentTypeId { get; set; }
+    public string? Id {get; set;} 
     public bool IncludeChildren { get; set; }
-    public Guid? ParentId { get; set; }
-    public Guid? LastEditedBy { get; set; }
+    public string? ParentId { get; set; }
+    public string? LastEditedBy { get; set; }
     public enum NestedContentFilter { Include, Exclude, Only }
     public NestedContentFilter NestedFilter { get; set; } = NestedContentFilter.Exclude;
     /*public enum PublishedContentFilter { OnlyPublished, IncludeUnpublished, OnlyUnpublished }

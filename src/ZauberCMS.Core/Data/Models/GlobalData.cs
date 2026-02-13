@@ -4,7 +4,7 @@ namespace ZauberCMS.Core.Data.Models;
 
 public class GlobalData
 {
-    public Guid Id { get; set; } = Guid.NewGuid().NewSequentialGuid();
+    public string? Id { get; set; } = Guid.NewGuid().NewSequentialGuid().ToString();
     public string? Alias { get; set; }
     
     public string? Data { get; set; }

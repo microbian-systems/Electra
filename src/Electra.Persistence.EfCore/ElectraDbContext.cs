@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Electra.Core;
 using Electra.Core.Entities;
 using Electra.Core.Identity;
-using Electra.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 

@@ -8,6 +8,6 @@ public class GetMediaParameters
     public bool IncludeChildren { get; set; }
     public bool IncludeParent { get; set; }
     public bool Cached { get; set; }
-    public bool AsNoTracking { get; set; } = true;
+    
     public MediaType? MediaType { get; set; }
 }

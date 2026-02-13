@@ -45,7 +45,7 @@
 
             if (metaData.OpenGraphImage != null)
             {
-                var result = await MediaService.GetMedia(metaData.OpenGraphImage.Value);
+                var result = await MediaService.GetMedia(metaData.OpenGraphImage);
                 if (result != null)
                 {
                     AddOpenGraphTag(sb, "og:image", $"{baseUri}/{result.Url}?width=1200&height=630&mode=stretch");

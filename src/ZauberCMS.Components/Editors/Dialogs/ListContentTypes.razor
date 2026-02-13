@@ -139,15 +139,15 @@ else
 
     [Parameter] public bool RootOnly { get; set; }
     [Parameter] public bool? ElementTypesOnly { get; set; }
-    [Parameter] public Guid? ParentId { get; set; }
-    [Parameter] public List<Guid>? AllowedElementTypeIds { get; set; }
-    [Parameter] public EventCallback<Guid> ContentTypeSelected { get; set; } // add this line
+    [Parameter] public string? ParentId { get; set; }
+    [Parameter] public List<string>? AllowedElementTypeIds { get; set; }
+    [Parameter] public EventCallback<string> ContentTypeSelected { get; set; } // add this line
 
     private IEnumerable<ContentType> ContentTypes { get; set; } = [];
     private IEnumerable<ContentType> ElementTypeFolders { get; set; } = [];
 
-    private Guid SelectedContentTypeId { get; set; }
-    private Dictionary<Guid, Media> CoverImages { get; set; } = new();
+    private string SelectedContentTypeId { get; set; }
+    private Dictionary<string, Media> CoverImages { get; set; } = new();
 
 
     protected override async Task OnInitializedAsync()
@@ -165,7 +165,7 @@ else
         // Apply parent restrictions if specified
         if (ParentId != null)
         {
-            var content = await ContentService.GetContentAsync(new GetContentParameters { Id = ParentId.Value });
+            var content = await ContentService.GetContentAsync(new GetContentParameters { Id = ParentId });
             if (content!.ContentType?.AllowedChildContentTypes.Any() == true)
             {
                 ContentTypes = ContentTypes.Where(x => content.ContentType.AllowedChildContentTypes.Contains(x.Id));
@@ -181,7 +181,7 @@ else
         var contentTypes = ContentTypes as ContentType[] ?? ContentTypes.ToArray();
         foreach (var contentType in contentTypes)
         {
-            if (contentType.MediaId != null && contentType.MediaId != Guid.Empty)
+            if (!string.IsNullOrEmpty(contentType.MediaId))
             {
                 var coverImage = await MediaService.GetMedia(contentType.MediaId);
                 if (coverImage != null) CoverImages.Add(contentType.Id, coverImage);
@@ -204,7 +204,7 @@ else
         ContentTypeSelected.InvokeAsync(SelectedContentTypeId);
     }
 
-    private void SelectContentType(Guid contentTypeId)
+    private void SelectContentType(string contentTypeId)
     {
         SelectedContentTypeId = contentTypeId;
         ContentTypeSelected.InvokeAsync(contentTypeId);

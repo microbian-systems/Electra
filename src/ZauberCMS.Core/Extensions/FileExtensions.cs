@@ -5,7 +5,7 @@ namespace ZauberCMS.Core.Extensions;
 
     public static class FileExtensions
     {
-        /*public static async Task<Media.Models.Media?> AddFileToDb<T>(this IBrowserFile browserFile, Guid id,
+        /*public static async Task<Media.Models.Media?> AddFileToDb<T>(this IBrowserFile browserFile, string? Id,
             HandlerResult<T> result,
             ProviderService providerService, ZauberDbContext dbContext)
         {

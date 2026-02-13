@@ -53,9 +53,9 @@ public class MoveContentContextMenu(NotificationService notificationService, ICo
 
         Modal = modalService.OpenSidePanel<MoveContent>("Move Content", parameters);
         var result = await Modal.Result;
-        if (result is { Confirmed: true, Data: Guid parentId })
+        if (result is { Confirmed: true, Data: string parentId })
         {
-            if (parentId == Guid.Empty)
+            if (parentId == string.Empty)
             {
                 // If this is null, they are trying to put it in the root
                 // get the content type and see if it's allowed in the root

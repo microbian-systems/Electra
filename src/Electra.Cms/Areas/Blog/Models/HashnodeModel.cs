@@ -208,7 +208,7 @@ namespace Hashnode
     public partial class Item
     {
         [JsonPropertyName("id")]
-        public Guid Id { get; set; }
+        public string? Id { get; set; }
 
         [JsonPropertyName("level")]
         public long Level { get; set; }
