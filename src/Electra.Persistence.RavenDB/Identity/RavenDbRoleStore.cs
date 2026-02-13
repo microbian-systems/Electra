@@ -126,7 +126,7 @@ public abstract class RoleStore<TRole, TRoleClaim> :
         }
 
         var roleId = GetRavenIdFromRoleName(role.Name, AsyncSession.Advanced.DocumentStore);
-        await AsyncSession.StoreAsync(role, roleId);
+        await AsyncSession.StoreAsync(role, roleId, cancellationToken);
         await SaveChanges(cancellationToken);
         return IdentityResult.Success;
     }

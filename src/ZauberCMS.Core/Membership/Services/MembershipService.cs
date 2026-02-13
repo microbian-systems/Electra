@@ -28,7 +28,7 @@ using ZauberCMS.Core.Shared.Services;
 namespace ZauberCMS.Core.Membership.Services;
 
 public class MembershipService(
-    IServiceScopeFactory serviceScopeFactory,
+    IAsyncDocumentSession db,
     ICacheService cacheService,
     IHttpContextAccessor httpContextAccessor,
     AuthenticationStateProvider authenticationStateProvider,
@@ -460,7 +460,7 @@ public class MembershipService(
             else
             {
                 parameters.Role.MapTo(role);
-                role.DateUpdated = DateTime.UtcNow;
+                role.ModifiedOn = DateTime.UtcNow;
 
                 var result = await roleManager.UpdateAsync(role);
                 if (!result.Succeeded)
@@ -567,9 +567,9 @@ public class MembershipService(
         {
             GetRolesOrderBy.Name => query.OrderBy(p => p.Name),
             GetRolesOrderBy.NameDescending => query.OrderByDescending(p => p.Name),
-            GetRolesOrderBy.DateCreated => query.OrderBy(p => p.DateCreated),
-            GetRolesOrderBy.DateCreatedDescending => query.OrderByDescending(p => p.DateCreated),
-            _ => query.OrderByDescending(p => p.DateCreated)
+            GetRolesOrderBy.DateCreated => query.OrderBy(p => p.CreatedOn),
+            GetRolesOrderBy.DateCreatedDescending => query.OrderByDescending(p => p.CreatedOn),
+            _ => query.OrderByDescending(p => p.CreatedOn)
         };
 
         return Task.FromResult(query.ToPaginatedList(parameters.PageIndex, parameters.AmountPerPage));

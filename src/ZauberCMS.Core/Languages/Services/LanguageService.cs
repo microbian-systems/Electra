@@ -120,6 +120,55 @@ public class LanguageService(
     }
 
     /// <summary>
+    /// Synchronous call to get query language 
+    /// </summary>
+    /// <param name="parameters"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public PaginatedList<Language> QueryLanguage(QueryLanguageParameters parameters, CancellationToken cancellationToken = default)
+    {
+        using var scope = serviceScopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<IDocumentSession>();
+        var query = dbContext.Query<Language>().AsQueryable();
+
+        if (parameters.Query != null)
+        {
+            query = parameters.Query.Invoke();
+        }
+        else
+        {
+            var idCount = parameters.Ids.Count;
+            if (parameters.Ids.Count != 0)
+            {
+                query = query.Where(x => parameters.Ids.Contains(x.Id));
+                parameters.AmountPerPage = idCount;
+            }
+
+            if (parameters.LanguageIsoCodes.Count != 0)
+            {
+                query = query.Where(x =>
+                    x.LanguageIsoCode != null && parameters.LanguageIsoCodes.Contains(x.LanguageIsoCode));
+            }
+        }
+
+        if (parameters.WhereClause != null)
+        {
+            query = query.Where(parameters.WhereClause);
+        }
+
+        query = parameters.OrderBy switch
+        {
+            GetLanguageOrderBy.DateCreated => query.OrderBy(p => p.DateCreated),
+            GetLanguageOrderBy.DateCreatedDescending => query.OrderByDescending(p => p.DateCreated),
+            GetLanguageOrderBy.LanguageIsoCode => query.OrderBy(p => p.LanguageIsoCode),
+            GetLanguageOrderBy.LanguageCultureName => query.OrderBy(p => p.LanguageCultureName),
+            _ => query.OrderByDescending(p => p.DateCreated)
+        };
+
+        return query.ToPaginatedList(parameters.PageIndex, parameters.AmountPerPage);
+    }
+    
+    /// <summary>
     /// Queries languages with filtering, ordering and paging.
     /// </summary>
     /// <param name="parameters">Query options including ids and ISO codes.</param>

@@ -25,8 +25,8 @@ public static class RoleMappingExtensions
         // Map custom properties
         target.Description = source.Description;
         target.Icon = source.Icon;
-        target.DateCreated = source.DateCreated;
-        target.DateUpdated = source.DateUpdated;
+        target.CreatedOn = source.CreatedOn;
+        target.ModifiedOn = source.ModifiedOn;
         target.ExtendedData = source.ExtendedData;
         target.Properties = source.Properties;
         target.Tabs = source.Tabs;

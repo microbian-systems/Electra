@@ -1,16 +1,16 @@
 ﻿using System.Text.Json.Serialization;
+using Electra.Core.Entities;
+using Electra.Core.Identity;
 using Microsoft.AspNetCore.Identity;
 using ZauberCMS.Core.Shared.Interfaces;
 using ZauberCMS.Core.Shared.Models;
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class Role : IdentityRole<string>, ITreeItem
+public class Role : ElectraRole, ITreeItem, IEntity
 {
     public string? Description { get; set; }
     public string? Icon { get; set; }
-    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
-    public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
     public Dictionary<string, object> ExtendedData { get; set; } = new();
     public List<UserRole> UserRoles { get; set; } = [];
     

@@ -44,7 +44,7 @@ public static class RavenDbExtensions
                 var urls = ravenDbSettings.Urls?
                     .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
                     .Select(u => u.Trim())
-                    .ToArray() ?? new[] { "http://localhost:8080" };
+                    .ToArray() ?? ["http://localhost:8080"];
 
                 store = new DocumentStore
                 {
@@ -59,6 +59,11 @@ public static class RavenDbExtensions
 
         // 2. Register the Session as SCOPED
         // This creates a new session for every HTTP request.
+        services.AddScoped<IDocumentSession>(sp =>
+        {
+            var store = sp.GetRequiredService<IDocumentStore>();
+            return store.OpenSession();
+        });
         services.AddScoped<IAsyncDocumentSession>(ctx =>
         {
             var store = ctx.GetRequiredService<IDocumentStore>();

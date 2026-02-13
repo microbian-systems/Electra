@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using Electra.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Core.Identity;
@@ -19,7 +20,7 @@ public class ElectraRole : ElectraRole<string>
 
 
 [Table("Roles")]
-public class ElectraRole<Tkey> : IdentityRole<Tkey>
+public class ElectraRole<Tkey> : IdentityRole<Tkey>, IEntity
     where Tkey : IEquatable<Tkey>, IComparable<Tkey>
 {
     public ElectraRole() { }
@@ -29,4 +30,9 @@ public class ElectraRole<Tkey> : IdentityRole<Tkey>
     public virtual ICollection<IdentityRoleClaim<string>> Claims { get; set; } = new List<IdentityRoleClaim<string>>();
 
     public virtual List<string> Users { get; set; } = [];
+    public new string Id { get; set; }
+    public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
+    public DateTimeOffset? ModifiedOn { get; set; } = DateTimeOffset.UtcNow;
+    public string CreatedBy { get; set; }
+    public string ModifiedBy { get; set; }
 }

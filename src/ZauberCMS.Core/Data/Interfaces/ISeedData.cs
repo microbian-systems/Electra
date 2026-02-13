@@ -5,5 +5,5 @@ namespace ZauberCMS.Core.Data.Interfaces;
 
 public interface ISeedData
 {
-    void Initialise(IDocumentStore store);
+    void Initialise(IDocumentSession store);
 }

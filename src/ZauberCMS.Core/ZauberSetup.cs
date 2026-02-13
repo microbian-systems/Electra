@@ -53,6 +53,7 @@ using ZauberCMS.Core.Shared;
 using ZauberCMS.Core.Shared.Services;
 using ZauberCMS.RTE.Services;
 using Electra.Persistence.RavenDB.Extensions;
+using Electra.Persistence.RavenDB.Identity;
 
 namespace ZauberCMS.Core;
 
@@ -167,6 +168,7 @@ public static class ZauberSetup
                 .AddRoleManager<RoleManager<Role>>()
                 .AddClaimsPrincipalFactory<ZauberUserClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
+            services.AddScoped<IRoleStore<Role>, RoleStore<Role>>();
             //
             // identityBuilder.AddRoles<Role>();
             //
@@ -318,51 +320,46 @@ public static class ZauberSetup
 
     public static void AddZauberCms<T>(this WebApplication app)
     {
-        using (var scope = app.Services.CreateScope())
+        using var scope = app.Services.CreateScope();
+        var sp = scope.ServiceProvider;
+        var db = sp.GetRequiredService<IDocumentSession>();
+        var extensionManager = sp.GetRequiredService<ExtensionManager>();
+        var languageService = sp.GetRequiredService<ILanguageService>();
+        var settings = sp.GetRequiredService<IOptions<ZauberSettings>>();
+
+        try
         {
-            var db = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
-            var extensionManager = scope.ServiceProvider.GetRequiredService<ExtensionManager>();
-            var languageService = scope.ServiceProvider.GetRequiredService<ILanguageService>();
-            var settings = scope.ServiceProvider.GetRequiredService<IOptions<ZauberSettings>>();
-
-            try
+            // todo - use a ravendb construct here for seeding the db
+            // Get any seed data
+            var seedData = extensionManager.GetInstances<ISeedData>();
+            foreach (var data in seedData)
             {
-                // todo - use a ravendb construct here for seeding the db
-                // if (dbContext.Database.GetPendingMigrations().Any())
-                // {
-                //     dbContext.Database.Migrate();
-                // }
-
-                // Get any seed data
-                var seedData = extensionManager.GetInstances<ISeedData>();
-                foreach (var data in seedData)
-                {
-                    //data.Value.Initialise(dbContext);
-                }
-
-                // Is this ok to use the awaiter and result here?
-                var langs = languageService.QueryLanguageAsync(new QueryLanguageParameters { AmountPerPage = 200 })
-                    .GetAwaiter().GetResult();
-
-                // en-US must be the default culture as that's what the backoffice resource is
-                var supportedCultures = new List<string> { settings.Value.AdminDefaultLanguage };
-
-                foreach (var langsItem in langs.Items)
-                {
-                    if (langsItem.LanguageIsoCode != null) supportedCultures.Add(langsItem.LanguageIsoCode);
-                }
-
-                var supportedCulturesArray = supportedCultures.Distinct().ToArray();
-                var localizationOptions = new RequestLocalizationOptions()
-                    .SetDefaultCulture(settings.Value.AdminDefaultLanguage)
-                    .AddSupportedCultures(supportedCulturesArray)
-                    .AddSupportedUICultures(supportedCulturesArray);
-                app.UseRequestLocalization(localizationOptions);
+                data.Value.Initialise(db);
             }
-            catch (Exception ex)
+
+            // Is this ok to use the awaiter and result here?
+            var langs = languageService
+                .QueryLanguage(new QueryLanguageParameters { AmountPerPage = 200 })
+                ;
+
+            // en-US must be the default culture as that's what the backoffice resource is
+            var supportedCultures = new List<string> { settings.Value.AdminDefaultLanguage };
+
+            foreach (var langsItem in langs.Items)
             {
-                Log.Error(ex, "Error during startup trying to do Db migrations");
+                if (langsItem.LanguageIsoCode != null) supportedCultures.Add(langsItem.LanguageIsoCode);
             }
+
+            var supportedCulturesArray = supportedCultures.Distinct().ToArray();
+            var localizationOptions = new RequestLocalizationOptions()
+                .SetDefaultCulture(settings.Value.AdminDefaultLanguage)
+                .AddSupportedCultures(supportedCulturesArray)
+                .AddSupportedUICultures(supportedCulturesArray);
+            app.UseRequestLocalization(localizationOptions);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Error during startup trying to do Db migrations");
         }
 
         app.UseSerilogRequestLogging();

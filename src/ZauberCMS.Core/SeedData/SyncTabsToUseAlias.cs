@@ -7,12 +7,11 @@ namespace ZauberCMS.Core.SeedData;
 
 public class SyncTabsToUseAlias : ISeedData
 {
-    public void Initialise(IDocumentStore store)
+    public void Initialise(IDocumentSession db)
     {
-        var dbContext = store.OpenSession();
         // Get all ContentTypes
         // ReSharper disable once EntityFramework.NPlusOne.IncompleteDataQuery
-        var types = dbContext.Query<ContentType>().ToList();
+        var types = db.Query<ContentType>().ToList();
         foreach (var contentType in types)
         {
             // ReSharper disable once EntityFramework.NPlusOne.IncompleteDataUsage
@@ -30,6 +29,6 @@ public class SyncTabsToUseAlias : ISeedData
             }
         }
             
-        dbContext.SaveChanges();
+        db.SaveChanges();
     }
 }
