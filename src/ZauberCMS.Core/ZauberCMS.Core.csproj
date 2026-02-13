@@ -53,19 +53,9 @@
       <Compile Remove="Membership\Mapping\MediaRoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\ContentRoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\RoleClaimDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\ContentRoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\MediaRoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\RoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\RoleClaimDbMapping.cs" />
       <Compile Remove="Membership\Mapping\UserClaimDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\RoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserClaimDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
       <None Include="Membership\Mapping\Morgue\UserMappingExtensions.cs" />
-      <None Include="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserRoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserTokenDbMapping.cs" />
       <Compile Remove="Membership\Mapping\UserDbMapping.cs" />
       <Compile Remove="Membership\Mapping\UserLoginDbMapping.cs" />
 
@@ -85,26 +75,16 @@
       <Compile Remove="Languages\Mapping\LanguageTextDbMapping.cs" />
       <None Include="Languages\Mapping\LanguageTextDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\ContentRoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\ContentRoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\MediaRoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\MediaRoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\RoleClaimDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\RoleClaimDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\RoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\RoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\UserClaimDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserClaimDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\UserDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
       <!-- UserMappingExtensions.cs is needed for compilation - DO NOT REMOVE -->
       <Compile Remove="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\UserRoleDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserRoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\UserTokenDbMapping.cs" />
-      <None Include="Membership\Mapping\Morgue\UserTokenDbMapping.cs" />
       <Compile Remove="Tags\Mapping\Morgue\TagItemDbMapping.cs" />
       <None Include="Tags\Mapping\Morgue\TagItemDbMapping.cs" />
       <Compile Remove="Tags\Mapping\Morgue\TagDbMapping.cs" />

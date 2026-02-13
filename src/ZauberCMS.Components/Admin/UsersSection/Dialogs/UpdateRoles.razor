@@ -17,7 +17,7 @@
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
     [Parameter, EditorRequired] public string UserId { get; set; }
     private CmsUser? User { get; set; }
-    private IEnumerable<Role> Roles { get; set; } = [];
+    private IEnumerable<CmsRole> Roles { get; set; } = [];
     private IEnumerable<string> UsersRoles { get; set; } = [];
     protected override async Task OnInitializedAsync()
     {

@@ -25,7 +25,7 @@ public class ZauberSignInManager(
     IOptions<ZauberSettings> options,
     IDataService dataService,
     IAsyncDocumentSession dbContext,
-    RoleManager<Role> roleManager)
+    RoleManager<CmsRole> roleManager)
     : SignInManager<CmsUser>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
 {
     private readonly UserManager<CmsUser> _userManager = userManager;

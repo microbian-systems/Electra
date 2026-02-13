@@ -7,18 +7,18 @@ namespace ZauberCMS.Core.Membership.Validation;
 
 public class ValidateUser : IValidate<CmsUser>
 {
-    public Task<ValidateResult> Validate(CmsUser item)
+    public Task<ValidateResult> Validate(CmsUser user)
     {
         var validateResult = new ValidateResult();
-        if (item.UserName.IsNullOrWhiteSpace())
+        if (user.UserName.IsNullOrWhiteSpace())
         {
             validateResult.ErrorMessages.Add("You cannot leave the name empty");
         }
         
-        var roles = item!.UserRoles.Select(x => x.Role);
-        var enumerable = roles as Role[] ?? roles.ToArray();
+        var roles = user!.UserRoles.Select(x => x.Role);
+        var enumerable = roles as CmsRole[] ?? roles.ToArray();
         var contentProperties = enumerable.SelectMany(x => x.Properties).ToList();
-        var valuesInDict = item.PropertyData.ToDictionary(x => x.ContentTypePropertyId, x => x);
+        var valuesInDict = user.PropertyData.ToDictionary(x => x.ContentTypePropertyId, x => x);
         foreach (var p in contentProperties.Where(x => x.IsRequired))
         {
             

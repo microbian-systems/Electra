@@ -8,7 +8,7 @@
 <RadzenPickList 
     Multiple="false"
     @bind-Source="@AllRoles" @bind-Target="@SelectedRoles" Style="height:500px; width:100%;"
-    TextProperty="@nameof(Role.Name)">
+    TextProperty="@nameof(CmsRole.Name)">
     <SourceHeader>
         Roles:
     </SourceHeader>
@@ -28,8 +28,8 @@
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
     [Parameter] public string ContentId { get; set; }
-    private IEnumerable<Role> AllRoles { get; set; } = [];
-    private IEnumerable<Role>? SelectedRoles { get; set; } = [];
+    private IEnumerable<CmsRole> AllRoles { get; set; } = [];
+    private IEnumerable<CmsRole>? SelectedRoles { get; set; } = [];
     private bool AlreadyHadContentRoles { get; set; }
     
     protected override async Task OnInitializedAsync()
@@ -40,12 +40,12 @@
             var allRoles = await MembershipService.QueryRolesAsync(new QueryRolesParameters { AmountPerPage = 250, OrderBy = GetRolesOrderBy.Name});
             AllRoles = allRoles.Items;
             SelectedRoles = content.ContentRoles.Select(x => x.Role);
-            var selectedRoles = SelectedRoles as Role[] ?? SelectedRoles.ToArray();
+            var selectedRoles = SelectedRoles as CmsRole[] ?? SelectedRoles.ToArray();
             if (selectedRoles.Any())
             {
                 AlreadyHadContentRoles = true;
                 // I need to remove the roles in SelectedRoles from AllRoles
-                AllRoles = AllRoles.Except(selectedRoles, new ITreeEqualityComparer<Role>()).ToList();
+                AllRoles = AllRoles.Except(selectedRoles, new ITreeEqualityComparer<CmsRole>()).ToList();
             }
         }
     }

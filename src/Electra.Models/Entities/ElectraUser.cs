@@ -1,15 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Electra.Core.Entities;
+using Electra.Core.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Models.Entities;
-
-// public class ElectraUser : ElectraUser<Guid>
-// {
-// }
 
 public interface IElectraUser : IEntity
 {
@@ -32,10 +30,8 @@ public interface IElectraUser : IEntity
     string MiddleName { get; set; }
     string LastName { get; set; }
     string CreatedBy { get; set; }
-
     // todo - remove data attribute -> ModelBuilding (EF)
     string ProfilePictureDataUrl { get; set; }
-
     bool IsDeleted { get; set; }
     DateTimeOffset? DeletedOn { get; set; }
     bool IsActive { get; set; }
@@ -44,10 +40,9 @@ public interface IElectraUser : IEntity
     DateTimeOffset? LastLoginAt { get; set; }
     ElectraUserProfile Profile { get; set; }
     UserSettingsModel UserSettings { get; set; }
-    ICollection<IdentityUserClaim<string>> Claims { get; set; }
-    ICollection<IdentityUserLogin<string>> Logins { get; set; }
-    ICollection<IdentityUserToken<string>> Tokens { get; set; }
-    ICollection<string> Roles { get; set; } 
+    List<IdentityUserClaim<string>> Claims { get; set; }
+    List<IdentityUserLogin<string>> Logins { get; set; }
+    List<IdentityUserToken<string>> Tokens { get; set; }
 }
 
 public class ElectraUser : ElectraUser<string>, IElectraUser, IEntity;
@@ -59,7 +54,6 @@ public interface IElectraUser<TKey>  where TKey : IEquatable<TKey>
     public string MiddleName { get; set; }
     public string LastName { get; set; }
     public string CreatedBy { get; set; }
-
     // todo - remove data attribute -> ModelBuilding (EF)
     public string ProfilePictureDataUrl { get; set; }
     public DateTimeOffset CreatedOn { get; set; }
@@ -72,10 +66,10 @@ public interface IElectraUser<TKey>  where TKey : IEquatable<TKey>
     public DateTimeOffset? RefreshTokenExpiryTime { get; set; }
     public ElectraUserProfile Profile { get; set;  }
     public UserSettingsModel UserSettings { get; set; }
-    public ICollection<IdentityUserClaim<string>> Claims { get; set; }
-    public ICollection<IdentityUserLogin<string>> Logins { get; set; }
-    public ICollection<IdentityUserToken<string>> Tokens { get; set; }
-    public ICollection<string> Roles { get; set; }
+    public List<IdentityUserClaim<string>> Claims { get; set; }
+    public List<IdentityUserLogin<string>> Logins { get; set; }
+    public List<IdentityUserToken<string>> Tokens { get; set; }
+    public List<ElectraRole> Roles { get; set; }
     TKey Id { get; set; }
     string? UserName { get; set; }
     string? NormalizedUserName { get; set; }
@@ -104,10 +98,8 @@ public class ElectraUser<TKey>
     public string MiddleName { get; set; }
     public string LastName { get; set; }
     public string CreatedBy { get; set; }
-
     [Column(TypeName = "text")] // todo - remove data attribute -> ModelBuilding (EF)
     public string ProfilePictureDataUrl { get; set; }
-
     public DateTimeOffset CreatedOn { get; set; }
     public string ModifiedBy { get; set; }
     public DateTimeOffset? ModifiedOn { get; set; }
@@ -117,33 +109,27 @@ public class ElectraUser<TKey>
     public string RefreshToken { get; set; }
     public DateTimeOffset? RefreshTokenExpiryTime { get; set; }
     public DateTimeOffset? LastLoginAt { get; set; }
-    
     public byte[] UserHandle { get; set; } 
     public TKey UserProfileId { get; set; }
-    
     // todo - consider converting the user profile property to a JsonB field vs a Foreign related table
     // Documentation on JsonB columns:
     // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
     //[Column(TypeName = "jsonb")]
     [JsonPropertyName("profile")] 
     public virtual ElectraUserProfile Profile { get; set; } = new();
-
     public virtual UserSettingsModel UserSettings { get; set; } = new();
-
-    public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; } = new List<IdentityUserClaim<string>>();
-    public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; } = new List<IdentityUserLogin<string>>();
-    public virtual ICollection<IdentityUserToken<string>> Tokens { get; set; } = new List<IdentityUserToken<string>>();
-
-    public virtual ICollection<string> Roles { get; set; } = new List<string>();
-
+    public virtual List<IdentityUserClaim<string>> Claims { get; set; } = [];
+    public virtual List<IdentityUserLogin<string>> Logins { get; set; } = [];
+    public virtual List<IdentityUserToken<string>> Tokens { get; set; } = [];
+    public virtual List<ElectraRole> Roles { get; set; } = [];
     [NotMapped]
     [JsonIgnore]
-    public virtual List<string> RoleNames { get; set; } = new();
-
-    public virtual List<string> TwoFactorRecoveryCodes { get; set; } = new();
-
+    public virtual List<string> RoleNames
+    {
+        get { return Roles.Select(x => x.Name).ToList(); }
+    }
+    public virtual List<string> TwoFactorRecoveryCodes { get; set; } = [];
     public virtual string? TwoFactorAuthenticatorKey { get; set; }
-
     public virtual List<string> GetRolesList() => RoleNames;
 }
 

@@ -51,7 +51,7 @@ public class IdentityUserIndex<TUser> : AbstractIndexCreationTask<TUser, Identit
                 UserName = u.UserName!,
                 Email = u.Email!,
                 LoginProviderIdentifiers = u.Logins.Select(x => x.LoginProvider + "|" + x.ProviderKey).ToList(),
-                Roles = u.Roles.ToList(),
+                Roles = u.Roles.Select(x => x.Name).ToList(),
             };
     }
 

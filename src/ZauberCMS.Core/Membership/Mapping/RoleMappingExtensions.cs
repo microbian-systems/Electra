@@ -14,7 +14,7 @@ public static class RoleMappingExtensions
     /// <param name="source">Source Role entity</param>
     /// <param name="target">Target Role entity to update</param>
     /// <returns>Updated target Role entity</returns>
-    public static Role MapTo(this Role source, Role target)
+    public static CmsRole MapTo(this CmsRole source, CmsRole target)
     {
         // Map all simple properties from IdentityRole
         target.Id = source.Id;
@@ -44,9 +44,9 @@ public static class RoleMappingExtensions
     /// </summary>
     /// <param name="source">Source Role entity</param>
     /// <returns>New Role entity with mapped properties</returns>
-    public static Role MapToNew(this Role source)
+    public static CmsRole MapToNew(this CmsRole source)
     {
-        var target = new Role();
+        var target = new CmsRole();
         return source.MapTo(target);
     }
 }

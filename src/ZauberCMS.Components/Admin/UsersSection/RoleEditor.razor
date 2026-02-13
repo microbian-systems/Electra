@@ -124,13 +124,13 @@
     [Inject] public NotificationService NotificationService { get; set; } = null!;
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public AppState AppState { get; set; } = null!;
-    [Inject] public ValidateService<Role> ValidateService { get; set; } = null!;
+    [Inject] public ValidateService<CmsRole> ValidateService { get; set; } = null!;
 
     [Parameter] public string? RoleId { get; set; }
 
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
 
-    private Role? Role { get; set; } = new();
+    private CmsRole? Role { get; set; } = new();
     private Dictionary<int, Tab> TabIndex { get; set; } = new();
     private bool ShowDeleteButton { get; set; }
     private int SelectedTabIndex { get; set; }

@@ -9,8 +9,6 @@ namespace ZauberCMS.Core.Membership.Models;
 
 public class CmsUser : ElectraUser, IEntity, ITreeItem, IHasPropertyValues
 {
-    public List<UserRole> UserRoles { get; set; } = [];
-
     //public Media? ProfileImage { get; set; }
     //public Guid? ProfileImageId { get; set; }
 
@@ -18,6 +16,8 @@ public class CmsUser : ElectraUser, IEntity, ITreeItem, IHasPropertyValues
     /// The content properties
     /// </summary>n
     public List<UserPropertyValue> PropertyData { get; set; } = [];
+
+    public List<UserRole> UserRoles { get; set; } = [];
 
 
     private Dictionary<string, string>? _contentValues;
@@ -40,9 +40,4 @@ public class CmsUser : ElectraUser, IEntity, ITreeItem, IHasPropertyValues
         get => this.UserName;
         set => this.UserName = value;
     }
-
-    public DateTimeOffset CreatedOn { get; set; } = DateTime.UtcNow;
-    public DateTimeOffset? ModifiedOn { get; set; } = DateTime.UtcNow;
-    public string? CreatedBy { get; set; }
-    public string? ModifiedBy { get; set; }
 }

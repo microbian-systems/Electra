@@ -4,5 +4,5 @@ namespace ZauberCMS.Core.Membership.Parameters;
 
 public class SaveRoleParameters
 {
-    public Role? Role { get; set; }
+    public CmsRole? Role { get; set; }
 }

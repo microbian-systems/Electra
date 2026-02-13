@@ -7,7 +7,7 @@ using ZauberCMS.Core.Shared.Models;
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class Role : ElectraRole, ITreeItem, IEntity
+public class CmsRole : ElectraRole, ITreeItem, IEntity
 {
     public string? Description { get; set; }
     public string? Icon { get; set; }

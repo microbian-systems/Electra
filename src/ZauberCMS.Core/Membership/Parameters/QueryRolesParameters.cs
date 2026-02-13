@@ -12,8 +12,8 @@ public class QueryRolesParameters
     public int PageIndex { get; set; } = 1;
     public int AmountPerPage { get; set; } = 10;
     public GetRolesOrderBy OrderBy { get; set; } = GetRolesOrderBy.DateUpdatedDescending;
-    public Expression<Func<Role, bool>>? WhereClause { get; set; }
-    public Func<IRavenQueryable<Role>>? Query { get; set; }
+    public Expression<Func<CmsRole, bool>>? WhereClause { get; set; }
+    public Func<IRavenQueryable<CmsRole>>? Query { get; set; }
     public string? SearchTerm { get; set; }
 }
 

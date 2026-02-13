@@ -64,7 +64,7 @@ public class RestrictAccessContextMenu(
 
         Modal = modalService.OpenSidePanel<RestrictAccess>("Public Access", parameters);
         var result = await Modal.Result;
-        if (result is { Confirmed: true, Data: (bool alreadyHadContentRoles, List<Role> selectedRoles) })
+        if (result is { Confirmed: true, Data: (bool alreadyHadContentRoles, List<CmsRole> selectedRoles) })
         {
             // Need to check if the roles are defined by an ancestor
             // If so we ignore this and return a message

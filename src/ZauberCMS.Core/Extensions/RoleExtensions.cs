@@ -13,7 +13,7 @@ public static class RoleExtensions
 {
         public static async Task<AuthenticationResult> AssignStartingRoleAsync(
             this UserManager<CmsUser> userManager,
-            RoleManager<Role> roleManager,
+            RoleManager<CmsRole> roleManager,
             ILogger logger,
             IAsyncDocumentSession dbContext,
             IOptions<ZauberSettings> settings,
@@ -39,7 +39,7 @@ public static class RoleExtensions
             var roleExist = await roleManager.RoleExistsAsync(startingRoleName);
             if (!roleExist)
             {
-                await roleManager.CreateAsync(new Role { Name = startingRoleName });
+                await roleManager.CreateAsync(new CmsRole { Name = startingRoleName });
             }
 
             // Add user to role

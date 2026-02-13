@@ -12,10 +12,10 @@ public interface IMembershipService
     Task<HandlerResult<CmsUser>> DeleteUserAsync(DeleteUserParameters parameters, CancellationToken cancellationToken = default);
     Task<PaginatedList<CmsUser>> QueryUsersAsync(QueryUsersParameters parameters, CancellationToken cancellationToken = default);
 
-    Task<Role?> GetRoleAsync(GetRoleParameters parameters, CancellationToken cancellationToken = default);
-    Task<HandlerResult<Role>> SaveRoleAsync(SaveRoleParameters parameters, CancellationToken cancellationToken = default);
-    Task<HandlerResult<Role>> DeleteRoleAsync(DeleteRoleParameters parameters, CancellationToken cancellationToken = default);
-    Task<PaginatedList<Role>> QueryRolesAsync(QueryRolesParameters parameters, CancellationToken cancellationToken = default);
+    Task<CmsRole?> GetRoleAsync(GetRoleParameters parameters, CancellationToken cancellationToken = default);
+    Task<HandlerResult<CmsRole>> SaveRoleAsync(SaveRoleParameters parameters, CancellationToken cancellationToken = default);
+    Task<HandlerResult<CmsRole>> DeleteRoleAsync(DeleteRoleParameters parameters, CancellationToken cancellationToken = default);
+    Task<PaginatedList<CmsRole>> QueryRolesAsync(QueryRolesParameters parameters, CancellationToken cancellationToken = default);
 
     Task<AuthenticationResult> LoginUserAsync(LoginUserParameters parameters, CancellationToken cancellationToken = default);
     Task<AuthenticationResult> RegisterUserAsync(RegisterUserParameters parameters, CancellationToken cancellationToken = default);

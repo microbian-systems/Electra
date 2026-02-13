@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Threading.RateLimiting;
 using Blazored.Modal;
+using Electra.Auth;
 using Electra.Auth.Extensions;
 using Electra.Common.Web.Extensions;
 using ImageResize.Core.Extensions;
@@ -164,11 +165,11 @@ public static class ZauberSetup
                 })
                 .AddRavenDbIdentityStores<CmsUser>()
                 .AddSignInManager()
-                .AddRoles<Role>()
-                .AddRoleManager<RoleManager<Role>>()
+                .AddRoles<CmsRole>()
+                .AddRoleManager<RoleManager<CmsRole>>()
                 .AddClaimsPrincipalFactory<ZauberUserClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
-            services.AddScoped<IRoleStore<Role>, RoleStore<Role>>();
+            services.AddScoped<IRoleStore<CmsRole>, RoleStore<CmsRole>>();
             //
             // identityBuilder.AddRoles<Role>();
             //
@@ -329,6 +330,8 @@ public static class ZauberSetup
 
         try
         {
+            Seeder.Initialize(app.Services, app.Configuration)
+                .GetAwaiter().GetResult();
             // todo - use a ravendb construct here for seeding the db
             // Get any seed data
             var seedData = extensionManager.GetInstances<ISeedData>();

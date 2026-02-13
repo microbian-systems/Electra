@@ -27,12 +27,11 @@ public class ElectraRole<Tkey> : IdentityRole<Tkey>, IEntity
 
     public ElectraRole(string roleName) : base(roleName) { }
 
-    public virtual ICollection<IdentityRoleClaim<string>> Claims { get; set; } = new List<IdentityRoleClaim<string>>();
-
-    public virtual List<string> Users { get; set; } = [];
     public new string Id { get; set; }
+    public List<IdentityRoleClaim<string>> Claims { get; set; } = [];
+    public List<string> Users { get; set; } = [];
     public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset? ModifiedOn { get; set; } = DateTimeOffset.UtcNow;
-    public string CreatedBy { get; set; }
-    public string ModifiedBy { get; set; }
+    public string? CreatedBy { get; set; }
+    public string? ModifiedBy { get; set; }
 }

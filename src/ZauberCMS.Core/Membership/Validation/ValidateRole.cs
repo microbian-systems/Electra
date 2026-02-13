@@ -5,9 +5,9 @@ using ZauberCMS.Core.Shared.Validation.Models;
 
 namespace ZauberCMS.Core.Membership.Validation;
 
-public class ValidateRole : IValidate<Role>
+public class ValidateRole : IValidate<CmsRole>
 {
-    public Task<ValidateResult> Validate(Role item)
+    public Task<ValidateResult> Validate(CmsRole item)
     {
         var validateResult = new ValidateResult();
         

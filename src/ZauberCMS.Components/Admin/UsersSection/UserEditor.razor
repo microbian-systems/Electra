@@ -260,7 +260,7 @@
         if (User != null)
         {
             var roles = User!.UserRoles.Select(x => x.Role);
-            var enumerable = roles as Role[] ?? roles.ToArray();
+            var enumerable = roles as CmsRole[] ?? roles.ToArray();
             AllTabs = enumerable.SelectMany(x => x.Tabs).OrderBy(x => x.SortOrder).ToList();
             AllContentProperties = enumerable.SelectMany(x => x.Properties).ToList();
 
