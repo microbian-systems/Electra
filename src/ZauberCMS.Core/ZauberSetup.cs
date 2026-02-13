@@ -1,6 +1,8 @@
 using System.Reflection;
 using System.Threading.RateLimiting;
 using Blazored.Modal;
+using Electra.Auth.Extensions;
+using Electra.Common.Web.Extensions;
 using ImageResize.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -58,6 +60,10 @@ public static class ZauberSetup
 {
     public static void AddZauberCms(this WebApplicationBuilder builder, params Assembly[] additionalAssemblies)
     {
+        var services = builder.Services;
+        var config = builder.Configuration;
+        var env = builder.Environment;
+
         builder.Host.UseSerilog((context, configuration) =>
             configuration.ReadFrom.Configuration(context.Configuration));
 
@@ -67,15 +73,16 @@ public static class ZauberSetup
         // Bind configuration to ZauberSettings instance
         var zauberSettings = new ZauberSettings();
         builder.Configuration.GetSection(Constants.SettingsConfigName).Bind(zauberSettings);
-        builder.Services.Configure<ZauberSettings>(builder.Configuration.GetSection(Constants.SettingsConfigName));
+        services.Configure<ZauberSettings>(builder.Configuration.GetSection(Constants.SettingsConfigName));
 
         // Configure ImageResize with settings from ZauberSettings
-        builder.Services.AddImageResize(o =>
+        services.AddImageResize(o =>
         {
             o.EnableMiddleware = zauberSettings.ImageResize.EnableMiddleware;
             o.ContentRoots = zauberSettings.ImageResize.ContentRoots;
             o.WebRoot = zauberSettings.ImageResize.WebRoot ?? builder.Environment.WebRootPath;
-            o.CacheRoot = zauberSettings.ImageResize.CacheRoot ?? Path.Combine(builder.Environment.WebRootPath, "_mediacache");
+            o.CacheRoot = zauberSettings.ImageResize.CacheRoot ??
+                          Path.Combine(builder.Environment.WebRootPath, "_mediacache");
             o.AllowUpscale = zauberSettings.ImageResize.AllowUpscale;
             o.DefaultQuality = zauberSettings.ImageResize.DefaultQuality;
             o.PngCompressionLevel = zauberSettings.ImageResize.PngCompressionLevel;
@@ -88,51 +95,51 @@ public static class ZauberSetup
             o.ResponseCache.SendLastModified = zauberSettings.ImageResize.ResponseCache.SendLastModified;
         });
 
-        builder.Services.AddHttpClient();
+        services.AddHttpClient();
 
-        builder.Services.AddScoped(sp =>
+        services.AddScoped(sp =>
         {
             var navigationManager = sp.GetRequiredService<NavigationManager>();
             return new HttpClient { BaseAddress = new Uri(navigationManager.BaseUri) };
         });
 
-        builder.Services.AddCascadingAuthenticationState();
-        builder.Services.AddScoped<IdentityUserAccessor>();
-        builder.Services.AddScoped<IdentityRedirectManager>();
-        builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
-        
-        // Register Service Interfaces and Implementations
-        builder.Services.AddScoped<IContentService, ContentService>();
-        builder.Services.AddScoped<IContentVersioningService, ContentVersioningService>();
-        builder.Services.AddScoped<IMembershipService, MembershipService>();
-        builder.Services.AddScoped<IMediaService, MediaService>();
-        builder.Services.AddScoped<ILanguageService, LanguageService>();
-        builder.Services.AddScoped<ITagService, TagService>();
-        builder.Services.AddScoped<IAuditService, AuditService>();
-        builder.Services.AddScoped<ISeoService, SeoService>();
-        builder.Services.AddScoped<IDataService, DataService>();
-        builder.Services.AddScoped<IEmailService, EmailService>();
-        
-        builder.Services.AddScoped<ZauberRouteValueTransformer>();
-        builder.Services.AddScoped<MediaValidationService>();
+        services.AddCascadingAuthenticationState();
+        services.AddScoped<IdentityUserAccessor>();
+        services.AddScoped<IdentityRedirectManager>();
+        services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
-        builder.Services.AddHostedService<DailyJob>();
-        
-        builder.Services.AddRadzenComponents();
+        // Register Service Interfaces and Implementations
+        services.AddScoped<IContentService, ContentService>();
+        services.AddScoped<IContentVersioningService, ContentVersioningService>();
+        services.AddScoped<IMembershipService, MembershipService>();
+        services.AddScoped<IMediaService, MediaService>();
+        services.AddScoped<ILanguageService, LanguageService>();
+        services.AddScoped<ITagService, TagService>();
+        services.AddScoped<IAuditService, AuditService>();
+        services.AddScoped<ISeoService, SeoService>();
+        services.AddScoped<IDataService, DataService>();
+        services.AddScoped<IEmailService, EmailService>();
+
+        services.AddScoped<ZauberRouteValueTransformer>();
+        services.AddScoped<MediaValidationService>();
+
+        services.AddHostedService<DailyJob>();
+
+        services.AddRadzenComponents();
 
         if (!zauberSettings.RedisConnectionString.IsNullOrWhiteSpace())
         {
-            builder.Services.AddStackExchangeRedisCache(options =>
+            services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = zauberSettings.RedisConnectionString;
             });
         }
 
         var databaseProvider = zauberSettings.DatabaseProvider;
+        services.AddRavenPersistence(builder.Configuration);
         if (databaseProvider != null)
         {
-            var identityBuilder = builder.Services.AddIdentityCore<CmsUser>(options =>
-            {
+            var identityBuilder = services.AddIdentityCore<CmsUser>(options =>
                 {
                     // Password settings.
                     options.Password.RequireDigit = zauberSettings.Identity.PasswordRequireDigit;
@@ -153,35 +160,38 @@ public static class ZauberSetup
 
                     // Email
                     options.SignIn.RequireConfirmedAccount = zauberSettings.Identity.SignInRequireConfirmedAccount;
-                }
-            }).AddRavenDbIdentityStores<CmsUser>()
-            .AddSignInManager()
-            .AddDefaultTokenProviders();
-            
-            identityBuilder.AddRoles<Role>();
-            
-            identityBuilder
-                .AddClaimsPrincipalFactory<ZauberUserClaimsPrincipalFactory>()
+                })
+                .AddRavenDbIdentityStores<CmsUser>()
                 .AddSignInManager()
+                .AddRoles<Role>()
+                .AddRoleManager<RoleManager<Role>>()
+                .AddClaimsPrincipalFactory<ZauberUserClaimsPrincipalFactory>()
                 .AddDefaultTokenProviders();
+            //
+            // identityBuilder.AddRoles<Role>();
+            //
+            // identityBuilder
+            //     .AddClaimsPrincipalFactory<ZauberUserClaimsPrincipalFactory>()
+            //     .AddSignInManager()
+            //     .AddDefaultTokenProviders();
 
-            builder.Services.AddScoped<IUserEmailStore<CmsUser>, UserEmailStore>();
+            services.AddScoped<IUserEmailStore<CmsUser>, UserEmailStore>();
         }
         else
         {
             throw new Exception("Unable to find database provider in appSettings");
         }
 
-        builder.Services.AddHttpContextAccessor();
-        builder.Services.AddAntiforgery();
-        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        builder.Services.AddBlazoredModal();
-        
+        services.AddHttpContextAccessor();
+        services.AddAntiforgery();
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddBlazoredModal();
+
         // Add rate limiting for authentication endpoints
-        builder.Services.AddRateLimiter(options =>
+        services.AddRateLimiter(options =>
         {
             options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
-            
+
             // Sliding window rate limiter for login attempts
             options.AddPolicy("login", httpContext =>
                 RateLimitPartition.GetSlidingWindowLimiter(
@@ -196,31 +206,38 @@ public static class ZauberSetup
                     }));
         });
 
-        builder.Services.AddScoped<ExtensionManager>();
-        builder.Services.AddScoped<ProviderService>();
-        builder.Services.AddScoped(typeof(ValidateService<>));
-        builder.Services.AddScoped<ICacheService, DefaultCacheService>();
-        builder.Services.AddScoped<IHtmlSanitizerService, DefaultHtmlSanitizerService>();
-        builder.Services.AddScoped<SignInManager<CmsUser>, ZauberSignInManager>();
-        builder.Services.AddScoped<IEmailSender<CmsUser>, IdentityEmailSender>();
-        builder.Services.AddScoped<TreeState>();
-        builder.Services.AddScoped<ContentFinderPipeline>();
+        services.AddScoped<ExtensionManager>();
+        services.AddScoped<ProviderService>();
+        services.AddScoped(typeof(ValidateService<>));
+        services.AddScoped<ICacheService, DefaultCacheService>();
+        services.AddScoped<IHtmlSanitizerService, DefaultHtmlSanitizerService>();
+        services.AddScoped<SignInManager<CmsUser>, ZauberSignInManager>();
+        services.AddScoped<IEmailSender<CmsUser>, IdentityEmailSender>();
+        services.AddScoped<TreeState>();
+        services.AddScoped<ContentFinderPipeline>();
 
-        builder.Services.AddSingleton<LayoutResolverService>();
-        builder.Services.AddSingleton<AppState>();
+        services.AddSingleton<LayoutResolverService>();
+        services.AddSingleton<AppState>();
 
-        // Add Authentication
-        var authBuilder = builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultScheme = IdentityConstants.ApplicationScheme;
-            options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-        });
-        authBuilder.AddIdentityCookies();
-
+        // Add Authentication + Authorization
+        // var authBuilder = services.AddAuthentication(options =>
+        // {
+        //     options.DefaultScheme = IdentityConstants.ApplicationScheme;
+        //     options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+        // });
+        //authBuilder.AddIdentityCookies();
         /*services.AddAuthorizationBuilder()
                     .AddPolicy("AdminOnly", policy => policy.RequireRole(Constants.Roles.AdminRoleName));*/
-        
-        
+
+        #region "aero"
+
+        var authBuilder = services.AddElectraAuthentication(env, config);
+        var authorizationBuilder = services.AddAuthorizationBuilder()
+            //.AddPolicy("AdminOnly", policy => policy.RequireRole(Constants.Roles.AdminRoleName))
+            ;
+
+        #endregion
+
         // Build explicit assembly list - only scan assemblies we explicitly register
         var assembliesToScan = new List<Assembly>
         {
@@ -253,57 +270,57 @@ public static class ZauberSetup
         AssemblyManager.SetAssemblies(discoverAssemblies);
 
         // Add Zauber RTE services
-        builder.Services.AddZauberRte(discoverAssemblies);
-        
+        services.AddZauberRte(discoverAssemblies);
+
         // Build the service provider and get the extension manager
-        var serviceProvider = builder.Services.BuildServiceProvider();
+        var serviceProvider = services.BuildServiceProvider();
         var extensionManager = serviceProvider.GetRequiredService<ExtensionManager>();
-        
+
         // Detailed errors have been enabled
         if (zauberSettings.ShowDetailedErrors)
         {
-            builder.Services
+            services
                 .AddRazorComponents(c => c.DetailedErrors = true)
                 .AddInteractiveServerComponents(c => c.DetailedErrors = true);
         }
         else
         {
-            builder.Services.AddRazorComponents()
+            services.AddRazorComponents()
                 .AddInteractiveServerComponents();
         }
 
-        builder.Services.AddControllersWithViews()
+        services.AddControllersWithViews()
             .AddRazorOptions(options =>
             {
                 // This adds another search path that looks for views in the root Views folder.
                 options.ViewLocationFormats.Add("/Views/{0}.cshtml");
             });
-        
 
 
         // Start up items
         var startUpItems = extensionManager.GetInstances<IStartupPlugin>();
         foreach (var startUpItem in startUpItems)
         {
-            startUpItem.Value.Register(builder.Services, builder.Configuration);
+            startUpItem.Value.Register(services, builder.Configuration);
         }
 
 
         // Add external authentication providers
-        foreach (var provider in extensionManager.GetInstances<IExternalAuthenticationProvider>())
+        var providers = extensionManager.GetInstances<IExternalAuthenticationProvider>();
+        foreach (var provider in providers)
         {
-            provider.Value.Add(builder.Services, authBuilder, builder.Configuration);
+            provider.Value.Add(services, authBuilder, builder.Configuration);
         }
 
         // Add localization services
-        builder.Services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+        services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
     }
 
     public static void AddZauberCms<T>(this WebApplication app)
     {
         using (var scope = app.Services.CreateScope())
         {
-            var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
+            var db = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
             var extensionManager = scope.ServiceProvider.GetRequiredService<ExtensionManager>();
             var languageService = scope.ServiceProvider.GetRequiredService<ILanguageService>();
             var settings = scope.ServiceProvider.GetRequiredService<IOptions<ZauberSettings>>();
@@ -324,7 +341,8 @@ public static class ZauberSetup
                 }
 
                 // Is this ok to use the awaiter and result here?
-                var langs = languageService.QueryLanguageAsync(new QueryLanguageParameters { AmountPerPage = 200 }).GetAwaiter().GetResult();
+                var langs = languageService.QueryLanguageAsync(new QueryLanguageParameters { AmountPerPage = 200 })
+                    .GetAwaiter().GetResult();
 
                 // en-US must be the default culture as that's what the backoffice resource is
                 var supportedCultures = new List<string> { settings.Value.AdminDefaultLanguage };
@@ -362,13 +380,13 @@ public static class ZauberSetup
         app.UseStaticFiles();
 
         app.UseRouting();
-        
+
         // Redirect middleware must run after routing to process SEO redirects with proper HTTP status codes
         app.UseMiddleware<RedirectMiddleware>();
-        
+
         // Culture middleware must run after routing so we have access to route values
         app.UseMiddleware<CultureMiddleware>();
-        
+
         app.UseRateLimiter();
 
         app.UseAuthorization();
@@ -377,16 +395,16 @@ public static class ZauberSetup
         app.MapControllers();
 
         app.MapStaticAssets();
-        
+
         app.MapRazorComponents<T>()
             .AddInteractiveServerRenderMode(o => o.ContentSecurityFrameAncestorsPolicy = "'none'")
             .AddAdditionalAssemblies(ExtensionManager.GetFilteredAssemblies(null).ToArray()!);
 
         // Add additional endpoints required by the Identity /Account Razor components.
         app.MapAdditionalIdentityEndpoints();
-        
+
         //app.MapBlazorHub();
-        
+
         //app.MapDynamicControllerRoute<ZauberRouteValueTransformer>("{**slug}");
 
         /*app.MapControllerRoute(

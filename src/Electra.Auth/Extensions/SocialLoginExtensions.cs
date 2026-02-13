@@ -15,11 +15,11 @@ public static class SocialLoginExtensions
     /// <param name="env">The hosting environment</param>
     /// <param name="config">Configuration</param>
     /// <returns>The service collection for chaining</returns>
-    public static IServiceCollection AddElectraAuthentication(this IServiceCollection services, IHostEnvironment env,
+    public static AuthenticationBuilder AddElectraAuthentication(this IServiceCollection services, IHostEnvironment env,
         IConfiguration config)
     {
         var useRavenDb = config.GetValue<bool>("Identity:UseRavenDB");
-        
+
 
         // Configure ASP.NET Core Identity
         var identityBuilder = services.AddIdentity<ElectraUser, ElectraRole>(opts =>
@@ -34,18 +34,12 @@ public static class SocialLoginExtensions
             opts.SignIn.RequireConfirmedEmail = false; // Set to true if email confirmation is implemented
         });
 
-        //if (useRavenDb)
+        services.AddRavenPersistence(config);
+        identityBuilder.AddRavenDbIdentityStores<ElectraUser, ElectraRole>(options =>
         {
-            services.AddRavenPersistence(config);
-            identityBuilder.AddRavenDbIdentityStores<ElectraUser, ElectraRole>(options =>
-            {
-                options.AutoSaveChanges = true;
-            });
-        }
-        //else
-        {
-            //identityBuilder.AddEntityFrameworkStores<ElectraDbContext>();
-        }
+            options.AutoSaveChanges = true;
+        });
+
 
         // services.AddOpenTelemetry()
         //     .WithMetrics(metrics =>
@@ -90,7 +84,7 @@ public static class SocialLoginExtensions
             //.PersistKeysToRegistry(Registry.CurrentUser)
             .SetApplicationName("microbians");
 
-        services.AddAuthentication()
+        var authBuilder = services.AddAuthentication()
             .AddCookie(static options =>
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
@@ -183,17 +177,10 @@ public static class SocialLoginExtensions
             services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         }
 
-        // Add DbContextFactory<DbContext> for EF Core based services (RefreshTokenService)
-        // services.AddScoped<IDbContextFactory<DbContext>>(provider =>
-        // {
-        //     var context = provider.GetRequiredService<ElectraDbContext>();
-        //     return new DbContextFactoryAdapter(context);
-        // });
-
         // Add memory cache for token store caching
         services.AddMemoryCache();
 
-        return services;
+        return authBuilder;
     }
 
     /// <summary>
