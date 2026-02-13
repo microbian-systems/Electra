@@ -50,6 +50,7 @@ using ZauberCMS.Core.Settings;
 using ZauberCMS.Core.Shared;
 using ZauberCMS.Core.Shared.Services;
 using ZauberCMS.RTE.Services;
+using Electra.Persistence.RavenDB.Extensions;
 
 namespace ZauberCMS.Core;
 
@@ -153,7 +154,9 @@ public static class ZauberSetup
                     // Email
                     options.SignIn.RequireConfirmedAccount = zauberSettings.Identity.SignInRequireConfirmedAccount;
                 }
-            });
+            }).AddRavenDbIdentityStores<CmsUser>()
+            .AddSignInManager()
+            .AddDefaultTokenProviders();
             
             identityBuilder.AddRoles<Role>();
             

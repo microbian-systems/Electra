@@ -20,8 +20,8 @@
 </RadzenPanel>
 
 @code {
-    [Parameter] public Guid? ParentId { get; set; }
-    [Parameter] public Guid? MediaId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
+    [Parameter] public string? MediaId { get; set; }
     
     [Inject] public AppState AppState { get; set; } = null!;
     
@@ -43,7 +43,7 @@
         await Task.CompletedTask;
     }
 
-    private static string GetCompositeKey(Guid? mediaId, Guid? parentId)
+    private static string GetCompositeKey(string? mediaId, string? parentId)
     {
         return $"{mediaId?.ToString() ?? "null"}_{parentId?.ToString() ?? "null"}";
     }

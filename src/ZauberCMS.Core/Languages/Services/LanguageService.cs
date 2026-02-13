@@ -378,21 +378,19 @@ public class LanguageService(
             //.AsTracking()
             .AsQueryable();
         
-        if (!string.IsNullOrEmpty(parameters.Filter))
-        {
-            // Filter via the Where method
-            query = query.Where(parameters.Filter);
-        }
+        // Note: Dynamic LINQ string filtering is not supported with RavenDB
+        // TODO: Implement proper filtering using expression trees
+        // if (!string.IsNullOrEmpty(parameters.Filter))
+        // {
+        //     query = query.Where(parameters.Filter);
+        // }
 
-        if (!string.IsNullOrEmpty(parameters.Order))
-        {
-            // Sort via the OrderBy method
-            query = query.OrderBy(parameters.Order);
-        }
-        else
-        {
-            query = query.OrderBy(x => x.Key);
-        }
+        // if (!string.IsNullOrEmpty(parameters.Order))
+        // {
+        //     query = query.OrderBy(parameters.Order);
+        // }
+        
+        query = query.OrderBy(x => x.Key);
 
         // Important!!! Make sure the Count property of RadzenDataGrid is set.
         result.Count = await query.CountAsync(cancellationToken);

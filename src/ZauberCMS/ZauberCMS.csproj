@@ -63,10 +63,6 @@
             <PackagePath>build/ZauberCMS.targets</PackagePath>
         </Content>
     </ItemGroup>
-
-    <ItemGroup>
-        <None Include="..\ReadMe.md" Pack="true" PackagePath="\" />
-    </ItemGroup>
     
     <ItemGroup>
       <UpToDateCheckInput Remove="Components\Pages\Index.razor" />

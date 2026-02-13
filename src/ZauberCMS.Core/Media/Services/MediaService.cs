@@ -244,15 +244,16 @@ public class MediaService(
         if (parameters.Cached)
         {
             return await cacheService
-                .GetSetCachedItemAsync(cacheKey, async () => await query.Select(x => new { x.Url, x.Id })
-                    .ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken)) ?? new Dictionary<string, string>();
+                .GetSetCachedItemAsync(cacheKey, async () => (await query.Select(x => new { x.Url, x.Id })
+                    .ToListAsync(cancellationToken))
+                    .ToDictionary(x => x.Url ?? string.Empty, x => x.Id)) ?? new Dictionary<string, string>();
         }
 
-        return await query.Select(x => new { x.Url, x.Id })
-            .ToDictionaryAsync(x => x.Url ?? string.Empty, x => x.Id, cancellationToken: cancellationToken);
+        var list = await query.Select(x => new { x.Url, x.Id }).ToListAsync(cancellationToken);
+        return list.ToDictionary(x => x.Url ?? string.Empty, x => x.Id);
     }
 
-    private static IRavenQueryable<Models.Media> BuildQuery(GetMediaParameters parameters, IAsyncDocumentSession dbContext)
+    private static IQueryable<Models.Media> BuildQuery(GetMediaParameters parameters, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Query<Models.Media>();
         
@@ -268,24 +269,24 @@ public class MediaService(
 
         if (parameters.MediaType != null)
         {
-            query = Queryable.Where(query, x => x.MediaType == parameters.MediaType);
+            query = query.Where(x => x.MediaType == parameters.MediaType);
         }
 
         if (parameters.Id != null)
         {
-            query = Queryable.Where(query, x => x.Id == parameters.Id);
+            query = query.Where(x => x.Id == parameters.Id);
         }
 
         return query;
     }
 
-    private static IRavenQueryable<Models.Media> BuildQuery(QueryMediaParameters parameters, IAsyncDocumentSession dbContext)
+    private static IQueryable<Models.Media> BuildQuery(QueryMediaParameters parameters, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Query<Models.Media>().Include(x => x.Parent);
 
         if (parameters.Query != null)
         {
-            query = (IRavenQueryable<Models.Media>)parameters.Query.Invoke();
+            query = parameters.Query.Invoke();
         }
         else
         {
@@ -296,37 +297,37 @@ public class MediaService(
 
             if (parameters.Ids.Count != 0)
             {
-                query = Queryable.Where(query, x => parameters.Ids.Contains(x.Id));
+                query = query.Where(x => parameters.Ids.Contains(x.Id));
                 parameters.AmountPerPage = parameters.Ids.Count;
             }
 
             if (parameters.MediaTypes.Count != 0)
             {
-                query = Queryable.Where(query, x => parameters.MediaTypes.Contains(x.MediaType));
+                query = query.Where(x => parameters.MediaTypes.Contains(x.MediaType));
             }
         }
 
         if (parameters.WhereClause != null)
         {
-            query = Queryable.Where(query, parameters.WhereClause);
+            query = query.Where(parameters.WhereClause);
         }
 
         query = parameters.OrderBy switch
         {
-            GetMediaOrderBy.DateUpdated => Queryable.OrderBy(query, p => p.DateUpdated),
-            GetMediaOrderBy.DateUpdatedDescending => Queryable.OrderByDescending(query, p => p.DateUpdated),
-            GetMediaOrderBy.DateCreated => Queryable.OrderBy(query, p => p.DateCreated),
-            GetMediaOrderBy.DateCreatedDescending => Queryable.OrderByDescending(query, p => p.DateCreated),
-            GetMediaOrderBy.Name => Queryable.OrderBy(query, p => p.Name),
-            GetMediaOrderBy.NameDescending => Queryable.OrderByDescending(query, p => p.Name),
-            _ => Queryable.OrderByDescending(query, p => p.DateUpdated)
+            GetMediaOrderBy.DateUpdated => query.OrderBy(p => p.DateUpdated),
+            GetMediaOrderBy.DateUpdatedDescending => query.OrderByDescending(p => p.DateUpdated),
+            GetMediaOrderBy.DateCreated => query.OrderBy(p => p.DateCreated),
+            GetMediaOrderBy.DateCreatedDescending => query.OrderByDescending(p => p.DateCreated),
+            GetMediaOrderBy.Name => query.OrderBy(p => p.Name),
+            GetMediaOrderBy.NameDescending => query.OrderByDescending(p => p.Name),
+            _ => query.OrderByDescending(p => p.DateUpdated)
         };
 
         return query;
     }
 
-    private static IRavenQueryable<Models.Media> BuildQuery(IAsyncDocumentSession dbContext)
+    private static IQueryable<Models.Media> BuildQuery(IAsyncDocumentSession dbContext)
     {
-        return Queryable.Where(dbContext.Query<Models.Media>(), x => x.RequiresAuthentication);
+        return dbContext.Query<Models.Media>().Where(x => x.RequiresAuthentication);
     }
 }

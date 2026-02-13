@@ -117,17 +117,17 @@ public class DataService(
         // Now you have the DbSet<T> and can query it
         var query = dbContext.Query<T>().AsQueryable();
         
-        if (!string.IsNullOrEmpty(parameters.Filter))
-        {
-            // Filter via the Where method
-            query = query.Where(parameters.Filter);
-        }
+        // Note: Dynamic LINQ string filtering is not supported with RavenDB
+        // TODO: Implement proper filtering using expression trees
+        // if (!string.IsNullOrEmpty(parameters.Filter))
+        // {
+        //     query = query.Where(parameters.Filter);
+        // }
 
-        if (!string.IsNullOrEmpty(parameters.OrderBy))
-        {
-            // Sort via the OrderBy method
-            query = query.OrderBy(parameters.OrderBy);
-        }
+        // if (!string.IsNullOrEmpty(parameters.OrderBy))
+        // {
+        //     query = query.OrderBy(parameters.OrderBy);
+        // }
 
         // Important!!! Make sure the Count property of RadzenDataGrid is set.
         result.Count = await query.CountAsync(cancellationToken);

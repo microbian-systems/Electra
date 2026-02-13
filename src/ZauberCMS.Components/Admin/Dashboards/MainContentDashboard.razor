@@ -90,7 +90,7 @@
 @code {
     [Inject] public IModalService DialogService { get; set; } = null!;
     
-    [Parameter] public Guid? ParentId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
     [Parameter] public int AmountPerPage { get; set; } = 20;
     [Parameter] public bool RefreshPage { get; set; }
 
@@ -100,7 +100,7 @@
     private CmsUser? CurrentUser { get; set; }
     private int AllUserCount { get; set; }
     private int YourUserCount { get; set; }
-    private List<Guid> UnpublishedContent { get; set; } = [];
+    private List<string> UnpublishedContent { get; set; } = [];
     private bool IsLoading { get; set; } = false;
     private IEnumerable<Content> AllUserContents { get; set; } = [];
     private IEnumerable<Content> YourUserContents { get; set; } = [];

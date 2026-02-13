@@ -22,7 +22,7 @@
             <RadzenDataGridColumn Property="Email" Title="Email"/>
             <RadzenDataGridColumn Property="DateUpdated" Title="Last Updated">
                 <Template Context="data">
-                    @data.DateUpdated.Humanize()
+                    @data.ModifiedOn.Humanize()
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -31,7 +31,7 @@
 </RadzenPanel>
 
 @code {
-    [Parameter] public Guid? RoleId { get; set; }
+    [Parameter] public string? RoleId { get; set; }
     
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
     
@@ -41,7 +41,7 @@
     {
         if (RoleId != null)
         {
-            var role = await MembershipService.GetRoleAsync(new GetRoleParameters {Id = RoleId.Value});
+            var role = await MembershipService.GetRoleAsync(new GetRoleParameters {Id = RoleId});
             if (role?.Name != null)
             {
                 var items = await MembershipService.QueryUsersAsync(new QueryUsersParameters

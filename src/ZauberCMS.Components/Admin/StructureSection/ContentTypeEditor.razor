@@ -334,9 +334,9 @@
     [Inject] public IWebHostEnvironment Env { get; set; } = null!;
     [Inject] public DialogService DialogService { get; set; } = null!;
     
-    [Parameter] public Guid? ContentTypeId { get; set; }
-    [Parameter] public Guid? CopyContentTypeId { get; set; }
-    [Parameter] public Guid? ParentId { get; set; }
+    [Parameter] public string? ContentTypeId { get; set; }
+    [Parameter] public string? CopyContentTypeId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
     [Parameter] public int? FolderType { get; set; }
 
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
@@ -366,7 +366,7 @@
 
         if (ContentTypeId != null)
         {
-            var contentType = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = ContentTypeId.Value });
+            var contentType = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = ContentTypeId });
             if (contentType != null)
             {
                 ContentType = contentType;
@@ -381,13 +381,13 @@
         if (CopyContentTypeId != null)
         {
             // Should this be done here?
-            var contentTypeToCopy = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = CopyContentTypeId.Value });
+            var contentTypeToCopy = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = CopyContentTypeId });
             if (contentTypeToCopy != null)
             {
                 ContentType = contentTypeToCopy;
                 ContentType.Name = string.Concat("Copy Of ", contentTypeToCopy.Name);
                 ContentType.Alias = string.Concat("CopyOf", contentTypeToCopy.Alias);
-                ContentType.Id = Guid.NewGuid().NewSequentialGuid();   
+                ContentType.Id = Guid.NewGuid().NewSequentialGuid().ToString();
             }
         }
 
@@ -414,9 +414,9 @@
     
     private void CompositionSelected(object data)
     {
-        if (data is IEnumerable<Guid> compositionIds)
+        if (data is IEnumerable<string> compositionIds)
         {
-            var enumerable = compositionIds as Guid[] ?? compositionIds.ToArray();
+            var enumerable = compositionIds as string[] ?? compositionIds.ToArray();
             ContentType.CompositionIds = enumerable.ToList();
             SelectedCompositions = Compositions.Where(x => enumerable.Contains(x.Id)).ToList();
         }
@@ -457,10 +457,10 @@
 
         if (ParentId != null)
         {
-            contentType.ParentId = ParentId.Value;
+            contentType.ParentId = ParentId;
             
             // Need to update foldertype from the parent
-            var parentContentType = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = ParentId.Value});
+            var parentContentType = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = ParentId});
             if (parentContentType != null)
             {
                 contentType.IsElementType = parentContentType.IsElementType;
@@ -667,7 +667,7 @@
                 { nameof(Dialogs.ChangeTab.Tabs), tabs }
             });
         var result = await dialog.Result;
-        if (result is { Confirmed: true, Data: Guid newTabId })
+        if (result is { Confirmed: true, Data: string newTabId })
         {
             // If it's been changed then update it
             var selectedTab = tabs.FirstOrDefault(x => x.Id == newTabId);

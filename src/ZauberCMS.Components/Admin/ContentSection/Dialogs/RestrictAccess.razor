@@ -27,7 +27,7 @@
 
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
-    [Parameter] public Guid ContentId { get; set; }
+    [Parameter] public string ContentId { get; set; }
     private IEnumerable<Role> AllRoles { get; set; } = [];
     private IEnumerable<Role>? SelectedRoles { get; set; } = [];
     private bool AlreadyHadContentRoles { get; set; }

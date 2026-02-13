@@ -9,7 +9,7 @@
 @using ZauberCMS.Core.Plugins
 @layout SectionLayout
 
-@attribute [Route($"{Urls.AdminUsersEdit}/{{UserId:guid}}")]
+@attribute [Route($"{Urls.AdminUsersEdit}/{{UserId}}")]
 
 <PageTitle>Edit User</PageTitle>
 
@@ -40,7 +40,7 @@
                     <RadzenIcon Icon="schedule" Style="line-height: 20px; height: 20px; font-size: 20px;"
                                 IconStyle="IconStyle.Light"/>
                     <RadzenText TextStyle="TextStyle.Caption" Style="margin: 0; padding: 0;">Last
-                        Updated: @User.DateUpdated.Humanize()</RadzenText>
+                        Updated: @User.ModifiedOn.Humanize()</RadzenText>
                 </RadzenStack>
             </RadzenStack>
             
@@ -126,13 +126,13 @@
     [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
     [Inject] public ValidateService<CmsUser> ValidateService { get; set; } = null!;
 
-    [Parameter] public Guid? UserId { get; set; }
+    [Parameter] public string? UserId { get; set; }
 
     private CmsUser? User { get; set; }
     private string? InitialUsername { get; set; }
     private string? InitialEmail { get; set; }
     private Dictionary<string, IContentProperty> AllProperties { get; set; } = new();
-    private Dictionary<Guid, UserPropertyValue> AllContentValues { get; set; } = new();
+    private Dictionary<string, UserPropertyValue> AllContentValues { get; set; } = new();
     private int SelectedTabIndex { get; set; }
     private RadzenTabs? Tabs { get; set; }
     private List<Tab> AllTabs { get; set; } = [];
@@ -152,7 +152,7 @@
         AllProperties = ExtensionManager.GetInstances<IContentProperty>(true);
         if (UserId != null)
         {
-            User = await MembershipService.GetUserAsync(new GetUserParameters { Id = UserId.Value });
+            User = await MembershipService.GetUserAsync(new GetUserParameters { Id = UserId });
             InitialUsername = User?.UserName;
             InitialEmail = User?.Email;
             SyncProperties();
@@ -201,7 +201,7 @@
                 }
             });
         var result = await dialog.Result;
-        if (result is { Confirmed: true, Data: List<Guid> roles })
+        if (result is { Confirmed: true, Data: List<string> roles })
         {
             var allRoles = await MembershipService.QueryRolesAsync(new QueryRolesParameters { OrderBy = GetRolesOrderBy.Name, AmountPerPage = 200 });
             var roleNames = allRoles.Items.Where(x => roles.Contains(x.Id)).Select(x => x.Name).ToList();
@@ -243,7 +243,7 @@
         SelectedTabIndex = i;
     }
 
-    private Task UpdateProperty(Guid ctpId, string value)
+    private Task UpdateProperty(string ctpId, string value)
     {
         var property = User!.PropertyData.FirstOrDefault(p => p.ContentTypePropertyId == ctpId);
         if (property != null)

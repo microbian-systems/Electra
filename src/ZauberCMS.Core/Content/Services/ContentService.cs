@@ -402,7 +402,7 @@ public class ContentService(
             {
                 if (descendant.ParentId != null)
                 {
-                    var newParentIdForDescendant = idMap[descendant.ParentId.Value];
+                    var newParentIdForDescendant = idMap[descendant.ParentId];
                     var copiedDescendant = CreateCopy(descendant, user, newParentIdForDescendant);
                     copiedDescendant.Path = descendant.Path
                         .Select(id => idMap.TryGetValue(id, out var value) ? value : id).ToList();
@@ -732,11 +732,6 @@ public class ContentService(
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
         var query = dbContext.Query<Domain>().AsQueryable();
-        if (parameters)
-        {
-            query = query();
-        }
-
         if (parameters.Url != null)
         {
             return await query.FirstOrDefaultAsync(x => x.Url == parameters.Url,
@@ -816,11 +811,6 @@ public class ContentService(
         }
         else
         {
-            if (parameters)
-            {
-                query = query();
-            }
-
             var idCount = parameters.Ids.Count;
             if (idCount != 0)
             {
@@ -878,7 +868,7 @@ public class ContentService(
         }
         else if (parameters.ContentId != null)
         {
-            domain = await dbContext.Query<Domain>().FirstOrDefaultAsync(x => x.ContentId == parameters.ContentId,
+            domain = await dbContext.Query<Domain>().FirstOrDefaultAsync(x => x.ContentId == parameters.ContentId.ToString(),
                 cancellationToken);
         }
 
@@ -907,7 +897,7 @@ public class ContentService(
     {
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
-        return await dbContext.Query<Content>().AnyAsync(cancellationToken);
+        return await dbContext.Query<Models.Content>().AnyAsync(cancellationToken);
     }
 
     /// <summary>
@@ -1056,11 +1046,6 @@ public class ContentService(
         if (parameters.IncludeChildren)
         {
             query = query.Include(x => x.Children);
-        }
-
-        if (parameters)
-        {
-            query = query();
         }
 
         if (!parameters.ContentTypeAlias.IsNullOrWhiteSpace())
@@ -1431,16 +1416,11 @@ public class ContentService(
     }
 
 
-    private IRavenQueryable<Models.Content> BuildQuery(GetContentParameters request, IAsyncDocumentSession dbContext)
+    private IQueryable<Models.Content> BuildQuery(GetContentParameters request, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Query<Models.Content>()
             .Include(x => x.ContentType)
             .Include(x => x.PropertyData);
-
-        if (request)
-        {
-            query = query();
-        }
 
         if (!request.IncludeUnpublished)
         {
@@ -1466,11 +1446,7 @@ public class ContentService(
 
         if (request.IncludeContentRoles)
         {
-            query = query.Include(x => x.ContentRoles)
-                    .Include<Role>()
-                //.ThenInclude(x => x.Role)
-                //.AsSplitQuery()
-                ;
+            query = query.Include(x => x.ContentRoles);
         }
 
         if (request.Id != null)
@@ -1486,7 +1462,7 @@ public class ContentService(
         return query;
     }
 
-    private IRavenQueryable<Models.Content> BuildQuery(QueryContentParameters request, IAsyncDocumentSession dbContext)
+    private IQueryable<Models.Content> BuildQuery(QueryContentParameters request, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Query<Models.Content>().Include(x => x.ContentType)
             .Include(x => x.PropertyData)
@@ -1543,9 +1519,9 @@ public class ContentService(
                     .Distinct();
             }
 
-            if (request)
+            if (request.Query != null)
             {
-                query = query();
+                query = request.Query();
             }
 
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
@@ -1598,13 +1574,13 @@ public class ContentService(
         return query;
     }
 
-    private Task<PaginatedList<Models.Content>> FetchContentAsync(IRavenQueryable<Models.Content> query,
+    private Task<PaginatedList<Models.Content>> FetchContentAsync(IQueryable<Models.Content> query,
         QueryContentParameters request)
     {
         return Task.FromResult(query.ToPaginatedList(request.PageIndex, request.AmountPerPage));
     }
 
-    private async Task<Models.Content?> FetchContentAsync(IRavenQueryable<Models.Content> query,
+    private async Task<Models.Content?> FetchContentAsync(IQueryable<Models.Content> query,
         CancellationToken cancellationToken)
     {
         return await query.FirstOrDefaultAsync(cancellationToken);
@@ -1838,8 +1814,11 @@ public class ContentService(
         try
         {
             // Find content with RelatedContentId that references non-existent content
-            var orphanedContentQuery = Queryable.Where(dbContext.Query<Models.Content>(), c => !string.IsNullOrEmpty(c.RelatedContentId) &&
-                                                               !dbContext.Query<Models.Content>().Any(rc => rc.Id == c.RelatedContentId));
+            var allContent = await dbContext.Query<Models.Content>().ToListAsync(cancellationToken);
+            var orphanedContentQuery = allContent
+                .Where(c => !string.IsNullOrEmpty(c.RelatedContentId) &&
+                            !allContent.Any(rc => rc.Id == c.RelatedContentId))
+                .AsQueryable();
 
             var orphanedCount = await orphanedContentQuery.CountAsync(cancellationToken);
 
@@ -1849,9 +1828,13 @@ public class ContentService(
                     orphanedCount);
 
                 // Clear the orphaned RelatedContentId references
-                await orphanedContentQuery
-                    .ExecuteUpdateAsync(c => c.SetProperty(content => content.RelatedContentId, (string?)null),
-                        cancellationToken);
+                var orphanedContent = await orphanedContentQuery.ToListAsync(cancellationToken);
+                foreach (var content in orphanedContent)
+                {
+                    content.RelatedContentId = null;
+                    await dbContext.StoreAsync(content, cancellationToken);
+                }
+                await dbContext.SaveChangesAsync(cancellationToken);
 
                 logger.LogInformation(
                     "Successfully cleared RelatedContentId for {OrphanedCount} orphaned content items", orphanedCount);

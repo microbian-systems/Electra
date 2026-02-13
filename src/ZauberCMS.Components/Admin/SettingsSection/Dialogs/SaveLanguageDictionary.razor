@@ -77,7 +77,9 @@
         var allTextsDict = LanguageDictionary.Texts.ToDictionary(x => x.LanguageId, x => x);
         foreach (var lang in allLangs.Items)
         {
-            var languageText = allTextsDict.TryGetValue(lang.Id, out var value) ? value : new LanguageText { LanguageId = lang.Id, LanguageDictionaryId = LanguageDictionary.Id };
+            var languageText = allTextsDict.TryGetValue(lang.Id, out var value) 
+                ? value 
+                : new LanguageText { LanguageId = lang.Id, LanguageDictionaryId = LanguageDictionary.Id };
             AllLanguages.Add(lang, languageText);
         }
     }

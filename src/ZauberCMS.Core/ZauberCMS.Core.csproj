@@ -41,6 +41,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Electra.Models\Electra.Models.csproj" />
+      <ProjectReference Include="..\Electra.Persistence.Core\Electra.Persistence.Core.csproj" />
+      <ProjectReference Include="..\Electra.Persistence.RavenDB\Electra.Persistence.RavenDB.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -62,7 +64,7 @@
       <None Include="Membership\Mapping\Morgue\UserTokenDbMapping.cs" />
       <Compile Remove="Membership\Mapping\UserDbMapping.cs" />
       <Compile Remove="Membership\Mapping\UserLoginDbMapping.cs" />
-      <Compile Remove="Membership\Mapping\UserMappingExtensions.cs" />
+
       <Compile Remove="Membership\Mapping\UserPropertyValueDbMapping.cs" />
       <Compile Remove="Membership\Mapping\UserRoleDbMapping.cs" />
       <Compile Remove="Membership\Mapping\UserTokenDbMapping.cs" />
@@ -92,8 +94,7 @@
       <None Include="Membership\Mapping\Morgue\UserDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
       <None Include="Membership\Mapping\Morgue\UserLoginDbMapping.cs" />
-      <Compile Remove="Membership\Mapping\Morgue\UserMappingExtensions.cs" />
-      <None Include="Membership\Mapping\Morgue\UserMappingExtensions.cs" />
+      <!-- UserMappingExtensions.cs is needed for compilation - DO NOT REMOVE -->
       <Compile Remove="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
       <None Include="Membership\Mapping\Morgue\UserPropertyValueDbMapping.cs" />
       <Compile Remove="Membership\Mapping\Morgue\UserRoleDbMapping.cs" />
@@ -120,8 +121,6 @@
       <None Include="Content\Mapping\UnpublishedContentDbMapping.cs" />
       <Compile Remove="Audit\Mapping\AuditDbMapper.cs" />
       <None Include="Audit\Mapping\AuditDbMapper.cs" />
-      <Compile Remove="Extensions\ValueConversionExtensions.cs" />
-      <None Include="Extensions\ValueConversionExtensions.cs" />
     </ItemGroup>
 
     <Target Name="CopyNuGetPackage" AfterTargets="Pack">

@@ -126,7 +126,7 @@
     [Inject] public AppState AppState { get; set; } = null!;
     [Inject] public ValidateService<Role> ValidateService { get; set; } = null!;
 
-    [Parameter] public Guid? RoleId { get; set; }
+    [Parameter] public string? RoleId { get; set; }
 
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
 
@@ -148,7 +148,7 @@
     {
         if (RoleId != null)
         {
-            Role = await MembershipService.GetRoleAsync(new GetRoleParameters { Id = RoleId.Value });
+            Role = await MembershipService.GetRoleAsync(new GetRoleParameters { Id = RoleId });
             ShowDeleteButton = true;
         }
 
@@ -262,7 +262,7 @@
                 }
             });
         var result = await dialog.Result;
-        if (result is { Confirmed: true, Data: Guid newTabId })
+        if (result is { Confirmed: true, Data: string newTabId })
         {
             property.TabId = newTabId;
             Tabs.Reload();

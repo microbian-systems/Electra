@@ -976,17 +976,17 @@ public class MembershipService(
         return await userManager.GetUserAsync(authState.User);
     }
 
-    private static IRavenQueryable<CmsUser> BuildQuery(GetUserParameters parameters, IAsyncDocumentSession dbContext)
+    private static IQueryable<CmsUser> BuildQuery(GetUserParameters parameters, IAsyncDocumentSession dbContext)
     {
-        var query = Queryable.Where(dbContext.Query<CmsUser>()
+        var query = dbContext.Query<CmsUser>()
                 .Include(x => x.UserRoles)
-                //.ThenInclude(x => x.Role) // todo - figure out what ThenInclude() translates to in RavenDB
-                .Include(x => x.PropertyData), x => x.Id == parameters.Id);
+                .Include(x => x.PropertyData)
+                .Where(x => x.Id == parameters.Id);
 
         return query;
     }
 
-    private static IRavenQueryable<CmsUser> BuildQuery(QueryUsersParameters parameters, IAsyncDocumentSession dbContext)
+    private static IQueryable<CmsUser> BuildQuery(QueryUsersParameters parameters, IAsyncDocumentSession dbContext)
     {
         var query = dbContext.Query<CmsUser>()
             .Include(x => x.UserRoles);
@@ -1000,31 +1000,31 @@ public class MembershipService(
             if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
             {
                 var searchTermLower = parameters.SearchTerm.ToLower();
-                query = Queryable.Where(query, x => x.UserName != null && x.UserName.ToLower().Contains(searchTermLower));
+                query = query.Where(x => x.UserName != null && x.UserName.ToLower().Contains(searchTermLower));
             }
 
             if (parameters.Roles.Count != 0)
             {
-                query = Queryable.Where(query, x => x.UserRoles.Any(ur => ur.Role.Name != null && parameters.Roles.Contains(ur.Role.Name)));
+                query = query.Where(x => x.UserRoles.Any(ur => ur.Role.Name != null && parameters.Roles.Contains(ur.Role.Name)));
             }
 
             if (parameters.Ids.Count != 0)
             {
-                query = Queryable.Where(query, x => parameters.Ids.Contains(x.Id));
+                query = query.Where(x => parameters.Ids.Contains(x.Id));
                 parameters.AmountPerPage = parameters.Ids.Count;
             }
         }
 
         if (parameters.WhereClause != null)
         {
-            query = Queryable.Where(query, parameters.WhereClause);
+            query = query.Where(parameters.WhereClause);
         }
 
         query = parameters.OrderBy switch
         {
-            GetUsersOrderBy.DateUpdated => Queryable.OrderBy(query, p => p.CreatedOn),
-            GetUsersOrderBy.DateCreatedDescending => Queryable.OrderByDescending(query, p => p.CreatedOn),
-            _ => Queryable.OrderByDescending(query, p => p.CreatedOn)
+            GetUsersOrderBy.DateUpdated => query.OrderBy(p => p.CreatedOn),
+            GetUsersOrderBy.DateCreatedDescending => query.OrderByDescending(p => p.CreatedOn),
+            _ => query.OrderByDescending(p => p.CreatedOn)
         };
 
         return query;

@@ -47,9 +47,11 @@ public class ContentVersioningService(
         }
 
         // Get next version number
-        var maxVersion = await dbContext.Query<ContentVersion>()
+        var maxVersionEntry = await dbContext.Query<ContentVersion>()
             .Where(v => v.ContentId == content.Id)
-            .MaxAsync(v => (int?)v.VersionNumber, cancellationToken) ?? 0;
+            .OrderByDescending(v => v.VersionNumber)
+            .FirstOrDefaultAsync(cancellationToken);
+        var maxVersion = maxVersionEntry?.VersionNumber ?? 0;
 
         // Clear existing flags if this is a new published version
         if (parameters.Status == ContentVersionStatus.Published)

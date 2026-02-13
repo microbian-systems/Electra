@@ -105,7 +105,7 @@
         }       
     }
 
-    private async Task Delete(Guid id)
+    private async Task Delete(string id)
     {
         var result = await LanguageService.DeleteLanguageAsync(new DeleteLanguageParameters {Id = id});
         if (result.Success)

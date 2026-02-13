@@ -10,14 +10,14 @@
     </ChildContent>
 </RadzenSplitButton>
 @code {
-    [Parameter] public Guid? ParentId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
     private Media? Media { get; set; }
     
     protected override async Task OnParametersSetAsync()
     {
         if (ParentId != null)
         {
-            Media = await MediaService.GetMediaAsync(new GetMediaParameters { Id = ParentId.Value });
+            Media = await MediaService.GetMediaAsync(new GetMediaParameters { Id = ParentId });
         }
     }
 

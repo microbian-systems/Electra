@@ -1,12 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 using Electra.Core.Entities;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Shared.Interfaces;
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class CmsUser : IdentityUser<string>, IEntity, ITreeItem, IHasPropertyValues
+public class CmsUser : ElectraUser, IEntity, ITreeItem, IHasPropertyValues
 {
     public List<UserRole> UserRoles { get; set; } = [];
 

@@ -86,7 +86,7 @@
         Domains = allDomains.Items.ToList();
     }
 
-    private async Task Delete(Guid id)
+    private async Task Delete(string id)
     {
         var deleteDomainResult = await ContentService.DeleteDomainAsync(new DeleteDomainParameters { Id = id });
         if (!deleteDomainResult.Success)

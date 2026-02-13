@@ -67,7 +67,7 @@
     [Inject] public AppState AppState { get; set; } = null!;
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
 
-    [Parameter] public Guid FolderId { get; set; }
+    [Parameter] public string FolderId { get; set; }
 
     private IEnumerable<Media> Contents { get; set; } = [];
     private int SelectedIndex { get; set; }
@@ -97,7 +97,7 @@
         StateHasChanged();
     }
 
-    private async Task SetContents(Guid folderId)
+    private async Task SetContents(string folderId)
     {
         var items = await MediaService.QueryMediaAsync(new QueryMediaParameters
         {

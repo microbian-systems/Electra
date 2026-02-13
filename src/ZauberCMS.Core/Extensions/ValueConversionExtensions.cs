@@ -27,37 +27,13 @@ public static class ValueConversionExtensions
         content.Data = JsonSerializer.Serialize(data);
     }
 
+    /*
+    // EF Core specific method - removed for RavenDB conversion
     public static void ToJsonConversion<T>(this PropertyBuilder<T> propertyBuilder, int? columnSize)
         where T : class, new()
     {
-        // Explicitly set JsonSerializerOptions to prevent indentation
-        var options = new JsonSerializerOptions
-        {
-            WriteIndented = false
-        };
-
-        var converter = new ValueConverter<T, string>
-        (
-            v => JsonSerializer.Serialize(v ?? new T(), options), // Serialize to JSON with default if null
-            v => string.IsNullOrWhiteSpace(v) 
-                ? new T() 
-                : JsonSerializer.Deserialize<T>(v, options) ?? new T() // Deserialize or return default
-        );
-
-        var comparer = new ValueComparer<T>
-        (
-            (l, r) => JsonSerializer.Serialize(l, options) == JsonSerializer.Serialize(r, options),
-            v => v == null ? 0 : JsonSerializer.Serialize(v, options).GetHashCode(),
-            v => JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(v, options), options)!
-        );
-
-        propertyBuilder.HasConversion(converter);
-        propertyBuilder.Metadata.SetValueConverter(converter);
-        propertyBuilder.Metadata.SetValueComparer(comparer);
-
-        if (columnSize != null)
-        {
-            propertyBuilder.HasMaxLength(columnSize.Value);
-        }
+        // This method requires EF Core and is not compatible with RavenDB
+        throw new NotSupportedException("This method requires EF Core and is not compatible with RavenDB");
     }
+    */
 }

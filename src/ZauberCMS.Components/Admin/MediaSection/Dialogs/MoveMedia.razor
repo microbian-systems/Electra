@@ -21,7 +21,7 @@
 
 @code {
     [Parameter, EditorRequired] public Media Item { get; set; } = null!;
-    [Parameter] public Guid? ParentId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
     private void OnValueChangedHandler(object value)
@@ -37,11 +37,11 @@
 
     private async Task Save()
     {
-        await BlazoredModal.CloseAsync(ModalResult.Ok(ParentId ?? Guid.Empty));
+        await BlazoredModal.CloseAsync(ModalResult.Ok(ParentId ?? Guid.Empty.ToString()));
     }
     
     private async Task SetAsRoot()
     {
-        await BlazoredModal.CloseAsync(ModalResult.Ok(Guid.Empty));
+        await BlazoredModal.CloseAsync(ModalResult.Ok(Guid.Empty.ToString()));
     }
 }

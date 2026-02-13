@@ -277,12 +277,12 @@ else
 
     [Inject] public IStringLocalizer<SharedResource> Localizer { get; set; } = null!;
 
-    [Parameter] public Guid? ContentId { get; set; }
-    [Parameter] public Guid? ParentId { get; set; }
-    [Parameter] public Guid? NestedParentId { get; set; }
+    [Parameter] public string? ContentId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
+    [Parameter] public string? NestedParentId { get; set; }
     [Parameter] public bool? IsBlockList { get; set; }
     [Parameter] public string? DefaultName { get; set; }
-    [Parameter] public List<Guid>? AllowedElementTypeIds { get; set; }
+    [Parameter] public List<string>? AllowedElementTypeIds { get; set; }
     [Parameter] public Action<BlockListChanges>? OnBlockListChanges { get; set; }
     [Parameter] public Content? Content { get; set; }
 
@@ -290,7 +290,7 @@ else
     private ContentType? ContentType { get; set; }
     private Dictionary<string, Type> AllContentTypeProperties { get; set; } = new();
     private List<ContentViewName> ContentViews { get; set; } = [];
-    private Dictionary<Guid, ContentPropertyValue> AllContentValues { get; set; } = new();
+    private Dictionary<string, ContentPropertyValue> AllContentValues { get; set; } = new();
 
     //private Dictionary<string, string> AvailableContentViews { get; set; } = new();
     private int SelectedTabIndex { get; set; }
@@ -392,7 +392,7 @@ else
     {
         if (ContentId != null)
         {
-            Content = await ContentService.GetContentAsync(new GetContentParameters { Id = ContentId!.Value, IncludeUnpublished = true, IncludeUnpublishedContent = true });
+            Content = await ContentService.GetContentAsync(new GetContentParameters { Id = ContentId, IncludeUnpublished = true, IncludeUnpublishedContent = true });
             ContentType = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = Content!.ContentTypeId });
             
             if (Content.UnpublishedContent != null)
@@ -422,7 +422,7 @@ else
         SelectedTabIndex = i;
     }
 
-    private Task UpdateProperty(Guid ctpId, string value)
+    private Task UpdateProperty(string ctpId, string value)
     {
         var property = WorkingCopy?.PropertyData.FirstOrDefault(p => p.ContentTypePropertyId == ctpId);
         if (property != null)
@@ -546,7 +546,7 @@ else
 
     }
 
-    private async Task UpdateContentTypeId(Guid contentTypeId)
+    private async Task UpdateContentTypeId(string contentTypeId)
     {
         ContentType = await ContentService.GetContentTypeAsync(new GetContentTypeParameters { Id = contentTypeId });
         if (ContentType == null)
@@ -755,10 +755,10 @@ else
                     if (ParentId != null)
                     {
                         // If we are creating or saving a child item, make sure the parent is open
-                        if (!TreeState.IsNodeExpanded(ParentId.Value))
+                        if (!TreeState.IsNodeExpanded(ParentId))
                         {
-                        TreeState.ClearChildCache(ParentId.Value);
-                            TreeState.NodeExpanded(ParentId.Value);
+                        TreeState.ClearChildCache(ParentId);
+                            TreeState.NodeExpanded(ParentId);
                         }
                     }
 
@@ -784,7 +784,7 @@ else
         source.MapTo(workingCopy);
         
         // Deep-copy Path list (MapTo only copies reference)
-        workingCopy.Path = new List<Guid>(source.Path);
+        workingCopy.Path = new List<string>(source.Path);
         
         // Deep-copy PropertyData list
         workingCopy.PropertyData = new List<ContentPropertyValue>(source.PropertyData.Select(pd => new ContentPropertyValue
@@ -801,7 +801,7 @@ else
         // Deep-copy pending block list changes
         foreach (var kvp in source.PendingBlockListChanges)
         {
-            workingCopy.PendingBlockListChanges[kvp.Key] = new Dictionary<Guid, Content>(kvp.Value);
+            workingCopy.PendingBlockListChanges[kvp.Key] = new Dictionary<string, Content>(kvp.Value);
         }
         
         return workingCopy;

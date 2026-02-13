@@ -4,7 +4,7 @@
 @if (User != null)
 {
     <RadzenStack Orientation="Orientation.Vertical" Gap="1rem" JustifyContent="JustifyContent.Center" AlignItems="AlignItems.Start">
-        <RadzenCheckBoxList Data="@Roles" Orientation="Orientation.Vertical" @bind-Value=@UsersRoles TValue="Guid" TextProperty="Name" ValueProperty="Id" />
+        <RadzenCheckBoxList Data="@Roles" Orientation="Orientation.Vertical" @bind-Value=@UsersRoles TValue="string" TextProperty="Name" ValueProperty="Id" />
     </RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Right" AlignItems="AlignItems.Center" class="rz-mt-3">
         <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Icon="save" Text="Save" Click="Save"/>
@@ -15,10 +15,10 @@
 {
     [Inject] NotificationService NotificationService { get; set; } = null!;
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = null!;
-    [Parameter, EditorRequired] public Guid UserId { get; set; }
+    [Parameter, EditorRequired] public string UserId { get; set; }
     private CmsUser? User { get; set; }
     private IEnumerable<Role> Roles { get; set; } = [];
-    private IEnumerable<Guid> UsersRoles { get; set; } = [];
+    private IEnumerable<string> UsersRoles { get; set; } = [];
     protected override async Task OnInitializedAsync()
     {
         User = await MembershipService.GetUserAsync(new GetUserParameters

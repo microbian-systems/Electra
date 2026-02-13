@@ -1,0 +1,905 @@
+System.AggregateException: Some services are not able to be constructed (Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Membership.IdentityUserAccessor Lifetime: Scoped 
+ImplementationType: ZauberCMS.Core.Membership.IdentityUserAccessor': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Content.Interfaces.IContentService Lifetime: Scoped ImplementationType: 
+ZauberCMS.Core.Content.Services.ContentService': No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' 
+can be instantiated using services from the service container and default values.) (Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Membership.Interfaces.IMembershipService 
+Lifetime: Scoped ImplementationType: ZauberCMS.Core.Membership.Services.MembershipService': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Email.Interfaces.IEmailService Lifetime: Scoped ImplementationType: ZauberCMS.Core.Email.Services.EmailService': No 
+constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service 
+container and default values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser] 
+Lifetime: Scoped ImplementationType: Microsoft.AspNetCore.Identity.UserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.UserManager`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.UserManager`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IRoleStore`1[Electra.Core.Identity.ElectraRole] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.RoleStore`1[Electra.Core.Identity.ElectraRole]': Unable to resolve service for type 'Raven.Client.Documents.Session.IAsyncDocumentSession' while attempting to 
+activate 'Electra.Persistence.RavenDB.Identity.RoleStore`1[Electra.Core.Identity.ElectraRole]'.) (Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserLoginStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserClaimStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserRoleStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserPasswordStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserSecurityStampStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped 
+ImplementationType: Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserEmailStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserLockoutStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserTwoFactorStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserPhoneNumberStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserAuthenticatorKeyStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped 
+ImplementationType: Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserAuthenticationTokenStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped 
+ImplementationType: Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserTwoFactorRecoveryCodeStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped 
+ImplementationType: Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IQueryableUserStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IPasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.PasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ISecurityStampValidator Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.SecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ITwoFactorSecurityStampValidator Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.TwoFactorSecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.RoleManager`1[ZauberCMS.Core.Membership.Models.Role] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.RoleManager`1[ZauberCMS.Core.Membership.Models.Role]': Unable to resolve service for type 
+'Microsoft.AspNetCore.Identity.IRoleStore`1[ZauberCMS.Core.Membership.Models.Role]' while attempting to activate 'Microsoft.AspNetCore.Identity.RoleManager`1[ZauberCMS.Core.Membership.Models.Role]'.) 
+(Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.UserClaimsPrincipalFactory`2[ZauberCMS.Core.Membership.Models.CmsUser,ZauberCMS.Core.Membership.Models.Role]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped 
+ImplementationType: ZauberCMS.Core.Membership.Claims.ZauberUserClaimsPrincipalFactory': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IPasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.PasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ISecurityStampValidator Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.SecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ITwoFactorSecurityStampValidator Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.TwoFactorSecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IUserEmailStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+ZauberCMS.Core.Membership.Stores.UserEmailStore': Unable to resolve service for type 'Raven.Client.Documents.Session.IAsyncDocumentSession' while attempting to activate 
+'ZauberCMS.Core.Membership.Stores.UserEmailStore'.) (Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser] 
+Lifetime: Scoped ImplementationType: ZauberCMS.Core.Membership.ZauberSignInManager': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.)
+ ---> System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Membership.IdentityUserAccessor Lifetime: Scoped ImplementationType: 
+ZauberCMS.Core.Membership.IdentityUserAccessor': No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' 
+can be instantiated using services from the service container and default values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+   at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in D:\proj\microbians\microbians.io\Electra\src\ZauberCMS.Web\Program.cs:line 16
+ ---> (Inner Exception #1) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Content.Interfaces.IContentService Lifetime: Scoped 
+ImplementationType: ZauberCMS.Core.Content.Services.ContentService': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #2) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Membership.Interfaces.IMembershipService Lifetime: Scoped 
+ImplementationType: ZauberCMS.Core.Membership.Services.MembershipService': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #3) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: ZauberCMS.Core.Email.Interfaces.IEmailService Lifetime: Scoped 
+ImplementationType: ZauberCMS.Core.Email.Services.EmailService': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #4) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.UserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #5) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.UserManager`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.UserManager`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #6) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #7) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.IRoleStore`1[Electra.Core.Identity.ElectraRole] 
+Lifetime: Scoped ImplementationType: Electra.Persistence.RavenDB.Identity.RoleStore`1[Electra.Core.Identity.ElectraRole]': Unable to resolve service for type 
+'Raven.Client.Documents.Session.IAsyncDocumentSession' while attempting to activate 'Electra.Persistence.RavenDB.Identity.RoleStore`1[Electra.Core.Identity.ElectraRole]'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Raven.Client.Documents.Session.IAsyncDocumentSession' while attempting to activate 
+'Electra.Persistence.RavenDB.Identity.RoleStore`1[Electra.Core.Identity.ElectraRole]'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #8) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserLoginStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #9) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserClaimStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #10) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserRoleStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #11) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserPasswordStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #12) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserSecurityStampStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #13) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserEmailStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #14) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserLockoutStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #15) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserTwoFactorStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #16) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserPhoneNumberStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #17) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserAuthenticatorKeyStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #18) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserAuthenticationTokenStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #19) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserTwoFactorRecoveryCodeStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #20) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IQueryableUserStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #21) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IPasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.PasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #22) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ISecurityStampValidator Lifetime: Scoped 
+ImplementationType: Microsoft.AspNetCore.Identity.SecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #23) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ITwoFactorSecurityStampValidator Lifetime: Scoped 
+ImplementationType: Microsoft.AspNetCore.Identity.TwoFactorSecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #24) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #25) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.RoleManager`1[ZauberCMS.Core.Membership.Models.Role] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.RoleManager`1[ZauberCMS.Core.Membership.Models.Role]': Unable to resolve service for type 
+'Microsoft.AspNetCore.Identity.IRoleStore`1[ZauberCMS.Core.Membership.Models.Role]' while attempting to activate 'Microsoft.AspNetCore.Identity.RoleManager`1[ZauberCMS.Core.Membership.Models.Role]'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Microsoft.AspNetCore.Identity.IRoleStore`1[ZauberCMS.Core.Membership.Models.Role]' while attempting to activate 
+'Microsoft.AspNetCore.Identity.RoleManager`1[ZauberCMS.Core.Membership.Models.Role]'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #26) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.UserClaimsPrincipalFactory`2[ZauberCMS.Core.Membership.Models.CmsUser,ZauberCMS.Core.Membership.Models.Role]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #27) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+ZauberCMS.Core.Membership.Claims.ZauberUserClaimsPrincipalFactory': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #28) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IPasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.PasskeyHandler`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #29) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ISecurityStampValidator Lifetime: Scoped 
+ImplementationType: Microsoft.AspNetCore.Identity.SecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #30) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: Microsoft.AspNetCore.Identity.ITwoFactorSecurityStampValidator Lifetime: Scoped 
+ImplementationType: Microsoft.AspNetCore.Identity.TwoFactorSecurityStampValidator`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #31) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: 
+Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser]': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #32) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.IUserEmailStore`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: ZauberCMS.Core.Membership.Stores.UserEmailStore': Unable to resolve service 
+for type 'Raven.Client.Documents.Session.IAsyncDocumentSession' while attempting to activate 'ZauberCMS.Core.Membership.Stores.UserEmailStore'.
+ ---> System.InvalidOperationException: Unable to resolve service for type 'Raven.Client.Documents.Session.IAsyncDocumentSession' while attempting to activate 
+'ZauberCMS.Core.Membership.Stores.UserEmailStore'.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---
+
+ ---> (Inner Exception #33) System.InvalidOperationException: Error while validating the service descriptor 'ServiceType: 
+Microsoft.AspNetCore.Identity.SignInManager`1[ZauberCMS.Core.Membership.Models.CmsUser] Lifetime: Scoped ImplementationType: ZauberCMS.Core.Membership.ZauberSignInManager': No constructor for type 
+'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be instantiated using services from the service container and default 
+values.
+ ---> System.InvalidOperationException: No constructor for type 'Electra.Persistence.RavenDB.Identity.UserStore`2[ZauberCMS.Core.Membership.Models.CmsUser,Electra.Core.Identity.ElectraRole]' can be 
+instantiated using services from the service container and default values.
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.TryCreateExact(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateCallSite(ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateArgumentCallSites(ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain callSiteChain, 
+ParameterInfo[] parameters, Boolean throwIfCallSiteNotFound)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateConstructorCallSite(ResultCache lifetime, ServiceIdentifier serviceIdentifier, Type implementationType, CallSiteChain 
+callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.CreateExact(ServiceDescriptor descriptor, ServiceIdentifier serviceIdentifier, CallSiteChain callSiteChain, Int32 slot)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.GetCallSite(ServiceDescriptor serviceDescriptor, CallSiteChain callSiteChain)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   --- End of inner exception stack trace ---
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.ValidateService(ServiceDescriptor descriptor)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)<---

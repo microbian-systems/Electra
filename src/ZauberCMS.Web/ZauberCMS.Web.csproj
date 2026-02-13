@@ -8,6 +8,7 @@
     </PropertyGroup>
     
     <ItemGroup>
+      <ProjectReference Include="..\Electra.Persistence.RavenDB\Electra.Persistence.RavenDB.csproj" />
       <ProjectReference Include="..\ZauberCMS\ZauberCMS.csproj" />
       <!--<PackageReference Include="ZauberCMS" Version="4.1.0" />-->
     </ItemGroup>

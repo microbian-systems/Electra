@@ -57,8 +57,8 @@
     [Inject] public NotificationService NotificationService { get; set; } = null!;
     [Inject] public IModalService ModalService { get; set; } = null!;
 
-    [Parameter] public Guid? ContentId { get; set; }
-    [Parameter] public Guid? ParentId { get; set; }
+    [Parameter] public string? ContentId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
     [Parameter] public Content? Content { get; set; }
 
     [Parameter] public int AmountPerPage { get; set; } = 20;
@@ -68,12 +68,12 @@
     private int AllUserCount { get; set; }
     private IEnumerable<Content> AllUserContents { get; set; } = [];
     
-    private static string GetCompositeKey(Guid? contentId, Guid? parentId)
+    private static string GetCompositeKey(string? contentId, string? parentId)
     {
         return $"{contentId?.ToString() ?? "null"}_{parentId?.ToString() ?? "null"}";
     }
     
-    private async Task Delete(Guid id)
+    private async Task Delete(string id)
     {
         var result = await ContentService.DeleteContentAsync(new DeleteContentParameters { ContentId = id, MoveToRecycleBin = true});
         if (result.Success)
@@ -136,16 +136,16 @@
     
     private async Task OpenContentEditor()
     {
-        if (ContentId.HasValue)
+        if (!string.IsNullOrEmpty(ContentId))
         {
             var parameters = new Dictionary<string, object>
             {
-                { "ContentId", ContentId.Value }
+                { "ContentId", ContentId }
             };
 
-            if (ParentId.HasValue)
+            if (!string.IsNullOrEmpty(ParentId))
             {
-                parameters.Add("ParentId", ParentId.Value);
+                parameters.Add("ParentId", ParentId);
             }
 
             var dialog = ModalService.OpenSidePanel<ContentEditor>($"Edit {Content?.Name}", parameters);

@@ -128,7 +128,7 @@ else
 }
 
 @code {
-    [Parameter] public Guid ContentId { get; set; }
+    [Parameter] public string ContentId { get; set; }
 
     [Inject] public IContentVersioningService ContentVersioningService { get; set; } = null!;
     [Inject] public NotificationService NotificationService { get; set; } = null!;
@@ -204,7 +204,7 @@ else
         return !version.IsCurrentPublished;
     }
 
-    private async Task RestoreToVersion(Guid versionId)
+    private async Task RestoreToVersion(string versionId)
     {
         try
         {

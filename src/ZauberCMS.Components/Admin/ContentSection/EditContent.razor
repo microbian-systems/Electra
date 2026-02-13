@@ -22,8 +22,8 @@
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public DialogService ConfirmService { get; set; } = null!;
 
-    [Parameter] public Guid? ContentId { get; set; }
-    [Parameter] public Guid? ParentId { get; set; }
+    [Parameter] public string? ContentId { get; set; }
+    [Parameter] public string? ParentId { get; set; }
 
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
     private Content? Content { get; set; }
@@ -50,7 +50,7 @@
         }
     }
 
-    private static string GetCompositeKey(Guid? contentId, Guid? parentId)
+    private static string GetCompositeKey(string? contentId, string? parentId)
     {
         return $"{contentId?.ToString() ?? "null"}_{parentId?.ToString() ?? "null"}";
     }

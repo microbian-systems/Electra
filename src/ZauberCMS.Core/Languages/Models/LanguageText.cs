@@ -22,7 +22,7 @@ public class LanguageText
     /// <summary>
     /// Language ID this relates to
     /// </summary>
-    public Guid LanguageId { get; set; }
+    public string LanguageId { get; set; }
     
     /// <summary>
     /// Language this relates to

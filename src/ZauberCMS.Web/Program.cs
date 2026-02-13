@@ -1,7 +1,15 @@
+using Electra.Persistence.RavenDB.Extensions;
+using Electra.Persistence.RavenDB.Identity;
 using ZauberCMS.Components;
 using ZauberCMS.Core;
 
+
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var config = builder.Configuration;
+var env = builder.Environment;
+
+//services.AddRavenPersistence(config);
 
 builder.AddZauberCms();
 
