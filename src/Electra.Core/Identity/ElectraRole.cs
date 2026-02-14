@@ -20,14 +20,13 @@ public class ElectraRole : ElectraRole<string>
 
 
 [Table("Roles")]
-public class ElectraRole<Tkey> : IdentityRole<Tkey>, IEntity
+public class ElectraRole<Tkey> : IdentityRole<Tkey>
     where Tkey : IEquatable<Tkey>, IComparable<Tkey>
 {
     public ElectraRole() { }
 
     public ElectraRole(string roleName) : base(roleName) { }
 
-    public new string Id { get; set; }
     public List<IdentityRoleClaim<string>> Claims { get; set; } = [];
     public List<string> Users { get; set; } = [];
     public DateTimeOffset CreatedOn { get; set; } = DateTimeOffset.UtcNow;

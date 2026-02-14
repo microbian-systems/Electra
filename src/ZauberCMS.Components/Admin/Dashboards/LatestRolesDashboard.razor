@@ -1,5 +1,5 @@
-﻿@using ZauberCMS.Core.Data.Parameters
 @using ZauberCMS.Core.Membership.Models
+@using ZauberCMS.Core.Membership.Parameters
 @implements ZauberCMS.Core.Sections.Interfaces.ISectionDashboard
 
 <RadzenDataGrid AllowFiltering="true"
@@ -15,7 +15,6 @@
                 SelectionMode="DataGridSelectionMode.Single"
                 RowSelect="@((CmsRole value) => OnRowSelect(value))"
                 PagerHorizontalAlign="HorizontalAlign.Center">
-    @*@bind-Value="@SelectedContent"*@
     <Columns>
         <RadzenDataGridColumn Property="Name" Title="Name"/>
         <RadzenDataGridColumn Property="DateUpdated" Title="Last Updated">
@@ -49,29 +48,20 @@
 
         await Task.Yield();
 
-        var command = new DataGridParameters<CmsRole>();
-        
-        if (args.Top != null && args.Top != 0)
+        var queryParams = new QueryRolesParameters
         {
-            command.Take = args.Top.Value;
-        }
-
-        if (args.Skip != null)
-        {
-            command.Skip = args.Skip.Value;
-        }
+            AmountPerPage = args.Top ?? AmountPerPage,
+            PageIndex = (args.Skip ?? 0) / (args.Top ?? AmountPerPage),
+            OrderBy = GetRolesOrderBy.DateCreatedDescending
+        };
 
         if (!string.IsNullOrEmpty(args.Filter))
         {
-            // Filter via the Where method
-            command.Filter = args.Filter;
+            queryParams.SearchTerm = args.Filter;
         }
 
-        // Sort via the OrderBy method
-        command.OrderBy = !string.IsNullOrEmpty(args.OrderBy) ? args.OrderBy : "DateCreated desc";
-
-        var result = await DataService.GetDataGridAsync(command);
-        Count = result.Count;
+        var result = await MembershipService.QueryRolesAsync(queryParams);
+        Count = (int)result.TotalItems;
         Roles = result.Items;
 
         IsLoading = false;

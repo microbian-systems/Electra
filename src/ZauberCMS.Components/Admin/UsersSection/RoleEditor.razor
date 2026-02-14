@@ -1,8 +1,9 @@
-﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
 @using ZauberCMS.Components.Admin.StructureSection.Dialogs
 @using ZauberCMS.Components.Editors.Dialogs
 @using ZauberCMS.Core.Membership.Models
 @using ZauberCMS.Core.Membership.Parameters
+@using ZauberCMS.Core.Membership.Interfaces
 @using ZauberCMS.Core.Plugins
 @using ZauberCMS.Core.Shared
 @using ZauberCMS.Core.Shared.Services
@@ -29,7 +30,7 @@
     }
 </RadzenStack>
 
-@if (Role != null)
+@if (Role != null && RoleUI != null)
 {
     <RadzenPanel Class="rz-mx-auto">
         <EditForm Model="Role" OnSubmit="Save">
@@ -40,14 +41,14 @@
                                  AlignItems="AlignItems.Center"
                                  Style="width: 40px; height: 40px; border: 1px #ccc solid; cursor: pointer;"
                                  @onclick="@(SelectIcon)">
-                        <RadzenIcon Icon="@(Role.Icon.IsNullOrWhiteSpace() ? "add" : Role.Icon)"
+                        <RadzenIcon Icon="@(RoleUI.Icon.IsNullOrWhiteSpace() ? "add" : RoleUI.Icon)"
                                     style="font-weight: 300; color: dimgray;"/>
                     </RadzenStack>
                     <RadzenTextBox Style="width: 100%;" Name="Name" Placeholder="Name" @bind-Value="@Role.Name"
                                    aria-label="Name"/>
                 </RadzenStack>
             </RadzenRow>
-            @if (Role.Tabs.Count > 0)
+            @if (RoleUI.Tabs.Count > 0)
             {
                 <RadzenTabs @ref="Tabs" RenderMode="TabRenderMode.Client" Change="@(i => TabChange(i))">
                     <Tabs>
@@ -72,7 +73,7 @@
                                     <ChildContent>
                                         <RadzenStack Gap="1rem">
                                             @{
-                                                var tabProperties = Role.Properties
+                                                var tabProperties = RoleUI.Properties
                                                     .Where(x => x.TabId == tab.Id)
                                                     .OrderBy(x => x.SortOrder)
                                                     .ToList();
@@ -125,12 +126,14 @@
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public AppState AppState { get; set; } = null!;
     [Inject] public ValidateService<CmsRole> ValidateService { get; set; } = null!;
+    [Inject] public ICmsUserProfileService ProfileService { get; set; } = null!;
 
     [Parameter] public string? RoleId { get; set; }
 
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
 
     private CmsRole? Role { get; set; } = new();
+    private CmsRoleUI? RoleUI { get; set; }
     private Dictionary<int, Tab> TabIndex { get; set; } = new();
     private bool ShowDeleteButton { get; set; }
     private int SelectedTabIndex { get; set; }
@@ -148,8 +151,26 @@
     {
         if (RoleId != null)
         {
+            // Load the role and its UI data
             Role = await MembershipService.GetRoleAsync(new GetRoleParameters { Id = RoleId });
+            RoleUI = await ProfileService.GetRoleUIAsync(RoleId);
+            
+            // If no UI data exists yet, create it
+            if (RoleUI == null && Role != null)
+            {
+                RoleUI = await ProfileService.GetOrCreateRoleUIAsync(RoleId);
+            }
+            
             ShowDeleteButton = true;
+        }
+        else
+        {
+            // New role - create empty UI
+            RoleUI = new CmsRoleUI
+            {
+                Tabs = [new() { Id = Constants.Ids.ContentTypeSystemTabId, IsSystemTab = true, SortOrder = 100, Name = "System" }],
+                Properties = []
+            };
         }
 
         InitializeTabsAndSortOrders();
@@ -161,7 +182,7 @@
         var result = await dialog.Result;
         if (result is { Confirmed: true, Data: string icon })
         {
-            Role!.Icon = icon;
+            RoleUI!.Icon = icon;
         }
     }
 
@@ -178,12 +199,12 @@
 
     private void InitializeTabsAndSortOrders()
     {
-        if (Role != null)
+        if (RoleUI != null)
         {
             // Now reset sort orders to be correct
-            foreach (var tab in Role.Tabs.Where(x => !x.IsSystemTab))
+            foreach (var tab in RoleUI.Tabs.Where(x => !x.IsSystemTab))
             {
-                var contentProperties = Role.Properties
+                var contentProperties = RoleUI.Properties
                     .Where(x => x.TabId == tab.Id)
                     .OrderBy(x => x.SortOrder)
                     .ToList();
@@ -199,12 +220,12 @@
 
     private List<Tab> GetTabsInOrder()
     {
-        return Role!.Tabs.OrderBy(x => x.SortOrder).ToList();
+        return RoleUI!.Tabs.OrderBy(x => x.SortOrder).ToList();
     }
 
     private void SortProperty(PropertyType property, bool moveDown)
     {
-        var propertiesInSameTab = Role!.Properties
+        var propertiesInSameTab = RoleUI!.Properties
             .Where(p => p.TabId == property.TabId)
             .OrderBy(p => p.SortOrder)
             .ToList();
@@ -232,10 +253,10 @@
     private void DeleteProperty(PropertyType property)
     {
         // Remove the specified property from the list
-        Role!.Properties.Remove(property);
+        RoleUI!.Properties.Remove(property);
 
         // Get properties in the same tab and re-adjust their sort orders
-        var propertiesInSameTab = Role.Properties
+        var propertiesInSameTab = RoleUI.Properties
             .Where(p => p.TabId == property.TabId)
             .OrderBy(p => p.SortOrder)
             .ToList();
@@ -255,7 +276,7 @@
             new Dictionary<string, object>
             {
                 {
-                    nameof(StructureSection.Dialogs.ChangeTab.Tabs), Role!.Tabs
+                    nameof(StructureSection.Dialogs.ChangeTab.Tabs), RoleUI!.Tabs
                         .Where(x => !x.IsSystemTab)
                         .OrderBy(x => x.SortOrder)
                         .ToList()
@@ -286,7 +307,7 @@
     private void DeleteTab(Tab tab)
     {
         // Remove the specified tab from the list of tabs
-        Role!.Tabs.Remove(tab);
+        RoleUI!.Tabs.Remove(tab);
 
         // The index will be the total count
         TabIndex.Clear();
@@ -303,8 +324,21 @@
     {
         if (await ValidateService.CanSave(Role!))
         {
-            var saveContentTypeCommand = new SaveRoleParameters { Role = Role };
-            var result = await MembershipService.SaveRoleAsync(saveContentTypeCommand);
+            // Save the role via MembershipService
+            var saveRoleCommand = new SaveRoleParameters { Role = Role };
+            var result = await MembershipService.SaveRoleAsync(saveRoleCommand);
+            
+            // Also save the RoleUI if the role save was successful
+            if (result.Success && RoleUI != null)
+            {
+                // If this is a new role, we need to set the RoleId on the UI
+                if (string.IsNullOrEmpty(RoleUI.RoleId))
+                {
+                    RoleUI.RoleId = Role!.Id;
+                }
+                await ProfileService.SaveRoleUIAsync(RoleUI);
+            }
+            
             NotificationService.Notify(result.Success ? new NotificationMessage { Severity = NotificationSeverity.Success, Summary = $"{Role?.Name} Saved", Detail = "", Duration = 4000 } : new NotificationMessage { Severity = NotificationSeverity.Error, Summary = $"{Role?.Name} Error", Detail = result.Messages.MessagesAsString(), Duration = 4000 });
         }
     }
@@ -329,7 +363,7 @@
             new Dictionary<string, object>
             {
                 { nameof(AddTab.Tab), tab! },
-                { nameof(AddTab.DefaultSortOrder), Role!.Tabs.Count(x => !x.IsSystemTab) + 1 }
+                { nameof(AddTab.DefaultSortOrder), RoleUI!.Tabs.Count(x => !x.IsSystemTab) + 1 }
             });
         var result = await dialog.Result;
         if (result is { Confirmed: true, Data: Tab newTab })
@@ -339,16 +373,16 @@
                 if (tab != null)
                 {
                     // Find and update the tab
-                    var index = Role.Tabs.IndexOf(tab);
+                    var index = RoleUI.Tabs.IndexOf(tab);
                     if (index != -1)
                     {
-                        Role.Tabs[index] = newTab;
+                        RoleUI.Tabs[index] = newTab;
                     }
                 }
                 else
                 {
                     // Add the new tab to the list of tabs
-                    Role.Tabs.Add(newTab);
+                    RoleUI.Tabs.Add(newTab);
                 }
 
                 // The index will be the total count
@@ -366,7 +400,7 @@
 
     private async Task AddProperty()
     {
-        if (Role!.Tabs.All(x => x.IsSystemTab))
+        if (RoleUI!.Tabs.All(x => x.IsSystemTab))
         {
             NotificationService.ShowNotification("You need to add a tab", NotificationSeverity.Info);
         }
@@ -377,10 +411,10 @@
             if (result is { Confirmed: true, Data: IContentProperty property })
             {
                 var tabToAddTo = TabIndex[SelectedTabIndex];
-                Role.Properties.Add(new PropertyType
+                RoleUI.Properties.Add(new PropertyType
                 {
                     Component = property.GetType().FullName ?? string.Empty,
-                    SortOrder = Role.Properties.Count + 1,
+                    SortOrder = RoleUI.Properties.Count + 1,
                     TabId = tabToAddTo.Id
                 });
                 Tabs.Reload();

@@ -2,6 +2,7 @@ using Electra.Core.Identity;
 using Electra.Persistence.RavenDB.Indexes;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 
 namespace Electra.Auth;
@@ -19,7 +20,7 @@ public class Seeder
         var store = sp.GetRequiredService<IDocumentStore>();
         var db = sp.GetRequiredService<IAsyncDocumentSession>();
         
-        var existing = roleManager.Roles.ToList();
+        var existing = await roleManager.Roles.ToListAsync();
         if (!existing.Any())
         {
             // Seed roles

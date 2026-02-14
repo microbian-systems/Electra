@@ -51,8 +51,5 @@ public class ElectraUserProfile : Entity
     [MaxLength(1024)]
     [JsonPropertyName("image_url")]
     public string? ImageUrl { get; set; }
-
-    public bool AgreedToTos { get; set; } 
-
     public AddressModel? Address { get; set; }
 }

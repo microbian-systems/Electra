@@ -1,4 +1,4 @@
-﻿@using System.Globalization
+@using System.Globalization
 @using System.Text.Json
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.Extensions.Localization
@@ -185,7 +185,7 @@ else
                                     <CentreColumn>
                                         <div class="flex justify-start items-center space-x-2">
                                             <RadzenGravatar Email="@LastUpdatedBy?.Email"/>
-                                            <span>@(LastUpdatedBy?.Name)</span>
+                                            <span>@(LastUpdatedBy?.UserName)</span>
                                         </div>
                                     </CentreColumn>
                                 </EditorRow>

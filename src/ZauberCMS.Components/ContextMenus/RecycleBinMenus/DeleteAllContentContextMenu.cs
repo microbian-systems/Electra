@@ -88,7 +88,7 @@ public class DeleteAllContentContextMenu(
         }
 
         // Notify state change once after all deletions
-        await appState.NotifyContentChanged(null, currentUser?.Name ?? "Unknown");
+        await appState.NotifyContentChanged(null, currentUser?.UserName ?? "Unknown");
 
         // Show result notification
         if (errorCount == 0)

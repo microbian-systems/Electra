@@ -70,7 +70,7 @@ public class CultureDomainsContentContextMenu(
                 else
                 {
                     notificationService.ShowSuccessNotification("Culture Updated");
-                    await appState.NotifyContentChanged(dbContent, currentUser?.Name ?? "Unknown");
+                    await appState.NotifyContentChanged(dbContent, currentUser?.UserName ?? "Unknown");
                 }
             }
         }

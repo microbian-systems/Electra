@@ -33,17 +33,17 @@ public static class UserMappingExtensions
         target.LockoutEnabled = source.LockoutEnabled;
         target.AccessFailedCount = source.AccessFailedCount;
 
-        // Map custom properties
+        // Map custom audit properties
         target.CreatedOn = source.CreatedOn;
         target.ModifiedOn = source.ModifiedOn;
         target.CreatedBy = source.CreatedBy;
         target.ModifiedBy = source.ModifiedBy;
-        target.ExtendedData = source.ExtendedData;
+
+        // Note: PropertyData, ExtendedData are now in CmsUserProfile
+        // Use CmsUserProfileMappingExtensions for those properties
 
         // Excluded properties (navigation properties):
         // - UserRoles (navigation property)
-        // - Audits (navigation property)
-        // - PropertyData (navigation property)
 
         return target;
     }
@@ -56,6 +56,33 @@ public static class UserMappingExtensions
     public static CmsUser MapToNew(this CmsUser source)
     {
         var target = new CmsUser();
+        return source.MapTo(target);
+    }
+}
+
+/// <summary>
+/// Extension methods for mapping CmsUserProfile entities
+/// </summary>
+public static class CmsUserProfileMappingExtensions
+{
+    /// <summary>
+    /// Maps properties from source Profile to target Profile
+    /// </summary>
+    public static CmsUserProfile MapTo(this CmsUserProfile source, CmsUserProfile target)
+    {
+        target.PropertyData = source.PropertyData;
+        target.ExtendedData = source.ExtendedData;
+        target.ProfileImageId = source.ProfileImageId;
+
+        return target;
+    }
+
+    /// <summary>
+    /// Creates a new Profile entity with properties mapped from source
+    /// </summary>
+    public static CmsUserProfile MapToNew(this CmsUserProfile source)
+    {
+        var target = new CmsUserProfile();
         return source.MapTo(target);
     }
 }

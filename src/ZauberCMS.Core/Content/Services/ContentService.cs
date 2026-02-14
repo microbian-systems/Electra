@@ -208,7 +208,7 @@ public class ContentService(
 
         var nameText = content.Name ?? nameof(Models.Content);
         var actionText = isUpdate ? "Updated" : "Created";
-        await SaveAuditAsync(db, $"{user.Name} {actionText} {nameText}", cancellationToken);
+        await SaveAuditAsync(db, $"{user.UserName} {actionText} {nameText}", cancellationToken);
 
         var saveResult = await db.SaveChangesAndLog(content, handlerResult, cacheService, extensionManager,
             cancellationToken);
@@ -415,7 +415,7 @@ public class ContentService(
         await db.SaveChangesAsync(cancellationToken);
         if (user != null)
         {
-            await SaveAuditAsync(db, $"{user.Name} Copied {contentToCopy.Name}", cancellationToken);
+            await SaveAuditAsync(db, $"{user.UserName} Copied {contentToCopy.Name}", cancellationToken);
         }
 
         handlerResult.Success = true;
@@ -535,7 +535,7 @@ public class ContentService(
         }
 
         var actionText = isUpdate ? "Updated" : "Created";
-        await SaveAuditAsync(db, $"{user.Name} {actionText} {contentType.Name}", cancellationToken);
+        await SaveAuditAsync(db, $"{user.UserName} {actionText} {contentType.Name}", cancellationToken);
 
         return await db.SaveChangesAndLog(contentType, handlerResult, cacheService, extensionManager,
             cancellationToken);
@@ -708,7 +708,7 @@ public class ContentService(
 
             if (user != null)
             {
-                await SaveAuditAsync(db, $"{user.Name} Deleted {contentType.Name}", cancellationToken);
+                await SaveAuditAsync(db, $"{user.UserName} Deleted {contentType.Name}", cancellationToken);
             }
 
             db.Delete(contentType);
@@ -785,7 +785,7 @@ public class ContentService(
         if (user != null)
         {
             var actionText = isUpdate ? "Updated" : "Created";
-            await SaveAuditAsync(db, $"{user.Name} {actionText} Domain ({domain.Url})", cancellationToken);
+            await SaveAuditAsync(db, $"{user.UserName} {actionText} Domain ({domain.Url})", cancellationToken);
         }
 
         return await db.SaveChangesAndLog(domain, handlerResult, cacheService, extensionManager,
@@ -876,7 +876,7 @@ public class ContentService(
         {
             if (user != null)
             {
-                await SaveAuditAsync(db, $"{user.Name} Deleted Domain ({domain.Url})", cancellationToken);
+                await SaveAuditAsync(db, $"{user.UserName} Deleted Domain ({domain.Url})", cancellationToken);
             }
 
             db.Delete(domain);
@@ -1793,7 +1793,7 @@ public class ContentService(
         CancellationToken cancellationToken)
     {
         if (user == null) return;
-        await SaveAuditAsync(db, $"{user.Name} {action} {name ?? string.Empty}", cancellationToken);
+        await SaveAuditAsync(db, $"{user.UserName} {action} {name ?? string.Empty}", cancellationToken);
     }
 
     private static async Task SaveAuditAsync(IAsyncDocumentSession db, string description,

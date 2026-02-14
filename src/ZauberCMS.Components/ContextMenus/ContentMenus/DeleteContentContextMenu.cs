@@ -46,7 +46,7 @@ public class DeleteContentContextMenu(IContentService contentService, IMembershi
                 Detail = result.Messages.MessagesAsString(), Duration = 4000 });
             if (result.Success)
             {
-                await appState.NotifyContentChanged(dbContent, currentUser?.Name ?? "Unknown");
+                await appState.NotifyContentChanged(dbContent, currentUser?.UserName ?? "Unknown");
             }
         }
     }

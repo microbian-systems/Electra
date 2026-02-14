@@ -1,36 +1,28 @@
-﻿using System.Text.Json.Serialization;
-using Electra.Core.Entities;
+using System.Text.Json.Serialization;
 using Electra.Core.Identity;
-using Microsoft.AspNetCore.Identity;
-using ZauberCMS.Core.Shared.Interfaces;
-using ZauberCMS.Core.Shared.Models;
 
 namespace ZauberCMS.Core.Membership.Models;
 
-public class CmsRole : ElectraRole, ITreeItem, IEntity
+/// <summary>
+/// CMS Role entity focused on Identity concerns only.
+/// UI-specific data (Description, Icon, Properties, Tabs, etc.) has been moved to CmsRoleUI.
+/// </summary>
+public class CmsRole : ElectraRole
 {
-    public string? Description { get; set; }
-    public string? Icon { get; set; }
-    public Dictionary<string, object> ExtendedData { get; set; } = new();
+    /// <summary>
+    /// User role assignments
+    /// </summary>
     public List<UserRole> UserRoles { get; set; } = [];
-    
+
+    /// <summary>
+    /// Content access permissions for this role
+    /// </summary>
     [JsonIgnore]
     public List<ContentRole> ContentRoles { get; set; } = [];
-    
+
+    /// <summary>
+    /// Media access permissions for this role
+    /// </summary>
     [JsonIgnore]
     public List<MediaRole> MediaRoles { get; set; } = [];
-    
-    /// <summary>
-    /// The properties available on this Role
-    /// </summary>
-    public List<PropertyType> Properties { get; set; } = [];
-    
-    /// <summary>
-    /// Gets or sets the list of tabs associated with this Role
-    /// </summary>
-    /// <remarks>
-    /// Tabs are used to organize the properties into separate sections.
-    /// Each tab represents a logical grouping of properties.
-    /// </remarks>
-    public List<Tab> Tabs { get; set; } = [new() {Id = Constants.Ids.ContentTypeSystemTabId, IsSystemTab = true, SortOrder = 100, Name = "System"}];
 }

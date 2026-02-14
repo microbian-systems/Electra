@@ -73,7 +73,7 @@ public class SortContentContextMenu(IContentService contentService, IMembershipS
                     }
                 }
 
-                await appState.NotifyContentChanged(dbContent, currentUser?.Name ?? "Unknown");
+                await appState.NotifyContentChanged(dbContent, currentUser?.UserName ?? "Unknown");
             }
         }
     }

@@ -47,7 +47,7 @@ public class RefreshContentContextMenu(
         contextMenuService.Close();
         cacheService.ClearCachedItemsWithPrefix(nameof(Core.Content));
         treeState.ClearChildCache(null);
-        await appState.NotifyContentChanged(dbContent, currentUser?.Name ?? "Unknown");
+        await appState.NotifyContentChanged(dbContent, currentUser?.UserName ?? "Unknown");
     }
 
     public int SortOrder => -50;

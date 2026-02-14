@@ -1,4 +1,4 @@
-﻿using ZauberCMS.Core.Audit.Interfaces;
+using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Audit.Parameters;
 using ZauberCMS.Core.Membership.Models;
 
@@ -11,7 +11,7 @@ public static class AuditExtensions
         if (user != null)
         {
             var nameText = name ?? entity.GetType().Name;
-            var text = $"{user.Name} {ActionWording(action)} {nameText}";
+            var text = $"{user.UserName} {ActionWording(action)} {nameText}";
             await auditService.SaveAuditAsync(new SaveAuditParameters
             {
                 Audit = new Audit.Models.Audit

@@ -37,7 +37,7 @@ public class RestoreContextMenu(IContentService contentService, IMembershipServi
         var saveResult = await contentService.SaveContentAsync(new SaveContentParameters { Content = dbContent, ExcludePropertyData = true});
         if (saveResult.Success)
         {
-            await appState.NotifyContentChanged(dbContent, currentUser?.Name ?? "Unknown");
+            await appState.NotifyContentChanged(dbContent, currentUser?.UserName ?? "Unknown");
         }
     }
 

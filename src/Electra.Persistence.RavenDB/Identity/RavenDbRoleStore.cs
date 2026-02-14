@@ -51,6 +51,7 @@ public class RoleStore<TRole> : RoleStore<TRole, IdentityRoleClaim<string>>
 /// <typeparam name="TRole">The type of the class representing a role.</typeparam>
 /// <typeparam name="TRoleClaim">The type of the class representing a role claim.</typeparam>
 public abstract class RoleStore<TRole, TRoleClaim> :
+    IRoleStore<TRole>,
     IRoleClaimStore<TRole>,
     IQueryableRoleStore<TRole>
     where TRole : ElectraRole

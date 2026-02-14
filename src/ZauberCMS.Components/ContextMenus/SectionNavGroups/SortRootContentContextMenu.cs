@@ -65,7 +65,7 @@ public class SortRootContentContextMenu(IContentService contentService, IMembers
                     }
                 }
 
-                await appState.NotifyContentChanged(null, currentUser?.Name ?? "Unknown");
+                await appState.NotifyContentChanged(null, currentUser?.UserName ?? "Unknown");
             }
         }
     }

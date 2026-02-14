@@ -349,7 +349,7 @@ public class UserStore<TUser, TRole> :
         if (options.Value.UseStaticIndexes)
         {
             var key = loginProvider + "|" + providerKey;
-            return await RavenQueryableExtensions.Where(DbSession.Query<TUser, IdentityUserIndex<TUser>>(), u => u.Logins.Any(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey))
+            return await RavenQueryableExtensions.Where(DbSession.Query<TUser, IdentityUserIndex>(), u => u.Logins.Any(l => l.LoginProvider == loginProvider && l.ProviderKey == providerKey))
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
@@ -596,7 +596,7 @@ public class UserStore<TUser, TRole> :
 
         if (options.Value.UseStaticIndexes)
         {
-            return await DbSession.Query<IdentityUserIndex<TUser>.Result, IdentityUserIndex<TUser>>()
+            return await DbSession.Query<IdentityUserIndex.Result, IdentityUserIndex>()
                 .Where(u => u.Email == normalizedEmail)
                 .OfType<TUser>()
                 .FirstOrDefaultAsync(cancellationToken);
@@ -941,7 +941,7 @@ public class UserStore<TUser, TRole> :
     private IRavenQueryable<TUser> UserQuery()
     {
         return options.Value.UseStaticIndexes
-            ? DbSession.Query<TUser, IdentityUserIndex<TUser>>()
+            ? DbSession.Query<TUser, IdentityUserIndex>()
             : DbSession.Query<TUser>();
     }
 }

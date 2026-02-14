@@ -143,7 +143,7 @@ public class RestrictAccessContextMenu(
                 }
             }
             
-            await appState.NotifyContentChanged(content, currentUser?.Name ?? "Unknown");
+            await appState.NotifyContentChanged(content, currentUser?.UserName ?? "Unknown");
         }
     }
 

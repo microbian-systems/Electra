@@ -290,7 +290,7 @@ public abstract class ElectraIdentityService<T, TKey> : IElectraIdentityService<
 
     public async Task<(bool success, string[] errors)> ResetPasswordConfirmation(string email, string token, string password)
     {
-        if (!email.IsValidEmail() || token.IsNullOrEmpty())
+        if (!email.IsValidEmail() || string.IsNullOrEmpty(token))
             return (false, new[] {$"must have a valid email address and token"});
 
         var user = await userManager.FindByEmailAsync(email);

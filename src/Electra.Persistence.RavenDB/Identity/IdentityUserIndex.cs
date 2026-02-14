@@ -8,7 +8,7 @@ namespace Electra.Persistence.RavenDB.Identity;
 /// <summary>
 /// Index to user when querying users.
 /// </summary>
-public class IdentityUserIndex<TUser> : AbstractIndexCreationTask<TUser, IdentityUserIndex<TUser>.Result> where TUser : ElectraUser
+public class IdentityUserIndex : AbstractIndexCreationTask<ElectraUser, IdentityUserIndex.Result>
 {
     /// <summary>
     /// Result from a query to the IdentityUserIndex.
@@ -45,7 +45,7 @@ public class IdentityUserIndex<TUser> : AbstractIndexCreationTask<TUser, Identit
     /// </summary>
     public IdentityUserIndex()
     {
-        Map = (IEnumerable<TUser> users) => from u in users
+        Map = (IEnumerable<ElectraUser> users) => from u in users
             select new Result
             {
                 UserName = u.UserName!,

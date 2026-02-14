@@ -22,7 +22,7 @@
                                     <RadzenText TextStyle="TextStyle.Body2" class="rz-mb-3">@Comparison.Version1.DateCreated.ToString("g")</RadzenText>
                                     <RadzenStack Gap="0.5rem">
                                         <div><strong>Status:</strong> <RadzenBadge BadgeStyle="BadgeStyle.Info" Text="@Comparison.Version1.Status.ToString()"/></div>
-                                        <div style="word-break: break-word;"><strong>Created by:</strong> @Comparison.Version1.CreatedBy?.Name</div>
+                                        <div style="word-break: break-word;"><strong>Created by:</strong> @Comparison.Version1.CreatedBy?.UserName</div>
                                         @if (!string.IsNullOrWhiteSpace(Comparison.Version1.VersionName))
                                         {
                                             <div style="word-break: break-word;"><strong>Name:</strong> @Comparison.Version1.VersionName</div>
@@ -40,7 +40,7 @@
                                     <RadzenText TextStyle="TextStyle.Body2" class="rz-mb-3">@Comparison.Version2.DateCreated.ToString("g")</RadzenText>
                                     <RadzenStack Gap="0.5rem">
                                         <div><strong>Status:</strong> <RadzenBadge BadgeStyle="BadgeStyle.Info" Text="@Comparison.Version2.Status.ToString()"/></div>
-                                        <div style="word-break: break-word;"><strong>Created by:</strong> @Comparison.Version2.CreatedBy?.Name</div>
+                                        <div style="word-break: break-word;"><strong>Created by:</strong> @Comparison.Version2.CreatedBy?.UserName</div>
                                         @if (!string.IsNullOrWhiteSpace(Comparison.Version2.VersionName))
                                         {
                                             <div style="word-break: break-word;"><strong>Name:</strong> @Comparison.Version2.VersionName</div>

@@ -68,7 +68,7 @@ public class SortMediaContextMenu(IMembershipService membershipService, IMediaSe
                     }
                 }
 
-                await appState.NotifyMediaChanged(dbContent, currentUser?.Name ?? "Unknown");
+                await appState.NotifyMediaChanged(dbContent, currentUser?.UserName ?? "Unknown");
             }
         }
     }

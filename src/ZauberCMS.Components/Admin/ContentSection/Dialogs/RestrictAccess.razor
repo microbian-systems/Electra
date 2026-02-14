@@ -1,4 +1,4 @@
-﻿@using ZauberCMS.Core.Content.Parameters
+@using ZauberCMS.Core.Content.Parameters
 @using ZauberCMS.Core.Membership.Models
 @using ZauberCMS.Core.Membership.Parameters
 @using ZauberCMS.Core.Shared.Comparers
@@ -45,7 +45,7 @@
             {
                 AlreadyHadContentRoles = true;
                 // I need to remove the roles in SelectedRoles from AllRoles
-                AllRoles = AllRoles.Except(selectedRoles, new ITreeEqualityComparer<CmsRole>()).ToList();
+                AllRoles = AllRoles.Except(selectedRoles, new RoleEqualityComparer()).ToList();
             }
         }
     }
@@ -53,5 +53,23 @@
     private async Task Save()
     {
         await BlazoredModal.CloseAsync(ModalResult.Ok((AlreadyHadContentRoles, SelectedRoles != null ? SelectedRoles.ToList() : [])));
+    }
+    
+    /// <summary>
+    /// Equality comparer for CmsRole that compares by Id
+    /// </summary>
+    private class RoleEqualityComparer : IEqualityComparer<CmsRole>
+    {
+        public bool Equals(CmsRole? x, CmsRole? y)
+        {
+            if (x == null && y == null) return true;
+            if (x == null || y == null) return false;
+            return x.Id == y.Id;
+        }
+
+        public int GetHashCode(CmsRole obj)
+        {
+            return obj.Id?.GetHashCode() ?? 0;
+        }
     }
 }

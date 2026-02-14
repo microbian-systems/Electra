@@ -22,14 +22,12 @@ public static class RoleMappingExtensions
         target.NormalizedName = source.NormalizedName;
         target.ConcurrencyStamp = source.ConcurrencyStamp;
 
-        // Map custom properties
-        target.Description = source.Description;
-        target.Icon = source.Icon;
+        // Map custom audit properties
         target.CreatedOn = source.CreatedOn;
         target.ModifiedOn = source.ModifiedOn;
-        target.ExtendedData = source.ExtendedData;
-        target.Properties = source.Properties;
-        target.Tabs = source.Tabs;
+
+        // Note: Description, Icon, Properties, Tabs, ExtendedData are now in CmsRoleUI
+        // Use CmsRoleUIMappingExtensions for those properties
 
         // Excluded properties (navigation properties):
         // - UserRoles (navigation property)
@@ -47,6 +45,35 @@ public static class RoleMappingExtensions
     public static CmsRole MapToNew(this CmsRole source)
     {
         var target = new CmsRole();
+        return source.MapTo(target);
+    }
+}
+
+/// <summary>
+/// Extension methods for mapping CmsRoleUI entities
+/// </summary>
+public static class CmsRoleUIMappingExtensions
+{
+    /// <summary>
+    /// Maps properties from source RoleUI to target RoleUI
+    /// </summary>
+    public static CmsRoleUI MapTo(this CmsRoleUI source, CmsRoleUI target)
+    {
+        target.Description = source.Description;
+        target.Icon = source.Icon;
+        target.ExtendedData = source.ExtendedData;
+        target.Properties = source.Properties;
+        target.Tabs = source.Tabs;
+
+        return target;
+    }
+
+    /// <summary>
+    /// Creates a new RoleUI entity with properties mapped from source
+    /// </summary>
+    public static CmsRoleUI MapToNew(this CmsRoleUI source)
+    {
+        var target = new CmsRoleUI();
         return source.MapTo(target);
     }
 }

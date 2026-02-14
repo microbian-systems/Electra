@@ -48,7 +48,7 @@ public class DeleteMediaContextMenu(
             if (deleteResult.Success)
             {
                 notificationService.ShowSuccessNotification("Media deleted");
-                await appState.NotifyMediaDeleted(dbMedia, currentUser?.Name ?? "Unknown");
+                await appState.NotifyMediaDeleted(dbMedia, currentUser?.UserName ?? "Unknown");
             }
             else
             {

@@ -114,6 +114,7 @@ public static class ZauberSetup
         services.AddScoped<IContentService, ContentService>();
         services.AddScoped<IContentVersioningService, ContentVersioningService>();
         services.AddScoped<IMembershipService, MembershipService>();
+        services.AddScoped<ICmsUserProfileService, CmsUserProfileService>();
         services.AddScoped<IMediaService, MediaService>();
         services.AddScoped<ILanguageService, LanguageService>();
         services.AddScoped<ITagService, TagService>();
@@ -319,7 +320,7 @@ public static class ZauberSetup
         services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
     }
 
-    public static void AddZauberCms<T>(this WebApplication app)
+    public static async Task AddZauberCms<T>(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
         var sp = scope.ServiceProvider;
@@ -332,9 +333,7 @@ public static class ZauberSetup
         
         try
         {
-            Seeder.Initialize(app.Services, app.Configuration)
-                .GetAwaiter().GetResult();
-            // todo - use a ravendb construct here for seeding the db
+            await Seeder.Initialize(app.Services, app.Configuration); // todo - use a ravendb construct here for seeding the db
             // Get any seed data
             var seedData = extensionManager.GetInstances<ISeedData>();
             foreach (var data in seedData)

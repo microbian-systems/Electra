@@ -111,9 +111,7 @@ public class ElectraUser<TKey>
     public DateTimeOffset? LastLoginAt { get; set; }
     public byte[] UserHandle { get; set; } 
     public TKey UserProfileId { get; set; }
-    // todo - consider converting the user profile property to a JsonB field vs a Foreign related table
-    // Documentation on JsonB columns:
-    // https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
+    public bool AgreedToTos { get; set; } 
     //[Column(TypeName = "jsonb")]
     [JsonPropertyName("profile")] 
     public virtual ElectraUserProfile Profile { get; set; } = new();

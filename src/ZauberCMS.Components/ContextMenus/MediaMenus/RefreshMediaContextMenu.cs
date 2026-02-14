@@ -47,7 +47,7 @@ public class RefreshMediaContextMenu(
         contextMenuService.Close();
         cacheService.ClearCachedItemsWithPrefix(nameof(Core.Media));
         treeState.ClearChildCache(null);
-        await appState.NotifyMediaChanged(dbMedia, currentUser?.Name ?? "Unknown");
+        await appState.NotifyMediaChanged(dbMedia, currentUser?.UserName ?? "Unknown");
     }
 
     public int SortOrder => 150;

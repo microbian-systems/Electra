@@ -137,15 +137,14 @@ public class MembershipService(
                 var updateResult = await userManager.UpdateAsync(user);
                 if (!updateResult.Succeeded)
                 {
-                    handlerResult.Messages.AddRange(updateResult.Errors.Select(e => new ResultMessage(e.Description, ResultMessageType.Error)));
+                handlerResult.Messages.AddRange(updateResult.Errors.Select(e => new ResultMessage(e.Description, ResultMessageType.Error)));
                     return handlerResult;
                 }
                 
                 // Note: Audit logging would need to be implemented without mediator
-                logger.LogInformation("Audit logging for user {UserName} {Action}", parameters.User.Name, isUpdate ? "Update" : "Create");
+                logger.LogInformation("Audit logging for user {UserName} {Action}", parameters.User.UserName, isUpdate ? "Update" : "Create");
                 
-                // Finally update property data
-                handlerResult = await UpdateUserPropertyValues(db, parameters.User, handlerResult, cancellationToken);
+                // Property data is now managed via CmsUserProfileService
             }
 
             // Handle roles
@@ -284,10 +283,9 @@ public class MembershipService(
                 }
                 
                 // Note: Audit logging would need to be implemented without mediator
-                logger.LogInformation("Audit logging for user {UserName} {Action}", parameters.User.Name, isUpdate ? "Update" : "Create");
+                logger.LogInformation("Audit logging for user {UserName} {Action}", parameters.User.UserName, isUpdate ? "Update" : "Create");
                 
-                // Finally update property data
-                handlerResult = await UpdateUserPropertyValues(db, parameters.User, handlerResult, cancellationToken);
+                // Property data is now managed via CmsUserProfileService
             }
 
             // Handle roles
@@ -367,7 +365,7 @@ public class MembershipService(
         if (user != null)
         {
             // Note: Audit logging would need to be implemented without mediator
-            logger.LogInformation("Audit logging for user {UserName} Delete", user.Name);
+            logger.LogInformation("Audit logging for user {UserName} Delete", user.UserName);
             
             var result = await userManager.DeleteAsync(user);
             if (!result.Succeeded)
@@ -766,7 +764,6 @@ public class MembershipService(
                 {
                     UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
                     Email = info.Principal.FindFirstValue(ClaimTypes.Email),
-                    Name = info.Principal.FindFirstValue(ClaimTypes.Name),
                     CreatedOn = DateTime.UtcNow,
                     ModifiedOn = DateTime.UtcNow
                 };
@@ -968,7 +965,6 @@ public class MembershipService(
     {
         var query = db.Query<CmsUser>()
                 .Include(x => x.UserRoles)
-                .Include(x => x.PropertyData)
                 .Where(x => x.Id == parameters.Id);
 
         return query;
@@ -991,10 +987,12 @@ public class MembershipService(
                 query = query.Where(x => x.UserName != null && x.UserName.ToLower().Contains(searchTermLower));
             }
 
-            if (parameters.Roles.Count != 0)
-            {
-                query = query.Where(x => x.UserRoles.Any(ur => ur.Role.Name != null && parameters.Roles.Contains(ur.Role.Name)));
-            }
+            // Note: Role filtering by name requires loading roles separately
+            // This functionality has been temporarily disabled during refactoring
+            // if (parameters.Roles.Count != 0)
+            // {
+            //     query = query.Where(x => x.UserRoles.Any(ur => parameters.Roles.Contains(ur.RoleId)));
+            // }
 
             if (parameters.Ids.Count != 0)
             {
@@ -1018,37 +1016,4 @@ public class MembershipService(
         return query;
     }
 
-    private async Task<HandlerResult<CmsUser>> UpdateUserPropertyValues(IAsyncDocumentSession db, CmsUser requestUser, HandlerResult<CmsUser> handlerResult, CancellationToken cancellationToken)
-    {
-        var user = db.Query<CmsUser>()
-            .Include(x => x.PropertyData)
-            .FirstOrDefault(x => x.Id == requestUser.Id);
-
-        // Remove deleted items
-        var deletedItems = user!.PropertyData.Where(epv => requestUser.PropertyData.All(npv => npv.Id != epv.Id)).ToList();
-        foreach (var deletedItem in deletedItems)
-        {
-            db.Delete(deletedItem);
-        }
-
-        // Add or update items
-        foreach (var newPropertyValue in requestUser.PropertyData)
-        {
-            var existingPropertyValue = user!.PropertyData
-                .FirstOrDefault(epv => epv.Id == newPropertyValue.Id);
-            if (existingPropertyValue == null)
-            {
-                // New property value
-                await db.StoreAsync(newPropertyValue, cancellationToken);
-            }
-            else
-            {
-                // Existing property value, update its properties
-                newPropertyValue.MapTo(existingPropertyValue);
-            }
-        }
-        
-        return await db
-            .SaveChangesAndLog(user, handlerResult, cacheService, extensionManager, cancellationToken);
-    }
 }
