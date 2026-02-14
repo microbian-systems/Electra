@@ -1,3 +1,4 @@
+﻿using Electra.Models.Entities;
 using ZauberCMS.Core.Audit.Interfaces;
 using ZauberCMS.Core.Audit.Parameters;
 using ZauberCMS.Core.Membership.Models;
@@ -6,7 +7,7 @@ namespace ZauberCMS.Core.Extensions;
 
 public static class AuditExtensions
 {
-    public static async Task AddAudit<T>(this CmsUser? user, T entity, string? name, AuditAction action, IAuditService auditService, CancellationToken? cancellationToken) where T : class
+    public static async Task AddAudit<T>(this ElectraUser? user, T entity, string? name, AuditAction action, IAuditService auditService, CancellationToken? cancellationToken) where T : class
     {
         if (user != null)
         {

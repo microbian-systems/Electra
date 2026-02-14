@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Electra.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ZauberCMS.Core.Membership.Models;
 
@@ -7,8 +8,8 @@ namespace ZauberCMS.Components.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class AuthController(
-    UserManager<CmsUser> userManager,
-    SignInManager<CmsUser> signInManager)
+    UserManager<ElectraUser> userManager,
+    SignInManager<ElectraUser> signInManager)
     : ControllerBase
 {
     [HttpGet("refreshsignin")]

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -21,7 +22,7 @@ public static class IdentityComponentsEndpointRouteBuilderExtensions
 
         accountGroup.MapPost("/PerformExternalLogin", (
             HttpContext context,
-            [FromServices] SignInManager<CmsUser> signInManager,
+            [FromServices] SignInManager<ElectraUser> signInManager,
             [FromForm] string provider,
             [FromForm] string returnUrl) =>
         {
@@ -42,7 +43,7 @@ public static class IdentityComponentsEndpointRouteBuilderExtensions
 
         accountGroup.MapPost("/Logout", async (
             ClaimsPrincipal user,
-            SignInManager<CmsUser> signInManager,
+            SignInManager<ElectraUser> signInManager,
             [FromForm] string returnUrl) =>
         {
             await signInManager.SignOutAsync();

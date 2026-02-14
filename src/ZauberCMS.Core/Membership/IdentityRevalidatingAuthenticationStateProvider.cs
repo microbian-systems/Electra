@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
@@ -24,11 +25,11 @@ public sealed class IdentityRevalidatingAuthenticationStateProvider(
     {
         // Get the user manager from a new scope to ensure it fetches fresh data
         await using var scope = scopeFactory.CreateAsyncScope();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
         return await ValidateSecurityStampAsync(userManager, authenticationState.User);
     }
 
-    private async Task<bool> ValidateSecurityStampAsync(UserManager<CmsUser> userManager,
+    private async Task<bool> ValidateSecurityStampAsync(UserManager<ElectraUser> userManager,
         ClaimsPrincipal principal)
     {
         var user = await userManager.GetUserAsync(principal);

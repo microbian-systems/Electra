@@ -1,3 +1,4 @@
+using Electra.Models.Entities;
 using ZauberCMS.Core.Membership.Models;
 
 namespace ZauberCMS.Core.Membership.Mapping;
@@ -14,7 +15,7 @@ public static class UserMappingExtensions
     /// <param name="source">Source User entity</param>
     /// <param name="target">Target User entity to update</param>
     /// <returns>Updated target User entity</returns>
-    public static CmsUser MapTo(this CmsUser source, CmsUser target)
+    public static ElectraUser MapTo(this ElectraUser source, ElectraUser target)
     {
         // Map all simple properties from IdentityUser
         target.Id = source.Id;
@@ -53,9 +54,9 @@ public static class UserMappingExtensions
     /// </summary>
     /// <param name="source">Source User entity</param>
     /// <returns>New User entity with mapped properties</returns>
-    public static CmsUser MapToNew(this CmsUser source)
+    public static ElectraUser MapToNew(this ElectraUser source)
     {
-        var target = new CmsUser();
+        var target = new ElectraUser();
         return source.MapTo(target);
     }
 }

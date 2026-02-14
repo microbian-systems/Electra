@@ -1,9 +1,10 @@
-﻿@using Microsoft.AspNetCore.Authentication
+﻿@using Electra.Models.Entities
+@using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using ZauberCMS.Core.Membership
 @using ZauberCMS.Core.Membership.Models
 
-@inject SignInManager<CmsUser> SignInManager
+@inject SignInManager<ElectraUser> SignInManager
 @inject IdentityRedirectManager RedirectManager
 
 @if (externalLogins.Any())

@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Encodings.Web;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -12,7 +13,7 @@ using ZauberCMS.Core.Providers;
 namespace ZauberCMS.Core.Email.Services;
 
 public class EmailService(
-    UserManager<CmsUser> userManager,
+    UserManager<ElectraUser> userManager,
     IHttpContextAccessor httpContextAccessor,
     ProviderService providerService)
     : IEmailService

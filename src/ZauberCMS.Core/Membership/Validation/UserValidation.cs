@@ -1,10 +1,11 @@
+using Electra.Models.Entities;
 using FluentValidation;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Shared.Validation;
 
 namespace ZauberCMS.Core.Membership.Validation;
 
-public class UserValidation : BaseFluentValidator<CmsUser>
+public class UserValidation : BaseFluentValidator<ElectraUser>
 {
     public UserValidation()
     {

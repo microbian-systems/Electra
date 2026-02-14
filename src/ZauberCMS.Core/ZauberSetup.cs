@@ -4,6 +4,7 @@ using Blazored.Modal;
 using Electra.Auth;
 using Electra.Auth.Extensions;
 using Electra.Common.Web.Extensions;
+using Electra.Models.Entities;
 using ImageResize.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -114,7 +115,7 @@ public static class ZauberSetup
         services.AddScoped<IContentService, ContentService>();
         services.AddScoped<IContentVersioningService, ContentVersioningService>();
         services.AddScoped<IMembershipService, MembershipService>();
-        services.AddScoped<ICmsUserProfileService, CmsUserProfileService>();
+        services.AddScoped<IElectraUserProfileService, ElectraUserProfileService>();
         services.AddScoped<IMediaService, MediaService>();
         services.AddScoped<ILanguageService, LanguageService>();
         services.AddScoped<ITagService, TagService>();
@@ -142,7 +143,7 @@ public static class ZauberSetup
         services.AddRavenPersistence(builder.Configuration);
         if (databaseProvider != null)
         {
-            var identityBuilder = services.AddIdentityCore<CmsUser>(options =>
+            var identityBuilder = services.AddIdentityCore<ElectraUser>(options =>
                 {
                     // Password settings.
                     options.Password.RequireDigit = zauberSettings.Identity.PasswordRequireDigit;
@@ -164,7 +165,7 @@ public static class ZauberSetup
                     // Email
                     options.SignIn.RequireConfirmedAccount = zauberSettings.Identity.SignInRequireConfirmedAccount;
                 })
-                .AddRavenDbIdentityStores<CmsUser>()
+                .AddRavenDbIdentityStores<ElectraUser>()
                 .AddSignInManager()
                 .AddRoles<CmsRole>()
                 .AddRoleManager<RoleManager<CmsRole>>()
@@ -179,7 +180,7 @@ public static class ZauberSetup
             //     .AddSignInManager()
             //     .AddDefaultTokenProviders();
 
-            services.AddScoped<IUserEmailStore<CmsUser>, UserEmailStore>();
+            services.AddScoped<IUserEmailStore<ElectraUser>, UserEmailStore>();
         }
         else
         {
@@ -215,8 +216,8 @@ public static class ZauberSetup
         services.AddScoped(typeof(ValidateService<>));
         services.AddScoped<ICacheService, DefaultCacheService>();
         services.AddScoped<IHtmlSanitizerService, DefaultHtmlSanitizerService>();
-        services.AddScoped<SignInManager<CmsUser>, ZauberSignInManager>();
-        services.AddScoped<IEmailSender<CmsUser>, IdentityEmailSender>();
+        services.AddScoped<SignInManager<ElectraUser>, ZauberSignInManager>();
+        services.AddScoped<IEmailSender<ElectraUser>, IdentityEmailSender>();
         services.AddScoped<TreeState>();
         services.AddScoped<ContentFinderPipeline>();
 

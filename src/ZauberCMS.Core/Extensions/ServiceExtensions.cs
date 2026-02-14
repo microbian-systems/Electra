@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Electra.Models.Entities;
 using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Content.Parameters;
 using ZauberCMS.Core.Data.Interfaces;
@@ -70,7 +71,7 @@ public static class ServiceExtensions
     /// </summary>
     /// <param name="membershipService"></param>
     /// <returns></returns>
-    public static async Task<CmsUser?> GetCurrentUser(this IMembershipService membershipService)
+    public static async Task<ElectraUser?> GetCurrentUser(this IMembershipService membershipService)
     {
         return await membershipService.GetCurrentUserAsync();
     }
@@ -82,7 +83,7 @@ public static class ServiceExtensions
     /// <param name="id">The unique identifier of the user to retrieve. If null, no user will be returned.</param>
     /// <param name="cached">Indicates whether to use cached data. Default value is true.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains an instance of User, or null if no user is found.</returns>
-    public static async Task<CmsUser?> GetUser(this IMembershipService membershipService, string? id, bool cached = true)
+    public static async Task<ElectraUser?> GetUser(this IMembershipService membershipService, string? id, bool cached = true)
     {
         if (id != null)
         {

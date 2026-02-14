@@ -12,7 +12,7 @@ public class CmsRole : ElectraRole
     /// <summary>
     /// User role assignments
     /// </summary>
-    public List<UserRole> UserRoles { get; set; } = [];
+    public List<ElectraRole> UserRoles { get; set; } = [];
 
     /// <summary>
     /// Content access permissions for this role

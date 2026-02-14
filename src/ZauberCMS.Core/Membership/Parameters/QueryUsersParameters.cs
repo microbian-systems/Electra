@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Electra.Models.Entities;
 using Raven.Client.Documents.Linq;
 using ZauberCMS.Core.Membership.Models;
 
@@ -14,8 +15,8 @@ public class QueryUsersParameters
     public int AmountPerPage { get; set; } = 10;
     public string? SearchTerm { get; set; }
     public GetUsersOrderBy OrderBy { get; set; } = GetUsersOrderBy.DateUpdatedDescending;
-    public Expression<Func<CmsUser, bool>>? WhereClause { get; set; }
-    public Func<IRavenQueryable<CmsUser>>? Query { get; set; }
+    public Expression<Func<ElectraUser, bool>>? WhereClause { get; set; }
+    public Func<IRavenQueryable<ElectraUser>>? Query { get; set; }
 }
 
 public enum GetUsersOrderBy

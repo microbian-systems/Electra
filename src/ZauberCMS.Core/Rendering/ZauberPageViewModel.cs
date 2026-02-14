@@ -1,4 +1,5 @@
-﻿using ZauberCMS.Core.Content.Interfaces;
+﻿using Electra.Models.Entities;
+using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Content.Models;
 using ZauberCMS.Core.Languages.Models;
 using ZauberCMS.Core.Membership.Models;
@@ -27,7 +28,7 @@ public class ZauberPageViewModel(Content.Models.Content content) : IHasPropertyV
         set => content.LastUpdatedById = value;
     }
 
-    public CmsUser? LastUpdatedBy
+    public ElectraUser? LastUpdatedBy
     {
         get => content.LastUpdatedBy;
         set => content.LastUpdatedBy = value;

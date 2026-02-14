@@ -1,4 +1,5 @@
-﻿@using ZauberCMS.Components.Admin.ContentSection.Dialogs
+﻿@using Electra.Models.Entities
+@using ZauberCMS.Components.Admin.ContentSection.Dialogs
 @using ZauberCMS.Core.Content.Parameters
 @using ZauberCMS.Core.Membership.Models
 @implements ZauberCMS.Core.Sections.Interfaces.ISectionDashboard
@@ -97,7 +98,7 @@
     public string TabName => "Latest Content";
     public int SortOrder => 0;
     public string SectionAlias => Constants.Sections.ContentSection;
-    private CmsUser? CurrentUser { get; set; }
+    private ElectraUser? CurrentUser { get; set; }
     private int AllUserCount { get; set; }
     private int YourUserCount { get; set; }
     private List<string> UnpublishedContent { get; set; } = [];

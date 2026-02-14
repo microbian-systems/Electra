@@ -1,7 +1,6 @@
 using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -18,6 +17,7 @@ using ZauberCMS.Core.Shared.Services;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Shared;
 using System.Text.Json;
+using Electra.Models.Entities;
 using Radzen;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
@@ -32,7 +32,7 @@ public class ContentService(
     ICacheService cacheService,
     IOptions<ZauberSettings> settings,
     AuthenticationStateProvider authenticationStateProvider,
-    UserManager<CmsUser> userManager,
+    UserManager<ElectraUser> userManager,
     ExtensionManager extensionManager,
     AppState appState,
     ILanguageService languageService,
@@ -422,7 +422,7 @@ public class ContentService(
         handlerResult.AddMessage("Content copied successfully.", ResultMessageType.Success);
         return handlerResult;
 
-        Models.Content CreateCopy(Models.Content original, CmsUser? currentUser, string? parentId = null)
+        Models.Content CreateCopy(Models.Content original, ElectraUser? currentUser, string? parentId = null)
         {
             var copy = original.MapToNew();
             copy.Id = Guid.NewGuid().NewSequentialGuid().ToString();
@@ -1345,7 +1345,7 @@ public class ContentService(
     }
 
     private static async Task ImportContentRecursive(ContentExport exp, string? parentId, ContentType contentType,
-        IAsyncDocumentSession db, CmsUser? user, Dictionary<string, string> propMap,
+        IAsyncDocumentSession db, ElectraUser? user, Dictionary<string, string> propMap,
         HandlerResult<ContentType> handlerResult)
     {
         var content = new Models.Content
@@ -1789,7 +1789,7 @@ public class ContentService(
         return query.ToPaginatedList(1, int.MaxValue);
     }
 
-    private static async Task SaveAuditIfUser(IAsyncDocumentSession db, CmsUser? user, string? name, string action,
+    private static async Task SaveAuditIfUser(IAsyncDocumentSession db, ElectraUser? user, string? name, string action,
         CancellationToken cancellationToken)
     {
         if (user == null) return;
@@ -1893,7 +1893,7 @@ public class ContentService(
         };
     }
 
-    private async Task ProcessBlockListEditorChangesAsync(Models.Content content, IAsyncDocumentSession db, CmsUser user,
+    private async Task ProcessBlockListEditorChangesAsync(Models.Content content, IAsyncDocumentSession db, ElectraUser user,
         CancellationToken cancellationToken)
     {
         // Load ContentType to identify which properties are BlockListEditor type

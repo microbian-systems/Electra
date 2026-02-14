@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Electra.Models.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raven.Client.Documents.Session;
@@ -12,13 +13,13 @@ namespace ZauberCMS.Core.Extensions;
 public static class RoleExtensions
 {
         public static async Task<AuthenticationResult> AssignStartingRoleAsync(
-            this UserManager<CmsUser> userManager,
+            this UserManager<ElectraUser> userManager,
             RoleManager<CmsRole> roleManager,
             ILogger logger,
             IAsyncDocumentSession dbContext,
             IOptions<ZauberSettings> settings,
             IDataService dataService,
-            CmsUser newUser,
+            ElectraUser newUser,
             AuthenticationResult loginResult)
         {
             // Log new account creation
@@ -28,7 +29,7 @@ public static class RoleExtensions
             
             // Determine starting role name
             var startingRoleName = settings.Value.NewUserStartingRole ?? Constants.Roles.StandardRoleName;
-            if (dbContext.Query<CmsUser>().Count() == 1 || 
+            if (dbContext.Query<ElectraUser>().Count() == 1 || 
                 globalSettings.AdminEmailAddresses.Count != 0 && 
                 globalSettings.AdminEmailAddresses.Contains(newUser.Email!))
             {

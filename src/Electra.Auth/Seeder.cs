@@ -42,7 +42,7 @@ public class Seeder
         var admins = await db
             .Query<Users_ByRoleName.Result, Users_ByRoleName>()
             .Where(x => x.RoleNames.Contains("admin"))
-            .OfType<IElectraUser>()
+            .OfType<ElectraUser>()
             .ToListAsync();
 
 

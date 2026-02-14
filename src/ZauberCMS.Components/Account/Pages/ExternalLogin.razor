@@ -1,4 +1,5 @@
 ﻿@page "/Account/ExternalLogin"
+@using Electra.Models.Entities
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Http
@@ -16,8 +17,8 @@
 
 @code {
     [Inject] public IdentityRedirectManager RedirectManager { get; set; } = null!;
-    [Inject] public SignInManager<CmsUser> SignInManager { get; set; } = null!;
-    [Inject] public UserManager<CmsUser> UserManager { get; set; } = null!;
+    [Inject] public SignInManager<ElectraUser> SignInManager { get; set; } = null!;
+    [Inject] public UserManager<ElectraUser> UserManager { get; set; } = null!;
     [Inject] public IOptions<ZauberSettings> Settings { get; set; } = null!;
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;

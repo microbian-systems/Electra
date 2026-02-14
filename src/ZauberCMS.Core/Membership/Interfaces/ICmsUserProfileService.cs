@@ -1,3 +1,4 @@
+using Electra.Models.Entities;
 using ZauberCMS.Core.Membership.Models;
 
 namespace ZauberCMS.Core.Membership.Interfaces;
@@ -6,7 +7,7 @@ namespace ZauberCMS.Core.Membership.Interfaces;
 /// Service for managing CMS user profiles and role UI data.
 /// Provides RavenDB-optimized queries using Include() patterns.
 /// </summary>
-public interface ICmsUserProfileService
+public interface IElectraUserProfileService
 {
     /// <summary>
     /// Gets a user profile by user ID
@@ -16,7 +17,7 @@ public interface ICmsUserProfileService
     /// <summary>
     /// Gets a user profile with the associated user loaded via Include()
     /// </summary>
-    Task<(CmsUser? User, CmsUserProfile? Profile)> GetUserWithProfileAsync(string userId, CancellationToken cancellationToken = default);
+    Task<(ElectraUser? User, CmsUserProfile? Profile)> GetUserWithProfileAsync(string userId, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Gets or creates a user profile for the specified user

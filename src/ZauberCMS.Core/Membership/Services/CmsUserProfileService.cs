@@ -1,3 +1,4 @@
+using Electra.Models.Entities;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
@@ -11,7 +12,7 @@ namespace ZauberCMS.Core.Membership.Services;
 /// Service for managing CMS user profiles and role UI data with RavenDB.
 /// Uses Include() patterns for efficient document loading.
 /// </summary>
-public class CmsUserProfileService(IAsyncDocumentSession db) : ICmsUserProfileService
+public class ElectraUserProfileService(IAsyncDocumentSession db) : IElectraUserProfileService
 {
     /// <summary>
     /// Gets a user profile by user ID
@@ -25,7 +26,7 @@ public class CmsUserProfileService(IAsyncDocumentSession db) : ICmsUserProfileSe
     /// <summary>
     /// Gets a user profile with the associated user loaded via Include()
     /// </summary>
-    public async Task<(CmsUser? User, CmsUserProfile? Profile)> GetUserWithProfileAsync(string userId, CancellationToken cancellationToken = default)
+    public async Task<(ElectraUser? User, CmsUserProfile? Profile)> GetUserWithProfileAsync(string userId, CancellationToken cancellationToken = default)
     {
         // Load the profile
         var profile = await db.Query<CmsUserProfile>()
@@ -35,7 +36,7 @@ public class CmsUserProfileService(IAsyncDocumentSession db) : ICmsUserProfileSe
             return (null, null);
 
         // Load the user separately
-        var user = await db.LoadAsync<CmsUser>(userId, cancellationToken);
+        var user = await db.LoadAsync<ElectraUser>(userId, cancellationToken);
         profile.User = user;
 
         return (user, profile);

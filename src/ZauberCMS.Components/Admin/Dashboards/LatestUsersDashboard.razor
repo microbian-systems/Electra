@@ -1,3 +1,4 @@
+@using Electra.Models.Entities
 @using ZauberCMS.Core.Membership.Models
 @using ZauberCMS.Core.Membership.Parameters
 @implements ZauberCMS.Core.Sections.Interfaces.ISectionDashboard
@@ -13,7 +14,7 @@
                 Count="@Count"
                 Data="@Users"
                 SelectionMode="DataGridSelectionMode.Single"
-                RowSelect="@((CmsUser value) => OnRowSelect(value))"
+                RowSelect="@((ElectraUser value) => OnRowSelect(value))"
                 PagerHorizontalAlign="HorizontalAlign.Center">
     <Columns>
         <RadzenDataGridColumn Property="UserName" Title="Username"/>
@@ -34,7 +35,7 @@
     public int SortOrder => 0;
     public string SectionAlias => Constants.Sections.UsersSection;
 
-    private IEnumerable<CmsUser> Users { get; set; } = [];
+    private IEnumerable<ElectraUser> Users { get; set; } = [];
     private int Count { get; set; } 
     private bool IsLoading { get; set; }
 
@@ -70,7 +71,7 @@
 
     private void OnRowSelect(object value)
     {
-        if (value is CmsUser selectedRow)
+        if (value is ElectraUser selectedRow)
         {
             NavigationManager.NavigateTo($"{Urls.AdminUsersEdit}/{selectedRow.Id}", RefreshPage);
         }

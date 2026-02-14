@@ -1,4 +1,5 @@
-﻿using ZauberCMS.Core.Content.Interfaces;
+﻿using Electra.Models.Entities;
+using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Content.Parameters;
 using ZauberCMS.Core.Media.Interfaces;
 using ZauberCMS.Core.Media.Parameters;
@@ -268,7 +269,7 @@ public static class ContentExtensions
     /// <param name="propertyAlias"></param>
     /// <param name="membershipService"></param>
     /// <returns></returns>
-    public static async Task<List<CmsUser>> GetUsers(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
+    public static async Task<List<ElectraUser>> GetUsers(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
     {
         if (!string.IsNullOrEmpty(propertyAlias))
         {
@@ -290,7 +291,7 @@ public static class ContentExtensions
     /// <param name="propertyAlias">The property alias to retrieve user ids</param>
     /// <param name="membershipService">The membershipService to handle user queries</param>
     /// <returns>A single user or null if no users are found</returns>
-    public static async Task<CmsUser?> GetUser(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
+    public static async Task<ElectraUser?> GetUser(this IHasPropertyValues content, string propertyAlias, IMembershipService membershipService)
     {
         return (await content.GetUsers(propertyAlias, membershipService)).FirstOrDefault();
     }

@@ -1,5 +1,6 @@
 @using System.Globalization
 @using System.Text.Json
+@using Electra.Models.Entities
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.Extensions.Localization
 @using ZauberCMS.Core.Shared
@@ -302,7 +303,7 @@ else
     private List<PropertyType> AllProperties { get; set; } = [];
     private List<ContentType> SelectedCompositions { get; set; } = [];
     private List<Content> Breadcrumb { get; set; } = [];
-    private CmsUser? LastUpdatedBy { get; set; }
+    private ElectraUser? LastUpdatedBy { get; set; }
     private bool Loading { get; set; } = true;
     private BlockListChanges? PendingBlockListChanges { get; set; }
     private Content? WorkingCopy { get; set; }

@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Electra.Core.Entities;
+using Electra.Models.Entities;
 using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Extensions;
 
@@ -7,12 +8,12 @@ namespace ZauberCMS.Core.Membership.Models;
 
 /// <summary>
 /// CMS-specific user profile data stored as a separate RavenDB document.
-/// Use Include(x => x.UserId) to load the associated CmsUser.
+/// Use Include(x => x.UserId) to load the associated ElectraUser.
 /// </summary>
 public class CmsUserProfile : Entity, IHasPropertyValues
 {
     /// <summary>
-    /// Reference to the CmsUser document ID for RavenDB Include() support
+    /// Reference to the ElectraUser document ID for RavenDB Include() support
     /// </summary>
     public string UserId { get; set; } = string.Empty;
 
@@ -20,7 +21,7 @@ public class CmsUserProfile : Entity, IHasPropertyValues
     /// Navigation property to the user (not serialized, loaded via Include)
     /// </summary>
     [JsonIgnore]
-    public CmsUser? User { get; set; }
+    public ElectraUser? User { get; set; }
 
     /// <summary>
     /// Property values for this user (embedded in the document)

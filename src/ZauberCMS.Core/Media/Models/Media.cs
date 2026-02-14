@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Electra.Models.Entities;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Membership.Models;
 using ZauberCMS.Core.Shared.Interfaces;
@@ -94,7 +95,7 @@ public class Media : IBaseItem
     /// The id of the last person to update the media 
     /// </summary>
     public string? LastUpdatedById { get; set; }
-    public CmsUser? LastUpdatedBy { get; set; }
+    public ElectraUser? LastUpdatedBy { get; set; }
     
     /// <summary>
     /// Date the file is created.

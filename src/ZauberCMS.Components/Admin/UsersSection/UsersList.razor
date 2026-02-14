@@ -1,4 +1,5 @@
-﻿@using ZauberCMS.Core.Membership.Parameters
+﻿@using Electra.Models.Entities
+@using ZauberCMS.Core.Membership.Parameters
 @using ZauberCMS.Core.Membership.Models
 
 @attribute [Route($"{Urls.AdminUsersList}/{{RoleId:guid}}")]
@@ -15,7 +16,7 @@
                     AllowSorting="true"
                     Data="@Users"
                     SelectionMode="DataGridSelectionMode.Single"
-                    RowSelect="@((CmsUser value) => OnRowSelect(value))">
+                    RowSelect="@((ElectraUser value) => OnRowSelect(value))">
         @*@bind-Value="@SelectedContent"*@
         <Columns>
             <RadzenDataGridColumn Property="Username" Title="Username"/>
@@ -35,7 +36,7 @@
     
     [CascadingParameter] protected SectionLayout? Layout { get; set; }
     
-    private IEnumerable<CmsUser> Users { get; set; } = [];
+    private IEnumerable<ElectraUser> Users { get; set; } = [];
 
     protected override async Task OnParametersSetAsync()
     {
@@ -62,7 +63,7 @@
     
     private void OnRowSelect(object value)
     {
-        if (value is CmsUser selectedRow)
+        if (value is ElectraUser selectedRow)
         {
             NavigationManager.NavigateTo($"{Urls.AdminUsersEdit}/{selectedRow.Id}");
         }

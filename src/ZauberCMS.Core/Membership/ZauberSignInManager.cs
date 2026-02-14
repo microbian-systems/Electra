@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,20 +16,20 @@ using ZauberCMS.Core.Settings;
 namespace ZauberCMS.Core.Membership;
 
 public class ZauberSignInManager(
-    UserManager<CmsUser> userManager,
+    UserManager<ElectraUser> userManager,
     IHttpContextAccessor contextAccessor,
-    IUserClaimsPrincipalFactory<CmsUser> claimsFactory,
+    IUserClaimsPrincipalFactory<ElectraUser> claimsFactory,
     IOptions<IdentityOptions> optionsAccessor,
     ILogger<ZauberSignInManager> logger,
     IAuthenticationSchemeProvider schemes,
-    IUserConfirmation<CmsUser> confirmation,
+    IUserConfirmation<ElectraUser> confirmation,
     IOptions<ZauberSettings> options,
     IDataService dataService,
     IAsyncDocumentSession dbContext,
     RoleManager<CmsRole> roleManager)
-    : SignInManager<CmsUser>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
+    : SignInManager<ElectraUser>(userManager, contextAccessor, claimsFactory, optionsAccessor, logger, schemes, confirmation)
 {
-    private readonly UserManager<CmsUser> _userManager = userManager;
+    private readonly UserManager<ElectraUser> _userManager = userManager;
     
     public override async Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey,
         bool isPersistent, bool bypassTwoFactor)
@@ -51,7 +52,7 @@ public class ZauberSignInManager(
             var email = info.Principal.FindFirstValue(ClaimTypes.Email);
             var username = info.Principal.FindFirstValue(ClaimTypes.Name) ?? GenerateUsernameFromEmail(email);
 
-            user = new CmsUser
+            user = new ElectraUser
             {
                 UserName = username,
                 Email = email

@@ -126,7 +126,7 @@
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public AppState AppState { get; set; } = null!;
     [Inject] public ValidateService<CmsRole> ValidateService { get; set; } = null!;
-    [Inject] public ICmsUserProfileService ProfileService { get; set; } = null!;
+    [Inject] public IElectraUserProfileService ProfileService { get; set; } = null!;
 
     [Parameter] public string? RoleId { get; set; }
 

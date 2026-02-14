@@ -1,3 +1,4 @@
+using Electra.Models.Entities;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Membership.Models;
 
@@ -42,7 +43,7 @@ public class ContentVersion
     /// User who created this version
     /// </summary>
     public string? CreatedById { get; set; }
-    public CmsUser? CreatedBy { get; set; }
+    public ElectraUser? CreatedBy { get; set; }
 
     /// <summary>
     /// When this version was created

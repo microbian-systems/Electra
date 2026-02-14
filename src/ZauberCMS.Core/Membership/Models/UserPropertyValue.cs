@@ -1,4 +1,5 @@
-﻿using ZauberCMS.Core.Content.Interfaces;
+﻿using Electra.Models.Entities;
+using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Extensions;
 
 namespace ZauberCMS.Core.Membership.Models;
@@ -11,5 +12,5 @@ public class UserPropertyValue : IPropertyValue
     public string Value { get; set; } = string.Empty;
     public DateTime? DateUpdated { get; set; } = DateTime.UtcNow;
     public string UserId { get; set; }    
-    public CmsUser? User { get; set; }
+    public ElectraUser? User { get; set; }
 }

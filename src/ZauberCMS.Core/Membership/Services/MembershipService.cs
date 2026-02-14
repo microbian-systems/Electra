@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -37,8 +38,8 @@ public class MembershipService(
     ProviderService providerService,
     IEmailService emailService,
     RoleManager<CmsRole> roleManager,
-    SignInManager<CmsUser> signInManager,
-    UserManager<CmsUser> userManager,
+    SignInManager<ElectraUser> signInManager,
+    UserManager<ElectraUser> userManager,
     IOptions<ZauberSettings> settings,
     ILogger<MembershipService> logger)
     : IMembershipService
@@ -49,10 +50,10 @@ public class MembershipService(
     /// <param name="parameters">User id and caching flag.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>User or null.</returns>
-    public async Task<CmsUser?> GetUserAsync(GetUserParameters parameters, CancellationToken cancellationToken = default)
+    public async Task<ElectraUser?> GetUserAsync(GetUserParameters parameters, CancellationToken cancellationToken = default)
     {
         var query = BuildQuery(parameters, db);
-        var cacheKey = query.GenerateCacheKey(typeof(CmsUser));
+        var cacheKey = query.GenerateCacheKey(typeof(ElectraUser));
 
         if (parameters.Cached)
         {
@@ -69,7 +70,7 @@ public class MembershipService(
     /// <param name="parameters">User to update and optional password/roles.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Result including success and messages.</returns>
-    public async Task<HandlerResult<CmsUser>> SaveUserAsync(SaveUserParameters parameters, CancellationToken cancellationToken = default)
+    public async Task<HandlerResult<ElectraUser>> SaveUserAsync(SaveUserParameters parameters, CancellationToken cancellationToken = default)
     {
         
         
@@ -78,7 +79,7 @@ public class MembershipService(
         
         var refreshCurrentUser = false;
         var isUpdate = false;
-        var handlerResult = new HandlerResult<CmsUser>();
+        var handlerResult = new HandlerResult<ElectraUser>();
         
         if (parameters.User != null)
         {
@@ -137,14 +138,15 @@ public class MembershipService(
                 var updateResult = await userManager.UpdateAsync(user);
                 if (!updateResult.Succeeded)
                 {
-                handlerResult.Messages.AddRange(updateResult.Errors.Select(e => new ResultMessage(e.Description, ResultMessageType.Error)));
+                    handlerResult.Messages.AddRange(
+                        updateResult.Errors.Select(e => new ResultMessage(e.Description, ResultMessageType.Error)));
                     return handlerResult;
                 }
                 
                 // Note: Audit logging would need to be implemented without mediator
                 logger.LogInformation("Audit logging for user {UserName} {Action}", parameters.User.UserName, isUpdate ? "Update" : "Create");
                 
-                // Property data is now managed via CmsUserProfileService
+                // Property data is now managed via ElectraUserProfileService
             }
 
             // Handle roles
@@ -211,7 +213,7 @@ public class MembershipService(
     /// <param name="parameters">User, password (for create), and role set.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Result including success and messages.</returns>
-    public async Task<HandlerResult<CmsUser>> CreateUpdateUserAsync(CreateUpdateUserParameters parameters, CancellationToken cancellationToken = default)
+    public async Task<HandlerResult<ElectraUser>> CreateUpdateUserAsync(CreateUpdateUserParameters parameters, CancellationToken cancellationToken = default)
     {
         
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
@@ -219,7 +221,7 @@ public class MembershipService(
         
         var refreshCurrentUser = false;
         var isUpdate = false;
-        var handlerResult = new HandlerResult<CmsUser>();
+        var handlerResult = new HandlerResult<ElectraUser>();
         
         if (parameters.User != null)
         {
@@ -285,7 +287,7 @@ public class MembershipService(
                 // Note: Audit logging would need to be implemented without mediator
                 logger.LogInformation("Audit logging for user {UserName} {Action}", parameters.User.UserName, isUpdate ? "Update" : "Create");
                 
-                // Property data is now managed via CmsUserProfileService
+                // Property data is now managed via ElectraUserProfileService
             }
 
             // Handle roles
@@ -352,14 +354,14 @@ public class MembershipService(
     /// <param name="parameters">Parameters containing the user id.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Result including success and messages.</returns>
-    public async Task<HandlerResult<CmsUser>> DeleteUserAsync(DeleteUserParameters parameters, CancellationToken cancellationToken = default)
+    public async Task<HandlerResult<ElectraUser>> DeleteUserAsync(DeleteUserParameters parameters, CancellationToken cancellationToken = default)
     {
         
         
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var loggedInUser = await userManager.GetUserAsync(authState.User);
         
-        var handlerResult = new HandlerResult<CmsUser>();
+        var handlerResult = new HandlerResult<ElectraUser>();
 
         var user = await userManager.FindByIdAsync(parameters.Id.ToString());
         if (user != null)
@@ -392,12 +394,12 @@ public class MembershipService(
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Paged list of users.</returns>
     #pragma warning disable CS1998
-    public async Task<PaginatedList<CmsUser>> QueryUsersAsync(QueryUsersParameters parameters, CancellationToken cancellationToken = default)
+    public async Task<PaginatedList<ElectraUser>> QueryUsersAsync(QueryUsersParameters parameters, CancellationToken cancellationToken = default)
     {
         
         
         var query = BuildQuery(parameters, db);
-        var cacheKey = $"{query.GenerateCacheKey(typeof(CmsUser))}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
+        var cacheKey = $"{query.GenerateCacheKey(typeof(ElectraUser))}_Page{parameters.PageIndex}_Amount{parameters.AmountPerPage}";
 
         if (parameters.Cached)
         {
@@ -661,7 +663,7 @@ public class MembershipService(
 
         try
         {
-            var newUser = new CmsUser { Id = Guid.NewGuid().NewSequentialGuid().ToString(), Email = parameters.Email, UserName = parameters.Username };
+            var newUser = new ElectraUser { Id = Guid.NewGuid().NewSequentialGuid().ToString(), Email = parameters.Email, UserName = parameters.Username };
             var result = await userManager.CreateAsync(newUser, parameters.Password);
             registrationResult.Success = result.Succeeded;
             
@@ -760,7 +762,7 @@ public class MembershipService(
             else
             {
                 // User doesn't have an account, create one
-                var user = new CmsUser
+                var user = new ElectraUser
                 {
                     UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
                     Email = info.Principal.FindFirstValue(ClaimTypes.Email),
@@ -952,27 +954,25 @@ public class MembershipService(
     /// </summary>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>User or null.</returns>
-    public async Task<CmsUser?> GetCurrentUserAsync(CancellationToken cancellationToken = default)
+    public async Task<ElectraUser?> GetCurrentUserAsync(CancellationToken cancellationToken = default)
     {
-        
-        
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         
         return await userManager.GetUserAsync(authState.User);
     }
 
-    private static IQueryable<CmsUser> BuildQuery(GetUserParameters parameters, IAsyncDocumentSession db)
+    private static IQueryable<ElectraUser> BuildQuery(GetUserParameters parameters, IAsyncDocumentSession db)
     {
-        var query = db.Query<CmsUser>()
+        var query = db.Query<ElectraUser>()
                 .Include(x => x.UserRoles)
                 .Where(x => x.Id == parameters.Id);
 
         return query;
     }
 
-    private static IQueryable<CmsUser> BuildQuery(QueryUsersParameters parameters, IAsyncDocumentSession db)
+    private static IQueryable<ElectraUser> BuildQuery(QueryUsersParameters parameters, IAsyncDocumentSession db)
     {
-        var query = db.Query<CmsUser>()
+        var query = db.Query<ElectraUser>()
             .Include(x => x.UserRoles);
 
         if (parameters.Query != null)

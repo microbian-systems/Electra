@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Electra.Models.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ZauberCMS.Core.Membership.Models;
 
@@ -6,6 +7,6 @@ namespace ZauberCMS.Core.Membership.Models;
 public abstract class Privilege<T>(IAuthorizationService authorizationService)
 #pragma warning restore CS9113 // Parameter is unread.
 {
-    public abstract bool CanCreate(T item, CmsUser user);
-    public abstract bool CanEdit(T item, CmsUser user);
+    public abstract bool CanCreate(T item, ElectraUser user);
+    public abstract bool CanEdit(T item, ElectraUser user);
 }

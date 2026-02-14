@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using Electra.Core;
+using Electra.Models.Entities;
 using ZauberCMS.Core.Content.Interfaces;
 using ZauberCMS.Core.Extensions;
 using ZauberCMS.Core.Languages.Models;
@@ -41,7 +43,7 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// Last updated by User object
     /// </summary>
-    public CmsUser? LastUpdatedBy { get; set; }
+    public ElectraUser? LastUpdatedBy { get; set; }
     
     /// <summary>
     /// Id of any unpublished content
@@ -103,7 +105,7 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
         {
             if (string.IsNullOrEmpty(value))
             {
-                InternalRedirectId = string.Empty;
+                InternalRedirectId = Snowflake.NewId();
             }
             else
             {

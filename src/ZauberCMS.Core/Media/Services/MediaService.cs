@@ -1,3 +1,4 @@
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -65,7 +66,7 @@ public class MediaService(
 
         var result = new HandlerResult<Models.Media>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
         var user = await userManager.GetUserAsync(authState.User);
 
         // If we are either creating a new file or over writing the current one
@@ -179,7 +180,7 @@ public class MediaService(
     {
         using var scope = serviceScopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<IAsyncDocumentSession>();
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<CmsUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ElectraUser>>();
         var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
         var user = await userManager.GetUserAsync(authState.User);
         var handlerResult = new HandlerResult<Models.Media>();

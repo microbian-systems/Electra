@@ -1,3 +1,4 @@
+@using Electra.Models.Entities
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Identity
 @using ZauberCMS.Components.Admin.UsersSection.Dialogs
@@ -123,14 +124,14 @@
     [Inject] public ExtensionManager ExtensionManager { get; set; } = null!;
     [Inject] public AppState AppState { get; set; } = null!;
     [Inject] public DialogService DialogService { get; set; } = null!;
-    [Inject] public UserManager<CmsUser> UserManager { get; set; } = null!;
+    [Inject] public UserManager<ElectraUser> UserManager { get; set; } = null!;
     [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; } = null!;
-    [Inject] public ValidateService<CmsUser> ValidateService { get; set; } = null!;
-    [Inject] public ICmsUserProfileService ProfileService { get; set; } = null!;
+    [Inject] public ValidateService<ElectraUser> ValidateService { get; set; } = null!;
+    [Inject] public IElectraUserProfileService ProfileService { get; set; } = null!;
 
     [Parameter] public string? UserId { get; set; }
 
-    private CmsUser? User { get; set; }
+    private ElectraUser? User { get; set; }
     private CmsUserProfile? Profile { get; set; }
     private string? InitialUsername { get; set; }
     private string? InitialEmail { get; set; }

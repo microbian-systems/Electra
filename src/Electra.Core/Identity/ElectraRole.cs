@@ -6,6 +6,30 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Core.Identity;
 
+// public class UserRole : IdentityUserRole<string>
+// {
+//     /// <summary>
+//     /// Reference to the Role document ID
+//     /// </summary>
+//     public string RoleId { get; set; } = string.Empty;
+//
+//     /// <summary>
+//     /// Navigation property to the role (not serialized, loaded via Include)
+//     /// </summary>
+//     [JsonIgnore]
+//     public CmsRole? Role { get; set; }
+//
+//     /// <summary>
+//     /// Reference to the User document ID
+//     /// </summary>
+//     public string UserId { get; set; } = string.Empty;
+//
+//     /// <summary>
+//     /// Navigation property to the user (not serialized, loaded via Include)
+//     /// </summary>
+//     [JsonIgnore]
+//     public ElectraUser? User { get; set; }
+// }
 
 [Table("Roles")]
 public class ElectraRole : ElectraRole<string>

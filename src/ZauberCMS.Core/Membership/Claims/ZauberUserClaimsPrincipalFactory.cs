@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using Electra.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using ZauberCMS.Core.Extensions;
@@ -9,13 +10,13 @@ namespace ZauberCMS.Core.Membership.Claims;
 
 public class ZauberUserClaimsPrincipalFactory(
     IServiceProvider serviceProvider,
-    UserManager<CmsUser> userManager,
+    UserManager<ElectraUser> userManager,
     IOptions<IdentityOptions> optionsAccessor)
-    : UserClaimsPrincipalFactory<CmsUser>(userManager, optionsAccessor)
+    : UserClaimsPrincipalFactory<ElectraUser>(userManager, optionsAccessor)
 {
-    private readonly UserManager<CmsUser> _userManager = userManager;
+    private readonly UserManager<ElectraUser> _userManager = userManager;
 
-    public override async Task<ClaimsPrincipal> CreateAsync(CmsUser user)
+    public override async Task<ClaimsPrincipal> CreateAsync(ElectraUser user)
     {
         using var scope = serviceProvider.CreateScope();
         var principal = await base.CreateAsync(user);

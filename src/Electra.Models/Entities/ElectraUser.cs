@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Electra.Models.Entities;
 
+
 public interface IElectraUser : IEntity
 {
     string? UserName { get; set; }
@@ -45,7 +46,9 @@ public interface IElectraUser : IEntity
     List<IdentityUserToken<string>> Tokens { get; set; }
 }
 
-public class ElectraUser : ElectraUser<string>, IElectraUser, IEntity;
+public class ElectraUser : ElectraUser<string>, IElectraUser
+{
+}
 
 public interface IElectraUser<TKey>  where TKey : IEquatable<TKey> 
 {
