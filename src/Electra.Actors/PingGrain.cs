@@ -12,12 +12,7 @@ public interface IPingGrain
     Task Ping();
 }
 
-public class GrainBase(ILogger<GrainBase> log) : Grain
-{
-    protected readonly ILogger<GrainBase> log = log;
-}
-
-public class PingGrain(ILogger<PingGrain> log, IGrainFactory grainFactory) : Grain, IPingGrain
+public class PingGrain(ILogger<PingGrain> log, IGrainFactory grainFactory) : AeroGrain(log), IPingGrain
 {
     public override async Task OnActivateAsync(CancellationToken cancellationToken)
     {

@@ -276,9 +276,9 @@
         {
             // Load role UI data for all user roles
             var roleUIs = new List<CmsRoleUI>();
-            foreach (var userRole in User.UserRoles)
+            foreach (var role in User.Roles)
             {
-                var roleUI = await ProfileService.GetRoleUIAsync(userRole.RoleId);
+                var roleUI = await ProfileService.GetRoleUIAsync(role.Id);
                 if (roleUI != null)
                 {
                     roleUIs.Add(roleUI);

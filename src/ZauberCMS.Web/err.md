@@ -1,12 +1,16 @@
-System.Reflection.AmbiguousMatchException: Ambiguous match found for 'Electra.Core.Identity.ElectraRole`1[System.String] System.String Id'.
-   at System.RuntimeType.GetPropertyImpl(String name, BindingFlags bindingAttr, Binder binder, Type returnType, Type[] types, ParameterModifier[] modifiers)
-   at System.Type.GetProperty(String name, BindingFlags bindingAttr)
-   at Raven.Client.Documents.Conventions.DocumentConventions.GetIdentityProperty(Type type)
-   at Raven.Client.Documents.Identity.GenerateEntityIdOnTheClient.TrySetIdentityInternal(Object entity, String id, Boolean isProjection)
-   at Raven.Client.Documents.Identity.GenerateEntityIdOnTheClient.TrySetIdentity(Object entity, String id)
-   at Raven.Client.Documents.Session.InMemoryDocumentSessionOperations.StoreInternal(Object entity, String changeVector, String id, ConcurrencyCheckMode forceConcurrencyCheck)
-   at Raven.Client.Documents.Session.InMemoryDocumentSessionOperations.StoreAsyncInternal(Object entity, String changeVector, String id, ConcurrencyCheckMode forceConcurrencyCheck, CancellationToken token)
-   at Electra.Persistence.RavenDB.Identity.RoleStore`2.CreateAsync(TRole role, CancellationToken cancellationToken) in D:\proj\microbians\microbians.io\Electra\src\Electra.Persistence.RavenDB\Identity\RavenDbRoleStore.cs:line 130
-   at Microsoft.AspNetCore.Identity.RoleManager`1.CreateAsync(TRole role)
-   at Electra.Auth.Seeder.Initialize(IServiceProvider serviceProvider, IConfiguration configuration) in D:\proj\microbians\microbians.io\Electra\src\Electra.Auth\Seeder.cs:line 31
-   at ZauberCMS.Core.ZauberSetup.AddZauberCms[T](WebApplication app) in D:\proj\microbians\microbians.io\Electra\src\ZauberCMS.Core\ZauberSetup.cs:line 336
+at Newtonsoft.Json.Serialization.DynamicValueProvider.GetValue(Object target)
+at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.CalculatePropertyValues(JsonWriter writer, Object value, JsonContainerContract contract, JsonProperty member, JsonProperty property, JsonContract& memberContract, Object& memberValue)
+at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeObject(JsonWriter writer, Object value, JsonObjectContract contract, JsonProperty member, JsonContainerContract collectionContract, JsonProperty containerProperty)
+at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.SerializeValue(JsonWriter writer, Object value, JsonContract valueContract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerProperty)
+at Newtonsoft.Json.Serialization.JsonSerializerInternalWriter.Serialize(JsonWriter jsonWriter, Object value, Type objectType)
+at Newtonsoft.Json.JsonSerializer.SerializeInternal(JsonWriter jsonWriter, Object value, Type objectType)
+at Newtonsoft.Json.JsonSerializer.Serialize(JsonWriter jsonWriter, Object value)
+at Raven.Client.Json.Serialization.NewtonsoftJson.Internal.NewtonsoftJsonJsonSerializer.Raven.Client.Json.Serialization.IJsonSerializer.Serialize(IJsonWriter writer, Object value)
+at Raven.Client.Json.Serialization.NewtonsoftJson.Internal.BlittableJsonConverterBase.ToBlittableInternal(Object entity, DocumentConventions conventions, JsonOperationContext context, IJsonSerializer serializer, IJsonWriter writer, Boolean removeIdentityProperty)
+at Raven.Client.Json.Serialization.NewtonsoftJson.Internal.SessionBlittableJsonConverter.ToBlittable(Object entity, DocumentInfo documentInfo)
+at Raven.Client.Documents.Session.InMemoryDocumentSessionOperations.PrepareForEntitiesPuts(SaveChangesData result)
+at Raven.Client.Documents.Session.InMemoryDocumentSessionOperations.PrepareForSaveChanges()
+at Raven.Client.Documents.Session.Operations.BatchOperation.CreateRequest()
+at Raven.Client.Documents.Session.DocumentSession.SaveChanges()
+at ZauberCMS.Web.SeedData.DefaultContentSeeder.Initialise(IDocumentSession db) in D:\proj\microbians\microbians.io\Electra\src\ZauberCMS.Web\SeedData\DefaultContentSeeder.cs:line 78
+at ZauberCMS.Core.ZauberSetup.AddZauberCms[T](WebApplication app) in D:\proj\microbians\microbians.io\Electra\src\ZauberCMS.Core\ZauberSetup.cs:line 342

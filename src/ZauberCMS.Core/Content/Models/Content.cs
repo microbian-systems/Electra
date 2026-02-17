@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Electra.Core;
 using Electra.Models.Entities;
@@ -43,6 +43,7 @@ public class Content : IContent<ContentPropertyValue>, IHasPropertyValues
     /// <summary>
     /// Last updated by User object
     /// </summary>
+    [JsonIgnore]
     public ElectraUser? LastUpdatedBy { get; set; }
     
     /// <summary>

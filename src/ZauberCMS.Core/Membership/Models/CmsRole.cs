@@ -6,14 +6,10 @@ namespace ZauberCMS.Core.Membership.Models;
 /// <summary>
 /// CMS Role entity focused on Identity concerns only.
 /// UI-specific data (Description, Icon, Properties, Tabs, etc.) has been moved to CmsRoleUI.
+/// Inherits from ElectraRole which contains the Users list for role assignments.
 /// </summary>
 public class CmsRole : ElectraRole
 {
-    /// <summary>
-    /// User role assignments
-    /// </summary>
-    public List<ElectraRole> UserRoles { get; set; } = [];
-
     /// <summary>
     /// Content access permissions for this role
     /// </summary>

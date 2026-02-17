@@ -421,8 +421,8 @@ public class MembershipService(
         
         
         
-        var query = Queryable.Where(db.Query<CmsRole>()
-                .Include(x => x.UserRoles), x => x.Id == parameters.Id);
+        var query = db.Query<CmsRole>()
+                .Where(x => x.Id == parameters.Id);
 
         return await query.FirstOrDefaultAsync(cancellationToken);
     }
@@ -535,8 +535,8 @@ public class MembershipService(
         
         
         var query = db.Query<CmsRole>()
-            .Include(x => x.UserRoles)
-            //.ThenInclude(x => x.User)  todo - figure out what ThenInclude() translates to in RavenDB
+            // Note: Users is now a List<string> of user IDs in ElectraRole
+            // If you need the actual user documents, load them separately using the IDs
             .AsQueryable();
 
         if (parameters.Query != null)
@@ -964,7 +964,7 @@ public class MembershipService(
     private static IQueryable<ElectraUser> BuildQuery(GetUserParameters parameters, IAsyncDocumentSession db)
     {
         var query = db.Query<ElectraUser>()
-                .Include(x => x.UserRoles)
+                .Include(x => x.Roles)
                 .Where(x => x.Id == parameters.Id);
 
         return query;
@@ -973,7 +973,7 @@ public class MembershipService(
     private static IQueryable<ElectraUser> BuildQuery(QueryUsersParameters parameters, IAsyncDocumentSession db)
     {
         var query = db.Query<ElectraUser>()
-            .Include(x => x.UserRoles);
+            .Include(x => x.Roles);
 
         if (parameters.Query != null)
         {

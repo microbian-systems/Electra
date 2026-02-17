@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using Electra.Models.Entities;
 using ZauberCMS.Core.Extensions;
@@ -59,6 +59,8 @@ public class ContentType : ITreeItem
     /// The id of the last person to update the content type 
     /// </summary>
     public string? LastUpdatedById { get; set; }
+    
+    [JsonIgnore]
     public ElectraUser? LastUpdatedBy { get; set; }
     
     /// <summary>

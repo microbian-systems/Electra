@@ -1,4 +1,5 @@
-﻿@using ZauberCMS.Core.Membership.Models
+@using Electra.Models.Entities
+@using ZauberCMS.Core.Membership.Models
 @using ZauberCMS.Core.Membership.Parameters
 @using ZauberCMS.Core.Shared.Models
 @using ZauberCMS.Core.Shared
@@ -31,7 +32,7 @@
         AppState.OnUserChanged -= HandleUsersChanged;
     }
 
-    private async Task HandleUsersChanged(CmsUser? user, string username)
+    private async Task HandleUsersChanged(ElectraUser? user, string username)
     {
         await DataRefresh();
         StateHasChanged();
@@ -63,7 +64,7 @@
                 Id = role.Id,
                 Name = role.Name,
                 Url = $"{Urls.AdminUsersList}/{role.Id}",
-                BranchType = typeof(CmsUser)
+                BranchType = typeof(ElectraUser)
             });
         }
 
