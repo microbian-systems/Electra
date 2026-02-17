@@ -1,4 +1,3 @@
-using System;
 using Aero.Cloudflare;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

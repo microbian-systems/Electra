@@ -3,7 +3,6 @@ using Aero.Common.Web.Middleware;
 using Aero.Services;
 using Aero.Common.Web.Services;
 using Aero.Core.Extensions;
-using Aero.Persistence;
 using Aero.Services.Geo;
 using Aero.Services.Mail;
 using Aero.Web.Extensions;

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Aero.Core.Extensions;
+﻿using Aero.Core.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 

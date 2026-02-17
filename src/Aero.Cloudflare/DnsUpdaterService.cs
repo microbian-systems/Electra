@@ -1,11 +1,4 @@
-using System;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
 namespace Aero.Cloudflare;
@@ -16,7 +9,6 @@ using CloudFlare.Client.Api.Zones.DnsRecord;
 using CloudFlare.Client.Enumerators;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Serilog;
 
 public partial class DnsUpdaterHostedService : BackgroundService, IHostedService
 {
