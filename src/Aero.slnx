@@ -5,12 +5,12 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Tests/">
-    <Project Path="../Tests/Electra.Auth.Tests.WebHost/Electra.Auth.Tests.WebHost.csproj" />
-    <Project Path="../Tests/Electra.Auth.Tests/Electra.Auth.Tests.csproj" />
-    <Project Path="../Tests/Electra.Common.Tests/Electra.Common.Tests.csproj" />
-    <Project Path="../Tests/Electra.DataStructures.Tests/Electra.DataStructures.Tests.csproj" />
-    <Project Path="../Tests/Electra.Persistence.RavenDB.Tests/Electra.Persistence.RavenDB.Tests.csproj" />
-    <Project Path="../Tests/Electra.SendGrid.Tests/Electra.SendGrid.Tests.csproj" />
+    <Project Path="../Tests/Aero.Auth.Tests.WebHost/Aero.Auth.Tests.WebHost.csproj" />
+    <Project Path="../Tests/Aero.Auth.Tests/Aero.Auth.Tests.csproj" />
+    <Project Path="../Tests/Aero.Common.Tests/Aero.Common.Tests.csproj" />
+    <Project Path="../Tests/Aero.DataStructures.Tests/Aero.DataStructures.Tests.csproj" />
+    <Project Path="../Tests/Aero.Persistence.RavenDB.Tests/Aero.Persistence.RavenDB.Tests.csproj" />
+    <Project Path="../Tests/Aero.SendGrid.Tests/Aero.SendGrid.Tests.csproj" />
   </Folder>
   <Folder Name="/__Misc__/">
     <File Path="../CLAUDE.md" />
