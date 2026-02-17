@@ -1,4 +1,4 @@
-﻿namespace Electra.MerakiUI.Tests;
+﻿namespace Aero.MerakiUI.Tests;
 
 public class UnitTest1
 {

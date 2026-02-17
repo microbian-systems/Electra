@@ -1,0 +1,162 @@
+@model Aero.Auth.Models.ViewModels.PasskeyRegistrationViewModel
+@{
+    ViewData["Title"] = "Register a Passkey";
+    Layout = "_AuthLayout";
+}
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h1>Add a Passkey</h1>
+        <p class="subtitle">Register your device for passwordless sign-in</p>
+        
+        <div id="passkey-status" class="alert" style="display: none;"></div>
+        
+        <div id="passkey-support-check">
+            <p>Checking passkey support...</p>
+        </div>
+        
+        <div id="passkey-registration-form" style="display: none;">
+            <form id="passkeyForm">
+                <div class="form-group mb-3">
+                    <label asp-for="PasskeyName">Passkey Name</label>
+                    <input asp-for="PasskeyName" class="form-control" 
+                           placeholder="e.g., 'My iPhone' or 'Work Laptop'" required />
+                    <small class="form-text text-muted">
+                        Give this passkey a memorable name to identify it later
+                    </small>
+                </div>
+                
+                <div class="alert alert-info">
+                    <strong>What happens next?</strong>
+                    <ul class="mb-0 mt-2">
+                        <li>You'll be prompted to use your device's biometric authentication (Face ID, Touch ID, Windows Hello, etc.)</li>
+                        <li>This passkey will be securely stored on your device</li>
+                        <li>You can use it to sign in without a password</li>
+                    </ul>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-3">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/>
+                    </svg>
+                    Register Passkey
+                </button>
+            </form>
+            
+            <div class="text-center mt-4">
+                <a href="/account/security" class="text-muted">Back to Security Settings</a>
+            </div>
+        </div>
+        
+        <div id="passkey-unsupported" style="display: none;">
+            <div class="alert alert-warning">
+                <strong>Passkeys not supported</strong>
+                <p>Your browser or device doesn't support passkeys. Please use a modern browser or device with biometric authentication.</p>
+            </div>
+            <a href="/account/security" class="btn btn-secondary w-100">Back to Security Settings</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Check for passkey support
+        (async function() {
+            const supportsPasskeys = window.PublicKeyCredential !== undefined &&
+                                   typeof window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable === 'function';
+            
+            if (!supportsPasskeys) {
+                document.getElementById('passkey-support-check').style.display = 'none';
+                document.getElementById('passkey-unsupported').style.display = 'block';
+                return;
+            }
+            
+            const platformAuthenticatorAvailable = 
+                await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+            
+            if (!platformAuthenticatorAvailable) {
+                document.getElementById('passkey-support-check').style.display = 'none';
+                document.getElementById('passkey-unsupported').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('passkey-support-check').style.display = 'none';
+            document.getElementById('passkey-registration-form').style.display = 'block';
+            
+            // Handle passkey registration
+            document.getElementById('passkeyForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                try {
+                    const passkeyName = document.getElementById('PasskeyName').value;
+                    
+                    showStatus('Preparing registration...', 'info');
+                    
+                    // Request challenge from server
+                    const challengeResponse = await fetch('/api/auth/passkey/register-challenge', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            passkeyName: passkeyName,
+                            deviceName: navigator.userAgent
+                        })
+                    });
+                    
+                    if (!challengeResponse.ok) {
+                        throw new Error('Failed to get registration challenge');
+                    }
+                    
+                    const challengeData = await challengeResponse.json();
+                    
+                    showStatus('Authenticate with your device...', 'info');
+                    
+                    // Create credential with authenticator
+                    const credential = await navigator.credentials.create({
+                        publicKey: challengeData.publicKey
+                    });
+                    
+                    // Send credential to server
+                    const registerResponse = await fetch('/api/auth/passkey/register-callback', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            id: credential.id,
+                            rawId: bufferToBase64(credential.rawId),
+                            type: credential.type,
+                            response: {
+                                attestationObject: bufferToBase64(credential.response.attestationObject),
+                                clientDataJSON: bufferToBase64(credential.response.clientDataJSON)
+                            }
+                        })
+                    });
+                    
+                    const result = await registerResponse.json();
+                    
+                    if (result.success) {
+                        showStatus('Passkey registered successfully! Redirecting...', 'success');
+                        setTimeout(() => {
+                            window.location.href = '/account/security';
+                        }, 2000);
+                    } else {
+                        throw new Error(result.message || 'Registration failed');
+                    }
+                    
+                } catch (error) {
+                    console.error('Passkey registration error:', error);
+                    showStatus('Registration failed: ' + error.message, 'danger');
+                }
+            });
+            
+            function showStatus(message, type) {
+                const statusDiv = document.getElementById('passkey-status');
+                statusDiv.className = `alert alert-${type}`;
+                statusDiv.textContent = message;
+                statusDiv.style.display = 'block';
+            }
+            
+            function bufferToBase64(buffer) {
+                return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+            }
+        })();
+    </script>
+}

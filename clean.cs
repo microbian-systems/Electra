@@ -53,10 +53,10 @@ public class CleanupAndRestore
 
             // --- Task 2: Discover and Run dotnet restore on all solution files ---
             
-            // Discover all *.sln files recursively. This achieves the effect of "**/*.sln".
+            // Discover all *.slnx files recursively. This achieves the effect of "**/*.slnx".
             var solutionFiles = Directory.EnumerateFiles(
                 currentDir,
-                "*.sln",
+                "*.slnx",
                 SearchOption.AllDirectories)
                 .ToList();
 

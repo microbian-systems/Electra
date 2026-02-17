@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Emails;
 using Bunit;
-using Electra.MerakiUI.Emails;
+using Aero.MerakiUI.Emails;
 
-namespace Electra.MerakiUI.Tests.Emails;
+namespace Aero.MerakiUI.Tests.Emails;
 
 public class EmailTests : BunitContext
 {

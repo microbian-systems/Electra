@@ -1,0 +1,729 @@
+{
+  "timestamp": "2026-02-17T15:45:50.929Z",
+  "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+  "eventCount": 10,
+  "events": [
+    {
+      "timestamp": "2026-02-17T15:35:04.416Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_open",
+      "file": "git\\scm1\\input",
+      "relativePath": "git\\scm1\\input",
+      "language": "scminput",
+      "lineCount": 1,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": null,
+      "selectionLength": 0,
+      "changes": []
+    },
+    {
+      "timestamp": "2026-02-17T15:37:09.922Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_open",
+      "file": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Electra.slnx",
+      "relativePath": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Electra.slnx",
+      "language": "xml",
+      "lineCount": 61,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": null,
+      "selectionLength": 0,
+      "changes": []
+    },
+    {
+      "timestamp": "2026-02-17T15:41:16.747Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_open",
+      "file": "dotnetdev-kr-custom.csharp.C#",
+      "relativePath": "dotnetdev-kr-custom.csharp.C#",
+      "language": "log",
+      "lineCount": 1,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": null,
+      "selectionLength": 0,
+      "changes": []
+    },
+    {
+      "timestamp": "2026-02-17T15:41:16.806Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_edit",
+      "file": "dotnetdev-kr-custom.csharp.C#",
+      "relativePath": "dotnetdev-kr-custom.csharp.C#",
+      "language": "log",
+      "lineCount": 599,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": {
+        "line": 19,
+        "character": 31
+      },
+      "selectionLength": 0,
+      "changes": [
+        {
+          "textLength": 189928,
+          "rangeLength": 0,
+          "lineCountDelta": 598,
+          "likelyAI": true,
+          "changeText": "2026-02-17 09:34:48.038 [info] Locating .NET runtime version 10.0.0\r\n2026-02-17 09:34:48.074 [info] Dotnet path: C:\\Program Files\\dotnet\\dotnet.exe\r\n2026-02-17 09:34:48.074 [info] Activating C# standalone...\r\n2026-02-17 09:34:48.274 [info] [stdout] info: Program[0]\r\n      Server started with process ID 168484\r\n\r\n2026-02-17 09:34:49.027 [info] [stdout] {\"pipeName\":\"\\\\\\\\.\\\\pipe\\\\8eb75449\"}\r\n\r\n2026-02-17 09:34:49.027 [info] received named pipe information from server\r\n2026-02-17 09:34:49.027 [info] client has connected to server\r\n2026-02-17 09:34:49.343 [info] [Program] Language server initialized\r\n2026-02-17 09:34:51.246 [info] [project/open] [Microsoft.CodeAnalysis.MSBuild.BuildHostProcessManager] .NET BuildHost started from c:\\Users\\bbqch\\.antigravity\\extensions\\dotnetdev-kr-custom.csharp-2.121.32-win32-x64\\.roslyn\\Microsoft.CodeAnalysis.LanguageServer.exe reloading to start from C:\\Program Files\\dotnet\\dotnet.exe to match necessary SDK location.\r\n2026-02-17 09:34:53.616 [info] [project/open] [LanguageServerProjectLoader] Successfully completed load of c:\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.Proxy\\Aero.Proxy.csproj\r\n2026-02-17 09:34:54.509 [info] [project/open] [LanguageServerProjectLoader] Successfully completed load of c:\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.Marten\\Aero.Marten.csproj\r\n2026-02-17 09:34:54.542 [info] [project/open] [LanguageServerProjectLoader] Successfully completed load of c:\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.Events\\Aero.Events.csproj\r\n2026-02-17 09:34:54.553 [info] [project/open] [LanguageServerProjectLoader] Successfully completed load of c:\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.SignalR\\Aero.SignalR.csproj\r\n2026-02-17 09:34:55.101 [info] [project/open] [LanguageServerProjectLoader] Successfully completed load of c:\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Electra.Common.Tests\\Electra.Common.Tests.csproj\r\n2026-02-17 09:34:55.160 [info] [project/...[TRUNCATED]",
+          "wasTruncated": true
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-02-17T15:42:05.193Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_open",
+      "file": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "relativePath": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "language": "xml",
+      "lineCount": 61,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": null,
+      "selectionLength": 0,
+      "changes": []
+    },
+    {
+      "timestamp": "2026-02-17T15:42:05.219Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "diagnostic_change",
+      "file": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Electra.slnx",
+      "relativePath": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Electra.slnx",
+      "language": "unknown",
+      "lineCount": 0,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": null,
+      "selectionLength": 0,
+      "changes": []
+    },
+    {
+      "timestamp": "2026-02-17T15:42:35.044Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_edit",
+      "file": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "relativePath": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "language": "xml",
+      "lineCount": 61,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": {
+        "line": 9,
+        "character": 53
+      },
+      "selectionLength": 7,
+      "changes": [
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        },
+        {
+          "textLength": 4,
+          "rangeLength": 7,
+          "lineCountDelta": 0,
+          "likelyAI": false,
+          "changeText": "Aero",
+          "wasTruncated": false
+        }
+      ]
+    },
+    {
+      "timestamp": "2026-02-17T15:42:35.047Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_edit",
+      "file": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "relativePath": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "language": "xml",
+      "lineCount": 61,
+      "isDirty": true,
+      "isUntitled": false,
+      "cursorPosition": {
+        "line": 9,
+        "character": 53
+      },
+      "selectionLength": 7,
+      "changes": []
+    },
+    {
+      "timestamp": "2026-02-17T15:42:39.568Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_edit",
+      "file": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "relativePath": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "language": "xml",
+      "lineCount": 61,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": {
+        "line": 15,
+        "character": 37
+      },
+      "selectionLength": 0,
+      "changes": []
+    },
+    {
+      "timestamp": "2026-02-17T15:42:39.569Z",
+      "sessionId": "6f66aade-a8ae-4c68-b0ad-d6dc972de0ce",
+      "eventType": "file_edit",
+      "file": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "relativePath": "c\\Users\\bbqch\\proj\\microbians\\microbians.io\\Electra\\src\\Aero.slnx",
+      "language": "xml",
+      "lineCount": 61,
+      "isDirty": false,
+      "isUntitled": false,
+      "cursorPosition": {
+        "line": 15,
+        "character": 37
+      },
+      "selectionLength": 0,
+      "changes": []
+    }
+  ],
+  "metadata": {
+    "version": "1.3.0",
+    "trigger": "deactivation",
+    "memoryUsage": 27542
+  }
+}

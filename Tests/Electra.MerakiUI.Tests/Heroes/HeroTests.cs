@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Heroes;
 using Bunit;
-using Electra.MerakiUI.Heroes;
+using Aero.MerakiUI.Heroes;
 
-namespace Electra.MerakiUI.Tests.Heroes;
+namespace Aero.MerakiUI.Tests.Heroes;
 
 public class HeroTests : BunitContext
 {

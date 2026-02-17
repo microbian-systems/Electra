@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Electra.MerakiUI\Electra.MerakiUI.csproj" />
+    <ProjectReference Include="..\..\src\Aero.MerakiUI\Aero.MerakiUI.csproj" />
   </ItemGroup>
 
 </Project>

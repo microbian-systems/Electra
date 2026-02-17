@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Breadcrumbs;
 using Bunit;
-using Electra.MerakiUI.Breadcrumbs;
+using Aero.MerakiUI.Breadcrumbs;
 
-namespace Electra.MerakiUI.Tests.Breadcrumbs;
+namespace Aero.MerakiUI.Tests.Breadcrumbs;
 
 public class BreadcrumbTests : BunitContext
 {

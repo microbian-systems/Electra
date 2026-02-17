@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Build and Clean:**
 ```bash
 # Build entire solution
-dotnet build src/Electra.sln
+dotnet build src/Aero.sln
 
 # Clean solution and restore packages  
 ./src/clean.ps1
@@ -22,14 +22,14 @@ dotnet build src/Electra.sln
 **Testing:**
 ```bash
 # Run all tests
-dotnet test src/Electra.sln
+dotnet test src/Aero.sln
 
 # Run specific test project
-dotnet test src/Electra.Core.Tests/
-dotnet test src/Electra.Validators.Tests/
-dotnet test src/Electra.Crypto.Solana.Tests/
-dotnet test src/Electra.Crypto.Base.Tests/
-dotnet test src/Electra.SendGrid.Tests/
+dotnet test src/Aero.Core.Tests/
+dotnet test src/Aero.Validators.Tests/
+dotnet test src/Aero.Crypto.Solana.Tests/
+dotnet test src/Aero.Crypto.Base.Tests/
+dotnet test src/Aero.SendGrid.Tests/
 ```
 
 **Development Environment:**
@@ -69,32 +69,32 @@ This is a .NET 9.0 modular web framework implementing **Clean Architecture** wit
 ### Project Structure
 
 **Core Projects:**
-- `Electra.Core` - Core domain entities, algorithms (including Shamir's Secret Sharing), encryption
-- `Electra.Core.Ai` - AI integration using Microsoft.SemanticKernel for LLM operations
-- `Electra.Common` - Command/Query patterns, decorators, shared utilities
-- `Electra.Models` - DTOs, view models, API request/response models
-- `Electra.Persistence` - Repository implementations for multiple databases
-- `Electra.Persistence.Core` - Core persistence abstractions and interfaces
-- `Electra.Persistence.Marten` - Marten (PostgreSQL) document store implementation
-- `Electra.Services` - Business logic, feature toggles, user management
+- `Aero.Core` - Core domain entities, algorithms (including Shamir's Secret Sharing), encryption
+- `Aero.Core.Ai` - AI integration using Microsoft.SemanticKernel for LLM operations
+- `Aero.Common` - Command/Query patterns, decorators, shared utilities
+- `Aero.Models` - DTOs, view models, API request/response models
+- `Aero.Persistence` - Repository implementations for multiple databases
+- `Aero.Persistence.Core` - Core persistence abstractions and interfaces
+- `Aero.Persistence.Marten` - Marten (PostgreSQL) document store implementation
+- `Aero.Services` - Business logic, feature toggles, user management
 
 **Infrastructure:**
-- `Electra.Web` - Web framework extensions, middleware, JWT authentication
-- `Electra.Web.Core` - Core web abstractions and utilities
-- `Electra.Web.BlogEngine` - Blog engine implementation
-- `Electra.Caching` - FusionCache-based caching with Redis backplane
-- `Electra.Auth` - OpenIddict authentication with passkey support
-- `Electra.Validators` - FluentValidation implementations
-- `Electra.Events` - Event sourcing and domain events
+- `Aero.Web` - Web framework extensions, middleware, JWT authentication
+- `Aero.Web.Core` - Core web abstractions and utilities
+- `Aero.Web.BlogEngine` - Blog engine implementation
+- `Aero.Caching` - FusionCache-based caching with Redis backplane
+- `Aero.Auth` - OpenIddict authentication with passkey support
+- `Aero.Validators` - FluentValidation implementations
+- `Aero.Events` - Event sourcing and domain events
 
 **Specialized:**
-- `Electra.Crypto.Core` - Core cryptographic abstractions and interfaces
-- `Electra.Crypto.Base` - Base cryptographic implementations and utilities
-- `Electra.Crypto.Solana` - Solana blockchain integration using Solnet libraries
-- `Electra.SignalR` - Real-time communication hub
-- `Electra.Components` - Blazor components
-- `Electra.Actors` - Actor model implementation
-- `Electra.Workflows` - Workflow orchestration
+- `Aero.Crypto.Core` - Core cryptographic abstractions and interfaces
+- `Aero.Crypto.Base` - Base cryptographic implementations and utilities
+- `Aero.Crypto.Solana` - Solana blockchain integration using Solnet libraries
+- `Aero.SignalR` - Real-time communication hub
+- `Aero.Components` - Blazor components
+- `Aero.Actors` - Actor model implementation
+- `Aero.Workflows` - Workflow orchestration
 
 **Testing:**
 - Test projects use XUnit with mocking libraries (FakeItEasy, NSubstitute)
@@ -105,7 +105,7 @@ This is a .NET 9.0 modular web framework implementing **Clean Architecture** wit
 Use extension methods for clean service registration:
 ```csharp
 // Core services
-builder.Services.AddElectraDefaults(builder.Configuration);
+builder.Services.AddAeroDefaults(builder.Configuration);
 
 // API-specific setup
 builder.Services.AddDefaultApi(builder.Configuration);
@@ -151,7 +151,7 @@ The `src/docker-compose.yml` provides a comprehensive development environment in
 ### Recent Architecture Changes
 
 **AI Integration:**
-- New `Electra.Core.Ai` project implements Microsoft.SemanticKernel integration
+- New `Aero.Core.Ai` project implements Microsoft.SemanticKernel integration
 - Supports LLM operations and AI-powered features
 - Includes usage logging through `AiUsageLog` entity
 
@@ -161,13 +161,13 @@ The `src/docker-compose.yml` provides a comprehensive development environment in
 - Maintains decorator pattern for transparent caching
 
 **Cryptography Modularization:**
-- Split crypto functionality into `Electra.Crypto.Core` and `Electra.Crypto.Base`
+- Split crypto functionality into `Aero.Crypto.Core` and `Aero.Crypto.Base`
 - Enhanced separation of concerns for cryptographic operations
 - Maintains Solana-specific implementations in dedicated project
 
 ### Common Gotchas
 
-- Some PowerShell scripts may reference outdated paths (Microbians vs Electra)
+- Some PowerShell scripts may reference outdated paths (Microbians vs Aero)
 - The solution includes git submodules for Solnet libraries
 - Authentication supports both JWT and OpenIddict with passkey integration
 - Repository decorators are automatically applied through DI configuration

@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Areas.Demo.Pages;
 using Bunit;
-using Electra.MerakiUI.Areas.Demo.Pages;
+using Aero.MerakiUI.Areas.Demo.Pages;
 
-namespace Electra.MerakiUI.Tests.Areas.Demo.Pages;
+namespace Aero.MerakiUI.Tests.Areas.Demo.Pages;
 
 public class MerakiShowcaseTests : BunitContext
 {

@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Navbars;
 using Bunit;
-using Electra.MerakiUI.Navbars;
+using Aero.MerakiUI.Navbars;
 
-namespace Electra.MerakiUI.Tests.Navbars;
+namespace Aero.MerakiUI.Tests.Navbars;
 
 public class NavbarTests : BunitContext
 {

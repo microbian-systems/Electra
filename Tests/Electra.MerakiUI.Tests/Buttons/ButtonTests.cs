@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Buttons;
 using Bunit;
-using Electra.MerakiUI.Buttons;
+using Aero.MerakiUI.Buttons;
 
-namespace Electra.MerakiUI.Tests.Buttons;
+namespace Aero.MerakiUI.Tests.Buttons;
 
 public class ButtonTests : BunitContext
 {

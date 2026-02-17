@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Sidebars;
 using Bunit;
-using Electra.MerakiUI.Sidebars;
+using Aero.MerakiUI.Sidebars;
 
-namespace Electra.MerakiUI.Tests.Sidebars;
+namespace Aero.MerakiUI.Tests.Sidebars;
 
 public class SidebarTests : BunitContext
 {

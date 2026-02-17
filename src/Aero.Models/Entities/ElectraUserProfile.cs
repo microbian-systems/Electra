@@ -1,0 +1,53 @@
+using System.ComponentModel.DataAnnotations;
+using Aero.Common;
+using Aero.Core.Entities;
+
+namespace Aero.Models.Entities;
+
+// todo - determine what format to store the profile
+// todo - later denormalize if join performance costs too much (cache first, then denormalize)
+// todo - add foreign key to the Users (AspNetUsers) table
+// https://www.npgsql.org/efcore/mapping/json.html?tabs=data-annotations%2Cpoco
+public class AeroUserProfile : Entity
+{
+    /// <summary>
+    /// Foreign key to the Aero Identity table
+    /// </summary>
+    [JsonPropertyName("user_id")]
+    public string Userid { get; set; } // todo - make this generic so the type can vary for pkey
+
+    [MinLength(4)] // todo - remove data annotations and use FluentValidation
+    [MaxLength(256)]
+    [JsonPropertyName("username")]
+    public string Username { get; set; }
+
+    [Url]
+    [MinLength(4)]
+    [MaxLength(1024)]
+    [JsonPropertyName("website")]
+    public string? Website { get; set; }
+
+    [JsonPropertyName("social_media")]
+    public Dictionary<SocialMediaType, string> SocialMedia { get; } = [];
+
+    [MaxLength(128)]
+    [JsonPropertyName("headline")]
+    public string Headline { get; set; }
+
+    [MaxLength(128)]
+    [JsonPropertyName("location")]
+    public string Location { get; set; }
+
+    [MaxLength(1024)]
+    [JsonPropertyName("bio")]
+    public string? Bio { get; set; }
+
+    /// <summary>
+    /// Can store as base64 encoded image or path to url
+    /// </summary>
+    [Url]
+    [MaxLength(1024)]
+    [JsonPropertyName("image_url")]
+    public string? ImageUrl { get; set; }
+    public AddressModel? Address { get; set; }
+}

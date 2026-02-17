@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Auth;
 using Bunit;
-using Electra.MerakiUI.Auth;
+using Aero.MerakiUI.Auth;
 
-namespace Electra.MerakiUI.Tests.Auth;
+namespace Aero.MerakiUI.Tests.Auth;
 
 public class AuthTests : BunitContext
 {

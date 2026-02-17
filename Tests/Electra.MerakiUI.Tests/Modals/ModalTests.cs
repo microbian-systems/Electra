@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Modals;
 using Bunit;
-using Electra.MerakiUI.Modals;
+using Aero.MerakiUI.Modals;
 
-namespace Electra.MerakiUI.Tests.Modals;
+namespace Aero.MerakiUI.Tests.Modals;
 
 public class ModalTests : BunitContext
 {

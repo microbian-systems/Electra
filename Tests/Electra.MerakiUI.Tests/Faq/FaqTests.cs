@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Faq;
 using Bunit;
-using Electra.MerakiUI.Faq;
+using Aero.MerakiUI.Faq;
 
-namespace Electra.MerakiUI.Tests.Faq;
+namespace Aero.MerakiUI.Tests.Faq;
 
 public class FaqTests : BunitContext
 {

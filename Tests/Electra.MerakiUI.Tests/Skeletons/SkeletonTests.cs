@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Skeletons;
 using Bunit;
-using Electra.MerakiUI.Skeletons;
+using Aero.MerakiUI.Skeletons;
 
-namespace Electra.MerakiUI.Tests.Skeletons;
+namespace Aero.MerakiUI.Tests.Skeletons;
 
 public class SkeletonTests : BunitContext
 {

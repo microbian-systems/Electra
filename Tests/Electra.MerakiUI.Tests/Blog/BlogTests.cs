@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Blog;
 using Bunit;
-using Electra.MerakiUI.Blog;
+using Aero.MerakiUI.Blog;
 
-namespace Electra.MerakiUI.Tests.Blog;
+namespace Aero.MerakiUI.Tests.Blog;
 
 public class BlogTests : BunitContext
 {

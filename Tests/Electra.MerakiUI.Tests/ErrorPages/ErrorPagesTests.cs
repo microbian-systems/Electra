@@ -1,7 +1,8 @@
+using Aero.MerakiUI.ErrorPages;
 using Bunit;
-using Electra.MerakiUI.ErrorPages;
+using Aero.MerakiUI.ErrorPages;
 
-namespace Electra.MerakiUI.Tests.ErrorPages;
+namespace Aero.MerakiUI.Tests.ErrorPages;
 
 public class ErrorPagesTests : BunitContext
 {

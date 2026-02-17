@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Pagination;
 using Bunit;
-using Electra.MerakiUI.Pagination;
+using Aero.MerakiUI.Pagination;
 
-namespace Electra.MerakiUI.Tests.Pagination;
+namespace Aero.MerakiUI.Tests.Pagination;
 
 public class PaginationTests : BunitContext
 {

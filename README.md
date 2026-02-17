@@ -1,13 +1,13 @@
 
-<img src="./assets/electra2.png" alt="electra Logo" width="150" height="150" /> 
+<img src="./assets/Aero2.png" alt="Aero Logo" width="150" height="150" /> 
 
-# Electra .NET Utilities Framework
+# Aero .NET Utilities Framework
 
 
 ### General Development Guidelines
 
 1. MVC Controllers (Web + API) should be small and thin
-1. This repo also has a sub-module **(Electra)** for an OSS library that is also in development.  
+1. This repo also has a sub-module **(Aero)** for an OSS library that is also in development.  
 1. Please remember to push changes from both the main git repository and the sub-module if modifictions are made there.
 1. We use the Git Flow branching strategy which means all work shoudl be done on feature branches, then when done, create a pull request to the develop branch.
 

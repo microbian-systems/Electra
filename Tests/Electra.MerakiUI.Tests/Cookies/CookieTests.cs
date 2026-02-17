@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Cookies;
 using Bunit;
-using Electra.MerakiUI.Cookies;
+using Aero.MerakiUI.Cookies;
 
-namespace Electra.MerakiUI.Tests.Cookies;
+namespace Aero.MerakiUI.Tests.Cookies;
 
 public class CookieTests : BunitContext
 {

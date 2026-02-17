@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Tabs;
 using Bunit;
-using Electra.MerakiUI.Tabs;
+using Aero.MerakiUI.Tabs;
 
-namespace Electra.MerakiUI.Tests.Tabs;
+namespace Aero.MerakiUI.Tests.Tabs;
 
 public class TabTests : BunitContext
 {
@@ -28,7 +29,7 @@ public class TabTests : BunitContext
     [Fact]
     public void TabWithIcons_ShouldRenderCorrectStructure()
     {
-        var items = new List<Electra.MerakiUI.Tabs.TabWithIcons.TabItem>
+        var items = new List<Aero.MerakiUI.Tabs.TabWithIcons.TabItem>
         {
             new() { Title = "Profile", Icon = "<svg>...</svg>" },
             new() { Title = "Dashboard", Icon = "<svg>...</svg>" }

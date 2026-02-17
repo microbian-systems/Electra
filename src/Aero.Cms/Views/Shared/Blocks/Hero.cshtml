@@ -1,0 +1,23 @@
+@using Aero.Cms.Models
+@model BlockDocument
+
+<section class="relative bg-gray-900 text-white py-20">
+    @if (!string.IsNullOrEmpty(Model.GetValue<string>("ImageUrl")))
+    {
+        <div class="absolute inset-0 z-0">
+            <img src="@(Model.GetValue<string>("ImageUrl"))" alt="" class="w-full h-full object-cover opacity-50" />
+        </div>
+    }
+    
+    <div class="container mx-auto px-4 relative z-10 text-center">
+        <h1 class="text-4xl font-bold mb-4">@(Model.GetValue<string>("Title"))</h1>
+        <p class="text-xl mb-8">@(Model.GetValue<string>("Subtitle"))</p>
+        
+        @if (!string.IsNullOrEmpty(Model.GetValue<string>("CtaText")) && !string.IsNullOrEmpty(Model.GetValue<string>("CtaUrl")))
+        {
+            <a href="@(Model.GetValue<string>("CtaUrl"))" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded">
+                @(Model.GetValue<string>("CtaText"))
+            </a>
+        }
+    </div>
+</section>

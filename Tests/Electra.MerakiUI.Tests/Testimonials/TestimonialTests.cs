@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Testimonials;
 using Bunit;
-using Electra.MerakiUI.Testimonials;
+using Aero.MerakiUI.Testimonials;
 
-namespace Electra.MerakiUI.Tests.Testimonials;
+namespace Aero.MerakiUI.Tests.Testimonials;
 
 public class TestimonialTests : BunitContext
 {

@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Inputs;
 using Bunit;
-using Electra.MerakiUI.Inputs;
+using Aero.MerakiUI.Inputs;
 
-namespace Electra.MerakiUI.Tests.Inputs;
+namespace Aero.MerakiUI.Tests.Inputs;
 
 public class InputTests : BunitContext
 {

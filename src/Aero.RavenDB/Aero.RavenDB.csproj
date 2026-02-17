@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aero.Models\Aero.Models.csproj" />
+      <ProjectReference Include="..\Aero.Persistence.Core\Aero.Persistence.Core.csproj" />
+      <ProjectReference Include="..\Aero.Persistence\Aero.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+      <PackageReference Include="RavenDB.Client" Version="7.2.0" />
+      <PackageReference Include="RavenDB.Embedded" Version="7.2.0" />
+    </ItemGroup>
+
+</Project>

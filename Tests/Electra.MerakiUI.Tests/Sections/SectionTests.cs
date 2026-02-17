@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Sections;
 using Bunit;
-using Electra.MerakiUI.Sections;
+using Aero.MerakiUI.Sections;
 
-namespace Electra.MerakiUI.Tests.Sections;
+namespace Aero.MerakiUI.Tests.Sections;
 
 public class SectionTests : BunitContext
 {

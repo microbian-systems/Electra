@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Alerts;
 using Bunit;
-using Electra.MerakiUI.Alerts;
+using Aero.MerakiUI.Alerts;
 
-namespace Electra.MerakiUI.Tests.Alerts;
+namespace Aero.MerakiUI.Tests.Alerts;
 
 public class AlertTests : BunitContext
 {

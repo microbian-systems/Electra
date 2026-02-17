@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Tooltips;
 using Bunit;
-using Electra.MerakiUI.Tooltips;
+using Aero.MerakiUI.Tooltips;
 
-namespace Electra.MerakiUI.Tests.Tooltips;
+namespace Aero.MerakiUI.Tests.Tooltips;
 
 public class TooltipTests : BunitContext
 {

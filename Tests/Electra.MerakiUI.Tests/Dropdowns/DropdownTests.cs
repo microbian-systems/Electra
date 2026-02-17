@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Dropdowns;
 using Bunit;
-using Electra.MerakiUI.Dropdowns;
+using Aero.MerakiUI.Dropdowns;
 
-namespace Electra.MerakiUI.Tests.Dropdowns;
+namespace Aero.MerakiUI.Tests.Dropdowns;
 
 public class DropdownTests : BunitContext
 {

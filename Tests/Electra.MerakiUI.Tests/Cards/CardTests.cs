@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Cards;
 using Bunit;
-using Electra.MerakiUI.Cards;
+using Aero.MerakiUI.Cards;
 
-namespace Electra.MerakiUI.Tests.Cards;
+namespace Aero.MerakiUI.Tests.Cards;
 
 public class CardTests : BunitContext
 {

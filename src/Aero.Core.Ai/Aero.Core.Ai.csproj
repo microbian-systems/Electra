@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+      <PackageReference Include="Microsoft.SemanticKernel" Version="1.70.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Abstractions" Version="1.70.0" />
+      <PackageReference Include="Microsoft.SemanticKernel.Core" Version="1.70.0" />
+      <PackageReference Include="ThrowGuard" Version="1.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Aero.Core\Aero.Core.csproj" />
+      <ProjectReference Include="..\Aero.Events\Aero.Events.csproj" />
+      <ProjectReference Include="..\Aero.Persistence.Core\Aero.Persistence.Core.csproj" />
+      <ProjectReference Include="..\Aero.Marten\Aero.Marten.csproj" />
+      <ProjectReference Include="..\Aero.Persistence\Aero.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="SmartKernelFactory.cs" />
+      <None Include="SmartKernelFactory.cs" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\Aero.Models\Aero.Models.csproj" />
+      <ProjectReference Include="..\Aero.Persistence.Core\Aero.Persistence.Core.csproj" />
+      <ProjectReference Include="..\Aero.Persistence\Aero.Persistence.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Compile Remove="MultipleResultSetWrapper.cs" />
+      <None Include="MultipleResultSetWrapper.cs" />
+      <Compile Remove="MultipleResultSetHelper.cs" />
+      <None Include="MultipleResultSetHelper.cs" />
+      <Compile Remove="BlogDbContext.cs" />
+      <None Include="BlogDbContext.cs" />
+    </ItemGroup>
+
+</Project>

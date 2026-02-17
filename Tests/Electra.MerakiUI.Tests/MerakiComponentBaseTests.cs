@@ -1,7 +1,8 @@
+using Aero.MerakiUI;
 using Bunit;
 using Microsoft.AspNetCore.Components;
 
-namespace Electra.MerakiUI.Tests;
+namespace Aero.MerakiUI.Tests;
 
 public class MerakiComponentBaseTests : BunitContext
 {

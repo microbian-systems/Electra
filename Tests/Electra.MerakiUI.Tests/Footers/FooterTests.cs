@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Footers;
 using Bunit;
-using Electra.MerakiUI.Footers;
+using Aero.MerakiUI.Footers;
 
-namespace Electra.MerakiUI.Tests.Footers;
+namespace Aero.MerakiUI.Tests.Footers;
 
 public class FooterTests : BunitContext
 {

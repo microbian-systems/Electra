@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Portfolio;
 using Bunit;
-using Electra.MerakiUI.Portfolio;
+using Aero.MerakiUI.Portfolio;
 
-namespace Electra.MerakiUI.Tests.Portfolio;
+namespace Aero.MerakiUI.Tests.Portfolio;
 
 public class PortfolioTests : BunitContext
 {

@@ -1,7 +1,7 @@
+using Aero.MerakiUI.Avatars;
 using Bunit;
-using Electra.MerakiUI.Avatars;
 
-namespace Electra.MerakiUI.Tests.Avatars;
+namespace Aero.MerakiUI.Tests.Avatars;
 
 public class AvatarTests : BunitContext
 {

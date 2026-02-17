@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Title>Data access patterns for the Aero Web Platform</Title>
+    <Description>Core components for the Aero web application platform</Description>
+    <IsPackable>false</IsPackable>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="MultipleResultSetHelper.cs" />
+    <Compile Remove="MultipleResultSetWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="AeroIdentityServerContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Elasticsearch.Net" Version="7.17.5" />
+    <PackageReference Include="FluentValidation" Version="12.1.1" />
+    <PackageReference Include="Foundatio" Version="12.0.0" />
+    <PackageReference Include="Foundatio.Repositories" Version="7.17.17" />
+    <PackageReference Include="Foundatio.Repositories.Elasticsearch" Version="7.17.17" />
+    <PackageReference Include="LanguageExt.Core" Version="4.4.9" />
+    <PackageReference Include="LiteDB" Version="5.0.21" />
+    <PackageReference Include="Marten" Version="8.21.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+    <PackageReference Include="NEST" Version="7.17.5" />
+    <PackageReference Include="Npgsql" Version="10.0.1" />
+    <PackageReference Include="Npgsql.Json.NET" Version="10.0.1" />
+    <PackageReference Include="RavenDB.Client" Version="7.2.0" />
+    <PackageReference Include="Serilog" Version="4.3.1" />
+    <PackageReference Include="Serilog.Formatting.Elasticsearch" Version="10.0.0" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="10.0.0" />
+    <PackageReference Include="ServiceStack.Aws" Version="10.0.6" />
+    <PackageReference Include="StackExchange.Redis" Version="2.10.14" />
+    <PackageReference Include="System.Data.Async" Version="2.0.0" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="ThrowGuard" Version="1.2.0" />
+    <PackageReference Include="YeSql.Net" Version="2.0.0" />
+    <PackageReference Include="Z.Expressions.Eval" Version="6.3.6" />
+    <PackageReference Include="Z.ExtensionMethods" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Aero.Core\Aero.Core.csproj" />
+    <ProjectReference Include="..\Aero.Models\Aero.Models.csproj" />
+    <ProjectReference Include="..\Aero.Common\Aero.Common.csproj" />
+    <ProjectReference Include="..\Aero.Persistence.Core\Aero.Persistence.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Morgue\AeroDbContext.cs" />
+  </ItemGroup>
+</Project>

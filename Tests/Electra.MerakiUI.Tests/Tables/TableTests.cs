@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Tables;
 using Bunit;
-using Electra.MerakiUI.Tables;
+using Aero.MerakiUI.Tables;
 
-namespace Electra.MerakiUI.Tests.Tables;
+namespace Aero.MerakiUI.Tests.Tables;
 
 public class TableTests : BunitContext
 {

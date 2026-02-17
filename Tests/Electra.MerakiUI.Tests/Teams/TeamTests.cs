@@ -1,7 +1,8 @@
+using Aero.MerakiUI.Teams;
 using Bunit;
-using Electra.MerakiUI.Teams;
+using Aero.MerakiUI.Teams;
 
-namespace Electra.MerakiUI.Tests.Teams;
+namespace Aero.MerakiUI.Tests.Teams;
 
 public class TeamTests : BunitContext
 {

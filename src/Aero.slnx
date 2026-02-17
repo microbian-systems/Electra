@@ -1,0 +1,55 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Tests/">
+    <Project Path="../Tests/Electra.Auth.Tests.WebHost/Electra.Auth.Tests.WebHost.csproj" />
+    <Project Path="../Tests/Electra.Auth.Tests/Electra.Auth.Tests.csproj" />
+    <Project Path="../Tests/Electra.Common.Tests/Electra.Common.Tests.csproj" />
+    <Project Path="../Tests/Electra.DataStructures.Tests/Electra.DataStructures.Tests.csproj" />
+    <Project Path="../Tests/Electra.Persistence.RavenDB.Tests/Electra.Persistence.RavenDB.Tests.csproj" />
+    <Project Path="../Tests/Electra.SendGrid.Tests/Electra.SendGrid.Tests.csproj" />
+  </Folder>
+  <Folder Name="/__Misc__/">
+    <File Path="../CLAUDE.md" />
+    <File Path="../clean.cs" />
+    <File Path="../README.md" />
+    <File Path="../submod.cs" />
+    <File Path="../upgrade.cs" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="garnet.conf.dev" />
+    <File Path="nuget-publish.sh" />
+    <File Path="nuget-update.sh" />
+    <File Path="pack.sh" />
+    <File Path="run-migrations.ps1" />
+    <File Path="upgrade-packages.ps1" />
+    <File Path="upgrade.ps1" />
+  </Folder>
+  <Project Path="Aero.Actors/Aero.Actors.csproj" />
+  <Project Path="Aero.Auth/Aero.Auth.csproj" />
+  <Project Path="Aero.Caching/Aero.Caching.csproj" />
+  <Project Path="Aero.Cms/Aero.Cms.csproj" />
+  <Project Path="Aero.Common/Aero.Common.csproj" />
+  <Project Path="Aero.Components/Aero.Components.csproj" />
+  <Project Path="Aero.Core.Ai/Aero.Core.Ai.csproj" />
+  <Project Path="Aero.Core/Aero.Core.csproj" />
+  <Project Path="Aero.DataStructures/Aero.DataStructures.csproj" />
+  <Project Path="Aero.Elastic/Aero.Elastic.csproj" />
+  <Project Path="Aero.Events/Aero.Events.csproj" />
+  <Project Path="Aero.MerakiUI/Aero.MerakiUI.csproj" />
+  <Project Path="Aero.Models/Aero.Models.csproj" />
+  <Project Path="Aero.Persistence.Core/Aero.Persistence.Core.csproj" />
+  <Project Path="Aero.EfCore/Aero.EfCore.csproj" />
+  <Project Path="Aero.Marten/Aero.Marten.csproj" />
+  <Project Path="Aero.RavenDB/Aero.RavenDB.csproj" />
+  <Project Path="Aero.Persistence/Aero.Persistence.csproj" />
+  <Project Path="Aero.Services/Aero.Services.csproj" />
+  <Project Path="Aero.SignalR/Aero.SignalR.csproj" />
+  <Project Path="Aero.Social/Aero.Social.csproj" />
+  <Project Path="Aero.Validators/Aero.Validators.csproj" />
+  <Project Path="Aero.Web.Core/Aero.Web.Core.csproj" />
+  <Project Path="Aero.Web/Aero.Web.csproj" />
+</Solution>
