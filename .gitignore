@@ -10,6 +10,7 @@ dist/
 [Oo]bj/
 .DS_Store/
 Microbians.Mobile.zip
+.frolic*.json
 
 # User-specific files
 *.suo
