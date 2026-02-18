@@ -1,4 +1,5 @@
 using System;
+using Aero.DataStructures.Trees.Persistence.Concurrency;
 using Aero.DataStructures.Trees.Persistence.Interfaces;
 using Aero.DataStructures.Trees.Persistence.Serialization;
 using Aero.DataStructures.Trees.Persistence.Storage;
@@ -61,19 +62,25 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddWal(
         this IServiceCollection services,
-        string walPath)
+        string walPath,
+        IsolationLevel isolation = IsolationLevel.ReadCommitted)
     {
+        services.AddSingleton<IConcurrencyStrategy>(_ => isolation switch
+        {
+            IsolationLevel.SnapshotMVCC => new MvccConcurrencyStrategy(),
+            IsolationLevel.OptimisticOCC => new OccConcurrencyStrategy(),
+            _ => new NoIsolationStrategy()
+        });
+
         services.AddSingleton<IWalStorageBackend>(sp =>
         {
             var inner = sp.GetRequiredService<IStorageBackend>();
-            return WalStorageBackendFactory.CreateAsync(inner, walPath)
+            var concurrency = sp.GetRequiredService<IConcurrencyStrategy>();
+            return WalStorageBackendFactory.CreateAsync(inner, walPath, concurrency)
                 .GetAwaiter().GetResult();
         });
 
         services.AddSingleton<IStorageBackend>(sp => sp.GetRequiredService<IWalStorageBackend>());
-        services.AddSingleton<IWalWriter>(sp => sp.GetRequiredService<IWalStorageBackend>() as WalStorageBackend != null
-            ? new WalFile(walPath)
-            : throw new InvalidOperationException("WAL backend not properly configured"));
 
         return services;
     }

@@ -14,7 +14,7 @@ internal sealed class TransactionContext : ITransactionContext
     private readonly TransactionManager _manager;
     private readonly Dictionary<long, ReadOnlyMemory<byte>> _dirtyPages = new();
     private readonly Dictionary<long, Lsn> _writeLsns = new();
-    private readonly HashSet<long> _readPages = new();
+    private readonly Dictionary<long, uint> _readSet = new();
     private bool _committed;
     private bool _aborted;
     private bool _disposed;
@@ -24,6 +24,7 @@ internal sealed class TransactionContext : ITransactionContext
     public bool IsCommitted => _committed;
     public bool IsAborted => _aborted;
     public IReadOnlyDictionary<long, ReadOnlyMemory<byte>> DirtyPages => _dirtyPages;
+    public IReadOnlyDictionary<long, uint> ReadSet => _readSet;
 
     public TransactionContext(
         long transactionId,
@@ -40,7 +41,19 @@ internal sealed class TransactionContext : ITransactionContext
     public void TrackRead(long pageId)
     {
         ThrowIfDisposed();
-        _readPages.Add(pageId);
+        if (!_readSet.ContainsKey(pageId))
+        {
+            _readSet[pageId] = 0;
+        }
+    }
+
+    public void TrackRead(long pageId, uint version)
+    {
+        ThrowIfDisposed();
+        if (!_readSet.ContainsKey(pageId))
+        {
+            _readSet[pageId] = version;
+        }
     }
 
     public void TrackWrite(long pageId, ReadOnlyMemory<byte> beforeImage)

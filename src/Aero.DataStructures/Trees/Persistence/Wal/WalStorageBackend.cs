@@ -3,6 +3,7 @@ using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Aero.DataStructures.Trees.Persistence.Concurrency;
 using Aero.DataStructures.Trees.Persistence.Storage;
 
 namespace Aero.DataStructures.Trees.Persistence.Wal;
@@ -12,6 +13,7 @@ public sealed class WalStorageBackend : IWalStorageBackend
     private readonly IStorageBackend _inner;
     private readonly IWalWriter _walWriter;
     private readonly TransactionManager _txnManager;
+    private readonly IConcurrencyStrategy _concurrency;
     private readonly Dictionary<long, byte[]> _dirtyPageCache = new();
     private TransactionContext? _currentTxn;
     private Lsn _lastCommittedLsn = Lsn.Zero;
@@ -24,11 +26,13 @@ public sealed class WalStorageBackend : IWalStorageBackend
     public WalStorageBackend(
         IStorageBackend inner,
         IWalWriter walWriter,
-        TransactionManager txnManager)
+        TransactionManager txnManager,
+        IConcurrencyStrategy? concurrency = null)
     {
         _inner = inner ?? throw new ArgumentNullException(nameof(inner));
         _walWriter = walWriter ?? throw new ArgumentNullException(nameof(walWriter));
         _txnManager = txnManager ?? throw new ArgumentNullException(nameof(txnManager));
+        _concurrency = concurrency ?? new NoIsolationStrategy();
     }
 
     public ValueTask<ITransactionContext> BeginTransactionAsync(CancellationToken ct = default)
@@ -40,6 +44,7 @@ public sealed class WalStorageBackend : IWalStorageBackend
 
         var txn = _txnManager.BeginAsync(ct).GetAwaiter().GetResult();
         _currentTxn = (TransactionContext)txn;
+        Concurrency.TransactionContext.Current = txn.TransactionId;
         return new ValueTask<ITransactionContext>(txn);
     }
 

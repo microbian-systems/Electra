@@ -15,4 +15,5 @@ public interface ITransactionContext : IAsyncDisposable
     bool IsCommitted { get; }
     bool IsAborted { get; }
     IReadOnlyDictionary<long, ReadOnlyMemory<byte>> DirtyPages { get; }
+    IReadOnlyDictionary<long, uint> ReadSet { get; }
 }
