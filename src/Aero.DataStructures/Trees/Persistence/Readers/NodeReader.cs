@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,12 +17,16 @@ internal abstract class NodeReader<TKey, TValue>
     where TKey : unmanaged, IComparable<TKey>
     where TValue : unmanaged
 {
-    /// <summary>Maximum degree of the B+ tree (calculated from page size).</summary>
-    protected readonly int MaxDegree;
+    /// <summary>Maximum capacity of records per leaf page.</summary>
+    public int LeafCapacity { get; }
+    
+    /// <summary>Maximum degree (fan-out) for internal nodes.</summary>
+    public int InternalDegree { get; }
 
-    protected NodeReader(int maxDegree)
+    protected NodeReader(int leafCapacity, int internalDegree)
     {
-        MaxDegree = maxDegree;
+        LeafCapacity = leafCapacity;
+        InternalDegree = internalDegree;
     }
 
     /// <summary>Reads an internal node from the specified page.</summary>
@@ -44,19 +47,12 @@ internal abstract class NodeReader<TKey, TValue>
     /// </summary>
     public static NodeReader<TKey, TValue> Create(IStorageBackend storage)
     {
-        var maxDegree = CalculateDegree(storage.PageSize);
+        var leafCapacity = BPlusLeafNode<TKey, TValue>.CalculateCapacity(storage.PageSize);
+        var internalDegree = BPlusInternalNode<TKey>.CalculateDegree(storage.PageSize);
         
         return storage is IZeroCopyStorageBackend zc
-            ? new ZeroCopyNodeReader<TKey, TValue>(zc, maxDegree)
-            : new CopyingNodeReader<TKey, TValue>(storage, maxDegree);
-    }
-
-    /// <summary>Calculates the maximum degree based on the smaller of internal and leaf node capacities.</summary>
-    private static int CalculateDegree(int pageSize)
-    {
-        var internalDegree = BPlusInternalNode<TKey>.CalculateDegree(pageSize);
-        var leafDegree = BPlusLeafNode<TKey, TValue>.CalculateDegree(pageSize);
-        return Math.Min(internalDegree, leafDegree);
+            ? new ZeroCopyNodeReader<TKey, TValue>(zc, leafCapacity, internalDegree)
+            : new CopyingNodeReader<TKey, TValue>(storage, leafCapacity, internalDegree);
     }
 }
 
@@ -70,15 +66,14 @@ internal sealed class ZeroCopyNodeReader<TKey, TValue> : NodeReader<TKey, TValue
 {
     private readonly IZeroCopyStorageBackend _storage;
 
-    public ZeroCopyNodeReader(IZeroCopyStorageBackend storage, int maxDegree) : base(maxDegree)
+    public ZeroCopyNodeReader(IZeroCopyStorageBackend storage, int leafCapacity, int internalDegree) 
+        : base(leafCapacity, internalDegree)
     {
         _storage = storage;
     }
 
     public override ValueTask<BPlusInternalNode<TKey>> ReadInternalAsync(long pageId, CancellationToken ct)
     {
-        // No allocation, no copy - ref into mapped memory reinterpreted as struct
-        // The struct is copied on return (unavoidable for ValueTask), but no heap allocation
         ref var node = ref _storage.GetPageRef<BPlusInternalNode<TKey>>(pageId);
         return ValueTask.FromResult(node);
     }
@@ -91,7 +86,6 @@ internal sealed class ZeroCopyNodeReader<TKey, TValue> : NodeReader<TKey, TValue
 
     public override ValueTask WriteInternalAsync(long pageId, BPlusInternalNode<TKey> node, CancellationToken ct)
     {
-        // Write directly into mapped memory - OS handles flush
         _storage.GetPageRef<BPlusInternalNode<TKey>>(pageId) = node;
         return ValueTask.CompletedTask;
     }
@@ -113,7 +107,8 @@ internal sealed class CopyingNodeReader<TKey, TValue> : NodeReader<TKey, TValue>
 {
     private readonly IStorageBackend _storage;
 
-    public CopyingNodeReader(IStorageBackend storage, int maxDegree) : base(maxDegree)
+    public CopyingNodeReader(IStorageBackend storage, int leafCapacity, int internalDegree) 
+        : base(leafCapacity, internalDegree)
     {
         _storage = storage;
     }

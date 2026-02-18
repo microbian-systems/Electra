@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,12 +13,15 @@ namespace Aero.DataStructures.Trees.Persistence.Storage;
 /// <summary>
 /// A memory-mapped file storage backend that provides high-performance page-based storage.
 /// Uses MemoryMappedFile for efficient random access with operating system-level caching.
+/// This is the safe implementation without direct pointer access.
 /// </summary>
 /// <remarks>
 /// This backend provides better performance than FileStorageBackend for workloads with:
 /// - Frequent random page access
 /// - Large files that don't fit entirely in memory
 /// - Need for operating system-level page caching
+/// 
+/// For zero-copy access, use MmapStorageBackend instead.
 /// </remarks>
 public sealed class MemoryMappedStorageBackend : IStorageBackend
 {
@@ -38,6 +42,8 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
     private readonly object _resizeLock = new();
     
     private readonly Stack<long> _freePages = new();
+    private readonly HashSet<long> _freePageSet = new();
+    private readonly Dictionary<long, PageMetadata> _metadata = new();
     private long _nextPageId = 0;
     private long _capacityInPages;
     private long _allocatedPages = 0;
@@ -128,15 +134,29 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
         long freeCount = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(HeaderFreeCountOffset));
         _capacityInPages = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(HeaderCapacityOffset));
         
+        _freePageSet.Clear();
         int maxFreeEntries = (int)Math.Min(freeCount, (_pageSize - HeaderFreeListOffset) / sizeof(long));
         for (int i = 0; i < maxFreeEntries; i++)
         {
             long freePageId = BinaryPrimitives.ReadInt64LittleEndian(
                 header.AsSpan(HeaderFreeListOffset + i * sizeof(long)));
             _freePages.Push(freePageId);
+            _freePageSet.Add(freePageId);
         }
         
         _nextPageId = _allocatedPages;
+        
+        // Initialize metadata for existing pages
+        _metadata.Clear();
+        for (long pageId = 0; pageId < _allocatedPages; pageId++)
+        {
+            _metadata[pageId] = new PageMetadata(
+                PageId: pageId,
+                TotalSlots: 0,
+                LiveSlots: 0,
+                DeadSlots: 0,
+                IsFree: _freePageSet.Contains(pageId));
+        }
     }
 
     private void SaveHeader()
@@ -169,7 +189,7 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
     {
         ThrowIfDisposed();
         
-        if (pageId < 0 || pageId >= _allocatedPages)
+        if (pageId < 0 || pageId >= _allocatedPages || _freePageSet.Contains(pageId))
             throw new PageNotFoundException(pageId);
         
         long offset = (pageId + 1) * _pageSize;
@@ -186,7 +206,7 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
         if (data.Length != PageSize)
             throw new PageSizeMismatchException(PageSize, data.Length);
         
-        if (pageId < 0 || pageId >= _allocatedPages)
+        if (pageId < 0 || pageId >= _allocatedPages || _freePageSet.Contains(pageId))
             throw new PageNotFoundException(pageId);
         
         long offset = (pageId + 1) * _pageSize;
@@ -209,6 +229,7 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
             if (_freePages.Count > 0)
             {
                 pageId = _freePages.Pop();
+                _freePageSet.Remove(pageId);
             }
             else
             {
@@ -221,6 +242,9 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
             }
             
             _allocatedPages = Math.Max(_allocatedPages, pageId + 1);
+            
+            // Initialize metadata
+            _metadata[pageId] = new PageMetadata(pageId, 0, 0, 0, false);
         }
         
         return new ValueTask<long>(pageId);
@@ -247,6 +271,14 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
             lock (_resizeLock)
             {
                 _freePages.Push(pageId);
+                _freePageSet.Add(pageId);
+                
+                // Update metadata to mark as free
+                if (_metadata.TryGetValue(pageId, out var meta))
+                {
+                    _metadata[pageId] = meta with { IsFree = true };
+                }
+                
                 if (pageId == _allocatedPages - 1)
                     _allocatedPages--;
             }
@@ -261,6 +293,54 @@ public sealed class MemoryMappedStorageBackend : IStorageBackend
         SaveHeader();
         _accessor.Flush();
         return ValueTask.CompletedTask;
+    }
+
+    public ValueTask<PageMetadata> GetPageMetadataAsync(long pageId, CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+
+        if (!_metadata.TryGetValue(pageId, out var meta))
+            throw new PageNotFoundException(pageId);
+
+        return new ValueTask<PageMetadata>(meta);
+    }
+
+    public ValueTask UpdatePageMetadataAsync(
+        long pageId,
+        int liveDelta,
+        int deadDelta,
+        CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+
+        if (!_metadata.TryGetValue(pageId, out var meta))
+            throw new PageNotFoundException(pageId);
+
+        _metadata[pageId] = new PageMetadata(
+            PageId: pageId,
+            TotalSlots: meta.TotalSlots,
+            LiveSlots: Math.Max(0, meta.LiveSlots + liveDelta),
+            DeadSlots: Math.Max(0, meta.DeadSlots + deadDelta),
+            IsFree: meta.IsFree);
+
+        return ValueTask.CompletedTask;
+    }
+
+    public async IAsyncEnumerable<PageMetadata> GetFragmentedPagesAsync(
+        double fragmentationThreshold,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+
+        var fragmented = _metadata.Values
+            .Where(m => !m.IsFree && m.Fragmentation >= fragmentationThreshold)
+            .OrderByDescending(m => m.Fragmentation);
+
+        foreach (var meta in fragmented)
+        {
+            ct.ThrowIfCancellationRequested();
+            yield return meta;
+        }
     }
 
     public async ValueTask DisposeAsync()

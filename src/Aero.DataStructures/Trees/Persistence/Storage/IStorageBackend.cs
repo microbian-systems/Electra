@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -48,6 +49,40 @@ public interface IStorageBackend : IAsyncDisposable
     /// </summary>
     /// <param name="ct">Cancellation token.</param>
     ValueTask FlushAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Returns cached metadata for a page without reading its full contents.
+    /// </summary>
+    /// <param name="pageId">The ID of the page.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>The metadata for the specified page.</returns>
+    /// <exception cref="PageNotFoundException">Thrown if the page ID does not exist.</exception>
+    ValueTask<PageMetadata> GetPageMetadataAsync(long pageId, CancellationToken ct = default);
+
+    /// <summary>
+    /// Adjusts the live and dead slot counts for a page after a tree operation.
+    /// Called by tree implementations after tombstoning or compacting records.
+    /// </summary>
+    /// <param name="pageId">The ID of the page to update.</param>
+    /// <param name="liveDelta">Change in live slot count (may be negative).</param>
+    /// <param name="deadDelta">Change in dead slot count (may be negative).</param>
+    /// <param name="ct">Cancellation token.</param>
+    ValueTask UpdatePageMetadataAsync(
+        long pageId,
+        int liveDelta,
+        int deadDelta,
+        CancellationToken ct = default);
+
+    /// <summary>
+    /// Lazily yields pages whose fragmentation ratio meets or exceeds the threshold.
+    /// Ordered by fragmentation descending (most fragmented first).
+    /// </summary>
+    /// <param name="fragmentationThreshold">Minimum fragmentation ratio (0.0 = all non-free pages).</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>Pages at or above the fragmentation threshold, ordered by fragmentation descending.</returns>
+    IAsyncEnumerable<PageMetadata> GetFragmentedPagesAsync(
+        double fragmentationThreshold,
+        CancellationToken ct = default);
 
     /// <summary>
     /// Gets the fixed page size in bytes for this backend instance.

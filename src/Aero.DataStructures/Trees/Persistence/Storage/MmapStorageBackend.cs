@@ -12,11 +12,13 @@ namespace Aero.DataStructures.Trees.Persistence.Storage;
 
 /// <summary>
 /// A high-performance memory-mapped storage backend using unsafe pointers for direct memory access.
+/// Implements IZeroCopyStorageBackend for zero-copy span access.
 /// </summary>
 /// <remarks>
 /// This implementation uses unsafe code to get direct pointer access to the memory-mapped file,
 /// providing the fastest possible page read/write performance. All unsafe operations are isolated
-/// to a single method (GetPageSpan), with the rest of the class using safe Span&lt;T&gt; operations.
+/// to GetPageSpan and GetPageRef methods, with the rest of the class using safe Span&lt;T&gt; operations.
+/// Metadata is tracked in-memory (not persisted to disk).
 /// </remarks>
 public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
 {
@@ -39,6 +41,8 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
     private long _allocatedPages;
     private long _nextPageId;
     private readonly Stack<long> _freePages = new();
+    private readonly HashSet<long> _freePageSet = new();
+    private readonly Dictionary<long, PageMetadata> _metadata = new();
     private readonly object _resizeLock = new();
     private bool _disposed;
 
@@ -137,15 +141,29 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
         long freeCount = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(HeaderFreeCountOffset));
         _capacityInPages = BinaryPrimitives.ReadInt64LittleEndian(header.AsSpan(HeaderCapacityOffset));
 
+        _freePageSet.Clear();
         int maxFreeEntries = (int)Math.Min(freeCount, (_pageSize - HeaderFreeListOffset) / sizeof(long));
         for (int i = 0; i < maxFreeEntries; i++)
         {
             long freePageId = BinaryPrimitives.ReadInt64LittleEndian(
                 header.AsSpan(HeaderFreeListOffset + i * sizeof(long)));
             _freePages.Push(freePageId);
+            _freePageSet.Add(freePageId);
         }
 
         _nextPageId = _allocatedPages;
+        
+        // Initialize metadata for existing pages
+        _metadata.Clear();
+        for (long pageId = 0; pageId < _allocatedPages; pageId++)
+        {
+            _metadata[pageId] = new PageMetadata(
+                PageId: pageId,
+                TotalSlots: 0,
+                LiveSlots: 0,
+                DeadSlots: 0,
+                IsFree: _freePageSet.Contains(pageId));
+        }
     }
 
     private void SaveHeader()
@@ -181,7 +199,8 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
 
     /// <summary>
     /// Gets a Span pointing to the specified page in the memory-mapped file.
-    /// This is the bridge between OS memory and Span world for zero-copy access.
+    /// Zero allocation. Zero copy. Synchronous.
+    /// Caller must not hold this span across any await.
     /// </summary>
     public Span<byte> GetPageSpan(long pageId)
     {
@@ -200,6 +219,7 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
     /// <summary>
     /// Returns a reference to a typed struct directly in mapped memory.
     /// Writes through this reference go directly to mapped pages.
+    /// Caller must not hold this ref across any await.
     /// </summary>
     public unsafe ref T GetPageRef<T>(long pageId) where T : unmanaged
     {
@@ -255,6 +275,7 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
             if (_freePages.Count > 0)
             {
                 pageId = _freePages.Pop();
+                _freePageSet.Remove(pageId);
             }
             else
             {
@@ -267,6 +288,10 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
             }
 
             _allocatedPages = Math.Max(_allocatedPages, pageId + 1);
+            
+            // Initialize metadata
+            _metadata[pageId] = new PageMetadata(pageId, 0, 0, 0, false);
+            
             return new ValueTask<long>(pageId);
         }
     }
@@ -307,6 +332,14 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
             if (pageId >= 0 && pageId < _allocatedPages)
             {
                 _freePages.Push(pageId);
+                _freePageSet.Add(pageId);
+                
+                // Update metadata to mark as free
+                if (_metadata.TryGetValue(pageId, out var meta))
+                {
+                    _metadata[pageId] = meta with { IsFree = true };
+                }
+                
                 if (pageId == _allocatedPages - 1)
                     _allocatedPages--;
             }
@@ -321,6 +354,54 @@ public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
         SaveHeader();
         _accessor.Flush();
         return ValueTask.CompletedTask;
+    }
+
+    public ValueTask<PageMetadata> GetPageMetadataAsync(long pageId, CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+
+        if (!_metadata.TryGetValue(pageId, out var meta))
+            throw new PageNotFoundException(pageId);
+
+        return new ValueTask<PageMetadata>(meta);
+    }
+
+    public ValueTask UpdatePageMetadataAsync(
+        long pageId,
+        int liveDelta,
+        int deadDelta,
+        CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+
+        if (!_metadata.TryGetValue(pageId, out var meta))
+            throw new PageNotFoundException(pageId);
+
+        _metadata[pageId] = new PageMetadata(
+            PageId: pageId,
+            TotalSlots: meta.TotalSlots,
+            LiveSlots: Math.Max(0, meta.LiveSlots + liveDelta),
+            DeadSlots: Math.Max(0, meta.DeadSlots + deadDelta),
+            IsFree: meta.IsFree);
+
+        return ValueTask.CompletedTask;
+    }
+
+    public async IAsyncEnumerable<PageMetadata> GetFragmentedPagesAsync(
+        double fragmentationThreshold,
+        [EnumeratorCancellation] CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+
+        var fragmented = _metadata.Values
+            .Where(m => !m.IsFree && m.Fragmentation >= fragmentationThreshold)
+            .OrderByDescending(m => m.Fragmentation);
+
+        foreach (var meta in fragmented)
+        {
+            ct.ThrowIfCancellationRequested();
+            yield return meta;
+        }
     }
 
     public ValueTask DisposeAsync()
