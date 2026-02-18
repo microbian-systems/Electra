@@ -17,22 +17,13 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.3.0" />
       <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
       <PackageReference Include="ThrowGuard" Version="1.2.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Aero.Core\Aero.Core.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Hashnode\" />
-      <Folder Include="Mastodon\" />
-      <Folder Include="Facebook\" />
-      <Folder Include="Instagram\" />
-      <Folder Include="Tiktok\" />
-      <Folder Include="Youtube\" />
-      <Folder Include="Twitter\" />
     </ItemGroup>
 
 </Project>
