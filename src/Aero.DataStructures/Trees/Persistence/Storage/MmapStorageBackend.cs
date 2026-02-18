@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.MemoryMappedFiles;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Aero.DataStructures.Trees.Persistence.Storage;
 /// providing the fastest possible page read/write performance. All unsafe operations are isolated
 /// to a single method (GetPageSpan), with the rest of the class using safe Span&lt;T&gt; operations.
 /// </remarks>
-public sealed unsafe class MmapStorageBackend : IStorageBackend
+public sealed unsafe class MmapStorageBackend : IZeroCopyStorageBackend
 {
     private const uint MagicNumber = 0x4D4D4146; // "MMAF" (Memory Mapped File)
     private const int HeaderMagicOffset = 0;
@@ -180,9 +181,9 @@ public sealed unsafe class MmapStorageBackend : IStorageBackend
 
     /// <summary>
     /// Gets a Span pointing to the specified page in the memory-mapped file.
-    /// This is the only method that uses unsafe code - the bridge between OS memory and Span world.
+    /// This is the bridge between OS memory and Span world for zero-copy access.
     /// </summary>
-    private Span<byte> GetPageSpan(long pageId)
+    public Span<byte> GetPageSpan(long pageId)
     {
         if (_disposed)
             throw new ObjectDisposedException(nameof(MmapStorageBackend));
@@ -194,6 +195,27 @@ public sealed unsafe class MmapStorageBackend : IStorageBackend
             throw new InvalidOperationException($"Page {pageId} offset {offset} exceeds capacity.");
 
         return new Span<byte>(_basePtr + offset, _pageSize);
+    }
+
+    /// <summary>
+    /// Returns a reference to a typed struct directly in mapped memory.
+    /// Writes through this reference go directly to mapped pages.
+    /// </summary>
+    public unsafe ref T GetPageRef<T>(long pageId) where T : unmanaged
+    {
+        if (_disposed)
+            throw new ObjectDisposedException(nameof(MmapStorageBackend));
+
+        // +1 because header is at offset 0 (page 0)
+        long offset = (pageId + 1) * _pageSize;
+        
+        if (offset < 0 || offset + _pageSize > _capacityInPages * _pageSize)
+            throw new InvalidOperationException($"Page {pageId} offset {offset} exceeds capacity.");
+
+        if (sizeof(T) > _pageSize)
+            throw new InvalidOperationException($"Type size {sizeof(T)} exceeds page size {_pageSize}.");
+
+        return ref Unsafe.AsRef<T>(_basePtr + offset);
     }
 
     public ValueTask<Memory<byte>> ReadPageAsync(long pageId, CancellationToken ct = default)
