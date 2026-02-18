@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
+using Aero.Core.Data;
 using Aero.Core.Entities;
-using Aero.EfCore.Data;
 
 namespace Aero.Caching.Decorators;
 

@@ -1,5 +1,4 @@
 using Aero.Auth.Controllers;
-using Aero.Auth.Extensions;
 using Aero.Models;
 using Aero.Models.Entities;
 using Microsoft.AspNetCore.Identity;
@@ -91,4 +90,7 @@ if (verified == null)
 await app.RunAsync();
 
 
-public partial class Program;
+namespace Aero.Auth.Tests.WebHost
+{
+    public partial class Program;
+}

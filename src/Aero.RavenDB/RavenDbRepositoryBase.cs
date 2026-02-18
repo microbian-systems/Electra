@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
+using Aero.Core.Data.Functional;
 using Aero.Core.Entities;
-using Aero.EfCore.Data.Functional;
 using Microsoft.Extensions.Logging;
 using static System.GC;
 

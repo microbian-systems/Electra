@@ -1,4 +1,4 @@
-﻿namespace Aero.Core.Json.Converters;
+﻿namespace Aero.Core.Converters;
 
 public class StringToIntConverter : JsonConverter<int>
 {

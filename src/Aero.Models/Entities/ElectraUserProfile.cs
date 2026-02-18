@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Aero.Common;
+using Aero.Core;
 using Aero.Core.Entities;
 
 namespace Aero.Models.Entities;

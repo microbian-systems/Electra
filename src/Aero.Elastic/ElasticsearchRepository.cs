@@ -1,12 +1,13 @@
 using System.ComponentModel;
 using System.Linq.Expressions;
+using Aero.Core.Data;
 using Aero.Core.Entities;
 using Aero.Core.Extensions;
-using Aero.EfCore.Data;
 using Microsoft.Extensions.Logging;
 using Nest;
+using ServiceStack;
 
-namespace Aero.Persistence.Elastic;
+namespace Aero.Elastic;
 
 public interface IElasticsearchRepository<T> where T : ElasticEntity
 {

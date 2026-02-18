@@ -1,6 +1,6 @@
 ﻿using System.Threading;
+using Aero.Core.Data;
 using Aero.Core.Entities;
-using Aero.EfCore.Data;
 using Microsoft.Extensions.Logging;
 using ServiceStack.Text;
 

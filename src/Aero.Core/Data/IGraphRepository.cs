@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Aero.Core.Entities;
 
-namespace Aero.EfCore.Data;
+namespace Aero.Core.Data;
 
 public interface IGraphRepository<TEntity, TKey> : IWriteRepository<TEntity, TKey> 
     where TEntity : class , IEntity<TKey> 

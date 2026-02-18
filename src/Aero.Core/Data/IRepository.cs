@@ -1,6 +1,6 @@
 ﻿using Aero.Core.Entities;
 
-namespace Aero.EfCore.Data;
+namespace Aero.Core.Data;
 
 
 

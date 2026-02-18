@@ -1,4 +1,4 @@
-namespace Aero.Persistence.Elastic;
+namespace Aero.Elastic;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = false)]
 public class IndexNameAttribute : Attribute

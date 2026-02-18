@@ -2,7 +2,7 @@
 using Aero.Core.Entities;
 using LanguageExt;
 
-namespace Aero.EfCore.Data.Functional;
+namespace Aero.Core.Data.Functional;
 
 public interface IReadonlyRepositorySyncOption<T, TKey> 
     where T : IEntity<TKey> 

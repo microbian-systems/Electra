@@ -42,7 +42,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Aero.Core\Aero.Core.csproj" />
     <ProjectReference Include="..\Aero.Models\Aero.Models.csproj" />
-    <ProjectReference Include="..\Aero.Common\Aero.Common.csproj" />
     <ProjectReference Include="..\Aero.Persistence.Core\Aero.Persistence.Core.csproj" />
   </ItemGroup>
   <ItemGroup>

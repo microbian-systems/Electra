@@ -3,6 +3,7 @@ using Aero.Core.Extensions;
 using Aero.Models.Entities;
 using Aero.Persistence.Core;
 using Aero.Marten;
+using ServiceStack;
 
 
 namespace Aero.Services;

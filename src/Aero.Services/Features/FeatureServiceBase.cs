@@ -1,4 +1,5 @@
 ﻿using Aero.Core.Extensions;
+using ServiceStack;
 
 namespace Aero.Services.Features;
 

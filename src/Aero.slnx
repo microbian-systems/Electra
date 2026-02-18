@@ -9,8 +9,8 @@
     <Project Path="../Tests/Aero.Auth.Tests/Aero.Auth.Tests.csproj" />
     <Project Path="../Tests/Aero.Common.Tests/Aero.Common.Tests.csproj" />
     <Project Path="../Tests/Aero.DataStructures.Tests/Aero.DataStructures.Tests.csproj" />
-    <Project Path="../Tests/Aero.Persistence.RavenDB.Tests/Aero.Persistence.RavenDB.Tests.csproj" />
     <Project Path="../Tests/Aero.SendGrid.Tests/Aero.SendGrid.Tests.csproj" />
+    <Project Path="D:/proj/microbians/microbians.io/Aero/Tests/Aero.RavenDB.Tests/Aero.RavenDB.Tests.csproj" />
   </Folder>
   <Folder Name="/__Misc__/">
     <File Path="../CLAUDE.md" />
@@ -32,7 +32,6 @@
   <Project Path="Aero.Auth/Aero.Auth.csproj" />
   <Project Path="Aero.Caching/Aero.Caching.csproj" />
   <Project Path="Aero.Cms/Aero.Cms.csproj" />
-  <Project Path="Aero.Common/Aero.Common.csproj" />
   <Project Path="Aero.Components/Aero.Components.csproj" />
   <Project Path="Aero.Core.Ai/Aero.Core.Ai.csproj" />
   <Project Path="Aero.Core/Aero.Core.csproj" />

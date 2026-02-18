@@ -1,4 +1,4 @@
-@model SiteDocument
+@model Aero.Cms.Models.SiteDocument
 @{
     bool isNew = string.IsNullOrEmpty(Model.Id) || Model.Id == "new";
     ViewData["Title"] = isNew ? "Add New Site" : $"Edit Site - {Model.Name}";

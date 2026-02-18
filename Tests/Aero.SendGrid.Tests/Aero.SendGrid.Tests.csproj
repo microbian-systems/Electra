@@ -30,7 +30,6 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Aero.Common\Aero.Common.csproj" />
     <ProjectReference Include="..\..\src\Aero.Core\Aero.Core.csproj" />
   </ItemGroup>
 </Project>

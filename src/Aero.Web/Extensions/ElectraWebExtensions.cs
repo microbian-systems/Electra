@@ -5,7 +5,6 @@ using Aero.Common.Web.Services;
 using Aero.Core.Extensions;
 using Aero.Services.Geo;
 using Aero.Services.Mail;
-using Aero.Web.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity.UI.Services;

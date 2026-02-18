@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Aero.Core.Entities;
 
-namespace Aero.EfCore.Data;
+namespace Aero.Core.Data;
 
 public abstract class ReadOnlyRepositoryBase<T, Tkey> : IReadOnlyRepository<T, Tkey> where T : IEntity<Tkey> where Tkey : IEquatable<Tkey>
 {

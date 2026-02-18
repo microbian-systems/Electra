@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Aero.Core.Entities;
 
-namespace Aero.EfCore.Data;
+namespace Aero.Core.Data;
 
 public interface IActiveRecord<T, in TKey> 
     where T: IEntity<TKey> 

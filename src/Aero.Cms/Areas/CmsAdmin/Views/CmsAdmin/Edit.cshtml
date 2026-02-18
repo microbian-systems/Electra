@@ -1,5 +1,6 @@
-@model PageEditViewModel
+@model Aero.Cms.Areas.CmsAdmin.Models.PageEditViewModel
 @using System.Text.Json
+@using Aero.Cms.Models
 @{
     ViewData["Title"] = $"Edit Page - {Model.Page.Metadata.Title}";
     var isNew = string.IsNullOrEmpty(Model.Page.Id) || Model.Page.Id == "new";

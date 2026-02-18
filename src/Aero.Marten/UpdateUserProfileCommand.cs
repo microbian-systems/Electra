@@ -1,7 +1,7 @@
 using Aero.Models.Entities;
 using Aero.Common.Commands;
+using Aero.Core.Data;
 using Aero.Core.Extensions;
-using Aero.EfCore.Data;
 using Microsoft.Extensions.Logging;
 
 

@@ -1,12 +1,13 @@
-﻿using Aero.Core.Extensions;
+﻿using Aero.Common;
+using Aero.Core.Extensions;
 using Elasticsearch.Net;
-using Aero.Common;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Nest;
+using ServiceStack;
 
-namespace Aero.Persistence.Elastic;
+namespace Aero.Elastic;
 
 public static class ElasticExtensions
 {

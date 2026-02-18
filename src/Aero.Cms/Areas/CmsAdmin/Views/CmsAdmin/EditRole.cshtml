@@ -1,4 +1,4 @@
-@model AeroRole
+@model Aero.Core.Identity.AeroRole
 @{
     bool isNew = string.IsNullOrEmpty(Model.Id) || Model.Id == "new";
     ViewData["Title"] = isNew ? "Add New Role" : $"Edit Role - {Model.Name}";

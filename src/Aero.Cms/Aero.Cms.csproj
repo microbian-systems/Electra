@@ -45,7 +45,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Aero.Caching\Aero.Caching.csproj" />
-    <ProjectReference Include="..\Aero.Common\Aero.Common.csproj" />
     <ProjectReference Include="..\Aero.Core\Aero.Core.csproj" />
     <ProjectReference Include="..\Aero.Events\Aero.Events.csproj" />
     <ProjectReference Include="..\Aero.MerakiUI\Aero.MerakiUI.csproj" />

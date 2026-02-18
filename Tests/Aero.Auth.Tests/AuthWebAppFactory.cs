@@ -1,5 +1,6 @@
 // Fixtures/TestWebAppFactory.cs
 
+using Aero.Auth.Tests.WebHost;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

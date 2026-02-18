@@ -1,7 +1,7 @@
 using Aero.Core;
+using Aero.Core.Data;
 using Aero.Core.Entities;
 using Aero.Core.Identity;
-using Aero.EfCore.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Aero.Core.Entities;
 
-namespace Aero.EfCore.Data;
+namespace Aero.Core.Data;
 
 public abstract class RepositoryBase<T, TKey>(ILogger<RepositoryBase<T, TKey>> log) 
     : IWriteRepository<T, TKey>

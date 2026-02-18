@@ -1,6 +1,5 @@
 using System.Linq.Expressions;
 using Aero.Core.Entities;
-using Aero.EfCore.Data;
 
 namespace Aero.Core.Data.ActiveRecord;
 

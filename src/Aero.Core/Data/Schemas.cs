@@ -1,4 +1,4 @@
-namespace Aero.EfCore.Data;
+namespace Aero.Core.Data;
 
 public class Schemas
 {

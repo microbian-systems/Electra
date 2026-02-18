@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Aero.Common.Web.Performance;
+namespace Aero.Common.Web.Middleware;
 
 public class PerfLoggingMiddleware(RequestDelegate next, ILogger<PerfLoggingMiddleware> log)
 {

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Aero.Core.Json.Converters;
+namespace Aero.Core.Converters;
 
 public class IsoDateTimeOffsetConverter : JsonConverter<DateTimeOffset>
 {

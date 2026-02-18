@@ -1,4 +1,4 @@
-using Aero.EfCore.Data;
+using Aero.Core.Data;
 
 namespace Aero.EfCore;
 

@@ -1,4 +1,4 @@
-@model UserEditViewModel
+@model Aero.Cms.Areas.CmsAdmin.Models.UserEditViewModel
 @{
     bool isNew = string.IsNullOrEmpty(Model.User.Id) || Model.User.Id == "new";
     ViewData["Title"] = isNew ? "Add User" : $"Edit User - {Model.User.Email}";

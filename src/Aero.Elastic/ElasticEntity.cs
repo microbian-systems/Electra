@@ -1,7 +1,6 @@
 using Aero.Core.Entities;
 
-
-namespace Aero.Persistence.Elastic;
+namespace Aero.Elastic;
 
 public abstract class ElasticEntity : Entity
 {

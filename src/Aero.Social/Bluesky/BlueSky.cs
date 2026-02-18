@@ -1,4 +1,4 @@
-namespace Aero.Social;
+namespace Aero.Social.Bluesky;
 
 public class BlueSky
 {
