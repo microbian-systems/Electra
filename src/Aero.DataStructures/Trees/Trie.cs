@@ -1,9 +1,26 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Aero.DataStructures.Trees;
+
+/// <summary>
+/// Represents a Trie node that wraps a complete word for ITreeNode interface.
+/// </summary>
+public class TrieWordNode : ITreeNode<string>
+{
+    public string Value { get; set; }
+    public IEnumerable<ITreeNode<string>> Children => Enumerable.Empty<ITreeNode<string>>();
+
+    public TrieWordNode(string value)
+    {
+        Value = value;
+    }
+}
 
 /// <summary>
 /// Represents a Trie (Prefix Tree) for efficient string storage and retrieval.
 /// </summary>
-public class Trie
+public class Trie : ITree<string>
 {
     private readonly TrieNode _root = new();
 
@@ -57,6 +74,13 @@ public class Trie
             }
         }
         return current;
+    }
+
+    /// <inheritdoc />
+    public ITreeNode<string> Find(string word)
+    {
+        var node = FindNode(word);
+        return node != null && node.IsEndOfWord ? new TrieWordNode(word) : null;
     }
         
     /// <summary>

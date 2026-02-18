@@ -5,10 +5,47 @@ using System.Linq;
 namespace Aero.DataStructures.Trees;
 
 /// <summary>
+/// Represents a B+ Tree node wrapper for ITreeNode interface.
+/// </summary>
+public class BPlusTreeNodeWrapper<T> : ITreeNode<T>
+{
+    private readonly BPlusTreeNode<T> _node;
+    private readonly int _keyIndex;
+
+    public BPlusTreeNodeWrapper(BPlusTreeNode<T> node, int keyIndex)
+    {
+        _node = node;
+        _keyIndex = keyIndex;
+    }
+
+    public T Value
+    {
+        get => _node.Keys[_keyIndex];
+        set => _node.Keys[_keyIndex] = value;
+    }
+
+    public IEnumerable<ITreeNode<T>> Children
+    {
+        get
+        {
+            if (_node.IsLeaf) yield break;
+            for (int i = 0; i < _node.Children.Count; i++)
+            {
+                var child = _node.Children[i];
+                for (int j = 0; j < child.Keys.Count; j++)
+                {
+                    yield return new BPlusTreeNodeWrapper<T>(child, j);
+                }
+            }
+        }
+    }
+}
+
+/// <summary>
 /// Represents a B+ Tree.
 /// </summary>
 /// <typeparam name="T">The type of the keys in the B+ Tree, must be comparable.</typeparam>
-public class BPlusTree<T> where T : IComparable<T>
+public class BPlusTree<T> : ITree<T> where T : IComparable<T>
 {
     public BPlusTreeNode<T> Root { get; private set; }
     private readonly int _degree;
@@ -19,7 +56,10 @@ public class BPlusTree<T> where T : IComparable<T>
         Root = new BPlusTreeNode<T>(degree) { IsLeaf = true };
     }
 
-    public T Find(T key)
+    /// <summary>
+    /// Finds a key in the B+ Tree and returns it if found.
+    /// </summary>
+    public T Get(T key)
     {
         var leaf = FindLeaf(key);
         foreach (var k in leaf.Keys)
@@ -30,6 +70,33 @@ public class BPlusTree<T> where T : IComparable<T>
             }
         }
         return default(T);
+    }
+
+    private (BPlusTreeNode<T> node, int index)? FindNode(BPlusTreeNode<T> node, T key)
+    {
+        if (node.IsLeaf)
+        {
+            for (int j = 0; j < node.Keys.Count; j++)
+            {
+                if (node.Keys[j].CompareTo(key) == 0)
+                    return (node, j);
+            }
+            return null;
+        }
+
+        var i = 0;
+        while (i < node.Keys.Count && key.CompareTo(node.Keys[i]) >= 0)
+        {
+            i++;
+        }
+        return FindNode(node.Children[i], key);
+    }
+
+    /// <inheritdoc />
+    public ITreeNode<T> Find(T key)
+    {
+        var result = FindNode(Root, key);
+        return result.HasValue ? new BPlusTreeNodeWrapper<T>(result.Value.node, result.Value.index) : null;
     }
 
     public IEnumerable<T> FindRange(T startKey, T endKey)

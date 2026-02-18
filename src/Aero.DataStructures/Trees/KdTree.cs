@@ -1,11 +1,42 @@
+using System;
 using System.Collections.Generic;
 
 namespace Aero.DataStructures.Trees;
 
 /// <summary>
+/// Represents a KD-Tree node wrapper for ITreeNode interface.
+/// </summary>
+public class KdTreeNodeWrapper : ITreeNode<Point>
+{
+    private readonly KdTreeNode _node;
+
+    public KdTreeNodeWrapper(KdTreeNode node)
+    {
+        _node = node;
+    }
+
+    public Point Value
+    {
+        get => _node.Point;
+        set => throw new NotSupportedException("Cannot modify KD-Tree node value directly");
+    }
+
+    public IEnumerable<ITreeNode<Point>> Children
+    {
+        get
+        {
+            if (_node.Left != null)
+                yield return new KdTreeNodeWrapper(_node.Left);
+            if (_node.Right != null)
+                yield return new KdTreeNodeWrapper(_node.Right);
+        }
+    }
+}
+
+/// <summary>
 /// Represents a KD-Tree for organizing points in a 2D space.
 /// </summary>
-public class KdTree
+public class KdTree : ITree<Point>
 {
     public KdTreeNode Root { get; private set; }
 
@@ -93,6 +124,117 @@ public class KdTree
         }
 
         return best;
+    }
+
+    /// <inheritdoc />
+    public void Delete(Point point)
+    {
+        Root = Delete(Root, point, 0);
+    }
+
+    private KdTreeNode Delete(KdTreeNode node, Point point, int depth)
+    {
+        if (node == null) return null;
+
+        var axis = depth % 2;
+        var pointCoord = axis == 0 ? point.X : point.Y;
+        var nodeCoord = axis == 0 ? node.Point.X : node.Point.Y;
+
+        if (pointCoord == nodeCoord && node.Point.X == point.X && node.Point.Y == point.Y)
+        {
+            // Found the node to delete
+            if (node.Right != null)
+            {
+                // Find minimum in right subtree
+                var minNode = FindMin(node.Right, axis, depth + 1);
+                node = new KdTreeNode(minNode.Point) { Left = node.Left, Right = Delete(node.Right, minNode.Point, depth + 1) };
+            }
+            else if (node.Left != null)
+            {
+                // Find minimum in left subtree and move to right
+                var minNode = FindMin(node.Left, axis, depth + 1);
+                node = new KdTreeNode(minNode.Point) { Left = null, Right = Delete(node.Left, minNode.Point, depth + 1) };
+            }
+            else
+            {
+                return null; // Leaf node
+            }
+        }
+        else if (pointCoord < nodeCoord)
+        {
+            node.Left = Delete(node.Left, point, depth + 1);
+        }
+        else
+        {
+            node.Right = Delete(node.Right, point, depth + 1);
+        }
+
+        return node;
+    }
+
+    private KdTreeNode FindMin(KdTreeNode node, int targetAxis, int depth)
+    {
+        if (node == null) return null;
+
+        var currentAxis = depth % 2;
+        if (currentAxis == targetAxis)
+        {
+            if (node.Left == null) return node;
+            return FindMin(node.Left, targetAxis, depth + 1);
+        }
+
+        // Need to check both subtrees
+        var leftMin = FindMin(node.Left, targetAxis, depth + 1);
+        var rightMin = FindMin(node.Right, targetAxis, depth + 1);
+
+        var minNode = node;
+        var minCoord = targetAxis == 0 ? node.Point.X : node.Point.Y;
+
+        if (leftMin != null)
+        {
+            var leftCoord = targetAxis == 0 ? leftMin.Point.X : leftMin.Point.Y;
+            if (leftCoord < minCoord)
+            {
+                minNode = leftMin;
+                minCoord = leftCoord;
+            }
+        }
+
+        if (rightMin != null)
+        {
+            var rightCoord = targetAxis == 0 ? rightMin.Point.X : rightMin.Point.Y;
+            if (rightCoord < minCoord)
+            {
+                minNode = rightMin;
+            }
+        }
+
+        return minNode;
+    }
+
+    /// <inheritdoc />
+    public ITreeNode<Point> Find(Point point)
+    {
+        var node = FindNode(Root, point, 0);
+        return node != null ? new KdTreeNodeWrapper(node) : null;
+    }
+
+    private KdTreeNode FindNode(KdTreeNode node, Point point, int depth)
+    {
+        if (node == null) return null;
+
+        if (node.Point.X == point.X && node.Point.Y == point.Y)
+            return node;
+
+        var axis = depth % 2;
+        if ((axis == 0 ? point.X : point.Y) < (axis == 0 ? node.Point.X : node.Point.Y))
+        {
+            return FindNode(node.Left, point, depth + 1);
+        }
+        else
+        {
+            return FindNode(node.Right, point, depth + 1);
+        }
     }
 }
 

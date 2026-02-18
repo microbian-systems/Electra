@@ -20,7 +20,8 @@ public class BTreeTests
         var found = btree.Find(6);
 
         // Assert
-        found.Should().BeTrue();
+        found.Should().NotBeNull();
+        found.Value.Should().Be(6);
     }
 
     [Fact]
@@ -39,6 +40,6 @@ public class BTreeTests
         var found = btree.Find(6);
 
         // Assert
-        found.Should().BeFalse();
+        found.Should().BeNull();
     }
 }

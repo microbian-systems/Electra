@@ -13,7 +13,7 @@ public enum HeapType
 /// Represents a Binary Heap, a complete binary tree that satisfies the heap property.
 /// </summary>
 /// <typeparam name="T">The type of the values in the heap, must be comparable.</typeparam>
-public class BinaryHeap<T> where T : IComparable<T>
+public class BinaryHeap<T> : IHeap<T> where T : IComparable<T>
 {
     private readonly List<T> _items = new();
     private readonly HeapType _heapType;
