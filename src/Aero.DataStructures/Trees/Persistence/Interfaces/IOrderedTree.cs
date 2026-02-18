@@ -16,15 +16,31 @@ public interface IOrderedTree<T> : ITree<T> where T : IComparable<T>
     /// Gets the minimum value in the tree.
     /// </summary>
     /// <param name="ct">Cancellation token.</param>
-    /// <returns>The minimum value, or null if the tree is empty.</returns>
-    ValueTask<T?> MinAsync(CancellationToken ct = default);
+    /// <returns>The minimum value.</returns>
+    /// <exception cref="InvalidOperationException">Thrown if the tree is empty.</exception>
+    ValueTask<T> MinAsync(CancellationToken ct = default);
 
     /// <summary>
     /// Gets the maximum value in the tree.
     /// </summary>
     /// <param name="ct">Cancellation token.</param>
-    /// <returns>The maximum value, or null if the tree is empty.</returns>
-    ValueTask<T?> MaxAsync(CancellationToken ct = default);
+    /// <returns>The maximum value.</returns>
+    /// <exception cref="InvalidOperationException">Thrown if the tree is empty.</exception>
+    ValueTask<T> MaxAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Tries to get the minimum value in the tree.
+    /// </summary>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>A tuple indicating success and the minimum value if found.</returns>
+    ValueTask<(bool found, T value)> TryGetMinAsync(CancellationToken ct = default);
+
+    /// <summary>
+    /// Tries to get the maximum value in the tree.
+    /// </summary>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>A tuple indicating success and the maximum value if found.</returns>
+    ValueTask<(bool found, T value)> TryGetMaxAsync(CancellationToken ct = default);
 
     /// <summary>
     /// Enumerates all values in ascending order.

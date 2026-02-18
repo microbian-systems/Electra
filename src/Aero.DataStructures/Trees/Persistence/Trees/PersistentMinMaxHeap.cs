@@ -453,6 +453,57 @@ public class PersistentMinMaxHeap<T> : IDoubleEndedPriorityTree<T>, IAsyncDispos
     }
 
     /// <inheritdoc />
+    public async ValueTask<bool> DeleteAsync(T value, CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+        
+        if (_count == 0)
+            return false;
+        
+        // O(n) scan to find the value
+        long foundIndex = -1;
+        for (long i = 0; i < _count; i++)
+        {
+            var page = await _storage.ReadPageAsync(i + 1, ct);
+            var element = _serializer.Deserialize(page.Span);
+            
+            if (element.Equals(value))
+            {
+                foundIndex = i;
+                break;
+            }
+        }
+        
+        if (foundIndex == -1)
+            return false;
+        
+        // Read last element
+        var lastPage = await _storage.ReadPageAsync(_count, ct);
+        var lastValue = _serializer.Deserialize(lastPage.Span);
+        
+        // Write last element into found index
+        _serializer.Serialize(lastValue, _pageBuffer);
+        await _storage.WritePageAsync(foundIndex + 1, _pageBuffer, ct);
+        
+        // Free the last page
+        await _storage.FreePageAsync(_count, ct);
+        
+        // Decrement count
+        _count--;
+        await SaveMetadataAsync();
+        
+        if (_count > 0)
+        {
+            // Both SiftUp and TrickleDown are needed because replacing with the last
+            // element could violate heap property in either direction
+            await SiftUpMinMaxAsync(foundIndex, ct);
+            await TrickleDownMinMaxAsync(foundIndex, ct);
+        }
+        
+        return true;
+    }
+
+    /// <inheritdoc />
     public ValueTask<long> CountAsync(CancellationToken ct = default)
     {
         ThrowIfDisposed();

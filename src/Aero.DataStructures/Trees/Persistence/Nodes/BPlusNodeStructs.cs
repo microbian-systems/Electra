@@ -24,6 +24,9 @@ public enum NodeType : byte
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public struct BPlusInternalNode<TKey> where TKey : unmanaged, IComparable<TKey>
 {
+    /// <summary>LSN of the last WAL entry that modified this page.</summary>
+    public ulong PageLsn;
+    
     /// <summary>Node type identifier. Always 0x01 for internal nodes.</summary>
     public NodeType NodeType;
     
@@ -79,8 +82,8 @@ public struct BPlusInternalNode<TKey> where TKey : unmanaged, IComparable<TKey>
     /// <summary>Calculates the maximum degree based on page size and key size.</summary>
     public static int CalculateDegree(int pageSize)
     {
-        // NodeType(1) + KeyCount(4) + padding(3) = 8 bytes header
-        var headerSize = 8;
+        // PageLsn(8) + NodeType(1) + KeyCount(4) + padding(3) = 16 bytes header
+        var headerSize = 16;
         var availableSpace = pageSize - headerSize;
         // Each key takes sizeof(TKey), each child takes sizeof(long)
         // We fit n keys and n+1 children: n*sizeof(TKey) + (n+1)*sizeof(long) <= available
@@ -101,6 +104,9 @@ public struct BPlusLeafNode<TKey, TValue>
     where TKey : unmanaged, IComparable<TKey>
     where TValue : unmanaged
 {
+    /// <summary>LSN of the last WAL entry that modified this page.</summary>
+    public ulong PageLsn;
+    
     /// <summary>Node type identifier. Always 0x02 for leaf nodes.</summary>
     public NodeType NodeType;
     
@@ -179,9 +185,9 @@ public struct BPlusLeafNode<TKey, TValue>
     /// </summary>
     public static int CalculateCapacity(int pageSize)
     {
-        // NodeType(1) + TotalSlots(4) + LiveCount(4) + DeadCount(4) + 
-        // PrevLeafPageId(8) + NextLeafPageId(8) = 29 bytes, pad to 32
-        var headerSize = 32;
+        // PageLsn(8) + NodeType(1) + TotalSlots(4) + LiveCount(4) + DeadCount(4) + 
+        // PrevLeafPageId(8) + NextLeafPageId(8) = 37 bytes, pad to 40
+        var headerSize = 40;
         var availableSpace = pageSize - headerSize;
         var recordSize = Unsafe.SizeOf<BPlusLeafRecord<TKey, TValue>>();
         var maxRecords = availableSpace / recordSize;

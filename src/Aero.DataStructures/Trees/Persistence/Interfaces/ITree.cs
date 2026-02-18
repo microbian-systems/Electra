@@ -18,6 +18,16 @@ public interface ITree<T>
     ValueTask InsertAsync(T value, CancellationToken ct = default);
 
     /// <summary>
+    /// Marks the value as deleted.
+    /// Returns true if found and deleted, false if not found.
+    /// For B+ trees: O(log n) tombstone. For heaps: O(n) scan + sift.
+    /// </summary>
+    /// <param name="value">The value to delete.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>True if the value was found and deleted, false otherwise.</returns>
+    ValueTask<bool> DeleteAsync(T value, CancellationToken ct = default);
+
+    /// <summary>
     /// Checks if the tree contains the specified value.
     /// </summary>
     /// <param name="value">The value to check.</param>

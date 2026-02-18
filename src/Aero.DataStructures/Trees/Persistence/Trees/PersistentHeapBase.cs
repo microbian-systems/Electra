@@ -2,6 +2,7 @@ using System;
 using System.Buffers.Binary;
 using System.Threading;
 using System.Threading.Tasks;
+using Aero.DataStructures.Trees.Persistence.Interfaces;
 using Aero.DataStructures.Trees.Persistence.Serialization;
 using Aero.DataStructures.Trees.Persistence.Storage;
 
@@ -10,6 +11,7 @@ namespace Aero.DataStructures.Trees.Persistence.Trees;
 /// <summary>
 /// Base class for persistent heap implementations.
 /// Provides shared sift logic parameterized by a comparison function.
+/// Heaps do NOT implement IVacuumable — they cannot fragment.
 /// </summary>
 /// <typeparam name="T">The type of elements.</typeparam>
 public abstract class PersistentHeapBase<T> : IAsyncDisposable
@@ -179,6 +181,59 @@ public abstract class PersistentHeapBase<T> : IAsyncDisposable
 
             index = target;
         }
+    }
+
+    /// <summary>
+    /// Deletes a value from the heap using O(n) scan + sift.
+    /// </summary>
+    /// <param name="value">The value to delete.</param>
+    /// <param name="ct">Cancellation token.</param>
+    /// <returns>True if found and deleted, false if not found.</returns>
+    public async ValueTask<bool> DeleteAsync(T value, CancellationToken ct = default)
+    {
+        ThrowIfDisposed();
+
+        if (Count == 0)
+            return false;
+
+        // O(n) scan to find the value
+        long foundIndex = -1;
+        for (long i = 0; i < Count; i++)
+        {
+            var page = await Storage.ReadPageAsync(i + 1, ct);
+            var element = Serializer.Deserialize(page.Span);
+            
+            if (element.Equals(value))
+            {
+                foundIndex = i;
+                break;
+            }
+        }
+
+        if (foundIndex == -1)
+            return false;
+
+        // Read last element
+        var lastPage = await Storage.ReadPageAsync(Count, ct);
+        var lastValue = Serializer.Deserialize(lastPage.Span);
+
+        // Write last element into found index
+        Serializer.Serialize(lastValue, PageBuffer);
+        await Storage.WritePageAsync(foundIndex + 1, PageBuffer, ct);
+
+        // Free the last page
+        await Storage.FreePageAsync(Count, ct);
+
+        // Decrement count
+        Count--;
+        await SaveMetadataAsync();
+
+        // Both SiftUp and SiftDown are needed because replacing with the last
+        // element could violate heap property in either direction
+        await SiftUpAsync(foundIndex, ct);
+        await SiftDownAsync(foundIndex, ct);
+
+        return true;
     }
 
     /// <inheritdoc />
