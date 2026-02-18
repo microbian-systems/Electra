@@ -18,9 +18,11 @@ public struct CatalogEntry
     public long CreatedAtUtc;
     public long EntryCount;
     public byte IsolationLevel;
+    public long HeapFilePageId;
+    public byte IndexType;
 
     public const int TreeNameLength = 128;
-    public const int Size = 8 + 8 + 128 + 8 + 1 + 1 + 1 + 4 + 8 + 8 + 1;
+    public const int Size = 8 + 8 + 128 + 8 + 1 + 1 + 1 + 4 + 8 + 8 + 1 + 8 + 1;
 
     public static readonly int SerializedSize = Marshal.SizeOf<CatalogEntry>();
 
