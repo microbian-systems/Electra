@@ -7,9 +7,9 @@
 
 ## Phase 3: Content Domain Model
 
-- [ ] Task: Create PublishingStatus enum
-    - [ ] Create file: Aero.CMS.Core/Content/Models/PublishingStatus.cs
-    - [ ] Define: Draft=0, PendingApproval=1, Approved=2, Published=3, Expired=4
+- [x] Task: Create PublishingStatus enum
+    - [x] Create file: Aero.CMS.Core/Content/Models/PublishingStatus.cs
+    - [x] Define: Draft=0, PendingApproval=1, Approved=2, Published=3, Expired=4
 
 - [ ] Task: Create ContentBlock base class
     - [ ] Create file: Aero.CMS.Core/Content/Models/ContentBlock.cs
