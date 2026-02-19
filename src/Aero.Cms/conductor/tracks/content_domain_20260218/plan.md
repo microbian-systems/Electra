@@ -104,10 +104,10 @@
     - [x] Test: GetByContentTypeAsync returns only matching alias
     - [x] **CRITICAL:** Test polymorphic block serialization (RichTextBlock, MarkdownBlock, DivBlock with nested RichTextBlock)
 
-- [ ] Task: Verify Phase 3 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Content"`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Content"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 3 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Content"`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Content"`
+    - [x] Confirm all pass, zero failures
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Content Domain Model' (Protocol in workflow.md)
 
