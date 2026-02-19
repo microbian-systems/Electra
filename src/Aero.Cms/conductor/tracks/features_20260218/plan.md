@@ -40,23 +40,23 @@
     - [x] Test: ParseWithFrontmatter returns body without YAML
     - [x] Test: No frontmatter returns full content as body
 
-- [ ] Task: Create MarkdownImportService
-    - [ ] Create file: Aero.CMS.Core/Content/Services/MarkdownImportService.cs
-    - [ ] Dependencies: MarkdownRendererService, IContentRepository
-    - [ ] ImportAsync creates ContentDocument with blogPost type
-    - [ ] Extract frontmatter for title, slug, author, tags
-    - [ ] Generate slug from title if not provided
+- [x] Task: Create MarkdownImportService
+    - [x] Create file: Aero.CMS.Core/Content/Services/MarkdownImportService.cs
+    - [x] Dependencies: MarkdownRendererService, IContentRepository
+    - [x] ImportAsync creates ContentDocument with blogPost type
+    - [x] Extract frontmatter for title, slug, author, tags
+    - [x] Generate slug from title if not provided
 
-- [ ] Task: Write MarkdownImportService unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/MarkdownImportServiceTests.cs
-    - [ ] Use NSubstitute for IContentRepository
-    - [ ] Test: Returns HandlerResult Success
-    - [ ] Test: ContentTypeAlias = "blogPost"
-    - [ ] Test: Status = Draft
-    - [ ] Test: Title from frontmatter
-    - [ ] Test: Slug generated from title when absent
-    - [ ] Test: One MarkdownBlock in Blocks
-    - [ ] Test: SaveAsync called exactly once
+- [x] Task: Write MarkdownImportService unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/MarkdownImportServiceTests.cs
+    - [x] Use NSubstitute for IContentRepository
+    - [x] Test: Returns HandlerResult Success
+    - [x] Test: ContentTypeAlias = "blogPost"
+    - [x] Test: Status = Draft
+    - [x] Test: Title from frontmatter
+    - [x] Test: Slug generated from title when absent
+    - [x] Test: One MarkdownBlock in Blocks
+    - [x] Test: SaveAsync called exactly once
 
 - [ ] Task: Verify Phase 12 gate
     - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Markdown"`
