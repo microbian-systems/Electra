@@ -109,7 +109,7 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Content"`
     - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Content Domain Model' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Content Domain Model' (Protocol in workflow.md)
 
 ---
 
