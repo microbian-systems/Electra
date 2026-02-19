@@ -155,7 +155,7 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Integration`
     - [x] Confirm full suite green (phases 1-4)
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Content Type Document' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Content Type Document' (Protocol in workflow.md)
 
 ---
 
