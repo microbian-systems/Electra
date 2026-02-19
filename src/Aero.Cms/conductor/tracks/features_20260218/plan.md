@@ -10,20 +10,20 @@
 - [x] Task: Add Markdig NuGet to Aero.CMS.Core
     - [x] Add package reference to project file
 
-- [ ] Task: Create SlugHelper
-    - [ ] Create file: Aero.CMS.Core/Extensions/SlugHelper.cs
-    - [ ] Static Generate(string) method
-    - [ ] Lowercase, remove special chars, spaces to hyphens, collapse hyphens
+- [x] Task: Create SlugHelper
+    - [x] Create file: Aero.CMS.Core/Extensions/SlugHelper.cs
+    - [x] Static Generate(string) method
+    - [x] Lowercase, remove special chars, spaces to hyphens, collapse hyphens
 
-- [ ] Task: Write SlugHelper unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/SlugHelperTests.cs
-    - [ ] Test: Lowercases input
-    - [ ] Test: Spaces become hyphens
-    - [ ] Test: Special chars removed
-    - [ ] Test: Multiple hyphens collapsed
-    - [ ] Test: Leading/trailing hyphens trimmed
-    - [ ] Test: "Hello World!" => "hello-world"
-    - [ ] Test: Empty input returns empty string
+- [x] Task: Write SlugHelper unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/SlugHelperTests.cs
+    - [x] Test: Lowercases input
+    - [x] Test: Spaces become hyphens
+    - [x] Test: Special chars removed
+    - [x] Test: Multiple hyphens collapsed
+    - [x] Test: Leading/trailing hyphens trimmed
+    - [x] Test: "Hello World!" => "hello-world"
+    - [x] Test: Empty input returns empty string
 
 - [ ] Task: Create MarkdownRendererService
     - [ ] Create file: Aero.CMS.Core/Content/Services/MarkdownRendererService.cs
