@@ -60,6 +60,7 @@
 - RavenDB.Client
 - Microsoft.Extensions.Options
 - Microsoft.Extensions.DependencyInjection.Abstractions
+- Microsoft.Extensions.Configuration.Binder
 - Markdig
 - Microsoft.AspNetCore.Identity
 
