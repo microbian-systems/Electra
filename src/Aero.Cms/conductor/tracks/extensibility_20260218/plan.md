@@ -7,32 +7,32 @@
 
 ## Phase 15: Plugin System
 
-- [ ] Task: Create ICmsPlugin interface
-    - [ ] Create file: Aero.CMS.Core/Plugins/Interfaces/ICmsPlugin.cs
-    - [ ] Properties: Alias, Version, DisplayName
-    - [ ] Methods: ConfigureServices, ConfigureBlocks
+- [x] Task: Create ICmsPlugin interface
+    - [x] Create file: Aero.CMS.Core/Plugins/Interfaces/ICmsPlugin.cs
+    - [x] Properties: Alias, Version, DisplayName
+    - [x] Methods: ConfigureServices, ConfigureBlocks
 
-- [ ] Task: Create PluginLoader
-    - [ ] Create file: Aero.CMS.Core/Plugins/PluginLoader.cs
-    - [ ] LoadedPlugins property
-    - [ ] LoadFromDirectory method
-    - [ ] Handle loading errors gracefully (try/catch, continue)
+- [x] Task: Create PluginLoader
+    - [x] Create file: Aero.CMS.Core/Plugins/PluginLoader.cs
+    - [x] LoadedPlugins property
+    - [x] LoadFromDirectory method
+    - [x] Handle loading errors gracefully (try/catch, continue)
 
-- [ ] Task: Create PluginLoadContext
-    - [ ] Internal class in PluginLoader.cs or separate file
-    - [ ] Extend AssemblyLoadContext(isCollectible: true)
-    - [ ] Use AssemblyDependencyResolver
+- [x] Task: Create PluginLoadContext
+    - [x] Internal class in PluginLoader.cs or separate file
+    - [x] Extend AssemblyLoadContext(isCollectible: true)
+    - [x] Use AssemblyDependencyResolver
 
-- [ ] Task: Write PluginLoader unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Plugins/PluginLoaderTests.cs
-    - [ ] Test: LoadFromDirectory with non-existent path returns empty
-    - [ ] Test: LoadFromDirectory with empty directory returns empty
-    - [ ] Test: LoadedPlugins starts empty
+- [x] Task: Write PluginLoader unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Plugins/PluginLoaderTests.cs
+    - [x] Test: LoadFromDirectory with non-existent path returns empty
+    - [x] Test: LoadFromDirectory with empty directory returns empty
+    - [x] Test: LoadedPlugins starts empty
 
-- [ ] Task: Verify Phase 15 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration`
-    - [ ] Confirm full suite green (phases 1-15)
+- [x] Task: Verify Phase 15 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration`
+    - [x] Confirm full suite green (phases 1-15)
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 15: Plugin System' (Protocol in workflow.md)
 
