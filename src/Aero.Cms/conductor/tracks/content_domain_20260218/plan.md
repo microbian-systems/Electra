@@ -34,10 +34,10 @@
     - [x] BlockType = "imageBlock"
     - [x] MediaId and Alt properties
 
-- [ ] Task: Create HeroBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/HeroBlock.cs
-    - [ ] BlockType = "heroBlock"
-    - [ ] Heading and Subtext properties
+- [x] Task: Create HeroBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/HeroBlock.cs
+    - [x] BlockType = "heroBlock"
+    - [x] Heading and Subtext properties
 
 - [ ] Task: Create QuoteBlock
     - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/QuoteBlock.cs
