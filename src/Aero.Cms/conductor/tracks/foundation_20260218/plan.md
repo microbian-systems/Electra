@@ -157,10 +157,10 @@
     - [x] Extend RavenTestDriver
     - [x] Provide IDocumentStore property
 
-- [ ] Task: Create ServiceExtensions (initial)
-    - [ ] Create file: Aero.CMS.Core/Extensions/ServiceExtensions.cs
-    - [ ] Implement AddAeroCmsCore() extension method
-    - [ ] Register IDocumentStore, ISystemClock, IKeyVaultService
+- [x] Task: Create ServiceExtensions (initial)
+    - [x] Create file: Aero.CMS.Core/Extensions/ServiceExtensions.cs
+    - [x] Implement AddAeroCmsCore() extension method
+    - [x] Register IDocumentStore, ISystemClock, IKeyVaultService
 
 - [ ] Task: Write BaseRepository integration tests
     - [ ] Create file: Aero.CMS.Tests.Integration/Data/BaseRepositoryTests.cs
