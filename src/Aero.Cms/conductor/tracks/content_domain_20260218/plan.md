@@ -24,10 +24,10 @@
     - [x] BlockType = "richTextBlock"
     - [x] Html property using Properties dictionary
 
-- [ ] Task: Create MarkdownBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/MarkdownBlock.cs
-    - [ ] BlockType = "markdownBlock"
-    - [ ] Markdown property using Properties dictionary
+- [x] Task: Create MarkdownBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/MarkdownBlock.cs
+    - [x] BlockType = "markdownBlock"
+    - [x] Markdown property using Properties dictionary
 
 - [ ] Task: Create ImageBlock
     - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/ImageBlock.cs
