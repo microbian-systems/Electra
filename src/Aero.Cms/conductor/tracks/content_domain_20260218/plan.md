@@ -77,12 +77,12 @@
     - [x] Properties dictionary, Blocks list
     - [x] SearchText, Search metadata
 
-- [ ] Task: Write ContentDocument unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentDocumentTests.cs
-    - [ ] Test: New ContentDocument has Status = Draft
-    - [ ] Test: New ContentDocument has empty Blocks list
-    - [ ] Test: PublishedAt is null
-    - [ ] Test: ParentId is null
+- [x] Task: Write ContentDocument unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/ContentDocumentTests.cs
+    - [x] Test: New ContentDocument has Status = Draft
+    - [x] Test: New ContentDocument has empty Blocks list
+    - [x] Test: PublishedAt is null
+    - [x] Test: ParentId is null
 
 - [ ] Task: Create IContentRepository interface
     - [ ] Create file: Aero.CMS.Core/Content/Data/ContentRepository.cs
