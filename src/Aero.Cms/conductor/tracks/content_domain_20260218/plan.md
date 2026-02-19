@@ -56,15 +56,15 @@
     - [x] Implement ICompositeContentBlock (MaxChildren=12, AllowNestedComposites=false)
     - [x] Columns property
 
-- [ ] Task: Write ContentBlock unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentBlockTests.cs
-    - [ ] Test: RichTextBlock.Type == "richTextBlock"
-    - [ ] Test: RichTextBlock.Html getter/setter round-trips
-    - [ ] Test: ImageBlock.MediaId returns null when absent
-    - [ ] Test: DivBlock implements ICompositeContentBlock
-    - [ ] Test: GridBlock.MaxChildren is 12
-    - [ ] Test: GridBlock.AllowNestedComposites is false
-    - [ ] Test: New block has non-empty Guid Id
+- [x] Task: Write ContentBlock unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/ContentBlockTests.cs
+    - [x] Test: RichTextBlock.Type == "richTextBlock"
+    - [x] Test: RichTextBlock.Html getter/setter round-trips
+    - [x] Test: ImageBlock.MediaId returns null when absent
+    - [x] Test: DivBlock implements ICompositeContentBlock
+    - [x] Test: GridBlock.MaxChildren is 12
+    - [x] Test: GridBlock.AllowNestedComposites is false
+    - [x] Test: New block has non-empty Guid Id
 
 - [ ] Task: Create SearchMetadata
     - [ ] Create file: Aero.CMS.Core/Content/Models/SearchMetadata.cs
