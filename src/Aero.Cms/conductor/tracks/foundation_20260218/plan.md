@@ -54,72 +54,72 @@
     - [x] Run `dotnet build Aero.CMS.sln`
     - [x] Confirm 0 errors, 0 warnings
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 0: Solution Scaffold' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 0: Solution Scaffold' (Protocol in workflow.md)
 
 ---
 
 ## Phase 1: Core Primitives
 
-- [ ] Task: Create IEntity interface
-    - [ ] Create file: Aero.CMS.Core/Shared/Interfaces/IEntity.cs
-    - [ ] Define IEntity<TId> with Id, CreatedAt, CreatedBy, UpdatedAt, UpdatedBy
+- [x] Task: Create IEntity interface
+    - [x] Create file: Aero.CMS.Core/Shared/Interfaces/IEntity.cs
+    - [x] Define IEntity<TId> with Id, CreatedAt, CreatedBy, UpdatedAt, UpdatedBy
 
-- [ ] Task: Create AuditableDocument base class
-    - [ ] Create file: Aero.CMS.Core/Shared/Models/AuditableDocument.cs
-    - [ ] Implement IEntity<Guid> with default values
+- [x] Task: Create AuditableDocument base class
+    - [x] Create file: Aero.CMS.Core/Shared/Models/AuditableDocument.cs
+    - [x] Implement IEntity<Guid> with default values
 
-- [ ] Task: Write AuditableDocument tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Shared/AuditableDocumentTests.cs
-    - [ ] Test: New subclass has non-empty Guid Id
-    - [ ] Test: New subclass has CreatedAt ~= UtcNow
-    - [ ] Test: UpdatedAt is null by default
-    - [ ] Test: UpdatedBy is null by default
-    - [ ] Test: Two instances have different Ids
+- [x] Task: Write AuditableDocument tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Shared/AuditableDocumentTests.cs
+    - [x] Test: New subclass has non-empty Guid Id
+    - [x] Test: New subclass has CreatedAt ~= UtcNow
+    - [x] Test: UpdatedAt is null by default
+    - [x] Test: UpdatedBy is null by default
+    - [x] Test: Two instances have different Ids
 
-- [ ] Task: Create ISystemClock interface
-    - [ ] Create file: Aero.CMS.Core/Shared/Interfaces/ISystemClock.cs
-    - [ ] Define UtcNow property
+- [x] Task: Create ISystemClock interface
+    - [x] Create file: Aero.CMS.Core/Shared/Interfaces/ISystemClock.cs
+    - [x] Define UtcNow property
 
-- [ ] Task: Create SystemClock implementation
-    - [ ] Create file: Aero.CMS.Core/Shared/Services/SystemClock.cs
-    - [ ] Implement ISystemClock returning DateTime.UtcNow
+- [x] Task: Create SystemClock implementation
+    - [x] Create file: Aero.CMS.Core/Shared/Services/SystemClock.cs
+    - [x] Implement ISystemClock returning DateTime.UtcNow
 
-- [ ] Task: Write SystemClock tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Shared/SystemClockTests.cs
-    - [ ] Test: UtcNow returns value ~= DateTime.UtcNow
-    - [ ] Test: UtcNow Kind is DateTimeKind.Utc
-    - [ ] Test: ISystemClock can be substituted with NSubstitute
+- [x] Task: Write SystemClock tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Shared/SystemClockTests.cs
+    - [x] Test: UtcNow returns value ~= DateTime.UtcNow
+    - [x] Test: UtcNow Kind is DateTimeKind.Utc
+    - [x] Test: ISystemClock can be substituted with NSubstitute
 
-- [ ] Task: Create HandlerResult classes
-    - [ ] Create file: Aero.CMS.Core/Shared/Models/HandlerResult.cs
-    - [ ] Implement HandlerResult with Ok(), Fail() factory methods
-    - [ ] Implement HandlerResult<T> with Value property
+- [x] Task: Create HandlerResult classes
+    - [x] Create file: Aero.CMS.Core/Shared/Models/HandlerResult.cs
+    - [x] Implement HandlerResult with Ok(), Fail() factory methods
+    - [x] Implement HandlerResult<T> with Value property
 
-- [ ] Task: Write HandlerResult tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Shared/HandlerResultTests.cs
-    - [ ] Test: Ok() has Success=true, empty Errors
-    - [ ] Test: Fail(string) has Success=false, Errors contains message
-    - [ ] Test: Fail(IEnumerable) contains all messages
-    - [ ] Test: HandlerResult<T>.Ok(value) has Success=true and Value set
-    - [ ] Test: HandlerResult<T>.Fail has Success=false and Value=default
+- [x] Task: Write HandlerResult tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Shared/HandlerResultTests.cs
+    - [x] Test: Ok() has Success=true, empty Errors
+    - [x] Test: Fail(string) has Success=false, Errors contains message
+    - [x] Test: Fail(IEnumerable) contains all messages
+    - [x] Test: HandlerResult<T>.Ok(value) has Success=true and Value set
+    - [x] Test: HandlerResult<T>.Fail has Success=false and Value=default
 
-- [ ] Task: Create IKeyVaultService interface
-    - [ ] Create file: Aero.CMS.Core/Shared/Interfaces/IKeyVaultService.cs
-    - [ ] Define GetSecretAsync method
+- [x] Task: Create IKeyVaultService interface
+    - [x] Create file: Aero.CMS.Core/Shared/Interfaces/IKeyVaultService.cs
+    - [x] Define GetSecretAsync method
 
-- [ ] Task: Create EnvironmentKeyVaultService implementation
-    - [ ] Create file: Aero.CMS.Core/Shared/Services/EnvironmentKeyVaultService.cs
-    - [ ] Implement using IConfiguration
+- [x] Task: Create EnvironmentKeyVaultService implementation
+    - [x] Create file: Aero.CMS.Core/Shared/Services/EnvironmentKeyVaultService.cs
+    - [x] Implement using IConfiguration
 
-- [ ] Task: Write EnvironmentKeyVaultService tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Shared/EnvironmentKeyVaultServiceTests.cs
-    - [ ] Test: Returns value from IConfiguration for known key
-    - [ ] Test: Returns null for unknown key
-    - [ ] Test: Uses NSubstitute for IConfiguration
+- [x] Task: Write EnvironmentKeyVaultService tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Shared/EnvironmentKeyVaultServiceTests.cs
+    - [x] Test: Returns value from IConfiguration for known key
+    - [x] Test: Returns null for unknown key
+    - [x] Test: Uses NSubstitute for IConfiguration
 
-- [ ] Task: Verify Phase 1 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Shared"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 1 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Shared"`
+    - [x] Confirm all pass, zero failures
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Core Primitives' (Protocol in workflow.md)
 
