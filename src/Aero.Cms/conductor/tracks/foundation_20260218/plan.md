@@ -132,10 +132,10 @@
     - [x] Microsoft.Extensions.Options
     - [x] Microsoft.Extensions.DependencyInjection.Abstractions
 
-- [ ] Task: Create GlobalSettings
-    - [ ] Create file: Aero.CMS.Core/Settings/GlobalSettings.cs
-    - [ ] Define GlobalSettings with RavenDbSettings
-    - [ ] Define RavenDbSettings with Urls, Database, EnableRevisions, RevisionsToKeep
+- [x] Task: Create GlobalSettings
+    - [x] Create file: Aero.CMS.Core/Settings/GlobalSettings.cs
+    - [x] Define GlobalSettings with RavenDbSettings
+    - [x] Define RavenDbSettings with Urls, Database, EnableRevisions, RevisionsToKeep
 
 - [ ] Task: Create DocumentStoreFactory
     - [ ] Create file: Aero.CMS.Core/Data/DocumentStoreFactory.cs
