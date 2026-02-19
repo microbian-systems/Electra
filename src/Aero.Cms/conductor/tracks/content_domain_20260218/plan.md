@@ -29,10 +29,10 @@
     - [x] BlockType = "markdownBlock"
     - [x] Markdown property using Properties dictionary
 
-- [ ] Task: Create ImageBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/ImageBlock.cs
-    - [ ] BlockType = "imageBlock"
-    - [ ] MediaId and Alt properties
+- [x] Task: Create ImageBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/ImageBlock.cs
+    - [x] BlockType = "imageBlock"
+    - [x] MediaId and Alt properties
 
 - [ ] Task: Create HeroBlock
     - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/HeroBlock.cs
