@@ -2,7 +2,8 @@ namespace Aero.CMS.Core.Content.Models.Blocks;
 
 public class DivBlock : ContentBlock, ICompositeContentBlock
 {
-    public override string Type => "divBlock";
+    public static string BlockType => "divBlock";
+    public override string Type => BlockType;
 
     public string CssClass
     {

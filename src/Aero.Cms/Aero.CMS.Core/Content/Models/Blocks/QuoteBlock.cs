@@ -2,7 +2,8 @@ namespace Aero.CMS.Core.Content.Models.Blocks;
 
 public class QuoteBlock : ContentBlock
 {
-    public override string Type => "quoteBlock";
+    public static string BlockType => "quoteBlock";
+    public override string Type => BlockType;
 
     public string Quote
     {

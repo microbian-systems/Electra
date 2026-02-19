@@ -2,7 +2,8 @@ namespace Aero.CMS.Core.Content.Models.Blocks;
 
 public class GridBlock : ContentBlock, ICompositeContentBlock
 {
-    public override string Type => "gridBlock";
+    public static string BlockType => "gridBlock";
+    public override string Type => BlockType;
 
     public int Columns
     {

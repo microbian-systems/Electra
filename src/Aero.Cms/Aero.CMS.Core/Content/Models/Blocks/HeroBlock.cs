@@ -2,7 +2,8 @@ namespace Aero.CMS.Core.Content.Models.Blocks;
 
 public class HeroBlock : ContentBlock
 {
-    public override string Type => "heroBlock";
+    public static string BlockType => "heroBlock";
+    public override string Type => BlockType;
 
     public string Heading
     {

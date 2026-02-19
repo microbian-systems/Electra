@@ -97,27 +97,27 @@
 
 ## Phase 10: Block Registry
 
-- [ ] Task: Create IBlockRegistry interface
-    - [ ] Create file: Aero.CMS.Core/Plugins/Interfaces/IBlockRegistry.cs
-    - [ ] Methods: Register<TBlock,TView>(), Register(string, Type), Resolve(string), GetAll()
+- [x] Task: Create IBlockRegistry interface
+    - [x] Create file: Aero.CMS.Core/Plugins/Interfaces/IBlockRegistry.cs
+    - [x] Methods: Register<TBlock,TView>(), Register(string, Type), Resolve(string), GetAll()
 
-- [ ] Task: Create BlockRegistry implementation
-    - [ ] Create file: Aero.CMS.Core/Plugins/BlockRegistry.cs
-    - [ ] Use reflection to get BlockType static property
-    - [ ] Store in Dictionary<string, Type>
+- [x] Task: Create BlockRegistry implementation
+    - [x] Create file: Aero.CMS.Core/Plugins/BlockRegistry.cs
+    - [x] Use reflection to get BlockType static property
+    - [x] Store in Dictionary<string, Type>
 
-- [ ] Task: Write BlockRegistry unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Plugins/BlockRegistryTests.cs
-    - [ ] Test: Register<TBlock,TView> uses BlockType as alias
-    - [ ] Test: Resolve returns correct Type
-    - [ ] Test: Resolve returns null for unregistered alias
-    - [ ] Test: Register(string, Type) overload works
-    - [ ] Test: GetAll returns all entries
-    - [ ] Test: Re-registering overwrites previous
+- [x] Task: Write BlockRegistry unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Plugins/BlockRegistryTests.cs
+    - [x] Test: Register<TBlock,TView> uses BlockType as alias
+    - [x] Test: Resolve returns correct Type
+    - [x] Test: Resolve returns null for unregistered alias
+    - [x] Test: Register(string, Type) overload works
+    - [x] Test: GetAll returns all entries
+    - [x] Test: Re-registering overwrites previous
 
-- [ ] Task: Verify Phase 10 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Plugins"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 10 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Plugins"`
+    - [x] Confirm all pass, zero failures
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 10: Block Registry' (Protocol in workflow.md)
 

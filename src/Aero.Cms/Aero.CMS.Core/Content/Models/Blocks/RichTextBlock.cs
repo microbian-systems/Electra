@@ -2,7 +2,8 @@ namespace Aero.CMS.Core.Content.Models.Blocks;
 
 public class RichTextBlock : ContentBlock
 {
-    public override string Type => "richTextBlock";
+    public static string BlockType => "richTextBlock";
+    public override string Type => BlockType;
 
     public string Html
     {

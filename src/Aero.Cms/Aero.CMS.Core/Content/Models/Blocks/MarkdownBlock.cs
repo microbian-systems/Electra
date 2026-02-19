@@ -2,7 +2,8 @@ namespace Aero.CMS.Core.Content.Models.Blocks;
 
 public class MarkdownBlock : ContentBlock
 {
-    public override string Type => "markdownBlock";
+    public static string BlockType => "markdownBlock";
+    public override string Type => BlockType;
 
     public string Markdown
     {

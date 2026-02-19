@@ -2,7 +2,8 @@ namespace Aero.CMS.Core.Content.Models.Blocks;
 
 public class ImageBlock : ContentBlock
 {
-    public override string Type => "imageBlock";
+    public static string BlockType => "imageBlock";
+    public override string Type => BlockType;
 
     public Guid? MediaId
     {
