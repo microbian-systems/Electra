@@ -58,10 +58,10 @@
     - [x] Test: One MarkdownBlock in Blocks
     - [x] Test: SaveAsync called exactly once
 
-- [ ] Task: Verify Phase 12 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Markdown"`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Slug"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 12 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Markdown"`
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Slug"`
+    - [x] Confirm all pass, zero failures
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 12: Markdown Subsystem' (Protocol in workflow.md)
 
