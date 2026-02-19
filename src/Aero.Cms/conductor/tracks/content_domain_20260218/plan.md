@@ -140,8 +140,8 @@
     - [x] Extend IRepository<ContentTypeDocument>
     - [x] Add GetByAliasAsync, GetAllAsync
 
-- [ ] Task: Create ContentTypeRepository implementation
-    - [ ] Implement both methods
+- [x] Task: Create ContentTypeRepository implementation
+    - [x] Implement both methods
 
 - [ ] Task: Write ContentTypeRepository integration tests
     - [ ] Create file: Aero.CMS.Tests.Integration/Content/ContentTypeRepositoryTests.cs
