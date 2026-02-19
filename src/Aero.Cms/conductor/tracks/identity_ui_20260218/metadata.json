@@ -1,0 +1,8 @@
+{
+  "track_id": "identity_ui_20260218",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-18T23:10:00Z",
+  "updated_at": "2026-02-18T23:10:00Z",
+  "description": "Identity & UI Integration: Membership models, Block registry, Rich text editor abstraction (Phases 9-11)"
+}

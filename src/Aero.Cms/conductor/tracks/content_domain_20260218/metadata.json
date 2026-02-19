@@ -1,0 +1,8 @@
+{
+  "track_id": "content_domain_20260218",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-18T23:10:00Z",
+  "updated_at": "2026-02-18T23:10:00Z",
+  "description": "Content Domain Model: ContentBlock hierarchy, ContentDocument, ContentType, Publishing workflow (Phases 3-5)"
+}
