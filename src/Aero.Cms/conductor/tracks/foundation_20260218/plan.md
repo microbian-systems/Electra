@@ -137,11 +137,11 @@
     - [x] Define GlobalSettings with RavenDbSettings
     - [x] Define RavenDbSettings with Urls, Database, EnableRevisions, RevisionsToKeep
 
-- [ ] Task: Create DocumentStoreFactory
-    - [ ] Create file: Aero.CMS.Core/Data/DocumentStoreFactory.cs
-    - [ ] Implement Create(RavenDbSettings) static method
-    - [ ] Set IdentityPartsSeparator to '/'
-    - [ ] Configure revisions if EnableRevisions is true
+- [x] Task: Create DocumentStoreFactory
+    - [x] Create file: Aero.CMS.Core/Data/DocumentStoreFactory.cs
+    - [x] Implement Create(RavenDbSettings) static method
+    - [x] Set IdentityPartsSeparator to '/'
+    - [x] Configure revisions if EnableRevisions is true
 
 - [ ] Task: Create IRepository interface
     - [ ] Create file: Aero.CMS.Core/Data/Interfaces/IRepository.cs
