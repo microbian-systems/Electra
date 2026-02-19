@@ -16,7 +16,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## Track 5: Feature Subsystems
+## [~] Track 5: Feature Subsystems
 *Link: [./conductor/tracks/features_20260218/](./conductor/tracks/features_20260218/)*
 - Phases 12-14: Markdown, SEO checks, Media management
 

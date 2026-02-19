@@ -7,8 +7,8 @@
 
 ## Phase 12: Markdown Subsystem
 
-- [ ] Task: Add Markdig NuGet to Aero.CMS.Core
-    - [ ] Add package reference to project file
+- [x] Task: Add Markdig NuGet to Aero.CMS.Core
+    - [x] Add package reference to project file
 
 - [ ] Task: Create SlugHelper
     - [ ] Create file: Aero.CMS.Core/Extensions/SlugHelper.cs
