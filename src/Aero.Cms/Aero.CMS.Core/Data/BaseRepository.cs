@@ -37,7 +37,7 @@ public abstract class BaseRepository<T> : IRepository<T> where T : AuditableDocu
             entity.UpdatedAt = now;
             // Note: CreatedBy/UpdatedBy should be handled by an identity service in future phases
 
-            await session.StoreAsync(entity, entity.Id.ToString(), ct);
+            await session.StoreAsync(entity, ct);
             await session.SaveChangesAsync(ct);
             
             return HandlerResult.Ok();

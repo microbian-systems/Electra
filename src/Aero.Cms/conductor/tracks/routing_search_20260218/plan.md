@@ -7,60 +7,60 @@
 
 ## Phase 6: Content Finder Pipeline
 
-- [ ] Task: Create ContentFinderContext
-    - [ ] Create file: Aero.CMS.Core/Content/Models/ContentFinderContext.cs
-    - [ ] Properties: Slug (required), HttpContext (required), LanguageCode, IsPreview, PreviewToken
+- [x] Task: Create ContentFinderContext
+    - [x] Create file: Aero.CMS.Core/Content/Models/ContentFinderContext.cs
+    - [x] Properties: Slug (required), HttpContext (required), LanguageCode, IsPreview, PreviewToken
 
-- [ ] Task: Create IContentFinder interface
-    - [ ] Create file: Aero.CMS.Core/Content/Interfaces/IContentFinder.cs
-    - [ ] Priority property (int)
-    - [ ] FindAsync method returning ContentDocument?
+- [x] Task: Create IContentFinder interface
+    - [x] Create file: Aero.CMS.Core/Content/Interfaces/IContentFinder.cs
+    - [x] Priority property (int)
+    - [x] FindAsync method returning ContentDocument?
 
-- [ ] Task: Create ContentFinderPipeline
-    - [ ] Create file: Aero.CMS.Core/Content/Services/ContentFinderPipeline.cs
-    - [ ] Accept IEnumerable<IContentFinder>
-    - [ ] Order by Priority ascending
-    - [ ] ExecuteAsync returns first non-null result
+- [x] Task: Create ContentFinderPipeline
+    - [x] Create file: Aero.CMS.Core/Content/Services/ContentFinderPipeline.cs
+    - [x] Accept IEnumerable<IContentFinder>
+    - [x] Order by Priority ascending
+    - [x] ExecuteAsync returns first non-null result
 
-- [ ] Task: Write ContentFinderPipeline unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentFinderPipelineTests.cs
-    - [ ] Test: Finders called in Priority order (lower first)
-    - [ ] Test: Returns first non-null result
-    - [ ] Test: Returns null when all finders return null
-    - [ ] Test: Stops after first success
+- [x] Task: Write ContentFinderPipeline unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/ContentFinderPipelineTests.cs
+    - [x] Test: Finders called in Priority order (lower first)
+    - [x] Test: Returns first non-null result
+    - [x] Test: Returns null when all finders return null
+    - [x] Test: Stops after first success
 
-- [ ] Task: Create DefaultContentFinder
-    - [ ] Create file: Aero.CMS.Core/Content/ContentFinders/DefaultContentFinder.cs
-    - [ ] Priority = 100
-    - [ ] Check Status == Published, PublishedAt <= UtcNow, ExpiresAt > UtcNow (or null)
-    - [ ] Bypass checks if IsPreview
+- [x] Task: Create DefaultContentFinder
+    - [x] Create file: Aero.CMS.Core/Content/ContentFinders/DefaultContentFinder.cs
+    - [x] Priority = 100
+    - [x] Check Status == Published, PublishedAt <= UtcNow, ExpiresAt > UtcNow (or null)
+    - [x] Bypass checks if IsPreview
 
-- [ ] Task: Write DefaultContentFinder unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/DefaultContentFinderTests.cs
-    - [ ] Test: Returns doc when Published, PublishedAt in past, no ExpiresAt
-    - [ ] Test: Returns null when doc not found
-    - [ ] Test: Returns null for Draft in non-preview mode
-    - [ ] Test: Returns null when PublishedAt is future
-    - [ ] Test: Returns null when ExpiresAt is past
-    - [ ] Test: Returns doc in preview regardless of Status
+- [x] Task: Write DefaultContentFinder unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/DefaultContentFinderTests.cs
+    - [x] Test: Returns doc when Published, PublishedAt in past, no ExpiresAt
+    - [x] Test: Returns null when doc not found
+    - [x] Test: Returns null for Draft in non-preview mode
+    - [x] Test: Returns null when PublishedAt is future
+    - [x] Test: Returns null when ExpiresAt is past
+    - [x] Test: Returns doc in preview regardless of Status
 
-- [ ] Task: Add Microsoft.AspNetCore.App reference to Aero.CMS.Routing
-    - [ ] Update project file with FrameworkReference
+- [x] Task: Add Microsoft.AspNetCore.App reference to Aero.CMS.Routing
+    - [x] Update project file with FrameworkReference
 
-- [ ] Task: Create AeroRouteValueTransformer
-    - [ ] Create file: Aero.CMS.Routing/AeroRouteValueTransformer.cs
-    - [ ] Extend DynamicRouteValueTransformer
-    - [ ] Extract slug from Request.Path
-    - [ ] Call ContentFinderPipeline.ExecuteAsync
-    - [ ] Set controller/action to AeroRender
-    - [ ] Store content in HttpContext.Items["AeroContent"]
+- [x] Task: Create AeroRouteValueTransformer
+    - [x] Create file: Aero.CMS.Routing/AeroRouteValueTransformer.cs
+    - [x] Extend DynamicRouteValueTransformer
+    - [x] Extract slug from Request.Path
+    - [x] Call ContentFinderPipeline.ExecuteAsync
+    - [x] Set controller/action to AeroRender
+    - [x] Store content in HttpContext.Items["AeroContent"]
 
-- [ ] Task: Verify Phase 6 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~ContentFinder"`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Pipeline"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 6 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~ContentFinder"`
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Pipeline"`
+    - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 6: Content Finder Pipeline' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 6: Content Finder Pipeline' (Protocol in workflow.md)
 
 ---
 

@@ -27,8 +27,10 @@ public class ContentFinderPipelineTests
         var finder1 = Substitute.For<IContentFinder>();
         finder1.Priority.Returns(20);
         
+        var expectedDoc = new ContentDocument { Name = "Found", Slug = "test-slug" };
         var finder2 = Substitute.For<IContentFinder>();
         finder2.Priority.Returns(10);
+        finder2.FindAsync(_context).Returns(expectedDoc);
         
         var finder3 = Substitute.For<IContentFinder>();
         finder3.Priority.Returns(30);
@@ -36,14 +38,12 @@ public class ContentFinderPipelineTests
         var pipeline = new ContentFinderPipeline(new[] { finder1, finder2, finder3 });
 
         // Act
-        await pipeline.ExecuteAsync(_context);
+        var result = await pipeline.ExecuteAsync(_context);
 
-        // Assert - verify order by checking that if a finder returns a value, the subsequent ones aren't called
-        finder2.FindAsync(_context).Returns(new ContentDocument { Name = "Found", Slug = "test-slug" });
-        
-        await pipeline.ExecuteAsync(_context);
-        
-        await finder2.Received(2).FindAsync(_context);
+        // Assert - verify order by checking that since finder2 (priority 10) returns a value, 
+        // the subsequent ones (finder1 at 20 and finder3 at 30) aren't called
+        result.ShouldBe(expectedDoc);
+        await finder2.Received(1).FindAsync(_context);
         await finder1.DidNotReceive().FindAsync(_context);
         await finder3.DidNotReceive().FindAsync(_context);
     }
