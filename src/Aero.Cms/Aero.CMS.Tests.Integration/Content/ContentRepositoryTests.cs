@@ -2,6 +2,7 @@ using Aero.CMS.Core.Content.Data;
 using Aero.CMS.Core.Content.Models;
 using Aero.CMS.Core.Content.Models.Blocks;
 using Aero.CMS.Core.Shared.Interfaces;
+using Aero.CMS.Core.Shared.Services;
 using Aero.CMS.Tests.Integration.Infrastructure;
 using NSubstitute;
 using Shouldly;
@@ -19,7 +20,12 @@ public class ContentRepositoryTests : RavenTestBase
     {
         _clock = Substitute.For<ISystemClock>();
         _clock.UtcNow.Returns(_now);
-        _sut = new ContentRepository(Store, _clock);
+        
+        var pipeline = new SaveHookPipeline<ContentDocument>(
+            Array.Empty<IBeforeSaveHook<ContentDocument>>(),
+            Array.Empty<IAfterSaveHook<ContentDocument>>());
+            
+        _sut = new ContentRepository(Store, _clock, pipeline);
     }
 
     [Fact]

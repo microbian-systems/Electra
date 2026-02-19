@@ -66,45 +66,45 @@
 
 ## Phase 7: Save Hook Pipeline
 
-- [ ] Task: Create ISaveHook interfaces
-    - [ ] Create file: Aero.CMS.Core/Shared/Interfaces/ISaveHook.cs
-    - [ ] IBeforeSaveHook<T> with Priority and ExecuteAsync
-    - [ ] IAfterSaveHook<T> with Priority and ExecuteAsync
+- [x] Task: Create ISaveHook interfaces
+    - [x] Create file: Aero.CMS.Core/Shared/Interfaces/ISaveHook.cs
+    - [x] IBeforeSaveHook<T> with Priority and ExecuteAsync
+    - [x] IAfterSaveHook<T> with Priority and ExecuteAsync
 
-- [ ] Task: Create SaveHookPipeline
-    - [ ] Create file: Aero.CMS.Core/Shared/Services/SaveHookPipeline.cs
-    - [ ] Accept before/after hooks in constructor
-    - [ ] RunBeforeAsync executes in Priority order
-    - [ ] RunAfterAsync executes in Priority order
+- [x] Task: Create SaveHookPipeline
+    - [x] Create file: Aero.CMS.Core/Shared/Services/SaveHookPipeline.cs
+    - [x] Accept before/after hooks in constructor
+    - [x] RunBeforeAsync executes in Priority order
+    - [x] RunAfterAsync executes in Priority order
 
-- [ ] Task: Write SaveHookPipeline unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Shared/SaveHookPipelineTests.cs
-    - [ ] Test: Before hooks execute in Priority order
-    - [ ] Test: After hooks execute in Priority order
-    - [ ] Test: All registered hooks called
-    - [ ] Test: Hooks receive correct entity instance
-    - [ ] Test: Empty hook lists do not throw
+- [x] Task: Write SaveHookPipeline unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Shared/SaveHookPipelineTests.cs
+    - [x] Test: Before hooks execute in Priority order
+    - [x] Test: After hooks execute in Priority order
+    - [x] Test: All registered hooks called
+    - [x] Test: Hooks receive correct entity instance
+    - [x] Test: Empty hook lists do not throw
 
-- [ ] Task: Update ContentRepository
-    - [ ] Modify: Aero.CMS.Core/Content/Data/ContentRepository.cs
-    - [ ] Add SaveHookPipeline<ContentDocument> to constructor
-    - [ ] Call RunBeforeAsync before session.StoreAsync
-    - [ ] Call RunAfterAsync after session.SaveChangesAsync
+- [x] Task: Update ContentRepository
+    - [x] Modify: Aero.CMS.Core/Content/Data/ContentRepository.cs
+    - [x] Add SaveHookPipeline<ContentDocument> to constructor
+    - [x] Call RunBeforeAsync before session.StoreAsync
+    - [x] Call RunAfterAsync after session.SaveChangesAsync
 
-- [ ] Task: Write ContentRepositoryWithHooks unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentRepositoryWithHooksTests.cs
-    - [ ] Use NSubstitute for hooks and session
-    - [ ] Test: Before hook called before save
-    - [ ] Test: After hook called after save
-    - [ ] Test: Both hooks receive same entity instance
-    - [ ] Test: Hook order matches Priority
+- [x] Task: Write ContentRepositoryWithHooks unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/ContentRepositoryWithHooksTests.cs
+    - [x] Use NSubstitute for hooks and session
+    - [x] Test: Before hook called before save
+    - [x] Test: After hook called after save
+    - [x] Test: Both hooks receive same entity instance
+    - [x] Test: Hook order matches Priority
 
-- [ ] Task: Verify Phase 7 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration`
-    - [ ] Confirm full suite green
+- [x] Task: Verify Phase 7 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration`
+    - [x] Confirm full suite green
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 7: Save Hook Pipeline' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 7: Save Hook Pipeline' (Protocol in workflow.md)
 
 ---
 
