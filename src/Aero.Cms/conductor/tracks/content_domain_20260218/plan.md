@@ -84,10 +84,10 @@
     - [x] Test: PublishedAt is null
     - [x] Test: ParentId is null
 
-- [ ] Task: Create IContentRepository interface
-    - [ ] Create file: Aero.CMS.Core/Content/Data/ContentRepository.cs
-    - [ ] Extend IRepository<ContentDocument>
-    - [ ] Add GetBySlugAsync, GetChildrenAsync, GetByContentTypeAsync
+- [x] Task: Create IContentRepository interface
+    - [x] Create file: Aero.CMS.Core/Content/Data/IContentRepository.cs
+    - [x] Extend IRepository<ContentDocument>
+    - [x] Add GetBySlugAsync, GetChildrenAsync, GetByContentTypeAsync
 
 - [ ] Task: Create ContentRepository implementation
     - [ ] Implement all three methods
