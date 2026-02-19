@@ -70,12 +70,12 @@
     - [x] Create file: Aero.CMS.Core/Content/Models/SearchMetadata.cs
     - [x] Properties: Title, Description, ImageAlts, LastIndexed
 
-- [ ] Task: Create ContentDocument
-    - [ ] Create file: Aero.CMS.Core/Content/Models/ContentDocument.cs
-    - [ ] Extend AuditableDocument
-    - [ ] Properties: Name, Slug, ContentTypeAlias, Status, PublishedAt, ExpiresAt, ParentId, SortOrder, LanguageCode
-    - [ ] Properties dictionary, Blocks list
-    - [ ] SearchText, Search metadata
+- [x] Task: Create ContentDocument
+    - [x] Create file: Aero.CMS.Core/Content/Models/ContentDocument.cs
+    - [x] Extend AuditableDocument
+    - [x] Properties: Name, Slug, ContentTypeAlias, Status, PublishedAt, ExpiresAt, ParentId, SortOrder, LanguageCode
+    - [x] Properties dictionary, Blocks list
+    - [x] SearchText, Search metadata
 
 - [ ] Task: Write ContentDocument unit tests
     - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentDocumentTests.cs
