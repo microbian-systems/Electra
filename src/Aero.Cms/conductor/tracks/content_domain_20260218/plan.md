@@ -165,26 +165,26 @@
     - [x] Create file: Aero.CMS.Core/Content/Interfaces/IPublishingWorkflow.cs
     - [x] Methods: SubmitForApprovalAsync, ApproveAsync, RejectAsync, PublishAsync, UnpublishAsync, ExpireAsync
 
-- [ ] Task: Create PublishingWorkflow implementation
-    - [ ] Create file: Aero.CMS.Core/Content/Services/PublishingWorkflow.cs
-    - [ ] Dependencies: IContentRepository, IContentTypeRepository, ISystemClock
-    - [ ] Implement all state transitions per spec table
+- [x] Task: Create PublishingWorkflow implementation
+    - [x] Create file: Aero.CMS.Core/Content/Services/PublishingWorkflow.cs
+    - [x] Dependencies: IContentRepository, IContentTypeRepository, ISystemClock
+    - [x] Implement all state transitions per spec table
 
-- [ ] Task: Write PublishingWorkflow unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/PublishingWorkflowTests.cs
-    - [ ] Use NSubstitute for all dependencies
-    - [ ] Test: Draft -> PendingApproval succeeds
-    - [ ] Test: Draft -> Published succeeds when RequiresApproval=false
-    - [ ] Test: Draft -> Published fails when RequiresApproval=true
-    - [ ] Test: PendingApproval -> Approved succeeds
-    - [ ] Test: PendingApproval -> Draft succeeds (reject)
-    - [ ] Test: Approved -> Published succeeds and sets PublishedAt
-    - [ ] Test: Published -> Draft succeeds, PublishedAt NOT cleared
-    - [ ] Test: Published -> Expired succeeds
-    - [ ] Test: PublishAsync on already-Published fails
-    - [ ] Test: SubmitForApproval on Published fails
-    - [ ] Test: Non-existent contentId fails
-    - [ ] Test: PublishAsync sets PublishedAt via ISystemClock
+- [x] Task: Write PublishingWorkflow unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/PublishingWorkflowTests.cs
+    - [x] Use NSubstitute for all dependencies
+    - [x] Test: Draft -> PendingApproval succeeds
+    - [x] Test: Draft -> Published succeeds when RequiresApproval=false
+    - [x] Test: Draft -> Published fails when RequiresApproval=true
+    - [x] Test: PendingApproval -> Approved succeeds
+    - [x] Test: PendingApproval -> Draft succeeds (reject)
+    - [x] Test: Approved -> Published succeeds and sets PublishedAt
+    - [x] Test: Published -> Draft succeeds, PublishedAt NOT cleared
+    - [x] Test: Published -> Expired succeeds
+    - [x] Test: PublishAsync on already-Published fails
+    - [x] Test: SubmitForApproval on Published fails
+    - [x] Test: Non-existent contentId fails
+    - [x] Test: PublishAsync sets PublishedAt via ISystemClock
 
 - [ ] Task: Verify Phase 5 gate
     - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Publishing"`
