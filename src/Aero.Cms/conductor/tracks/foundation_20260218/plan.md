@@ -143,9 +143,9 @@
     - [x] Set IdentityPartsSeparator to '/'
     - [x] Configure revisions if EnableRevisions is true
 
-- [ ] Task: Create IRepository interface
-    - [ ] Create file: Aero.CMS.Core/Data/Interfaces/IRepository.cs
-    - [ ] Define GetByIdAsync, SaveAsync, DeleteAsync
+- [x] Task: Create IRepository interface
+    - [x] Create file: Aero.CMS.Core/Data/Interfaces/IRepository.cs
+    - [x] Define GetByIdAsync, SaveAsync, DeleteAsync
 
 - [ ] Task: Create BaseRepository implementation
     - [ ] Create file: Aero.CMS.Core/Data/BaseRepository.cs
