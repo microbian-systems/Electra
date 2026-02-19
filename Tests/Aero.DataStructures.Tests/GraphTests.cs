@@ -54,10 +54,10 @@ public class GraphTests
         // Matrix order depends on sorting, likely A then B
         var matrix = graph.GetAdjacencyMatrix();
         // A -> B should be 5
-        // B -> A should be 0 (default)
+        // B -> A should be null (no edge)
         // Assuming A is index 0, B is index 1
         matrix[0, 1].Should().Be(5);
-        matrix[1, 0].Should().Be(0);
+        matrix[1, 0].Should().BeNull();
     }
 
     [Fact]

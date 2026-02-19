@@ -13,7 +13,7 @@ public class ForemArticleService : HttpClientBase
 
     public ForemArticleService(HttpClient client, ILogger<ForemArticleService> log) : base(client, log)
     {
-        _httpClient = httpClient;
+        _httpClient = client;
     }
 
     public async Task<ArticleCreateResponse?> CreateArticleAsync(ArticleCreateRequest request, CancellationToken cancellationToken = default)

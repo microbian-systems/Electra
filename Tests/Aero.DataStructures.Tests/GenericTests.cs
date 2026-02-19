@@ -184,10 +184,10 @@ public class GenericTests
             matrix[2, 0].Should().Be(1);
 
             // No self loop A->A
-            matrix[0, 0].Should().Be(0);
+            matrix[0, 0].Should().BeNull();
             
             // No connection A->C
-            matrix[0, 2].Should().Be(0);
+            matrix[0, 2].Should().BeNull();
         }
         
         [Fact]
@@ -261,14 +261,14 @@ public class GenericTests
 
         Assert.Equal(3, matrix.GetLength(0));
         Assert.Equal(3, matrix.GetLength(1));
-        Assert.Equal(0, matrix[0, 0]);
+        Assert.Null(matrix[0, 0]);
         Assert.Equal(1, matrix[0, 1]);
-        Assert.Equal(0, matrix[0, 2]);
-        Assert.Equal(0, matrix[1, 0]);
-        Assert.Equal(0, matrix[1, 1]);
+        Assert.Null(matrix[0, 2]);
+        Assert.Null(matrix[1, 0]);
+        Assert.Null(matrix[1, 1]);
         Assert.Equal(2, matrix[1, 2]);
-        Assert.Equal(0, matrix[2, 0]);
-        Assert.Equal(0, matrix[2, 1]);
-        Assert.Equal(0, matrix[2, 2]);
+        Assert.Null(matrix[2, 0]);
+        Assert.Null(matrix[2, 1]);
+        Assert.Null(matrix[2, 2]);
     }
 }
