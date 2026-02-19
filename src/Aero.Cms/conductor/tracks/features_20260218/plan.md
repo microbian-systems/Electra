@@ -69,41 +69,41 @@
 
 ## Phase 13: SEO Subsystem
 
-- [ ] Task: Create SEO models
-    - [ ] Create file: Aero.CMS.Core/Seo/Models/SeoCheckResult.cs
-    - [ ] SeoCheckStatus enum
-    - [ ] SeoCheckResultItem class
-    - [ ] SeoCheckResult class with Score calculation
+- [x] Task: Create SEO models
+    - [x] Create file: Aero.CMS.Core/Seo/Models/SeoCheckResult.cs
+    - [x] SeoCheckStatus enum
+    - [x] SeoCheckResultItem class
+    - [x] SeoCheckResult class with Score calculation
 
-- [ ] Task: Create ISeoCheck interface
-    - [ ] Create file: Aero.CMS.Core/Seo/Interfaces/ISeoCheck.cs
-    - [ ] SeoCheckContext class
-    - [ ] ISeoCheck interface
+- [x] Task: Create ISeoCheck interface
+    - [x] Create file: Aero.CMS.Core/Seo/Interfaces/ISeoCheck.cs
+    - [x] SeoCheckContext class
+    - [x] ISeoCheck interface
 
-- [ ] Task: Create PageTitleSeoCheck
-    - [ ] Create file: Aero.CMS.Core/Seo/Checks/PageTitleSeoCheck.cs
-    - [ ] Pass: 10-60 chars
-    - [ ] Warning: <10 or >60
-    - [ ] Fail: absent
+- [x] Task: Create PageTitleSeoCheck
+    - [x] Create file: Aero.CMS.Core/Seo/Checks/PageTitleSeoCheck.cs
+    - [x] Pass: 10-60 chars
+    - [x] Warning: <10 or >60
+    - [x] Fail: absent
 
-- [ ] Task: Create MetaDescriptionSeoCheck
-    - [ ] Create file: Aero.CMS.Core/Seo/Checks/MetaDescriptionSeoCheck.cs
-    - [ ] Pass: 50-160 chars
-    - [ ] Warning: >160
-    - [ ] Fail: absent
+- [x] Task: Create MetaDescriptionSeoCheck
+    - [x] Create file: Aero.CMS.Core/Seo/Checks/MetaDescriptionSeoCheck.cs
+    - [x] Pass: 50-160 chars
+    - [x] Warning: >160
+    - [x] Fail: absent
 
-- [ ] Task: Create WordCountSeoCheck
-    - [ ] Create file: Aero.CMS.Core/Seo/Checks/WordCountSeoCheck.cs
-    - [ ] Pass: >=300 words
-    - [ ] Warning: <300
-    - [ ] Fail: empty SearchText
+- [x] Task: Create WordCountSeoCheck
+    - [x] Create file: Aero.CMS.Core/Seo/Checks/WordCountSeoCheck.cs
+    - [x] Pass: >=300 words
+    - [x] Warning: <300
+    - [x] Fail: empty SearchText
 
-- [ ] Task: Create HeadingOneSeoCheck
-    - [ ] Create file: Aero.CMS.Core/Seo/Checks/HeadingOneSeoCheck.cs
-    - [ ] Pass: exactly one <h1>
-    - [ ] Warning: multiple <h1>
-    - [ ] Fail: no <h1>
-    - [ ] Info: RenderedHtml is null
+- [x] Task: Create HeadingOneSeoCheck
+    - [x] Create file: Aero.CMS.Core/Seo/Checks/HeadingOneSeoCheck.cs
+    - [x] Pass: exactly one <h1>
+    - [x] Warning: multiple <h1>
+    - [x] Fail: no <h1>
+    - [x] Info: RenderedHtml is null
 
 - [ ] Task: Write SEO check unit tests
     - [ ] Create file: Aero.CMS.Tests.Unit/Seo/SeoCheckTests.cs
