@@ -39,10 +39,10 @@
     - [x] BlockType = "heroBlock"
     - [x] Heading and Subtext properties
 
-- [ ] Task: Create QuoteBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/QuoteBlock.cs
-    - [ ] BlockType = "quoteBlock"
-    - [ ] Quote and Attribution properties
+- [x] Task: Create QuoteBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/QuoteBlock.cs
+    - [x] BlockType = "quoteBlock"
+    - [x] Quote and Attribution properties
 
 - [ ] Task: Create DivBlock
     - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/DivBlock.cs
