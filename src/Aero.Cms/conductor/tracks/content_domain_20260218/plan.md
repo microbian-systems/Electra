@@ -161,9 +161,9 @@
 
 ## Phase 5: Publishing Workflow
 
-- [ ] Task: Create IPublishingWorkflow interface
-    - [ ] Create file: Aero.CMS.Core/Content/Interfaces/IPublishingWorkflow.cs
-    - [ ] Methods: SubmitForApprovalAsync, ApproveAsync, RejectAsync, PublishAsync, UnpublishAsync, ExpireAsync
+- [x] Task: Create IPublishingWorkflow interface
+    - [x] Create file: Aero.CMS.Core/Content/Interfaces/IPublishingWorkflow.cs
+    - [x] Methods: SubmitForApprovalAsync, ApproveAsync, RejectAsync, PublishAsync, UnpublishAsync, ExpireAsync
 
 - [ ] Task: Create PublishingWorkflow implementation
     - [ ] Create file: Aero.CMS.Core/Content/Services/PublishingWorkflow.cs
