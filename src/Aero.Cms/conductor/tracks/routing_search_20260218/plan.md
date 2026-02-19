@@ -110,81 +110,81 @@
 
 ## Phase 8: Search Text Extraction
 
-- [ ] Task: Create IBlockTextExtractor interface
-    - [ ] Create file: Aero.CMS.Core/Content/Interfaces/IBlockTextExtractor.cs
-    - [ ] BlockType property (string)
-    - [ ] Extract method returning string?
+- [x] Task: Create IBlockTextExtractor interface
+    - [x] Create file: Aero.CMS.Core/Content/Interfaces/IBlockTextExtractor.cs
+    - [x] BlockType property (string)
+    - [x] Extract method returning string?
 
-- [ ] Task: Create RichTextBlockExtractor
-    - [ ] Create file: Aero.CMS.Core/Content/Search/Extractors/RichTextBlockExtractor.cs
-    - [ ] BlockType = "richTextBlock"
-    - [ ] Strip HTML using Regex: `<[^>]+>`
-    - [ ] Return null for empty html
+- [x] Task: Create RichTextBlockExtractor
+    - [x] Create file: Aero.CMS.Core/Content/Search/Extractors/RichTextBlockExtractor.cs
+    - [x] BlockType = "richTextBlock"
+    - [x] Strip HTML using Regex: `<[^>]+>`
+    - [x] Return null for empty html
 
-- [ ] Task: Create MarkdownBlockExtractor
-    - [ ] Create file: Aero.CMS.Core/Content/Search/Extractors/MarkdownBlockExtractor.cs
-    - [ ] BlockType = "markdownBlock"
-    - [ ] Strip: # markers, ** bold, []() links
-    - [ ] Return null for empty markdown
+- [x] Task: Create MarkdownBlockExtractor
+    - [x] Create file: Aero.CMS.Core/Content/Search/Extractors/MarkdownBlockExtractor.cs
+    - [x] BlockType = "markdownBlock"
+    - [x] Strip: # markers, ** bold, []() links
+    - [x] Return null for empty markdown
 
-- [ ] Task: Create ImageBlockExtractor
-    - [ ] Create file: Aero.CMS.Core/Content/Search/Extractors/ImageBlockExtractor.cs
-    - [ ] BlockType = "imageBlock"
-    - [ ] Return alt text from Properties
+- [x] Task: Create ImageBlockExtractor
+    - [x] Create file: Aero.CMS.Core/Content/Search/Extractors/ImageBlockExtractor.cs
+    - [x] BlockType = "imageBlock"
+    - [x] Return alt text from Properties
 
-- [ ] Task: Create HeroBlockExtractor
-    - [ ] Create file: Aero.CMS.Core/Content/Search/Extractors/HeroBlockExtractor.cs
-    - [ ] BlockType = "heroBlock"
-    - [ ] Return heading + "\n" + subtext
+- [x] Task: Create HeroBlockExtractor
+    - [x] Create file: Aero.CMS.Core/Content/Search/Extractors/HeroBlockExtractor.cs
+    - [x] BlockType = "heroBlock"
+    - [x] Return heading + "\n" + subtext
 
-- [ ] Task: Create QuoteBlockExtractor
-    - [ ] Create file: Aero.CMS.Core/Content/Search/Extractors/QuoteBlockExtractor.cs
-    - [ ] BlockType = "quoteBlock"
-    - [ ] Return quote + "\n" + attribution
+- [x] Task: Create QuoteBlockExtractor
+    - [x] Create file: Aero.CMS.Core/Content/Search/Extractors/QuoteBlockExtractor.cs
+    - [x] BlockType = "quoteBlock"
+    - [x] Return quote + "\n" + attribution
 
-- [ ] Task: Write BlockTextExtractor unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/BlockTextExtractorTests.cs
-    - [ ] Test RichTextBlockExtractor: strips HTML, returns null for empty
-    - [ ] Test MarkdownBlockExtractor: strips syntax, returns null for empty
-    - [ ] Test ImageBlockExtractor: returns alt, null when absent
-    - [ ] Test HeroBlockExtractor: returns heading/subtext
-    - [ ] Test QuoteBlockExtractor: returns quote/attribution
+- [x] Task: Write BlockTextExtractor unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/BlockTextExtractorTests.cs
+    - [x] Test RichTextBlockExtractor: strips HTML, returns null for empty
+    - [x] Test MarkdownBlockExtractor: strips syntax, returns null for empty
+    - [x] Test ImageBlockExtractor: returns alt, null when absent
+    - [x] Test HeroBlockExtractor: returns heading/subtext
+    - [x] Test QuoteBlockExtractor: returns quote/attribution
 
-- [ ] Task: Create BlockTreeTextExtractor
-    - [ ] Create file: Aero.CMS.Core/Content/Search/BlockTreeTextExtractor.cs
-    - [ ] Build dictionary from registered extractors
-    - [ ] Implement DFS traversal
-    - [ ] Add double newlines between blocks
+- [x] Task: Create BlockTreeTextExtractor
+    - [x] Create file: Aero.CMS.Core/Content/Search/BlockTreeTextExtractor.cs
+    - [x] Build dictionary from registered extractors
+    - [x] Implement DFS traversal
+    - [x] Add double newlines between blocks
 
-- [ ] Task: Write BlockTreeTextExtractor unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/BlockTreeTextExtractorTests.cs
-    - [ ] Test: Flat list extracts from all blocks
-    - [ ] Test: DivBlock children recursively extracted
-    - [ ] Test: Nested DivBlock > DivBlock > RichText fully traversed
-    - [ ] Test: Unregistered block types skipped
-    - [ ] Test: Empty list returns empty string
-    - [ ] Test: Double newline between blocks
-    - [ ] Test: Order matches DFS (parent before children)
+- [x] Task: Write BlockTreeTextExtractor unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/BlockTreeTextExtractorTests.cs
+    - [x] Test: Flat list extracts from all blocks
+    - [x] Test: DivBlock children recursively extracted
+    - [x] Test: Nested DivBlock > DivBlock > RichText fully traversed
+    - [x] Test: Unregistered block types skipped
+    - [x] Test: Empty list returns empty string
+    - [x] Test: Double newline between blocks
+    - [x] Test: Order matches DFS (parent before children)
 
-- [ ] Task: Create ContentSearchIndexerHook
-    - [ ] Create file: Aero.CMS.Core/Content/Search/ContentSearchIndexerHook.cs
-    - [ ] Implement IBeforeSaveHook<ContentDocument>
-    - [ ] Priority = 10
-    - [ ] Set SearchText from BlockTreeTextExtractor
-    - [ ] Set Search.Title from pageTitle property or Name
-    - [ ] Set Search.LastIndexed from ISystemClock
+- [x] Task: Create ContentSearchIndexerHook
+    - [x] Create file: Aero.CMS.Core/Content/Search/ContentSearchIndexerHook.cs
+    - [x] Implement IBeforeSaveHook<ContentDocument>
+    - [x] Priority = 10
+    - [x] Set SearchText from BlockTreeTextExtractor
+    - [x] Set Search.Title from pageTitle property or Name
+    - [x] Set Search.LastIndexed from ISystemClock
 
-- [ ] Task: Write ContentSearchIndexerHook unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentSearchIndexerHookTests.cs
-    - [ ] Test: SearchText populated from blocks
-    - [ ] Test: Search.Title from pageTitle property
-    - [ ] Test: Search.Title falls back to Name
-    - [ ] Test: Search.LastIndexed set from clock
-    - [ ] Test: Priority is 10
+- [x] Task: Write ContentSearchIndexerHook unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/ContentSearchIndexerHookTests.cs
+    - [x] Test: SearchText populated from blocks
+    - [x] Test: Search.Title from pageTitle property
+    - [x] Test: Search.Title falls back to Name
+    - [x] Test: Search.LastIndexed set from clock
+    - [x] Test: Priority is 10
 
-- [ ] Task: Verify Phase 8 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Search"`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Extractor"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 8 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Search"`
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Extractor"`
+    - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 8: Search Text Extraction' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 8: Search Text Extraction' (Protocol in workflow.md)
