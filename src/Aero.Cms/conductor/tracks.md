@@ -4,7 +4,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## Track 2: Content Domain Model
+## [x] Track 2: Content Domain Model
 *Link: [./conductor/tracks/content_domain_20260218/](./conductor/tracks/content_domain_20260218/)*
 - Phases 3-5: ContentBlock hierarchy, ContentDocument, ContentType, Publishing workflow
 
