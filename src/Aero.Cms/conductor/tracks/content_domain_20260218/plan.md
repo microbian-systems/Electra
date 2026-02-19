@@ -115,9 +115,9 @@
 
 ## Phase 4: Content Type Document
 
-- [ ] Task: Create PropertyType enum
-    - [ ] Create file: Aero.CMS.Core/Content/Models/PropertyType.cs
-    - [ ] Define all property types (Text, TextArea, RichText, etc.)
+- [x] Task: Create PropertyType enum
+    - [x] Create file: Aero.CMS.Core/Content/Models/PropertyType.cs
+    - [x] Define all property types (Text, TextArea, RichText, etc.)
 
 - [ ] Task: Create ContentTypeProperty
     - [ ] Create file: Aero.CMS.Core/Content/Models/ContentTypeProperty.cs
