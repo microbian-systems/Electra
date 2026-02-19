@@ -6,7 +6,14 @@ namespace Aero.CMS.Core.Data;
 
 public static class DocumentStoreFactory
 {
+    public static Func<RavenDbSettings, IDocumentStore> Factory { get; set; } = CreateInternal;
+
     public static IDocumentStore Create(RavenDbSettings settings)
+    {
+        return Factory(settings);
+    }
+
+    internal static IDocumentStore CreateInternal(RavenDbSettings settings)
     {
         var store = new DocumentStore
         {

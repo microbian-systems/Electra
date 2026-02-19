@@ -34,53 +34,53 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Integration`
     - [x] Confirm full suite green (phases 1-15)
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 15: Plugin System' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 15: Plugin System' (Protocol in workflow.md)
 
 ---
 
 ## Phase 16: DI Composition Root
 
-- [ ] Task: Update ServiceExtensions with complete registration
-    - [ ] Modify: Aero.CMS.Core/Extensions/ServiceExtensions.cs
-    - [ ] Infrastructure: IDocumentStore (singleton), ISystemClock, IKeyVaultService, IBlockRegistry
-    - [ ] Repositories: IContentRepository, IContentTypeRepository, ISeoRedirectRepository (scoped)
-    - [ ] Save hooks: SaveHookPipeline<ContentDocument>, ContentSearchIndexerHook
-    - [ ] Search: BlockTreeTextExtractor, all IBlockTextExtractor implementations
-    - [ ] Content: IPublishingWorkflow, ContentFinderPipeline, DefaultContentFinder
-    - [ ] Markdown: MarkdownRendererService, MarkdownImportService
-    - [ ] Rich text: IRichTextEditor -> NullRichTextEditor
-    - [ ] Media: IMediaProvider -> DiskStorageProvider
-    - [ ] SEO: All ISeoCheck implementations
-    - [ ] Identity: IBanService
-    - [ ] Plugins: PluginLoader (singleton)
+- [x] Task: Update ServiceExtensions with complete registration
+    - [x] Modify: Aero.CMS.Core/Extensions/ServiceExtensions.cs
+    - [x] Infrastructure: IDocumentStore (singleton), ISystemClock, IKeyVaultService, IBlockRegistry
+    - [x] Repositories: IContentRepository, IContentTypeRepository, ISeoRedirectRepository (scoped)
+    - [x] Save hooks: SaveHookPipeline<ContentDocument>, ContentSearchIndexerHook
+    - [x] Search: BlockTreeTextExtractor, all IBlockTextExtractor implementations
+    - [x] Content: IPublishingWorkflow, ContentFinderPipeline, DefaultContentFinder
+    - [x] Markdown: MarkdownRendererService, MarkdownImportService
+    - [x] Rich text: IRichTextEditor -> NullRichTextEditor
+    - [x] Media: IMediaProvider -> DiskStorageProvider
+    - [x] SEO: All ISeoCheck implementations
+    - [x] Identity: IBanService
+    - [x] Plugins: PluginLoader (singleton)
 
-- [ ] Task: Write CompositionRoot integration tests
-    - [ ] Create file: Aero.CMS.Tests.Integration/Infrastructure/CompositionRootTests.cs
-    - [ ] Build ServiceProvider with AddAeroCmsCore
-    - [ ] Verify resolution of all services
-    - [ ] Verify collection counts: ISeoCheck (4), IBlockTextExtractor (5), IContentFinder (1)
-    - [ ] Verify SaveHookPipeline resolves
-    - [ ] Verify IBeforeSaveHook<ContentDocument> count (1)
+- [x] Task: Write CompositionRoot integration tests
+    - [x] Create file: Aero.CMS.Tests.Integration/Infrastructure/CompositionRootTests.cs
+    - [x] Build ServiceProvider with AddAeroCmsCore
+    - [x] Verify resolution of all services
+    - [x] Verify collection counts: ISeoCheck (4), IBlockTextExtractor (5), IContentFinder (1)
+    - [x] Verify SaveHookPipeline resolves
+    - [x] Verify IBeforeSaveHook<ContentDocument> count (1)
 
-- [ ] Task: Verify final gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration`
-    - [ ] Run `dotnet test --collect:"XPlat Code Coverage"`
-    - [ ] Confirm zero failures
-    - [ ] Confirm Aero.CMS.Core coverage >= 80%
+- [x] Task: Verify final gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration`
+    - [x] Run `dotnet test --collect:"XPlat Code Coverage"`
+    - [x] Confirm zero failures
+    - [x] Confirm Aero.CMS.Core coverage >= 80%
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 16: DI Composition Root' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 16: DI Composition Root' (Protocol in workflow.md)
 
 ---
 
 ## Track Completion
 
-- [ ] Task: Final verification
-    - [ ] All 16 phases complete
-    - [ ] All unit tests pass
-    - [ ] All integration tests pass
-    - [ ] Coverage >= 80%
-    - [ ] No NotImplementedException or TODO
-    - [ ] All file paths match spec
-    - [ ] NSubstitute used for all mocks
-    - [ ] Shouldly used for all assertions
+- [x] Task: Final verification
+    - [x] All 16 phases complete
+    - [x] All unit tests pass
+    - [x] All integration tests pass
+    - [x] Coverage >= 80%
+    - [x] No NotImplementedException or TODO
+    - [x] All file paths match spec
+    - [x] NSubstitute used for all mocks
+    - [x] Shouldly used for all assertions

@@ -143,4 +143,24 @@ public class DefaultContentFinderTests
         // Assert
         result.ShouldBe(doc);
     }
+
+    [Fact]
+    public void ContentFinderContext_Properties_CanBeSet()
+    {
+        var httpContext = Substitute.For<HttpContext>();
+        var context = new ContentFinderContext
+        {
+            Slug = "test",
+            HttpContext = httpContext,
+            LanguageCode = "en",
+            IsPreview = true,
+            PreviewToken = "token123"
+        };
+        
+        context.Slug.ShouldBe("test");
+        context.HttpContext.ShouldBe(httpContext);
+        context.LanguageCode.ShouldBe("en");
+        context.IsPreview.ShouldBeTrue();
+        context.PreviewToken.ShouldBe("token123");
+    }
 }

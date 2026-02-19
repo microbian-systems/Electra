@@ -61,6 +61,50 @@ public class ContentBlockTests
     }
 
     [Fact]
+    public void GridBlock_Columns_Default_Is_1()
+    {
+        var block = new GridBlock();
+        block.Columns.ShouldBe(1);
+    }
+
+    [Fact]
+    public void GridBlock_Columns_RoundTrips()
+    {
+        var block = new GridBlock();
+        block.Columns = 3;
+        block.Columns.ShouldBe(3);
+        block.Properties["columns"].ShouldBe(3);
+    }
+
+    [Fact]
+    public void GridBlock_Columns_InvalidValue_Defaults_To_1()
+    {
+        var block = new GridBlock();
+        block.Properties["columns"] = "invalid";
+        block.Columns.ShouldBe(1);
+    }
+
+    [Fact]
+    public void GridBlock_BlockType_Is_gridBlock()
+    {
+        GridBlock.BlockType.ShouldBe("gridBlock");
+    }
+
+    [Fact]
+    public void GridBlock_Type_Returns_BlockType()
+    {
+        var block = new GridBlock();
+        block.Type.ShouldBe(GridBlock.BlockType);
+    }
+
+    [Fact]
+    public void GridBlock_AllowedChildTypes_Is_Empty()
+    {
+        var block = new GridBlock();
+        block.AllowedChildTypes.ShouldBeEmpty();
+    }
+
+    [Fact]
     public void NewBlock_Has_NonEmpty_Guid_Id()
     {
         var block = new RichTextBlock();
@@ -76,5 +120,50 @@ public class ContentBlockTests
         
         parent.Children.Count.ShouldBe(1);
         parent.Children[0].ShouldBe(child);
+    }
+
+    [Fact]
+    public void HeroBlock_Heading_RoundTrips()
+    {
+        var block = new HeroBlock();
+        block.Heading = "Test Heading";
+        block.Heading.ShouldBe("Test Heading");
+        block.Properties["heading"].ShouldBe("Test Heading");
+    }
+
+    [Fact]
+    public void HeroBlock_Subtext_RoundTrips()
+    {
+        var block = new HeroBlock();
+        block.Subtext = "Test Subtext";
+        block.Subtext.ShouldBe("Test Subtext");
+        block.Properties["subtext"].ShouldBe("Test Subtext");
+    }
+
+    [Fact]
+    public void ImageBlock_Alt_RoundTrips()
+    {
+        var block = new ImageBlock();
+        block.Alt = "Test Alt";
+        block.Alt.ShouldBe("Test Alt");
+        block.Properties["alt"].ShouldBe("Test Alt");
+    }
+
+    [Fact]
+    public void QuoteBlock_Quote_RoundTrips()
+    {
+        var block = new QuoteBlock();
+        block.Quote = "Test Quote";
+        block.Quote.ShouldBe("Test Quote");
+        block.Properties["quote"].ShouldBe("Test Quote");
+    }
+
+    [Fact]
+    public void QuoteBlock_Attribution_RoundTrips()
+    {
+        var block = new QuoteBlock();
+        block.Attribution = "Test Attribution";
+        block.Attribution.ShouldBe("Test Attribution");
+        block.Properties["attribution"].ShouldBe("Test Attribution");
     }
 }

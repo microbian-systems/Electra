@@ -77,4 +77,32 @@ public class BlockRegistryTests
         var resolved = _sut.Resolve("same");
         Assert.Equal(typeof(string), resolved);
     }
+
+    private class BlockWithoutBlockType { }
+    private class BlockWithBlockType
+    {
+        public static string BlockType => "customType";
+    }
+
+    [Fact]
+    public void Register_Generic_UsesTypeNameWhenBlockTypeMissing()
+    {
+        // Act
+        _sut.Register<BlockWithoutBlockType, TestView>();
+
+        // Assert
+        var resolved = _sut.Resolve("blockWithoutBlockType");
+        Assert.Equal(typeof(TestView), resolved);
+    }
+
+    [Fact]
+    public void Register_Generic_UsesBlockTypeStaticProperty()
+    {
+        // Act
+        _sut.Register<BlockWithBlockType, TestView>();
+
+        // Assert
+        var resolved = _sut.Resolve("customType");
+        Assert.Equal(typeof(TestView), resolved);
+    }
 }
