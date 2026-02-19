@@ -121,16 +121,16 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Shared"`
     - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Core Primitives' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Core Primitives' (Protocol in workflow.md)
 
 ---
 
 ## Phase 2: RavenDB Infrastructure
 
-- [ ] Task: Add NuGet packages to Aero.CMS.Core
-    - [ ] RavenDB.Client
-    - [ ] Microsoft.Extensions.Options
-    - [ ] Microsoft.Extensions.DependencyInjection.Abstractions
+- [x] Task: Add NuGet packages to Aero.CMS.Core
+    - [x] RavenDB.Client
+    - [x] Microsoft.Extensions.Options
+    - [x] Microsoft.Extensions.DependencyInjection.Abstractions
 
 - [ ] Task: Create GlobalSettings
     - [ ] Create file: Aero.CMS.Core/Settings/GlobalSettings.cs
