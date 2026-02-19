@@ -143,17 +143,17 @@
 - [x] Task: Create ContentTypeRepository implementation
     - [x] Implement both methods
 
-- [ ] Task: Write ContentTypeRepository integration tests
-    - [ ] Create file: Aero.CMS.Tests.Integration/Content/ContentTypeRepositoryTests.cs
-    - [ ] Test: GetByAliasAsync returns correct document
-    - [ ] Test: GetByAliasAsync returns null for unknown alias
-    - [ ] Test: GetAllAsync returns all saved documents
-    - [ ] Test: SaveAsync then GetByAlias retrieves with all Properties intact
+- [x] Task: Write ContentTypeRepository integration tests
+    - [x] Create file: Aero.CMS.Tests.Integration/Content/ContentTypeRepositoryTests.cs
+    - [x] Test: GetByAliasAsync returns correct document
+    - [x] Test: GetByAliasAsync returns null for unknown alias
+    - [x] Test: GetAllAsync returns all saved documents
+    - [x] Test: SaveAsync then GetByAlias retrieves with all Properties intact
 
-- [ ] Task: Verify Phase 4 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration`
-    - [ ] Confirm full suite green (phases 1-4)
+- [x] Task: Verify Phase 4 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration`
+    - [x] Confirm full suite green (phases 1-4)
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4: Content Type Document' (Protocol in workflow.md)
 
