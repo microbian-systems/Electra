@@ -7,52 +7,52 @@
 
 ## Phase 0: Solution Scaffold
 
-- [ ] Task: Create solution and projects
-    - [ ] Run `dotnet new sln -n Aero.CMS`
-    - [ ] Run `dotnet new classlib -n Aero.CMS.Core -f net10.0`
-    - [ ] Run `dotnet new razorclasslib -n Aero.CMS.Components -f net10.0`
-    - [ ] Run `dotnet new classlib -n Aero.CMS.Routing -f net10.0`
-    - [ ] Run `dotnet new blazor -n Aero.CMS.Web -f net10.0 --interactivity Server`
-    - [ ] Run `dotnet new xunit -n Aero.CMS.Tests.Unit -f net10.0`
-    - [ ] Run `dotnet new xunit -n Aero.CMS.Tests.Integration -f net10.0`
+- [x] Task: Create solution and projects
+    - [x] Run `dotnet new sln -n Aero.CMS`
+    - [x] Run `dotnet new classlib -n Aero.CMS.Core -f net10.0`
+    - [x] Run `dotnet new razorclasslib -n Aero.CMS.Components -f net10.0`
+    - [x] Run `dotnet new classlib -n Aero.CMS.Routing -f net10.0`
+    - [x] Run `dotnet new blazor -n Aero.CMS.Web -f net10.0 --interactivity Server`
+    - [x] Run `dotnet new xunit -n Aero.CMS.Tests.Unit -f net10.0`
+    - [x] Run `dotnet new xunit -n Aero.CMS.Tests.Integration -f net10.0`
 
-- [ ] Task: Add projects to solution
-    - [ ] Add all projects to Aero.CMS.sln
+- [x] Task: Add projects to solution
+    - [x] Add all projects to Aero.CMS.sln
 
-- [ ] Task: Configure project references
-    - [ ] Components -> Core
-    - [ ] Routing -> Core
-    - [ ] Web -> Core, Components, Routing
-    - [ ] Tests.Unit -> Core
-    - [ ] Tests.Integration -> Core
+- [x] Task: Configure project references
+    - [x] Components -> Core
+    - [x] Routing -> Core
+    - [x] Web -> Core, Components, Routing
+    - [x] Tests.Unit -> Core
+    - [x] Tests.Integration -> Core
 
-- [ ] Task: Add NuGet packages to Tests.Unit
-    - [ ] xunit
-    - [ ] xunit.runner.visualstudio
-    - [ ] Shouldly
-    - [ ] NSubstitute
-    - [ ] AutoFixture
-    - [ ] AutoFixture.AutoNSubstitute
-    - [ ] Bogus
-    - [ ] Microsoft.NET.Test.Sdk
-    - [ ] coverlet.collector
+- [x] Task: Add NuGet packages to Tests.Unit
+    - [x] xunit
+    - [x] xunit.runner.visualstudio
+    - [x] Shouldly
+    - [x] NSubstitute
+    - [x] AutoFixture
+    - [x] AutoFixture.AutoNSubstitute
+    - [x] Bogus
+    - [x] Microsoft.NET.Test.Sdk
+    - [x] coverlet.collector
 
-- [ ] Task: Add NuGet packages to Tests.Integration
-    - [ ] xunit
-    - [ ] xunit.runner.visualstudio
-    - [ ] Shouldly
-    - [ ] NSubstitute
-    - [ ] RavenDB.TestDriver
-    - [ ] Microsoft.NET.Test.Sdk
-    - [ ] coverlet.collector
+- [x] Task: Add NuGet packages to Tests.Integration
+    - [x] xunit
+    - [x] xunit.runner.visualstudio
+    - [x] Shouldly
+    - [x] NSubstitute
+    - [x] RavenDB.TestDriver
+    - [x] Microsoft.NET.Test.Sdk
+    - [x] coverlet.collector
 
-- [ ] Task: Delete placeholder files
-    - [ ] Remove Class1.cs from classlib projects
-    - [ ] Remove template placeholders from other projects
+- [x] Task: Delete placeholder files
+    - [x] Remove Class1.cs from classlib projects
+    - [x] Remove template placeholders from other projects
 
-- [ ] Task: Verify Phase 0 gate
-    - [ ] Run `dotnet build Aero.CMS.sln`
-    - [ ] Confirm 0 errors, 0 warnings
+- [x] Task: Verify Phase 0 gate
+    - [x] Run `dotnet build Aero.CMS.sln`
+    - [x] Confirm 0 errors, 0 warnings
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 0: Solution Scaffold' (Protocol in workflow.md)
 

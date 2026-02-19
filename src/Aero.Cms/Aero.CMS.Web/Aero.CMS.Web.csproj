@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Aero.CMS.Core\Aero.CMS.Core.csproj" />
+    <ProjectReference Include="..\Aero.CMS.Components\Aero.CMS.Components.csproj" />
+    <ProjectReference Include="..\Aero.CMS.Routing\Aero.CMS.Routing.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+  </PropertyGroup>
+
+</Project>

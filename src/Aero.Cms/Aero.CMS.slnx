@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="Aero.CMS.Components/Aero.CMS.Components.csproj" />
+  <Project Path="Aero.CMS.Core/Aero.CMS.Core.csproj" />
+  <Project Path="Aero.CMS.Routing/Aero.CMS.Routing.csproj" />
+  <Project Path="Aero.CMS.Tests.Integration/Aero.CMS.Tests.Integration.csproj" />
+  <Project Path="Aero.CMS.Tests.Unit/Aero.CMS.Tests.Unit.csproj" />
+  <Project Path="Aero.CMS.Web/Aero.CMS.Web.csproj" />
+</Solution>
