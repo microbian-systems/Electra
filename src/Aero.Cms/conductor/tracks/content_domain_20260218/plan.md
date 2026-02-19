@@ -190,4 +190,4 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Publishing"`
     - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 5: Publishing Workflow' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 5: Publishing Workflow' (Protocol in workflow.md)
