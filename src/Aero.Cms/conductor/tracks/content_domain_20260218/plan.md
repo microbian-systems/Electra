@@ -123,11 +123,11 @@
     - [x] Create file: Aero.CMS.Core/Content/Models/ContentTypeProperty.cs
     - [x] Properties: Id, Name, Alias, PropertyType, Description, Required, SortOrder, TabAlias, Settings
 
-- [ ] Task: Create ContentTypeDocument
-    - [ ] Create file: Aero.CMS.Core/Content/Models/ContentTypeDocument.cs
-    - [ ] Extend AuditableDocument
-    - [ ] Properties: Name, Alias, Description, Icon, RequiresApproval, AllowAtRoot
-    - [ ] AllowedChildContentTypes, Properties list
+- [x] Task: Create ContentTypeDocument
+    - [x] Create file: Aero.CMS.Core/Content/Models/ContentTypeDocument.cs
+    - [x] Extend AuditableDocument
+    - [x] Properties: Name, Alias, Description, Icon, RequiresApproval, AllowAtRoot
+    - [x] AllowedChildContentTypes, Properties list
 
 - [ ] Task: Write ContentTypeDocument unit tests
     - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentTypeDocumentTests.cs
