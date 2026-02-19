@@ -1,6 +1,0 @@
-{
-  "DevToApi": {
-    "BaseUrl": "https://dev.to/api/",
-    "ApiKey": "your-dev-to-api-key-here"
-  }
-}
