@@ -7,89 +7,89 @@
 
 ## Phase 9: Identity & Auth
 
-- [ ] Task: Add Microsoft.AspNetCore.Identity NuGet to Aero.CMS.Core
-    - [ ] Add package reference to project file
+- [x] Task: Add Microsoft.AspNetCore.Identity NuGet to Aero.CMS.Core
+    - [x] Add package reference to project file
 
-- [ ] Task: Create PasskeyCredential model
-    - [ ] Create file: Aero.CMS.Core/Membership/Models/PasskeyCredential.cs
-    - [ ] Properties: Id, CredentialId (byte[]), PublicKey (byte[]), SignCount, DeviceName, CreatedAt, LastUsedAt
+- [x] Task: Create PasskeyCredential model
+    - [x] Create file: Aero.CMS.Core/Membership/Models/PasskeyCredential.cs
+    - [x] Properties: Id, CredentialId (byte[]), PublicKey (byte[]), SignCount, DeviceName, CreatedAt, LastUsedAt
 
-- [ ] Task: Create RefreshToken model
-    - [ ] Create file: Aero.CMS.Core/Membership/Models/RefreshToken.cs
-    - [ ] Properties: Token, ExpiresAt, IsRevoked, CreatedByIp, CreatedAt
+- [x] Task: Create RefreshToken model
+    - [x] Create file: Aero.CMS.Core/Membership/Models/RefreshToken.cs
+    - [x] Properties: Token, ExpiresAt, IsRevoked, CreatedByIp, CreatedAt
 
-- [ ] Task: Create UserClaim model
-    - [ ] Create file: Aero.CMS.Core/Membership/Models/UserClaim.cs
-    - [ ] Properties: ClaimType, ClaimValue
+- [x] Task: Create UserClaim model
+    - [x] Create file: Aero.CMS.Core/Membership/Models/UserClaim.cs
+    - [x] Properties: ClaimType, ClaimValue
 
-- [ ] Task: Create CmsUser model
-    - [ ] Create file: Aero.CMS.Core/Membership/Models/CmsUser.cs
-    - [ ] Extend AuditableDocument
-    - [ ] Identity properties: UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp
-    - [ ] Lockout properties: LockoutEnd, LockoutEnabled, AccessFailedCount
-    - [ ] Ban properties: IsBanned, BannedUntil, BanReason
-    - [ ] Collections: Roles, Claims, Passkeys, RefreshTokens
+- [x] Task: Create CmsUser model
+    - [x] Create file: Aero.CMS.Core/Membership/Models/CmsUser.cs
+    - [x] Extend AuditableDocument
+    - [x] Identity properties: UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp
+    - [x] Lockout properties: LockoutEnd, LockoutEnabled, AccessFailedCount
+    - [x] Ban properties: IsBanned, BannedUntil, BanReason
+    - [x] Collections: Roles, Claims, Passkeys, RefreshTokens
 
-- [ ] Task: Create CmsRole model
-    - [ ] Create file: Aero.CMS.Core/Membership/Models/CmsRole.cs
-    - [ ] Extend AuditableDocument
-    - [ ] Properties: Name, NormalizedName, Permissions list
+- [x] Task: Create CmsRole model
+    - [x] Create file: Aero.CMS.Core/Membership/Models/CmsRole.cs
+    - [x] Extend AuditableDocument
+    - [x] Properties: Name, NormalizedName, Permissions list
 
-- [ ] Task: Create Permissions static class
-    - [ ] Create file: Aero.CMS.Core/Membership/Models/Permissions.cs
-    - [ ] Constants for all permissions
-    - [ ] All[] array
+- [x] Task: Create Permissions static class
+    - [x] Create file: Aero.CMS.Core/Membership/Models/Permissions.cs
+    - [x] Constants for all permissions
+    - [x] All[] array
 
-- [ ] Task: Create RavenUserStore
-    - [ ] Create file: Aero.CMS.Core/Membership/Stores/RavenUserStore.cs
-    - [ ] Implement IUserStore<CmsUser>
-    - [ ] Implement IUserPasswordStore<CmsUser>
-    - [ ] Implement IUserEmailStore<CmsUser>
-    - [ ] Implement IUserRoleStore<CmsUser>
-    - [ ] Implement IUserClaimStore<CmsUser>
-    - [ ] Implement IUserLockoutStore<CmsUser>
-    - [ ] Each method opens/disposes its own session
+- [x] Task: Create RavenUserStore
+    - [x] Create file: Aero.CMS.Core/Membership/Stores/RavenUserStore.cs
+    - [x] Implement IUserStore<CmsUser>
+    - [x] Implement IUserPasswordStore<CmsUser>
+    - [x] Implement IUserEmailStore<CmsUser>
+    - [x] Implement IUserRoleStore<CmsUser>
+    - [x] Implement IUserClaimStore<CmsUser>
+    - [x] Implement IUserLockoutStore<CmsUser>
+    - [x] Each method opens/disposes its own session
 
-- [ ] Task: Create RavenRoleStore
-    - [ ] Create file: Aero.CMS.Core/Membership/Stores/RavenRoleStore.cs
-    - [ ] Implement IRoleStore<CmsRole>
+- [x] Task: Create RavenRoleStore
+    - [x] Create file: Aero.CMS.Core/Membership/Stores/RavenRoleStore.cs
+    - [x] Implement IRoleStore<CmsRole>
 
-- [ ] Task: Create IBanService interface
-    - [ ] Create file: Aero.CMS.Core/Membership/Services/BanService.cs
-    - [ ] Methods: BanAsync, UnbanAsync, IsBannedAsync
+- [x] Task: Create IBanService interface
+    - [x] Create file: Aero.CMS.Core/Membership/Services/BanService.cs
+    - [x] Methods: BanAsync, UnbanAsync, IsBannedAsync
 
-- [ ] Task: Create BanService implementation
-    - [ ] Implement IsBannedAsync: true if IsBanned && (BannedUntil == null || BannedUntil > UtcNow)
-    - [ ] Implement BanAsync: set IsBanned, BanReason, BannedUntil
-    - [ ] Implement UnbanAsync: clear ban properties
+- [x] Task: Create BanService implementation
+    - [x] Implement IsBannedAsync: true if IsBanned && (BannedUntil == null || BannedUntil > UtcNow)
+    - [x] Implement BanAsync: set IsBanned, BanReason, BannedUntil
+    - [x] Implement UnbanAsync: clear ban properties
 
-- [ ] Task: Write BanService unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Membership/BanServiceTests.cs
-    - [ ] Test: BanAsync sets IsBanned=true
-    - [ ] Test: BanAsync with null until = permanent ban
-    - [ ] Test: BanAsync with future DateTime = temporary ban
-    - [ ] Test: UnbanAsync clears properties
-    - [ ] Test: IsBannedAsync true for permanent ban
-    - [ ] Test: IsBannedAsync true for active temporary ban
-    - [ ] Test: IsBannedAsync false for expired temporary ban
+- [x] Task: Write BanService unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Membership/BanServiceTests.cs
+    - [x] Test: BanAsync sets IsBanned=true
+    - [x] Test: BanAsync with null until = permanent ban
+    - [x] Test: BanAsync with future DateTime = temporary ban
+    - [x] Test: UnbanAsync clears properties
+    - [x] Test: IsBannedAsync true for permanent ban
+    - [x] Test: IsBannedAsync true for active temporary ban
+    - [x] Test: IsBannedAsync false for expired temporary ban
 
-- [ ] Task: Write RavenUserStore integration tests
-    - [ ] Create file: Aero.CMS.Tests.Integration/Membership/RavenUserStoreTests.cs
-    - [ ] Test: CreateAsync saves user
-    - [ ] Test: FindByIdAsync retrieves correctly
-    - [ ] Test: FindByNameAsync retrieves by NormalizedUserName
-    - [ ] Test: FindByEmailAsync retrieves by NormalizedEmail
-    - [ ] Test: UpdateAsync persists changes
-    - [ ] Test: DeleteAsync removes user
-    - [ ] Test: AddToRoleAsync/RemoveFromRoleAsync/IsInRoleAsync/GetRolesAsync
-    - [ ] Test: Password hash round-trip
-    - [ ] Test: Lockout round-trip
-    - [ ] Test: AccessFailedCount increment/reset
+- [x] Task: Write RavenUserStore integration tests
+    - [x] Create file: Aero.CMS.Tests.Integration/Membership/RavenUserStoreTests.cs
+    - [x] Test: CreateAsync saves user
+    - [x] Test: FindByIdAsync retrieves correctly
+    - [x] Test: FindByNameAsync retrieves by NormalizedUserName
+    - [x] Test: FindByEmailAsync retrieves by NormalizedEmail
+    - [x] Test: UpdateAsync persists changes
+    - [x] Test: DeleteAsync removes user
+    - [x] Test: AddToRoleAsync/RemoveFromRoleAsync/IsInRoleAsync/GetRolesAsync
+    - [x] Test: Password hash round-trip
+    - [x] Test: Lockout round-trip
+    - [x] Test: AccessFailedCount increment/reset
 
-- [ ] Task: Verify Phase 9 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Membership"`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Membership"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 9 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Membership"`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Membership"`
+    - [x] Confirm all pass, zero failures
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 9: Identity & Auth' (Protocol in workflow.md)
 
