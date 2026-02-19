@@ -66,9 +66,9 @@
     - [x] Test: GridBlock.AllowNestedComposites is false
     - [x] Test: New block has non-empty Guid Id
 
-- [ ] Task: Create SearchMetadata
-    - [ ] Create file: Aero.CMS.Core/Content/Models/SearchMetadata.cs
-    - [ ] Properties: Title, Description, ImageAlts, LastIndexed
+- [x] Task: Create SearchMetadata
+    - [x] Create file: Aero.CMS.Core/Content/Models/SearchMetadata.cs
+    - [x] Properties: Title, Description, ImageAlts, LastIndexed
 
 - [ ] Task: Create ContentDocument
     - [ ] Create file: Aero.CMS.Core/Content/Models/ContentDocument.cs
