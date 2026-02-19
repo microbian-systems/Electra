@@ -152,10 +152,10 @@
     - [x] Implement IRepository<T> for AuditableDocument
     - [x] Handle audit fields in SaveAsync
 
-- [ ] Task: Create RavenTestBase
-    - [ ] Create file: Aero.CMS.Tests.Integration/Infrastructure/RavenTestBase.cs
-    - [ ] Extend RavenTestDriver
-    - [ ] Provide IDocumentStore property
+- [x] Task: Create RavenTestBase
+    - [x] Create file: Aero.CMS.Tests.Integration/Infrastructure/RavenTestBase.cs
+    - [x] Extend RavenTestDriver
+    - [x] Provide IDocumentStore property
 
 - [ ] Task: Create ServiceExtensions (initial)
     - [ ] Create file: Aero.CMS.Core/Extensions/ServiceExtensions.cs
