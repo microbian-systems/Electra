@@ -19,10 +19,10 @@
     - [x] Create file: Aero.CMS.Core/Content/Models/ICompositeContentBlock.cs
     - [x] Properties: Children, AllowedChildTypes, AllowNestedComposites, MaxChildren
 
-- [ ] Task: Create RichTextBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/RichTextBlock.cs
-    - [ ] BlockType = "richTextBlock"
-    - [ ] Html property using Properties dictionary
+- [x] Task: Create RichTextBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/RichTextBlock.cs
+    - [x] BlockType = "richTextBlock"
+    - [x] Html property using Properties dictionary
 
 - [ ] Task: Create MarkdownBlock
     - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/MarkdownBlock.cs
