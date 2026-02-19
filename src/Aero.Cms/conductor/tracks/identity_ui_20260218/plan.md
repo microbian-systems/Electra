@@ -91,7 +91,7 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Membership"`
     - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 9: Identity & Auth' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 9: Identity & Auth' (Protocol in workflow.md)
 
 ---
 
@@ -119,36 +119,36 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Plugins"`
     - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 10: Block Registry' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 10: Block Registry' (Protocol in workflow.md)
 
 ---
 
 ## Phase 11: IRichTextEditor Abstraction
 
-- [ ] Task: Create RichTextEditorSettings
-    - [ ] Create file: Aero.CMS.Core/Content/Models/RichTextEditorSettings.cs
-    - [ ] Properties: MinHeight (300), EnableMedia (true), EnableTables (true), EnableCodeBlocks (true), ToolbarItems
+- [x] Task: Create RichTextEditorSettings
+    - [x] Create file: Aero.CMS.Core/Content/Models/RichTextEditorSettings.cs
+    - [x] Properties: MinHeight (300), EnableMedia (true), EnableTables (true), EnableCodeBlocks (true), ToolbarItems
 
-- [ ] Task: Create IRichTextEditor interface
-    - [ ] Create file: Aero.CMS.Core/Content/Interfaces/IRichTextEditor.cs
-    - [ ] EditorAlias property
-    - [ ] Render method with value, isEditing, onChanged callback, settings
+- [x] Task: Create IRichTextEditor interface
+    - [x] Create file: Aero.CMS.Core/Content/Interfaces/IRichTextEditor.cs
+    - [x] EditorAlias property
+    - [x] Render method with value, isEditing, onChanged callback, settings
 
-- [ ] Task: Create NullRichTextEditor
-    - [ ] Create file: Aero.CMS.Core/Content/Services/NullRichTextEditor.cs
-    - [ ] EditorAlias = "null"
-    - [ ] Render returns RenderFragment with textarea
+- [x] Task: Create NullRichTextEditor
+    - [x] Create file: Aero.CMS.Core/Content/Services/NullRichTextEditor.cs
+    - [x] EditorAlias = "null"
+    - [x] Render returns RenderFragment with textarea
 
-- [ ] Task: Write RichTextEditor unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/RichTextEditorTests.cs
-    - [ ] Test: NullRichTextEditor.EditorAlias == "null"
-    - [ ] Test: NullRichTextEditor.Render returns non-null RenderFragment
-    - [ ] Test: IRichTextEditor can be substituted
-    - [ ] Test: RichTextEditorSettings defaults
+- [x] Task: Write RichTextEditor unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/RichTextEditorTests.cs
+    - [x] Test: NullRichTextEditor.EditorAlias == "null"
+    - [x] Test: NullRichTextEditor.Render returns non-null RenderFragment
+    - [x] Test: IRichTextEditor can be substituted
+    - [x] Test: RichTextEditorSettings defaults
 
-- [ ] Task: Verify Phase 11 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration`
-    - [ ] Confirm full suite green (phases 1-11)
+- [x] Task: Verify Phase 11 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration`
+    - [x] Confirm full suite green (phases 1-11)
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 11: IRichTextEditor Abstraction' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 11: IRichTextEditor Abstraction' (Protocol in workflow.md)

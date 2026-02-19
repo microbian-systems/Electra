@@ -15,7 +15,8 @@ public class RichTextBlockExtractor : IBlockTextExtractor
         if (string.IsNullOrWhiteSpace(richText.Html)) return null;
 
         // Simple HTML stripping - for production use a robust library like HtmlAgilityPack
-        var stripped = Regex.Replace(richText.Html, "<[^>]+>", " ").Trim();
+        var decoded = System.Net.WebUtility.HtmlDecode(richText.Html);
+        var stripped = Regex.Replace(decoded, "<[^>]+>", " ").Trim();
         return Regex.Replace(stripped, @"\s+", " ");
     }
 }
