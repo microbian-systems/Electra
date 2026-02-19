@@ -25,20 +25,20 @@
     - [x] Test: "Hello World!" => "hello-world"
     - [x] Test: Empty input returns empty string
 
-- [ ] Task: Create MarkdownRendererService
-    - [ ] Create file: Aero.CMS.Core/Content/Services/MarkdownRendererService.cs
-    - [ ] Create MarkdownPipeline with UseAdvancedExtensions, UseYamlFrontMatter
-    - [ ] ToHtml method
-    - [ ] ParseWithFrontmatter method returning tuple
+- [x] Task: Create MarkdownRendererService
+    - [x] Create file: Aero.CMS.Core/Content/Services/MarkdownRendererService.cs
+    - [x] Create MarkdownPipeline with UseAdvancedExtensions, UseYamlFrontMatter
+    - [x] ToHtml method
+    - [x] ParseWithFrontmatter method returning tuple
 
-- [ ] Task: Write MarkdownRendererService unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/MarkdownRendererServiceTests.cs
-    - [ ] Test: ToHtml converts paragraph to <p>
-    - [ ] Test: ToHtml converts # to <h1>
-    - [ ] Test: ToHtml converts **bold** to <strong>
-    - [ ] Test: ParseWithFrontmatter extracts title
-    - [ ] Test: ParseWithFrontmatter returns body without YAML
-    - [ ] Test: No frontmatter returns full content as body
+- [x] Task: Write MarkdownRendererService unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/MarkdownRendererServiceTests.cs
+    - [x] Test: ToHtml converts paragraph to <p>
+    - [x] Test: ToHtml converts # to <h1>
+    - [x] Test: ToHtml converts **bold** to <strong>
+    - [x] Test: ParseWithFrontmatter extracts title
+    - [x] Test: ParseWithFrontmatter returns body without YAML
+    - [x] Test: No frontmatter returns full content as body
 
 - [ ] Task: Create MarkdownImportService
     - [ ] Create file: Aero.CMS.Core/Content/Services/MarkdownImportService.cs
