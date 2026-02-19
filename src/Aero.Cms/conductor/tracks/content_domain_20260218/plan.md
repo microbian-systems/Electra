@@ -119,9 +119,9 @@
     - [x] Create file: Aero.CMS.Core/Content/Models/PropertyType.cs
     - [x] Define all property types (Text, TextArea, RichText, etc.)
 
-- [ ] Task: Create ContentTypeProperty
-    - [ ] Create file: Aero.CMS.Core/Content/Models/ContentTypeProperty.cs
-    - [ ] Properties: Id, Name, Alias, PropertyType, Description, Required, SortOrder, TabAlias, Settings
+- [x] Task: Create ContentTypeProperty
+    - [x] Create file: Aero.CMS.Core/Content/Models/ContentTypeProperty.cs
+    - [x] Properties: Id, Name, Alias, PropertyType, Description, Required, SortOrder, TabAlias, Settings
 
 - [ ] Task: Create ContentTypeDocument
     - [ ] Create file: Aero.CMS.Core/Content/Models/ContentTypeDocument.cs
