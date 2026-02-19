@@ -173,9 +173,9 @@
     - [x] Test: SaveAsync returns HandlerResult Success=true
     - [x] Test: GetByIdAsync returns null for non-existent Guid
 
-- [ ] Task: Verify Phase 2 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Data"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 2 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Data"`
+    - [x] Confirm all pass, zero failures
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: RavenDB Infrastructure' (Protocol in workflow.md)

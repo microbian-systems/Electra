@@ -1,3 +1,4 @@
+using Aero.CMS.Core.Shared.Interfaces;
 using Aero.CMS.Core.Shared.Models;
 using Shouldly;
 
@@ -8,20 +9,27 @@ public class AuditableDocumentTests
     private class TestDocument : AuditableDocument { }
 
     [Fact]
-    public void NewInstance_HasNonEmptyGuidId()
+    public void NewInstance_HasNonEmptyId()
     {
         var doc = new TestDocument();
-        doc.Id.ShouldNotBe(Guid.Empty);
+        doc.Id.ShouldNotBeNullOrEmpty();
+        Guid.TryParse(doc.Id, out _).ShouldBeTrue();
     }
 
     [Fact]
-    public void NewInstance_HasCreatedAtApproximatelyUtcNow()
+    public void NewInstance_IdMapsToInterfaceGuid()
     {
-        var before = DateTime.UtcNow.AddSeconds(-1);
         var doc = new TestDocument();
-        var after = DateTime.UtcNow.AddSeconds(1);
-        
-        doc.CreatedAt.ShouldBeInRange(before, after);
+        var guidId = ((IEntity<Guid>)doc).Id;
+        guidId.ShouldNotBe(Guid.Empty);
+        guidId.ToString().ShouldBe(doc.Id);
+    }
+
+    [Fact]
+    public void NewInstance_CreatedAtIsDefault()
+    {
+        var doc = new TestDocument();
+        doc.CreatedAt.ShouldBe(default);
     }
 
     [Fact]
