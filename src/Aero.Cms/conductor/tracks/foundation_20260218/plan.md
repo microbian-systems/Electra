@@ -162,16 +162,16 @@
     - [x] Implement AddAeroCmsCore() extension method
     - [x] Register IDocumentStore, ISystemClock, IKeyVaultService
 
-- [ ] Task: Write BaseRepository integration tests
-    - [ ] Create file: Aero.CMS.Tests.Integration/Data/BaseRepositoryTests.cs
-    - [ ] Create TestDocument : AuditableDocument
-    - [ ] Create TestRepository : BaseRepository<TestDocument>
-    - [ ] Test: SaveAsync then GetByIdAsync retrieves document
-    - [ ] Test: SaveAsync sets UpdatedAt and UpdatedBy
-    - [ ] Test: SaveAsync sets CreatedAt on new entity
-    - [ ] Test: DeleteAsync removes document
-    - [ ] Test: SaveAsync returns HandlerResult Success=true
-    - [ ] Test: GetByIdAsync returns null for non-existent Guid
+- [x] Task: Write BaseRepository integration tests
+    - [x] Create file: Aero.CMS.Tests.Integration/Data/BaseRepositoryTests.cs
+    - [x] Create TestDocument : AuditableDocument
+    - [x] Create TestRepository : BaseRepository<TestDocument>
+    - [x] Test: SaveAsync then GetByIdAsync retrieves document
+    - [x] Test: SaveAsync sets UpdatedAt and UpdatedBy
+    - [x] Test: SaveAsync sets CreatedAt on new entity
+    - [x] Test: DeleteAsync removes document
+    - [x] Test: SaveAsync returns HandlerResult Success=true
+    - [x] Test: GetByIdAsync returns null for non-existent Guid
 
 - [ ] Task: Verify Phase 2 gate
     - [ ] Run `dotnet test Aero.CMS.Tests.Unit`
