@@ -50,11 +50,11 @@
     - [x] Implement ICompositeContentBlock
     - [x] CssClass property
 
-- [ ] Task: Create GridBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/GridBlock.cs
-    - [ ] BlockType = "gridBlock"
-    - [ ] Implement ICompositeContentBlock (MaxChildren=12, AllowNestedComposites=false)
-    - [ ] Columns property
+- [x] Task: Create GridBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/GridBlock.cs
+    - [x] BlockType = "gridBlock"
+    - [x] Implement ICompositeContentBlock (MaxChildren=12, AllowNestedComposites=false)
+    - [x] Columns property
 
 - [ ] Task: Write ContentBlock unit tests
     - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentBlockTests.cs
