@@ -15,9 +15,9 @@
     - [x] Create file: Aero.CMS.Core/Content/Models/ContentBlock.cs
     - [x] Properties: Id, Type, SortOrder, Properties, Children
 
-- [ ] Task: Create ICompositeContentBlock interface
-    - [ ] Create file: Aero.CMS.Core/Content/Models/ICompositeContentBlock.cs
-    - [ ] Properties: Children, AllowedChildTypes, AllowNestedComposites, MaxChildren
+- [x] Task: Create ICompositeContentBlock interface
+    - [x] Create file: Aero.CMS.Core/Content/Models/ICompositeContentBlock.cs
+    - [x] Properties: Children, AllowedChildTypes, AllowNestedComposites, MaxChildren
 
 - [ ] Task: Create RichTextBlock
     - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/RichTextBlock.cs
