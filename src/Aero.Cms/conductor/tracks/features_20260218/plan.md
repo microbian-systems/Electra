@@ -133,39 +133,39 @@
 
 ## Phase 14: Media Domain
 
-- [ ] Task: Create MediaType enum
-    - [ ] Create file: Aero.CMS.Core/Media/Models/MediaDocument.cs (include enum)
-    - [ ] Image, Video, Document, Audio, Other
+- [x] Task: Create MediaType enum
+    - [x] Create file: Aero.CMS.Core/Media/Models/MediaDocument.cs (include enum)
+    - [x] Image, Video, Document, Audio, Other
 
-- [ ] Task: Create MediaDocument
-    - [ ] Extend AuditableDocument
-    - [ ] Properties: Name, FileName, ContentType, FileSize, MediaType
-    - [ ] StorageKey, AltText, ParentFolderId, Width, Height
+- [x] Task: Create MediaDocument
+    - [x] Extend AuditableDocument
+    - [x] Properties: Name, FileName, ContentType, FileSize, MediaType
+    - [x] StorageKey, AltText, ParentFolderId, Width, Height
 
-- [ ] Task: Create IMediaProvider interface
-    - [ ] Create file: Aero.CMS.Core/Media/Interfaces/IMediaProvider.cs
-    - [ ] MediaUploadResult record
-    - [ ] ProviderAlias, UploadAsync, DeleteAsync, GetPublicUrl
+- [x] Task: Create IMediaProvider interface
+    - [x] Create file: Aero.CMS.Core/Media/Interfaces/IMediaProvider.cs
+    - [x] MediaUploadResult record
+    - [x] ProviderAlias, UploadAsync, DeleteAsync, GetPublicUrl
 
-- [ ] Task: Create DiskStorageProvider
-    - [ ] Create file: Aero.CMS.Core/Media/Providers/DiskStorageProvider.cs
-    - [ ] Dependency: IWebHostEnvironment
-    - [ ] ProviderAlias = "disk"
-    - [ ] BasePath = wwwroot/media
-    - [ ] Storage key format: {Guid}/{fileName}
+- [x] Task: Create DiskStorageProvider
+    - [x] Create file: Aero.CMS.Core/Media/Providers/DiskStorageProvider.cs
+    - [x] Dependency: IWebHostEnvironment
+    - [x] ProviderAlias = "disk"
+    - [x] BasePath = wwwroot/media
+    - [x] Storage key format: {Guid}/{fileName}
 
-- [ ] Task: Write DiskStorageProvider unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Media/DiskStorageProviderTests.cs
-    - [ ] Test: ProviderAlias == "disk"
-    - [ ] Test: UploadAsync returns success with StorageKey
-    - [ ] Test: UploadAsync creates file
-    - [ ] Test: DeleteAsync removes file
-    - [ ] Test: DeleteAsync on non-existent key does not throw
-    - [ ] Test: GetPublicUrl starts with /media/
-    - [ ] Test: GetPublicUrl uses forward slashes
+- [x] Task: Write DiskStorageProvider unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Media/DiskStorageProviderTests.cs
+    - [x] Test: ProviderAlias == "disk"
+    - [x] Test: UploadAsync returns success with StorageKey
+    - [x] Test: UploadAsync creates file
+    - [x] Test: DeleteAsync removes file
+    - [x] Test: DeleteAsync on non-existent key does not throw
+    - [x] Test: GetPublicUrl starts with /media/
+    - [x] Test: GetPublicUrl uses forward slashes
 
-- [ ] Task: Verify Phase 14 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Media"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 14 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Media"`
+    - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 14: Media Domain' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 14: Media Domain' (Protocol in workflow.md)
