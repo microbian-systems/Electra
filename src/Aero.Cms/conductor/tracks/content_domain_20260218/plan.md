@@ -44,11 +44,11 @@
     - [x] BlockType = "quoteBlock"
     - [x] Quote and Attribution properties
 
-- [ ] Task: Create DivBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/DivBlock.cs
-    - [ ] BlockType = "divBlock"
-    - [ ] Implement ICompositeContentBlock
-    - [ ] CssClass property
+- [x] Task: Create DivBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/DivBlock.cs
+    - [x] BlockType = "divBlock"
+    - [x] Implement ICompositeContentBlock
+    - [x] CssClass property
 
 - [ ] Task: Create GridBlock
     - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/GridBlock.cs
