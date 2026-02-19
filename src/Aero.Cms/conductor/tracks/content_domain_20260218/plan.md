@@ -89,9 +89,9 @@
     - [x] Extend IRepository<ContentDocument>
     - [x] Add GetBySlugAsync, GetChildrenAsync, GetByContentTypeAsync
 
-- [ ] Task: Create ContentRepository implementation
-    - [ ] Implement all three methods
-    - [ ] Each opens its own session
+- [x] Task: Create ContentRepository implementation
+    - [x] Implement all three methods
+    - [x] Each opens its own session
 
 - [ ] Task: Write ContentRepository integration tests
     - [ ] Create file: Aero.CMS.Tests.Integration/Content/ContentRepositoryTests.cs
