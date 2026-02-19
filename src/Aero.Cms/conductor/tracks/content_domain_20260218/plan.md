@@ -11,9 +11,9 @@
     - [x] Create file: Aero.CMS.Core/Content/Models/PublishingStatus.cs
     - [x] Define: Draft=0, PendingApproval=1, Approved=2, Published=3, Expired=4
 
-- [ ] Task: Create ContentBlock base class
-    - [ ] Create file: Aero.CMS.Core/Content/Models/ContentBlock.cs
-    - [ ] Properties: Id, Type, SortOrder, Properties, Children
+- [x] Task: Create ContentBlock base class
+    - [x] Create file: Aero.CMS.Core/Content/Models/ContentBlock.cs
+    - [x] Properties: Id, Type, SortOrder, Properties, Children
 
 - [ ] Task: Create ICompositeContentBlock interface
     - [ ] Create file: Aero.CMS.Core/Content/Models/ICompositeContentBlock.cs
