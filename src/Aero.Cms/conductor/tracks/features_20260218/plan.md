@@ -117,17 +117,17 @@
     - [x] Extend AuditableDocument
     - [x] Properties: FromSlug, ToSlug, StatusCode (default 301), IsActive
 
-- [ ] Task: Create SeoRedirectRepository
-    - [ ] Create file: Aero.CMS.Core/Seo/Data/SeoRedirectRepository.cs
-    - [ ] ISeoRedirectRepository interface
-    - [ ] FindByFromSlugAsync method
+- [x] Task: Create SeoRedirectRepository
+    - [x] Create file: Aero.CMS.Core/Seo/Data/SeoRedirectRepository.cs
+    - [x] ISeoRedirectRepository interface
+    - [x] FindByFromSlugAsync method
 
-- [ ] Task: Verify Phase 13 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Seo"`
-    - [ ] Run `dotnet test Aero.CMS.Tests.Integration`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 13 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Seo"`
+    - [x] Run `dotnet test Aero.CMS.Tests.Integration`
+    - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 13: SEO Subsystem' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 13: SEO Subsystem' (Protocol in workflow.md)
 
 ---
 
