@@ -1,0 +1,8 @@
+{
+  "track_id": "routing_search_20260218",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-18T23:10:00Z",
+  "updated_at": "2026-02-18T23:10:00Z",
+  "description": "Routing & Search: ContentFinder pipeline, Save hooks, Block text extraction (Phases 6-8)"
+}

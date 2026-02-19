@@ -10,12 +10,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [x] Track 3: Routing & Search
-*Link: [./conductor/tracks/routing_search_20260218/](./conductor/tracks/routing_search_20260218/)*
-- Phases 6-8: ContentFinder pipeline, Save hooks, Block text extraction
-
----
-
 ## Track 4: Identity & UI Integration
 *Link: [./conductor/tracks/identity_ui_20260218/](./conductor/tracks/identity_ui_20260218/)*
 - Phases 9-11: Membership models, Block registry, Rich text editor abstraction
