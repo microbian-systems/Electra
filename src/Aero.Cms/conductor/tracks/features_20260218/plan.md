@@ -112,10 +112,10 @@
     - [x] Test WordCountSeoCheck: pass/warning/fail conditions
     - [x] Test HeadingOneSeoCheck: pass/warning/fail/info conditions
 
-- [ ] Task: Create SeoRedirectDocument
-    - [ ] Create file: Aero.CMS.Core/Seo/Models/SeoRedirectDocument.cs
-    - [ ] Extend AuditableDocument
-    - [ ] Properties: FromSlug, ToSlug, StatusCode (default 301), IsActive
+- [x] Task: Create SeoRedirectDocument
+    - [x] Create file: Aero.CMS.Core/Seo/Models/SeoRedirectDocument.cs
+    - [x] Extend AuditableDocument
+    - [x] Properties: FromSlug, ToSlug, StatusCode (default 301), IsActive
 
 - [ ] Task: Create SeoRedirectRepository
     - [ ] Create file: Aero.CMS.Core/Seo/Data/SeoRedirectRepository.cs
