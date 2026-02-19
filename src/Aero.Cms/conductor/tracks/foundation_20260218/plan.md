@@ -147,10 +147,10 @@
     - [x] Create file: Aero.CMS.Core/Data/Interfaces/IRepository.cs
     - [x] Define GetByIdAsync, SaveAsync, DeleteAsync
 
-- [ ] Task: Create BaseRepository implementation
-    - [ ] Create file: Aero.CMS.Core/Data/BaseRepository.cs
-    - [ ] Implement IRepository<T> for AuditableDocument
-    - [ ] Handle audit fields in SaveAsync
+- [x] Task: Create BaseRepository implementation
+    - [x] Create file: Aero.CMS.Core/Data/BaseRepository.cs
+    - [x] Implement IRepository<T> for AuditableDocument
+    - [x] Handle audit fields in SaveAsync
 
 - [ ] Task: Create RavenTestBase
     - [ ] Create file: Aero.CMS.Tests.Integration/Infrastructure/RavenTestBase.cs
