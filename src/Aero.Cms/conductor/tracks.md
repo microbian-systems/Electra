@@ -4,12 +4,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [x] Track 1: Foundation Infrastructure
-*Link: [./conductor/tracks/foundation_20260218/](./conductor/tracks/foundation_20260218/)*
-- Phases 0-2: Solution scaffold, Core primitives, RavenDB infrastructure
-
----
-
 ## Track 2: Content Domain Model
 *Link: [./conductor/tracks/content_domain_20260218/](./conductor/tracks/content_domain_20260218/)*
 - Phases 3-5: ContentBlock hierarchy, ContentDocument, ContentType, Publishing workflow
