@@ -129,16 +129,16 @@
     - [x] Properties: Name, Alias, Description, Icon, RequiresApproval, AllowAtRoot
     - [x] AllowedChildContentTypes, Properties list
 
-- [ ] Task: Write ContentTypeDocument unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/ContentTypeDocumentTests.cs
-    - [ ] Test: New ContentTypeDocument has empty Properties list
-    - [ ] Test: RequiresApproval is false by default
-    - [ ] Test: New ContentTypeProperty has non-empty Guid Id
+- [x] Task: Write ContentTypeDocument unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/ContentTypeDocumentTests.cs
+    - [x] Test: New ContentTypeDocument has empty Properties list
+    - [x] Test: RequiresApproval is false by default
+    - [x] Test: New ContentTypeProperty has non-empty Guid Id
 
-- [ ] Task: Create IContentTypeRepository interface
-    - [ ] Create file: Aero.CMS.Core/Content/Data/ContentTypeRepository.cs
-    - [ ] Extend IRepository<ContentTypeDocument>
-    - [ ] Add GetByAliasAsync, GetAllAsync
+- [x] Task: Create IContentTypeRepository interface
+    - [x] Create file: Aero.CMS.Core/Content/Data/IContentTypeRepository.cs
+    - [x] Extend IRepository<ContentTypeDocument>
+    - [x] Add GetByAliasAsync, GetAllAsync
 
 - [ ] Task: Create ContentTypeRepository implementation
     - [ ] Implement both methods
