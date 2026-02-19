@@ -93,16 +93,16 @@
     - [x] Implement all three methods
     - [x] Each opens its own session
 
-- [ ] Task: Write ContentRepository integration tests
-    - [ ] Create file: Aero.CMS.Tests.Integration/Content/ContentRepositoryTests.cs
-    - [ ] Test: SaveAsync then GetByIdAsync retrieves correctly
-    - [ ] Test: GetBySlugAsync returns correct document
-    - [ ] Test: GetBySlugAsync returns null for unknown slug
-    - [ ] Test: GetChildrenAsync returns all children by ParentId
-    - [ ] Test: GetChildrenAsync with statusFilter only returns matching status
-    - [ ] Test: GetChildrenAsync results ordered by SortOrder
-    - [ ] Test: GetByContentTypeAsync returns only matching alias
-    - [ ] **CRITICAL:** Test polymorphic block serialization (RichTextBlock, MarkdownBlock, DivBlock with nested RichTextBlock)
+- [x] Task: Write ContentRepository integration tests
+    - [x] Create file: Aero.CMS.Tests.Integration/Content/ContentRepositoryTests.cs
+    - [x] Test: SaveAsync then GetByIdAsync retrieves correctly
+    - [x] Test: GetBySlugAsync returns correct document
+    - [x] Test: GetBySlugAsync returns null for unknown slug
+    - [x] Test: GetChildrenAsync returns all children by ParentId
+    - [x] Test: GetChildrenAsync with statusFilter only returns matching status
+    - [x] Test: GetChildrenAsync results ordered by SortOrder
+    - [x] Test: GetByContentTypeAsync returns only matching alias
+    - [x] **CRITICAL:** Test polymorphic block serialization (RichTextBlock, MarkdownBlock, DivBlock with nested RichTextBlock)
 
 - [ ] Task: Verify Phase 3 gate
     - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Content"`
