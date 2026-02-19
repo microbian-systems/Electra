@@ -186,8 +186,8 @@
     - [x] Test: Non-existent contentId fails
     - [x] Test: PublishAsync sets PublishedAt via ISystemClock
 
-- [ ] Task: Verify Phase 5 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Publishing"`
-    - [ ] Confirm all pass, zero failures
+- [x] Task: Verify Phase 5 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~Publishing"`
+    - [x] Confirm all pass, zero failures
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Publishing Workflow' (Protocol in workflow.md)
