@@ -105,12 +105,12 @@
     - [x] Fail: no <h1>
     - [x] Info: RenderedHtml is null
 
-- [ ] Task: Write SEO check unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Seo/SeoCheckTests.cs
-    - [ ] Test PageTitleSeoCheck: pass/warning/fail conditions
-    - [ ] Test MetaDescriptionSeoCheck: pass/warning/fail conditions
-    - [ ] Test WordCountSeoCheck: pass/warning/fail conditions
-    - [ ] Test HeadingOneSeoCheck: pass/warning/fail/info conditions
+- [x] Task: Write SEO check unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Seo/SeoCheckTests.cs
+    - [x] Test PageTitleSeoCheck: pass/warning/fail conditions
+    - [x] Test MetaDescriptionSeoCheck: pass/warning/fail conditions
+    - [x] Test WordCountSeoCheck: pass/warning/fail conditions
+    - [x] Test HeadingOneSeoCheck: pass/warning/fail/info conditions
 
 - [ ] Task: Create SeoRedirectDocument
     - [ ] Create file: Aero.CMS.Core/Seo/Models/SeoRedirectDocument.cs
