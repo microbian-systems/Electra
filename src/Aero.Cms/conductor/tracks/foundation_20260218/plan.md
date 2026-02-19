@@ -178,4 +178,4 @@
     - [x] Run `dotnet test Aero.CMS.Tests.Integration --filter "FullyQualifiedName~Data"`
     - [x] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: RavenDB Infrastructure' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: RavenDB Infrastructure' (Protocol in workflow.md)
