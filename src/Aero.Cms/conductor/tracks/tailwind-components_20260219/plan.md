@@ -84,8 +84,8 @@
     - [ ] AllowNestedComposites = true
     - [ ] MaxChildren = null
 
-- [ ] Task: Create ThreeColumnRowBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/ThreeColumnRowBlock.cs
+- [x] Task: Create ThreeColumnRowBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/ThreeColumnRowBlock.cs
     - [ ] BlockType = "threeColumnRowBlock"
     - [ ] Implement ICompositeContentBlock
     - [ ] Properties: EqualColumns (bool), Gap, ResponsiveBreakpoint
