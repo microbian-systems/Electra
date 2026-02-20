@@ -32,8 +32,8 @@
     - [ ] Test: ForgotPasswordBlock.SuccessMessage returns default when absent
     - [ ] Test: All blocks have non-empty Guid Id
 
-- [ ] Task: Create LoginBlock Blazor component
-    - [ ] Create file: Aero.CMS.Web/Components/Blocks/LoginBlock.razor
+- [x] Task: Create LoginBlock Blazor component
+    - [x] Create file: Aero.CMS.Web/Components/Blocks/LoginBlock.razor
     - [ ] Use Tailwind CSS classes for styling
     - [ ] Include form validation with error states
     - [ ] Support mock mode (display success/error messages without real auth)
