@@ -44,8 +44,8 @@
     - [ ] Include validation for required fields
     - [ ] Display appropriate success/error messages
 
-- [ ] Task: Create ForgotPasswordBlock Blazor component
-    - [ ] Create file: Aero.CMS.Web/Components/Blocks/ForgotPasswordBlock.razor
+- [x] Task: Create ForgotPasswordBlock Blazor component
+    - [x] Create file: Aero.CMS.Web/Components/Blocks/ForgotPasswordBlock.razor
     - [ ] Use Tailwind CSS classes for styling
     - [ ] Simple email input form
     - [ ] Display success/error messages
