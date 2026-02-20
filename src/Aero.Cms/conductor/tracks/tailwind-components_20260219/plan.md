@@ -75,8 +75,8 @@
     - [ ] AllowNestedComposites = true
     - [ ] MaxChildren = null (unlimited)
 
-- [ ] Task: Create TwoColumnRowBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/TwoColumnRowBlock.cs
+- [x] Task: Create TwoColumnRowBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/TwoColumnRowBlock.cs
     - [ ] BlockType = "twoColumnRowBlock"
     - [ ] Implement ICompositeContentBlock
     - [ ] Properties: Column1Width, Column2Width, Gap, ResponsiveBreakpoint
