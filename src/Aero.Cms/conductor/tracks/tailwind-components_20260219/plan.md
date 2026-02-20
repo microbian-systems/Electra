@@ -13,8 +13,8 @@
     - [ ] Properties: Title, ShowForgotPasswordLink, RedirectUrl
     - [ ] Support mock mode vs real authentication mode
 
-- [ ] Task: Create RegisterBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/RegisterBlock.cs
+- [x] Task: Create RegisterBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/RegisterBlock.cs
     - [ ] BlockType = "registerBlock"
     - [ ] Properties: Title, RequireEmailConfirmation, TermsUrl, PrivacyUrl
     - [ ] Include validation properties
