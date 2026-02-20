@@ -19,8 +19,8 @@
     - [ ] Properties: Title, RequireEmailConfirmation, TermsUrl, PrivacyUrl
     - [ ] Include validation properties
 
-- [ ] Task: Create ForgotPasswordBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/ForgotPasswordBlock.cs
+- [x] Task: Create ForgotPasswordBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/ForgotPasswordBlock.cs
     - [ ] BlockType = "forgotPasswordBlock"
     - [ ] Properties: Title, SuccessMessage, ErrorMessage
 
