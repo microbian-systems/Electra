@@ -50,18 +50,18 @@
     - [ ] Simple email input form
     - [ ] Display success/error messages
 
-- [ ] Task: Verify Phase 17 gate
-    - [ ] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~AuthenticationBlocks"`
+- [x] Task: Verify Phase 17 gate
+    - [x] Run `dotnet test Aero.CMS.Tests.Unit --filter "FullyQualifiedName~AuthenticationBlocks"`
     - [ ] Confirm all pass, zero failures
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 17: Authentication Blocks' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 17: Authentication Blocks' (Protocol in workflow.md)
 
 ---
 
 ## Phase 18: Layout Blocks
 
-- [ ] Task: Create HeroBlock2
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/HeroBlock2.cs
+- [x] Task: Create HeroBlock2
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/HeroBlock2.cs
     - [ ] BlockType = "heroBlock2"
     - [ ] Properties: Title, Subtitle, CallToActionText, CallToActionUrl, BackgroundColor, TextColor
     - [ ] Follow "layout2" naming convention
