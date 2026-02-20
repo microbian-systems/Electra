@@ -24,8 +24,8 @@
     - [ ] BlockType = "forgotPasswordBlock"
     - [ ] Properties: Title, SuccessMessage, ErrorMessage
 
-- [ ] Task: Write AuthenticationBlocks unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/AuthenticationBlocksTests.cs
+- [x] Task: Write AuthenticationBlocks unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/AuthenticationBlocksTests.cs
     - [ ] Test: LoginBlock.Type == "loginBlock"
     - [ ] Test: LoginBlock.Title getter/setter round-trips
     - [ ] Test: RegisterBlock.RequireEmailConfirmation defaults to true
