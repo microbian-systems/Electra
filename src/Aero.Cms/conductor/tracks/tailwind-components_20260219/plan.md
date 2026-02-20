@@ -102,8 +102,8 @@
     - [ ] AllowNestedComposites = true
     - [ ] MaxChildren = null
 
-- [ ] Task: Write LayoutBlocks unit tests
-    - [ ] Create file: Aero.CMS.Tests.Unit/Content/LayoutBlocksTests.cs
+- [x] Task: Write LayoutBlocks unit tests
+    - [x] Create file: Aero.CMS.Tests.Unit/Content/LayoutBlocksTests.cs
     - [ ] Test: HeroBlock2.Type == "heroBlock2"
     - [ ] Test: OneColumnRowBlock implements ICompositeContentBlock
     - [ ] Test: TwoColumnRowBlock.Column1Width defaults to "50%"
