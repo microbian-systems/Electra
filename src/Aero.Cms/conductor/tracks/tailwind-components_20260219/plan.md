@@ -93,8 +93,8 @@
     - [ ] AllowNestedComposites = true
     - [ ] MaxChildren = null
 
-- [ ] Task: Create FourColumnRowBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/FourColumnRowBlock.cs
+- [x] Task: Create FourColumnRowBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/FourColumnRowBlock.cs
     - [ ] BlockType = "fourColumnRowBlock"
     - [ ] Implement ICompositeContentBlock
     - [ ] Properties: EqualColumns (bool), Gap, ResponsiveBreakpoint
