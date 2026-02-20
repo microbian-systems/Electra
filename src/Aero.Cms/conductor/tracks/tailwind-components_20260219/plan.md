@@ -66,8 +66,8 @@
     - [ ] Properties: Title, Subtitle, CallToActionText, CallToActionUrl, BackgroundColor, TextColor
     - [ ] Follow "layout2" naming convention
 
-- [ ] Task: Create OneColumnRowBlock
-    - [ ] Create file: Aero.CMS.Core/Content/Models/Blocks/OneColumnRowBlock.cs
+- [x] Task: Create OneColumnRowBlock
+    - [x] Create file: Aero.CMS.Core/Content/Models/Blocks/OneColumnRowBlock.cs
     - [ ] BlockType = "oneColumnRowBlock"
     - [ ] Implement ICompositeContentBlock
     - [ ] Properties: Padding, Gap, BackgroundColor
