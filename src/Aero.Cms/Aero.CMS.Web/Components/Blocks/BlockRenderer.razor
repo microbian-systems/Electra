@@ -1,0 +1,60 @@
+@using Aero.CMS.Core.Content.Models
+@using Aero.CMS.Core.Content.Models.Blocks
+@using Model = Aero.CMS.Core.Content.Models.Blocks
+@namespace Aero.CMS.Web.Components.Blocks
+
+@{
+    if (BlockData == null)
+    {
+        return;
+    }
+
+    var blockType = BlockData.Type;
+}
+
+@switch (blockType)
+{
+    case "loginBlock":
+        <LoginBlock Block="@((Model.LoginBlock)BlockData)" />
+        break;
+    case "registerBlock":
+        <RegisterBlock Block="@((Model.RegisterBlock)BlockData)" />
+        break;
+    case "forgotPasswordBlock":
+        <ForgotPasswordBlock Block="@((Model.ForgotPasswordBlock)BlockData)" />
+        break;
+    case "heroBlock2":
+        <HeroBlock2 Block="@((Model.HeroBlock2)BlockData)" />
+        break;
+    case "oneColumnRowBlock":
+        <OneColumnRowBlock Block="@((Model.OneColumnRowBlock)BlockData)" />
+        break;
+    case "twoColumnRowBlock":
+        <TwoColumnRowBlock Block="@((Model.TwoColumnRowBlock)BlockData)" />
+        break;
+    case "threeColumnRowBlock":
+        <ThreeColumnRowBlock Block="@((Model.ThreeColumnRowBlock)BlockData)" />
+        break;
+    case "fourColumnRowBlock":
+        <FourColumnRowBlock Block="@((Model.FourColumnRowBlock)BlockData)" />
+        break;
+    case "markdownRendererBlock":
+        <MarkdownRendererBlock Block="@((Model.MarkdownRendererBlock)BlockData)" />
+        break;
+    case "divBlock":
+        <DivBlock Block="@((Model.DivBlock)BlockData)" />
+        break;
+    case "gridBlock":
+        <GridBlock Block="@((Model.GridBlock)BlockData)" />
+        break;
+    default:
+        <div class="p-4 border border-red-300 bg-red-50 text-red-800">
+            Unknown block type: @blockType
+        </div>
+        break;
+}
+
+@code {
+    [Parameter]
+    public ContentBlock? BlockData { get; set; }
+}

@@ -1,0 +1,55 @@
+@using Aero.CMS.Core.Content.Models.Blocks
+@using Model = Aero.CMS.Core.Content.Models.Blocks
+@using Aero.CMS.Core.Content.Services
+@namespace Aero.CMS.Web.Components.Blocks
+
+@if (Block == null)
+{
+    return;
+}
+
+<div class="@GetCssClasses()">
+    @((MarkupString)HtmlContent)
+</div>
+
+@code {
+    [Parameter]
+    public Aero.CMS.Core.Content.Models.Blocks.MarkdownRendererBlock? Block { get; set; }
+
+    private string HtmlContent => ConvertMarkdownToHtml(Block?.MarkdownContent ?? string.Empty);
+
+    private string ConvertMarkdownToHtml(string markdown)
+    {
+        if (string.IsNullOrEmpty(markdown))
+            return string.Empty;
+
+        var html = Markdig.Markdown.ToHtml(markdown);
+        var sanitized = HtmlSanitizer.Sanitize(html);
+        return sanitized;
+    }
+
+    private string GetCssClasses()
+    {
+        var classes = new List<string>();
+        
+        if (Block?.UseTypographyStyles ?? true)
+        {
+            classes.Add("prose");
+        }
+        
+        if (!string.IsNullOrEmpty(Block?.MaxWidth))
+        {
+            if (Block.MaxWidth == "prose")
+            {
+                classes.Add("max-w-prose");
+            }
+            else
+            {
+                // Assume Tailwind width class
+                classes.Add(Block.MaxWidth);
+            }
+        }
+        
+        return string.Join(" ", classes);
+    }
+}

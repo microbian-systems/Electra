@@ -1,0 +1,48 @@
+@using Aero.CMS.Core.Content.Models.Blocks
+@using Model = Aero.CMS.Core.Content.Models.Blocks
+@namespace Aero.CMS.Web.Components.Blocks
+
+<div class="@GetCssClasses()">
+    @foreach (var child in Block?.Children ?? Enumerable.Empty<ContentBlock>())
+    {
+        <div>
+            <BlockRenderer BlockData="@child" />
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Aero.CMS.Core.Content.Models.Blocks.TwoColumnRowBlock? Block { get; set; }
+
+    private string GetCssClasses()
+    {
+        var classes = new List<string>();
+        
+        // Responsive grid: stack on mobile, columns on breakpoint
+        var breakpoint = Block?.ResponsiveBreakpoint ?? "md";
+        classes.Add("grid grid-cols-1");
+        classes.Add($"{breakpoint}:grid-cols-2");
+        
+        if (!string.IsNullOrEmpty(Block?.Gap))
+        {
+            classes.Add(Block.Gap);
+        }
+        else
+        {
+            classes.Add("gap-4");
+        }
+        
+        if (!string.IsNullOrEmpty(Block?.Padding))
+        {
+            classes.Add(Block.Padding);
+        }
+        
+        if (!string.IsNullOrEmpty(Block?.BackgroundColor))
+        {
+            classes.Add(Block.BackgroundColor);
+        }
+        
+        return string.Join(" ", classes);
+    }
+}

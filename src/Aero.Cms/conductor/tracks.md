@@ -22,6 +22,6 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## Track 7: Tailwind Example Blazor Components
+## [x] Track 7: Tailwind Example Blazor Components
 *Link: [./conductor/tracks/tailwind-components_20260219/](./conductor/tracks/tailwind-components_20260219/)*
 - Create Tailwind example Blazor components for CMS component editor and published pages: login, register, forgot password, hero, 1-4 column rows, markdown renderer

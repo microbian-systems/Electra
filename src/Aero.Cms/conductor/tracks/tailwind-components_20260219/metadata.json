@@ -1,0 +1,8 @@
+{
+  "track_id": "tailwind-components_20260219",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-19T22:21:37Z",
+  "updated_at": "2026-02-19T22:21:37Z",
+  "description": "Create Tailwind example Blazor components for CMS component editor and published pages: login, register, forgot password, hero, 1-4 column rows, markdown renderer"
+}

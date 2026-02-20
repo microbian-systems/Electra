@@ -1,0 +1,15 @@
+@using Aero.CMS.Core.Content.Models.Blocks
+@using Model = Aero.CMS.Core.Content.Models.Blocks
+@namespace Aero.CMS.Web.Components.Blocks
+
+<div class="grid gap-4" style="grid-template-columns: repeat(@Block?.Columns, 1fr);">
+    @foreach (var child in Block?.Children ?? Enumerable.Empty<ContentBlock>())
+    {
+        <BlockRenderer BlockData="@child" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Aero.CMS.Core.Content.Models.Blocks.GridBlock? Block { get; set; }
+}

@@ -1,4 +1,5 @@
 @using Aero.CMS.Core.Content.Models.Blocks
+@using Model = Aero.CMS.Core.Content.Models.Blocks
 @namespace Aero.CMS.Web.Components.Blocks
 
 <div class="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
@@ -63,7 +64,7 @@
 
 @code {
     [Parameter]
-    public LoginBlock? Block { get; set; }
+    public Aero.CMS.Core.Content.Models.Blocks.LoginBlock? Block { get; set; }
 
     private string _email = "";
     private string _password = "";

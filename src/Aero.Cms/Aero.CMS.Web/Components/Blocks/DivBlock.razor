@@ -1,0 +1,15 @@
+@using Aero.CMS.Core.Content.Models.Blocks
+@using Model = Aero.CMS.Core.Content.Models.Blocks
+@namespace Aero.CMS.Web.Components.Blocks
+
+<div class="@(Block?.CssClass ?? "")">
+    @foreach (var child in Block?.Children ?? [])
+    {
+        <BlockRenderer BlockData="@child" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Model.DivBlock? Block { get; set; }
+}

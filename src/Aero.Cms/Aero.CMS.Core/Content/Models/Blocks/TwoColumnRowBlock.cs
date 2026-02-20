@@ -23,6 +23,18 @@ public class TwoColumnRowBlock : ContentBlock, ICompositeContentBlock
         set => Properties["gap"] = value;
     }
 
+    public string Padding
+    {
+        get => Properties.TryGetValue("padding", out var value) ? value?.ToString() ?? string.Empty : string.Empty;
+        set => Properties["padding"] = value;
+    }
+
+    public string BackgroundColor
+    {
+        get => Properties.TryGetValue("backgroundColor", out var value) ? value?.ToString() ?? string.Empty : string.Empty;
+        set => Properties["backgroundColor"] = value;
+    }
+
     public string ResponsiveBreakpoint
     {
         get => Properties.TryGetValue("responsiveBreakpoint", out var value) ? value?.ToString() ?? "md" : "md";
