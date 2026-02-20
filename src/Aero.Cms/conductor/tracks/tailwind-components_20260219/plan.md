@@ -38,8 +38,8 @@
     - [ ] Include form validation with error states
     - [ ] Support mock mode (display success/error messages without real auth)
 
-- [ ] Task: Create RegisterBlock Blazor component
-    - [ ] Create file: Aero.CMS.Web/Components/Blocks/RegisterBlock.razor
+- [x] Task: Create RegisterBlock Blazor component
+    - [x] Create file: Aero.CMS.Web/Components/Blocks/RegisterBlock.razor
     - [ ] Use Tailwind CSS classes for styling
     - [ ] Include validation for required fields
     - [ ] Display appropriate success/error messages

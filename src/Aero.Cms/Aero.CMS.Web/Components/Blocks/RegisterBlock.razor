@@ -1,0 +1,142 @@
+@using Aero.CMS.Core.Content.Models.Blocks
+@namespace Aero.CMS.Web.Components.Blocks
+
+<div class="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
+    @if (!string.IsNullOrEmpty(Block?.Title))
+    {
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">@Block.Title</h2>
+    }
+
+    <div class="space-y-4">
+        @if (_showSuccessMessage)
+        {
+            <div class="p-3 bg-green-50 border border-green-200 text-green-700 rounded">
+                @_successMessage
+            </div>
+        }
+        @if (_showErrorMessage)
+        {
+            <div class="p-3 bg-red-50 border border-red-200 text-red-700 rounded">
+                @_errorMessage
+            </div>
+        }
+
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input type="email" id="email" @bind="_email" 
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                   placeholder="you@example.com" />
+        </div>
+
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input type="password" id="password" @bind="_password" 
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                   placeholder="••••••••" />
+            @if (Block?.ValidatePasswordStrength == true && _password.Length > 0 && _password.Length < (Block?.PasswordMinLength ?? 8))
+            {
+                <p class="mt-1 text-sm text-red-600">Password must be at least @(Block?.PasswordMinLength ?? 8) characters</p>
+            }
+        </div>
+
+        <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+            <input type="password" id="confirmPassword" @bind="_confirmPassword" 
+                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                   placeholder="••••••••" />
+            @if (_password != _confirmPassword && !string.IsNullOrEmpty(_confirmPassword))
+            {
+                <p class="mt-1 text-sm text-red-600">Passwords do not match</p>
+            }
+        </div>
+
+        @if (!string.IsNullOrEmpty(Block?.TermsUrl) || !string.IsNullOrEmpty(Block?.PrivacyUrl))
+        {
+            <div class="text-sm text-gray-600">
+                <p>By registering, you agree to our</p>
+                <div class="mt-1 flex gap-2">
+                    @if (!string.IsNullOrEmpty(Block?.TermsUrl))
+                    {
+                        <a href="@Block.TermsUrl" class="text-blue-600 hover:text-blue-800">Terms of Service</a>
+                    }
+                    @if (!string.IsNullOrEmpty(Block?.PrivacyUrl))
+                    {
+                        <a href="@Block.PrivacyUrl" class="text-blue-600 hover:text-blue-800">Privacy Policy</a>
+                    }
+                </div>
+            </div>
+        }
+
+        <button @onclick="HandleRegister" 
+                disabled="@(_isSubmitting || !IsFormValid())"
+                class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+            @(_isSubmitting ? "Creating Account..." : "Create Account")
+        </button>
+
+        @if (Block?.RequireEmailConfirmation == true)
+        {
+            <p class="text-sm text-gray-500 mt-2">
+                After registration, you will receive an email to confirm your account.
+            </p>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public RegisterBlock? Block { get; set; }
+
+    private string _email = "";
+    private string _password = "";
+    private string _confirmPassword = "";
+    private bool _showSuccessMessage = false;
+    private bool _showErrorMessage = false;
+    private string _successMessage = "Account created successfully!";
+    private string _errorMessage = "Please check your inputs and try again.";
+    private bool _isSubmitting = false;
+
+    private bool IsFormValid()
+    {
+        if (string.IsNullOrEmpty(_email) || string.IsNullOrEmpty(_password))
+            return false;
+
+        if (_password != _confirmPassword)
+            return false;
+
+        if (Block?.ValidatePasswordStrength == true && _password.Length < (Block?.PasswordMinLength ?? 8))
+            return false;
+
+        return true;
+    }
+
+    private async Task HandleRegister()
+    {
+        _isSubmitting = true;
+        _showSuccessMessage = false;
+        _showErrorMessage = false;
+
+        // Simulate API call
+        await Task.Delay(800);
+
+        if (IsFormValid())
+        {
+            _showSuccessMessage = true;
+            _successMessage = Block?.RequireEmailConfirmation == true 
+                ? "Account created! Please check your email to confirm your account." 
+                : "Account created successfully! You can now log in.";
+            
+            // In a real implementation, you would redirect
+            if (!string.IsNullOrEmpty(Block?.RedirectUrl))
+            {
+                // navigationManager.NavigateTo(Block.RedirectUrl);
+            }
+        }
+        else
+        {
+            _showErrorMessage = true;
+            _errorMessage = "Please fill all fields correctly.";
+        }
+
+        _isSubmitting = false;
+    }
+}
