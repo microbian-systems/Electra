@@ -13,7 +13,7 @@ public class RegisterBlock : ContentBlock
 
     public bool RequireEmailConfirmation
     {
-        get => Properties.TryGetValue("requireEmailConfirmation", out var value) && value is bool b && b;
+        get => Properties.TryGetValue("requireEmailConfirmation", out var value) ? value is bool b && b : true;
         set => Properties["requireEmailConfirmation"] = value;
     }
 
