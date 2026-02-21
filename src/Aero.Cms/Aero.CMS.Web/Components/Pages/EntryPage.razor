@@ -1,32 +1,30 @@
-@page "/{*slug}"
-@inject IPageService PageService
-@inject IBlockRegistry BlockRegistry
+@page "/aero-entry"
+@using Aero.CMS.Core.Content.Models
+@using Aero.CMS.Web.Components.Pages
+@inject IHttpContextAccessor HttpContextAccessor
 
 @if (_content is not null)
 {
-    <PublicPageView Page="_content" />
-}
-else if (_loaded)
-{
-    <h1 class="text-center py-20 text-gray-500">404 - Page not found</h1>
+    <DynamicComponent Type="@ResolveView(_content.ContentTypeAlias)"
+                      Parameters="@new Dictionary<string, object> { ["Page"] = _content }" />
 }
 else
 {
-    <p>Loading...</p>
+    <h1 class="text-center py-20 text-gray-500">404 — Page not found</h1>
 }
 
 @code {
-    [Parameter] public string? Slug { get; set; }
     private ContentDocument? _content;
-    private bool _loaded;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        var slug = "/" + (Slug ?? "");
-        if (slug == "/")
-            slug = "/home";
-        
-        _content = await PageService.GetBySlugAsync(slug);
-        _loaded = true;
+        _content = HttpContextAccessor.HttpContext?
+            .Items["AeroContent"] as ContentDocument;
     }
+
+    private static Type ResolveView(string alias) => alias switch
+    {
+        "page" => typeof(PublicPageView),
+        _      => typeof(NotFound)
+    };
 }

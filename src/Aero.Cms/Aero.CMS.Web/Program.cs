@@ -9,6 +9,7 @@ using Aero.CMS.Web.Components;
 using Aero.CMS.Web.Components.Blocks;
 using Aero.CMS.Components.Admin.PageSection;
 using Aero.CMS.Core.Plugins;
+using Aero.CMS.Routing;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,10 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     ;
 
+builder.Services.AddControllersWithViews();
 builder.Services.AddAeroCmsCore(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSingleton<AeroRouteValueTransformer>();
 
 builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddScoped<ISiteRepository, SiteRepository>();
@@ -51,6 +54,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.MapStaticAssets();
 app.UseAntiforgery();
+
+app.MapDynamicControllerRoute<AeroRouteValueTransformer>("{**slug}");
+
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddAdditionalAssemblies(typeof(PageList).Assembly);

@@ -1,4 +1,4 @@
-@page "/admin/page/{PageId:guid}"
+@page "/admin/page/{PageId}"
 @rendermode RenderMode.InteractiveServer
 @inject IPageService PageService
 @inject NavigationManager Nav
@@ -12,6 +12,7 @@
 }
 else
 {
+    @* ... rest of the template ... *@
     <div class="page-editor-header">
         <div>
             <h1>@_page.Name</h1>
@@ -47,7 +48,7 @@ else
 }
 
 @code {
-    [Parameter] public Guid PageId { get; set; }
+    [Parameter] public string PageId { get; set; } = string.Empty;
 
     private ContentDocument? _page;
     private bool _saving;
@@ -56,7 +57,22 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        _page = await PageService.GetByIdAsync(PageId);
+        if (Guid.TryParse(PageId, out var guid))
+        {
+            _page = await PageService.GetByIdAsync(guid);
+        }
+        else
+        {
+            // Try loading by slug if PageId is not a GUID, or handle full RavenDB ID if needed
+            // For MVP, we assume PageId is either a GUID or we need to support full IDs
+            // Let's try parsing it as a GUID from the last part if it contains a slash
+            var lastPart = PageId.Split('/').Last();
+            if (Guid.TryParse(lastPart, out var partGuid))
+            {
+                _page = await PageService.GetByIdAsync(partGuid);
+            }
+        }
+
         if (_page is null) Nav.NavigateTo("/admin");
     }
 

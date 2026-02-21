@@ -60,18 +60,27 @@ else
     {
         var site = await SiteRepo.GetDefaultAsync();
         if (site is null) return;
-        _siteId = Guid.Parse(site.Id);
+        
+        // Handle both GUID and full RavenDB ID for siteId
+        var lastPart = site.Id.Split('/').Last();
+        if (Guid.TryParse(lastPart, out var guid))
+        {
+            _siteId = guid;
+        }
+        
         _pages = await PageService.GetPagesForSiteAsync(_siteId);
     }
 
     private void OpenNewPageDialog() => _showNewPage = true;
     private void OpenDeleteDialog(ContentDocument doc) => _deletingPage = doc;
-    private void EditPage(string id) => Nav.NavigateTo($"/admin/page/{id}");
+    private void EditPage(string id) => Nav.NavigateTo($"/admin/page/{Uri.EscapeDataString(id)}");
 
-    private void HandlePageCreated(string pageId)
+    private async Task HandlePageCreated(string pageId)
     {
         _showNewPage = false;
-        Nav.NavigateTo($"/admin/page/{pageId}");
+        _pages = await PageService.GetPagesForSiteAsync(_siteId);
+        StateHasChanged();
+        Nav.NavigateTo($"/admin/page/{Uri.EscapeDataString(pageId)}");
     }
 
     private async Task HandlePageDeleted()
