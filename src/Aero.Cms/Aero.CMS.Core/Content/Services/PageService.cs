@@ -35,7 +35,8 @@ public class PageService(
     public async Task<List<ContentDocument>> GetPagesForSiteAsync(
         Guid siteId, CancellationToken ct = default)
     {
-        var all = await contentRepo.GetByContentTypeAsync("page", ct);
+        // Admin/Management tasks should always wait for non-stale results to ensure consistency
+        var all = await contentRepo.GetByContentTypeAsync("page", waitForNonStaleResults: true, ct);
         return all
             .Where(p => p.Properties.TryGetValue("siteId", out var id)
                         && id?.ToString() == siteId.ToString())
@@ -46,7 +47,7 @@ public class PageService(
 
     public Task<ContentDocument?> GetBySlugAsync(
         string slug, CancellationToken ct = default)
-        => contentRepo.GetBySlugAsync(slug, ct);
+        => contentRepo.GetBySlugAsync(slug, waitForNonStaleResults: true, ct);
 
     public Task<ContentDocument?> GetByIdAsync(
         Guid pageId, CancellationToken ct = default)
@@ -62,7 +63,7 @@ public class PageService(
         if (string.IsNullOrWhiteSpace(slug))
             slug = SlugHelper.Generate(name);
 
-        var existing = await contentRepo.GetBySlugAsync(slug, ct);
+        var existing = await contentRepo.GetBySlugAsync(slug, waitForNonStaleResults: true, ct);
         if (existing is not null)
             return HandlerResult<ContentDocument>.Fail(
                 $"A page with slug '{slug}' already exists.");

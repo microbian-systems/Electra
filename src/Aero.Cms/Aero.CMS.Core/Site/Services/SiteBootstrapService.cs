@@ -66,7 +66,7 @@ public class SiteBootstrapService(IServiceScopeFactory scopeFactory) : IHostedSe
 
         // Seed "home" page if absent
         var pageRepo = scope.ServiceProvider.GetRequiredService<IContentRepository>();
-        var homePage = await pageRepo.GetBySlugAsync("/", ct);
+        var homePage = await pageRepo.GetBySlugAsync("/", waitForNonStaleResults: true, ct);
         if (homePage is null)
         {
             var siteDoc = await siteRepo.GetDefaultAsync(ct);

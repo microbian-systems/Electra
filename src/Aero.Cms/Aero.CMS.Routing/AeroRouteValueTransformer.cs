@@ -8,41 +8,82 @@ namespace Aero.CMS.Routing;
 
 public class AeroRouteValueTransformer(ContentFinderPipeline pipeline) : DynamicRouteValueTransformer
 {
-    public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
+    private static readonly string[] ReservedPrefixes = 
+    [
+        "/admin", 
+        "/_framework", 
+        "/_content", 
+        "/_blazor", 
+        "/not-found", 
+        "/api",
+        "/css",
+        "/js",
+        "/lib",
+        "/media"
+    ];
+
+    public override async ValueTask<RouteValueDictionary?> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
     {
-        var path = httpContext.Request.Path.Value ?? string.Empty;
-        
-        // Skip static files
-        if (path.Contains(".") || path.EndsWith("favicon.ico", StringComparison.OrdinalIgnoreCase))
+        var path = httpContext.Request.Path.Value ?? "/";
+
+        // 1. FAST PATH: Skip reserved routes and static files immediately
+        if (IsReserved(path))
         {
-            return values;
+            return null;
         }
 
-        // Normalize slug to absolute path format: e.g. "/", "/hello-world"
-        var slug = "/" + path.Trim('/');
+        // 2. Normalize slug: Ensure it starts with / and has no trailing slash (unless it's the root)
+        var slug = path;
+        if (string.IsNullOrEmpty(slug) || slug == "/") 
+        {
+            slug = "/";
+        }
+        else 
+        {
+            slug = "/" + slug.Trim('/');
+        }
 
+        // 3. Prepare context
         var context = new ContentFinderContext
         {
             Slug = slug,
             HttpContext = httpContext,
-            // We can extend this later to extract LanguageCode, IsPreview from query/cookies
-            IsPreview = httpContext.Request.Query.ContainsKey("preview")
+            IsPreview = httpContext.Request.Query.ContainsKey("preview"),
+            PreviewToken = httpContext.Request.Query["preview"]
         };
 
+        // 4. Find content
         var content = await pipeline.ExecuteAsync(context);
 
         if (content == null)
         {
-            return values; // Or return null to continue to next route
+            return null; // Next middleware/route takes over
         }
 
+        // 5. Claim the route
         httpContext.Items["AeroContent"] = content;
 
         return new RouteValueDictionary
         {
             { "controller", "AeroRender" },
-            { "action", "Index" },
-            { "slug", slug }
+            { "action", "Index" }
         };
+    }
+
+    private static bool IsReserved(string path)
+    {
+        if (string.IsNullOrEmpty(path) || path == "/") return false;
+
+        var normalizedPath = path.ToLowerInvariant();
+        
+        // Skip reserved prefixes
+        if (ReservedPrefixes.Any(p => normalizedPath.StartsWith(p.ToLowerInvariant())))
+            return true;
+
+        // Skip anything with an extension (static files)
+        if (path.Contains('.') && !path.EndsWith("/"))
+            return true;
+
+        return false;
     }
 }

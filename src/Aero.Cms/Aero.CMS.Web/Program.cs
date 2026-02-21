@@ -10,8 +10,20 @@ using Aero.CMS.Web.Components.Blocks;
 using Aero.CMS.Components.Admin.PageSection;
 using Aero.CMS.Core.Plugins;
 using Aero.CMS.Routing;
+using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Information)
+    .MinimumLevel.Override("Microsoft.AspNetCore.Routing", LogEventLevel.Debug)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
@@ -54,6 +66,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.MapStaticAssets();
 app.UseAntiforgery();
+app.UseSerilogRequestLogging();
 
 app.MapDynamicControllerRoute<AeroRouteValueTransformer>("{**slug}");
 

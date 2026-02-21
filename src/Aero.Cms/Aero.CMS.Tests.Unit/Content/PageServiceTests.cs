@@ -31,7 +31,7 @@ public class PageServiceTests
             new() { Name = "Page 2", Properties = { ["siteId"] = otherSiteId.ToString() } },
             new() { Name = "Page 3", Properties = { ["siteId"] = siteId.ToString() } }
         };
-        _contentRepo.GetByContentTypeAsync("page", Arg.Any<CancellationToken>())
+        _contentRepo.GetByContentTypeAsync("page", Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns(pages);
 
         var result = await _service.GetPagesForSiteAsync(siteId);
@@ -44,7 +44,7 @@ public class PageServiceTests
     public async Task GetPagesForSiteAsync_ReturnsEmptyList_WhenNoPagesForSite()
     {
         var siteId = Guid.NewGuid();
-        _contentRepo.GetByContentTypeAsync("page", Arg.Any<CancellationToken>())
+        _contentRepo.GetByContentTypeAsync("page", Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns([]);
 
         var result = await _service.GetPagesForSiteAsync(siteId);
@@ -62,7 +62,7 @@ public class PageServiceTests
             new() { Name = "Alpha", SortOrder = 1, Properties = { ["siteId"] = siteId.ToString() } },
             new() { Name = "Beta", SortOrder = 0, Properties = { ["siteId"] = siteId.ToString() } }
         };
-        _contentRepo.GetByContentTypeAsync("page", Arg.Any<CancellationToken>())
+        _contentRepo.GetByContentTypeAsync("page", Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns(pages);
 
         var result = await _service.GetPagesForSiteAsync(siteId);
@@ -85,7 +85,7 @@ public class PageServiceTests
     public async Task CreatePageAsync_GeneratesSlugFromName_WhenSlugNotProvided()
     {
         var siteId = Guid.NewGuid();
-        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns((ContentDocument?)null);
         _contentRepo.SaveAsync(Arg.Any<ContentDocument>(), Arg.Any<CancellationToken>())
             .Returns(HandlerResult.Ok());
@@ -100,7 +100,7 @@ public class PageServiceTests
     public async Task CreatePageAsync_ReturnsFail_WhenSlugAlreadyExists()
     {
         var existing = new ContentDocument { Slug = "/about" };
-        _contentRepo.GetBySlugAsync("/about", Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync("/about", Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns(existing);
 
         var result = await _service.CreatePageAsync(Guid.NewGuid(), "About", "/about", "admin");
@@ -112,7 +112,7 @@ public class PageServiceTests
     [Fact]
     public async Task CreatePageAsync_SetsContentTypeAlias_ToPage()
     {
-        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns((ContentDocument?)null);
         _contentRepo.SaveAsync(Arg.Any<ContentDocument>(), Arg.Any<CancellationToken>())
             .Returns(HandlerResult.Ok());
@@ -126,7 +126,7 @@ public class PageServiceTests
     [Fact]
     public async Task CreatePageAsync_SetsStatus_ToPublished()
     {
-        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns((ContentDocument?)null);
         _contentRepo.SaveAsync(Arg.Any<ContentDocument>(), Arg.Any<CancellationToken>())
             .Returns(HandlerResult.Ok());
@@ -142,7 +142,7 @@ public class PageServiceTests
     {
         var expectedDate = new DateTime(2024, 1, 15, 10, 30, 0, DateTimeKind.Utc);
         _clock.UtcNow.Returns(expectedDate);
-        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns((ContentDocument?)null);
         _contentRepo.SaveAsync(Arg.Any<ContentDocument>(), Arg.Any<CancellationToken>())
             .Returns(HandlerResult.Ok());
@@ -156,7 +156,7 @@ public class PageServiceTests
     [Fact]
     public async Task CreatePageAsync_PrependsSlashToSlug_IfNotPresent()
     {
-        _contentRepo.GetBySlugAsync("/about-us", Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync("/about-us", Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns((ContentDocument?)null);
         _contentRepo.SaveAsync(Arg.Any<ContentDocument>(), Arg.Any<CancellationToken>())
             .Returns(HandlerResult.Ok());
@@ -171,7 +171,7 @@ public class PageServiceTests
     public async Task CreatePageAsync_StoresSiteId_InProperties()
     {
         var siteId = Guid.NewGuid();
-        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns((ContentDocument?)null);
         _contentRepo.SaveAsync(Arg.Any<ContentDocument>(), Arg.Any<CancellationToken>())
             .Returns(HandlerResult.Ok());
@@ -185,7 +185,7 @@ public class PageServiceTests
     [Fact]
     public async Task CreatePageAsync_CallsContentRepoSaveAsync_ExactlyOnce()
     {
-        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync(Arg.Any<string>(), Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns((ContentDocument?)null);
         _contentRepo.SaveAsync(Arg.Any<ContentDocument>(), Arg.Any<CancellationToken>())
             .Returns(HandlerResult.Ok());
@@ -256,7 +256,7 @@ public class PageServiceTests
     public async Task GetBySlugAsync_DelegatesToContentRepo()
     {
         var page = new ContentDocument { Slug = "/test" };
-        _contentRepo.GetBySlugAsync("/test", Arg.Any<CancellationToken>())
+        _contentRepo.GetBySlugAsync("/test", Arg.Any<bool>(), Arg.Any<CancellationToken>())
             .Returns(page);
 
         var result = await _service.GetBySlugAsync("/test");

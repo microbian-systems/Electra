@@ -20,7 +20,7 @@ public class DefaultContentFinder : IContentFinder
 
     public async Task<ContentDocument?> FindAsync(ContentFinderContext context)
     {
-        var content = await _contentRepository.GetBySlugAsync(context.Slug);
+        var content = await _contentRepository.GetBySlugAsync(context.Slug, context.IsPreview);
 
         if (content == null)
         {

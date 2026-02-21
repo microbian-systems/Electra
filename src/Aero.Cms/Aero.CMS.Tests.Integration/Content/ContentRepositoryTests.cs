@@ -40,7 +40,7 @@ public class ContentRepositoryTests : RavenTestBase
 
         // Assert
         retrieved.ShouldNotBeNull();
-        retrieved.Slug.ShouldBe("test-page");
+        retrieved!.Slug.ShouldBe("test-page");
         retrieved.Name.ShouldBe("Page");
     }
 
@@ -131,11 +131,11 @@ public class ContentRepositoryTests : RavenTestBase
         saveResult.Success.ShouldBeTrue(string.Join(", ", saveResult.Errors));
 
         // Act
-        var retrieved = await _sut.GetByIdAsync(((IEntity<Guid>)doc).Id);
+        var retrieved = await _sut.GetByIdAsync(Guid.Parse(doc.Id));
 
         // Assert
         retrieved.ShouldNotBeNull();
-        retrieved.Blocks.Count.ShouldBe(3);
+        retrieved!.Blocks.Count.ShouldBe(3);
         
         var b1 = retrieved.Blocks[0].ShouldBeOfType<RichTextBlock>();
         b1.Html.ShouldBe("<p>Rich</p>");

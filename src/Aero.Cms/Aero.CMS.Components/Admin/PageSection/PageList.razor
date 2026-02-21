@@ -28,7 +28,7 @@ else
                 <div class="page-slug">@p.Slug</div>
             </div>
             <div class="actions">
-                <a href="@p.Slug" target="_blank" class="btn btn-ghost">View</a>
+                <a href="@($"{p.Slug}?preview=true")" target="_blank" class="btn btn-ghost">View</a>
                 <button class="btn btn-secondary" @onclick="@(() => EditPage(p.Id))">Edit</button>
                 <button class="btn btn-danger" @onclick="@(() => OpenDeleteDialog(p))">Delete</button>
             </div>

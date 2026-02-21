@@ -5,6 +5,7 @@ using Aero.CMS.Core.Shared.Models;
 using Aero.CMS.Core.Shared.Services;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
+using Raven.Client.Documents.Session;
 
 namespace Aero.CMS.Core.Content.Data;
 
@@ -41,19 +42,30 @@ public class ContentRepository : BaseRepository<ContentDocument>, IContentReposi
         }
     }
 
-    public async Task<ContentDocument?> GetBySlugAsync(string slug, CancellationToken ct = default)
+    public async Task<ContentDocument?> GetBySlugAsync(string slug, bool waitForNonStaleResults = false, CancellationToken ct = default)
     {
         using var session = Store.OpenAsyncSession();
-        return await session.Query<ContentDocument>()
-            .Customize(x => x.WaitForNonStaleResults())
-            .FirstOrDefaultAsync(x => x.Slug == slug, ct);
+        var query = session.Query<ContentDocument>();
+        
+        if (waitForNonStaleResults)
+        {
+            query = query.Customize(x => x.WaitForNonStaleResults());
+        }
+
+        return await query.FirstOrDefaultAsync(x => x.Slug == slug, ct);
     }
 
-    public async Task<List<ContentDocument>> GetChildrenAsync(Guid? parentId, PublishingStatus? statusFilter = null, CancellationToken ct = default)
+    public async Task<List<ContentDocument>> GetChildrenAsync(Guid? parentId, PublishingStatus? statusFilter = null, bool waitForNonStaleResults = false, CancellationToken ct = default)
     {
         using var session = Store.OpenAsyncSession();
-        var query = session.Query<ContentDocument>()
-            .Where(x => x.ParentId == parentId);
+        var query = session.Query<ContentDocument>();
+
+        if (waitForNonStaleResults)
+        {
+            query = query.Customize(x => x.WaitForNonStaleResults());
+        }
+
+        query = query.Where(x => x.ParentId == parentId);
 
         if (statusFilter.HasValue)
         {
@@ -63,11 +75,17 @@ public class ContentRepository : BaseRepository<ContentDocument>, IContentReposi
         return await query.OrderBy(x => x.SortOrder).ToListAsync(ct);
     }
 
-    public async Task<List<ContentDocument>> GetByContentTypeAsync(string contentTypeAlias, CancellationToken ct = default)
+    public async Task<List<ContentDocument>> GetByContentTypeAsync(string contentTypeAlias, bool waitForNonStaleResults = false, CancellationToken ct = default)
     {
         using var session = Store.OpenAsyncSession();
-        return await session.Query<ContentDocument>()
-            .Where(x => x.ContentTypeAlias == contentTypeAlias)
+        var query = session.Query<ContentDocument>();
+
+        if (waitForNonStaleResults)
+        {
+            query = query.Customize(x => x.WaitForNonStaleResults());
+        }
+
+        return await query.Where(x => x.ContentTypeAlias == contentTypeAlias)
             .OrderBy(x => x.SortOrder)
             .ToListAsync(ct);
     }

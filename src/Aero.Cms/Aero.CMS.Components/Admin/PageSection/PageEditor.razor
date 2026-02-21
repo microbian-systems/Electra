@@ -23,7 +23,7 @@ else
             </div>
         </div>
         <div class="page-actions">
-            <a href="@_page.Slug" target="_blank" class="btn btn-ghost">View Page</a>
+            <a href="@($"{_page.Slug}?preview=true")" target="_blank" class="btn btn-ghost">View Page</a>
             <button class="btn btn-primary" @onclick="SaveNow">Save</button>
              <button class="btn btn-ghost" @onclick="@(() => Nav.NavigateTo("/admin"))">Back</button>
         </div>

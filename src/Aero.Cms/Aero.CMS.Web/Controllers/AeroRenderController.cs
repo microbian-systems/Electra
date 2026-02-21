@@ -1,25 +1,27 @@
 using Aero.CMS.Core.Content.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Aero.CMS.Web.Components.Pages;
 
 namespace Aero.CMS.Web.Controllers;
 
 public class AeroRenderController : Controller
 {
-    public IActionResult Index()
+    public IResult Index()
     {
         var content = HttpContext.Items["AeroContent"] as ContentDocument;
         if (content == null)
         {
-            return NotFound();
+            return Results.NotFound();
         }
 
-        return View(content);
+        // Point directly to the EntryPage dispatcher component
+        return new RazorComponentResult<EntryPage>();
     }
 
     [ActionName("NotFound")]
-    public IActionResult ContentNotFound()
+    public IResult ContentNotFound()
     {
-        return NotFound();
+        return Results.NotFound();
     }
 }
