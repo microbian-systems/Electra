@@ -1,4 +1,4 @@
-@page "/admin/page/{PageId}"
+@page "/admin/page/edit/{PageId}"
 @rendermode RenderMode.InteractiveServer
 @inject IPageService PageService
 @inject NavigationManager Nav
@@ -43,7 +43,7 @@ else
             </div>
         </div>
     </div>
-
+    <MyComponent Data="Hello World!" />
     <BlockCanvas Page="_page" OnChanged="ScheduleSave" />
 }
 

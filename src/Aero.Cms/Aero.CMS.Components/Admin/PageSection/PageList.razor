@@ -73,14 +73,14 @@ else
 
     private void OpenNewPageDialog() => _showNewPage = true;
     private void OpenDeleteDialog(ContentDocument doc) => _deletingPage = doc;
-    private void EditPage(string id) => Nav.NavigateTo($"/admin/page/{Uri.EscapeDataString(id)}");
+    private void EditPage(string id) => Nav.NavigateTo($"/admin/page/edit/{Uri.EscapeDataString(id)}");
 
     private async Task HandlePageCreated(string pageId)
     {
         _showNewPage = false;
         _pages = await PageService.GetPagesForSiteAsync(_siteId);
         StateHasChanged();
-        Nav.NavigateTo($"/admin/page/{Uri.EscapeDataString(pageId)}");
+        Nav.NavigateTo($"/admin/page/edit/{Uri.EscapeDataString(pageId)}");
     }
 
     private async Task HandlePageDeleted()

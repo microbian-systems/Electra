@@ -21,6 +21,7 @@ using Aero.CMS.Core.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 
 namespace Aero.CMS.Core.Extensions;
 
@@ -32,6 +33,7 @@ public static class ServiceExtensions
                              ?? new RavenDbSettings();
 
         services.AddSingleton<IDocumentStore>(_ => DocumentStoreFactory.Create(ravenDbSettings));
+        services.AddScoped<IAsyncDocumentSession>(sp => sp.GetRequiredService<IDocumentStore>().OpenAsyncSession());
         
         services.AddSingleton<ISystemClock, SystemClock>();
         services.AddSingleton<IKeyVaultService, EnvironmentKeyVaultService>();

@@ -4,10 +4,19 @@
 
 <CascadingValue Value="_editContext">
 <div class="canvas" @onclick="() => _editContext.ClearAll()">
+    @if (_sections.Count == 0)
+    {
+        <div class="p-8 text-center border-2 border-dashed border-gray-300 rounded-lg mb-4">
+            <p class="text-gray-500">No sections added yet. Start by adding a section.</p>
+        </div>
+    }
 
     <Sortable TItem="ContentBlock" Items="_sections" OnUpdate="SortSections" Context="block" Group="sections">
         @{
-            var sectionBlock = (SectionBlock)block;
+            var sectionBlock = block as SectionBlock;
+        }
+        @if (sectionBlock is not null)
+        {
             var gridClass = sectionBlock.Layout switch
             {
                 SectionLayout.Full        => "cols-1",
@@ -16,10 +25,9 @@
                 SectionLayout.Sidebar     => "cols-sidebar",
                 _ => "cols-1"
             };
-        }
 
-        <div class="section-block @(_editContext.IsSectionActive(sectionBlock.Id) ? "is-active" : "")"
-             @onclick:stopPropagation="true">
+            <div class="section-block @(_editContext.IsSectionActive(sectionBlock.Id) ? "is-active" : "")"
+                 @onclick:stopPropagation="true">
 
             <div class="section-toolbar">
                 <button @onclick="@(() => DeleteSection(sectionBlock.Id))" title="Delete section">Delete Section</button>
@@ -47,6 +55,7 @@
                 }
             </div>
         </div>
+        }
     </Sortable>
 
     <AddSectionButton OnAdd="AddSection" />

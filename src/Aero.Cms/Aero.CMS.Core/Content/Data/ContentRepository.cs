@@ -3,6 +3,7 @@ using Aero.CMS.Core.Data;
 using Aero.CMS.Core.Shared.Interfaces;
 using Aero.CMS.Core.Shared.Models;
 using Aero.CMS.Core.Shared.Services;
+using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
@@ -14,9 +15,11 @@ public class ContentRepository : BaseRepository<ContentDocument>, IContentReposi
     private readonly SaveHookPipeline<ContentDocument> _hookPipeline;
 
     public ContentRepository(
+        IAsyncDocumentSession db,
         IDocumentStore store, 
         ISystemClock clock,
-        SaveHookPipeline<ContentDocument> hookPipeline) : base(store, clock)
+        ILogger<ContentRepository> log,
+        SaveHookPipeline<ContentDocument> hookPipeline) : base(db, store, clock, log)
     {
         _hookPipeline = hookPipeline;
     }

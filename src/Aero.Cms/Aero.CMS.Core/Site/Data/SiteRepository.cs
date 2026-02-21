@@ -2,7 +2,9 @@ using Aero.CMS.Core.Data;
 using Aero.CMS.Core.Data.Interfaces;
 using Aero.CMS.Core.Shared.Interfaces;
 using Aero.CMS.Core.Site.Models;
+using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 
 namespace Aero.CMS.Core.Site.Data;
 
@@ -12,7 +14,8 @@ public interface ISiteRepository : IRepository<SiteDocument>
     Task<List<SiteDocument>> GetAllAsync(CancellationToken ct = default);
 }
 
-public class SiteRepository(IDocumentStore store, ISystemClock clock) : BaseRepository<SiteDocument>(store, clock), ISiteRepository
+public class SiteRepository(IAsyncDocumentSession db, IDocumentStore store, ISystemClock clock, ILogger<SiteRepository> log) 
+    : BaseRepository<SiteDocument>(db, store, clock, log), ISiteRepository
 {
     public async Task<SiteDocument?> GetDefaultAsync(CancellationToken ct = default)
     {

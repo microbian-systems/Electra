@@ -1,13 +1,15 @@
 using Aero.CMS.Core.Content.Models;
 using Aero.CMS.Core.Data;
 using Aero.CMS.Core.Shared.Interfaces;
+using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 
 namespace Aero.CMS.Core.Content.Data;
 
 public class ContentTypeRepository : BaseRepository<ContentTypeDocument>, IContentTypeRepository
 {
-    public ContentTypeRepository(IDocumentStore store, ISystemClock clock) : base(store, clock)
+    public ContentTypeRepository(IAsyncDocumentSession db, IDocumentStore store, ISystemClock clock, ILogger<ContentTypeRepository> log) : base(db, store, clock, log)
     {
     }
 
