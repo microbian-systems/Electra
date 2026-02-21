@@ -75,11 +75,9 @@ public class AeroRouteValueTransformer(ContentFinderPipeline pipeline, ILogger<A
     private static bool IsReserved(string path)
     {
         if (string.IsNullOrEmpty(path) || path == "/") return false;
-
-        var normalizedPath = path.ToLowerInvariant();
         
         // Skip reserved prefixes
-        if (ReservedPrefixes.Any(p => normalizedPath.StartsWith(p.ToLowerInvariant())))
+        if (ReservedPrefixes.Any(p => path.StartsWith(p, StringComparison.OrdinalIgnoreCase)))
             return true;
 
         // Skip anything with an extension (static files)

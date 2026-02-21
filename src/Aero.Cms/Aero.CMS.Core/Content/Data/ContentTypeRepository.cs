@@ -9,7 +9,7 @@ namespace Aero.CMS.Core.Content.Data;
 
 public class ContentTypeRepository : BaseRepository<ContentTypeDocument>, IContentTypeRepository
 {
-    public ContentTypeRepository(IAsyncDocumentSession db, IDocumentStore store, ISystemClock clock, ILogger<ContentTypeRepository> log) : base(db, store, clock, log)
+    public ContentTypeRepository(IDocumentStore store, ISystemClock clock, ILogger<ContentTypeRepository> log) : base(store, clock, log)
     {
     }
 

@@ -2,6 +2,7 @@
 @rendermode RenderMode.InteractiveServer
 @inject IPageService PageService
 @inject NavigationManager Nav
+@using Microsoft.Extensions.Logging
 @implements IAsyncDisposable
 
 <AdminNavBar PageName="@(_page?.Name ?? "Loading...")" />
@@ -43,79 +44,10 @@ else
             </div>
         </div>
     </div>
-    <MyComponent Data="Hello World!" />
-    <BlockCanvas Page="_page" OnChanged="ScheduleSave" />
+
+@* <BlockCanvas Page="_page" OnChanged="ScheduleSave" /> *@
+    
+    <MyComponent Data="Hi!" />
+
 }
 
-@code {
-    [Parameter] public string PageId { get; set; } = string.Empty;
-
-    private ContentDocument? _page;
-    private bool _saving;
-    private bool _saved;
-    private CancellationTokenSource? _debounce;
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (Guid.TryParse(PageId, out var guid))
-        {
-            _page = await PageService.GetByIdAsync(guid);
-        }
-        else
-        {
-            // Try loading by slug if PageId is not a GUID, or handle full RavenDB ID if needed
-            // For MVP, we assume PageId is either a GUID or we need to support full IDs
-            // Let's try parsing it as a GUID from the last part if it contains a slash
-            var lastPart = PageId.Split('/').Last();
-            if (Guid.TryParse(lastPart, out var partGuid))
-            {
-                _page = await PageService.GetByIdAsync(partGuid);
-            }
-        }
-
-        if (_page is null) Nav.NavigateTo("/admin");
-    }
-
-    private void ScheduleSave()
-    {
-        _saved = false;
-        _debounce?.Cancel();
-        _debounce = new CancellationTokenSource();
-        var token = _debounce.Token;
-        
-        // Execute on thread pool to avoid blocking UI
-        Task.Run(async () => {
-            try 
-            {
-                await Task.Delay(800, token);
-                if (!token.IsCancellationRequested)
-                {
-                    await InvokeAsync(SaveNow);
-                }
-            }
-            catch (TaskCanceledException) { }
-        });
-    }
-
-    private async Task SaveNow()
-    {
-        if (_page is null) return;
-        _saving = true;
-        _saved = false;
-        StateHasChanged();
-        await PageService.SavePageAsync(_page, "admin");
-        _saving = false;
-        _saved = true;
-        StateHasChanged();
-        await Task.Delay(2000);
-        _saved = false;
-        StateHasChanged();
-    }
-
-    public ValueTask DisposeAsync()
-    {
-        _debounce?.Cancel();
-        _debounce?.Dispose();
-        return ValueTask.CompletedTask;
-    }
-}

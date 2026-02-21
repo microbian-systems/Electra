@@ -15,11 +15,10 @@ public class ContentRepository : BaseRepository<ContentDocument>, IContentReposi
     private readonly SaveHookPipeline<ContentDocument> _hookPipeline;
 
     public ContentRepository(
-        IAsyncDocumentSession db,
         IDocumentStore store, 
         ISystemClock clock,
         ILogger<ContentRepository> log,
-        SaveHookPipeline<ContentDocument> hookPipeline) : base(db, store, clock, log)
+        SaveHookPipeline<ContentDocument> hookPipeline) : base(store, clock, log)
     {
         _hookPipeline = hookPipeline;
     }

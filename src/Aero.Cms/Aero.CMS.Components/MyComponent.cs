@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-
 namespace Aero.CMS.Components;
 
 public partial class MyComponent

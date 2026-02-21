@@ -9,8 +9,8 @@ namespace Aero.CMS.Core.Seo.Data;
 
 public class SeoRedirectRepository : BaseRepository<SeoRedirectDocument>, ISeoRedirectRepository
 {
-    public SeoRedirectRepository(IAsyncDocumentSession db, IDocumentStore store, ISystemClock clock, ILogger<SeoRedirectRepository> log) 
-        : base(db, store, clock, log)
+    public SeoRedirectRepository(IDocumentStore store, ISystemClock clock, ILogger<SeoRedirectRepository> log) 
+        : base(store, clock, log)
     {
     }
 

@@ -1,6 +1,7 @@
 @using BlazorSortable
 @inject SectionService SectionSvc
 @inject IBlockRegistry BlockRegistry
+@inject ILogger<BlockCanvas> log;
 
 <CascadingValue Value="_editContext">
 <div class="canvas" @onclick="() => _editContext.ClearAll()">
@@ -69,13 +70,21 @@
     private List<ContentBlock> _sections = [];
     private readonly BlockEditContext _editContext = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        log.LogInformation("Initializing BlockCanvas for page {id}", Page.Id);
+        await base.OnInitializedAsync();
+    }
+
     protected override void OnParametersSet()
     {
+        log.LogDebug("OnParametersSet: {a} sections loaded for page {b}", Page.Blocks.Count, Page.Id);
         _sections = Page.Blocks.ToList();
     }
 
     private async Task AddSection(SectionLayout layout)
     {
+        log.LogInformation("Adding new section with layout {a} to page {b}", layout, Page.Id);
         SectionSvc.AddSection(Page, layout);
         _sections = Page.Blocks.ToList();
         await SavePage();
@@ -83,6 +92,7 @@
 
     private async Task DeleteSection(Guid sectionId)
     {
+        log.LogInformation("Deleting section {a} from page {b}", sectionId, Page.Id);
         _editContext.ClearAll();
         SectionSvc.RemoveSection(Page, sectionId);
         _sections = Page.Blocks.ToList();
@@ -91,6 +101,7 @@
 
     private void SortSections(SortableEventArgs<ContentBlock> args)
     {
+        log.LogInformation("Sorting sections: moving from index {a} to {b} on page {c}", args.OldIndex, args.NewIndex, Page.Id);
         if (args.OldIndex == args.NewIndex) return;
         
         var item = Page.Blocks[args.OldIndex];

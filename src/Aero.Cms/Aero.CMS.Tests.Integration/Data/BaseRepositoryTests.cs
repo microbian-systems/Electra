@@ -2,6 +2,7 @@ using Aero.CMS.Core.Data;
 using Aero.CMS.Core.Shared.Interfaces;
 using Aero.CMS.Core.Shared.Models;
 using Aero.CMS.Tests.Integration.Infrastructure;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Shouldly;
 using Xunit;
@@ -15,7 +16,7 @@ public class TestDocument : AuditableDocument
 
 public class TestRepository : BaseRepository<TestDocument>
 {
-    public TestRepository(Raven.Client.Documents.IDocumentStore store, ISystemClock clock) : base(store, clock)
+    public TestRepository(Raven.Client.Documents.IDocumentStore store, ISystemClock clock, ILogger<TestRepository> log) : base(store, clock, log)
     {
     }
 }
@@ -30,7 +31,8 @@ public class BaseRepositoryTests : RavenTestBase
     {
         _clock = Substitute.For<ISystemClock>();
         _clock.UtcNow.Returns(_now);
-        _sut = new TestRepository(Store, _clock);
+        var log = Substitute.For<ILogger<TestRepository>>();
+        _sut = new TestRepository(Store, _clock, log);
     }
 
     [Fact]

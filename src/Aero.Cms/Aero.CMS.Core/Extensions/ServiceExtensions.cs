@@ -33,7 +33,6 @@ public static class ServiceExtensions
                              ?? new RavenDbSettings();
 
         services.AddSingleton<IDocumentStore>(_ => DocumentStoreFactory.Create(ravenDbSettings));
-        services.AddScoped<IAsyncDocumentSession>(sp => sp.GetRequiredService<IDocumentStore>().OpenAsyncSession());
         
         services.AddSingleton<ISystemClock, SystemClock>();
         services.AddSingleton<IKeyVaultService, EnvironmentKeyVaultService>();

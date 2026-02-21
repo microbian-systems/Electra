@@ -14,8 +14,8 @@ public interface ISiteRepository : IRepository<SiteDocument>
     Task<List<SiteDocument>> GetAllAsync(CancellationToken ct = default);
 }
 
-public class SiteRepository(IAsyncDocumentSession db, IDocumentStore store, ISystemClock clock, ILogger<SiteRepository> log) 
-    : BaseRepository<SiteDocument>(db, store, clock, log), ISiteRepository
+public class SiteRepository(IDocumentStore store, ISystemClock clock, ILogger<SiteRepository> log) 
+    : BaseRepository<SiteDocument>(store, clock, log), ISiteRepository
 {
     public async Task<SiteDocument?> GetDefaultAsync(CancellationToken ct = default)
     {

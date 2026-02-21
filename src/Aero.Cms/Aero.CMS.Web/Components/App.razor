@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="/css/admin.css" />
     <ImportMap />
     <link rel="icon" type="image/png" href="favicon.png" />
-    <HeadOutlet />
+    <HeadOutlet @rendermode="InteractiveServer" />
     <link rel="stylesheet" href="_content/BlazorSortable/css/blazor-sortable.css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-    <Routes />
+    <Routes @rendermode="InteractiveServer" />
     <ReconnectModal />
     <script src="@Assets["_framework/blazor.web.js"]"></script>
     <script src="lib/sortable/Sortable.min.js"></script>
