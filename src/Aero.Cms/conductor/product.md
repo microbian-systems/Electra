@@ -26,8 +26,14 @@ Aero CMS is a modern, modular content management system built on .NET 10 that en
 - Document-based content storage with RavenDB
 - Flexible content type definitions
 - Block-based content composition (RichText, Markdown, Image, Hero, Quote, Grid, Div)
+- Section and Column layout primitive for structured page building
+- Visual drag-and-drop reordering of sections and blocks
 - Hierarchical content organization (parent/child relationships)
 - Multi-language support
+
+### Site Management
+- Default site bootstrapping and configuration
+- Multi-site ready architecture
 
 ### Publishing Workflow
 - Draft → PendingApproval → Approved → Published → Expired

@@ -7,6 +7,7 @@
 | Runtime | .NET | 10 LTS |
 | Web Framework | ASP.NET Core | 10.x |
 | UI Framework | Blazor Server | 10.x |
+| Drag & Drop | BlazorSortable | 5.x |
 | Additional Views | Razor Pages + MVC | 10.x |
 
 ## Projects Structure
@@ -66,6 +67,9 @@
 
 ### Aero.CMS.Routing
 - Microsoft.AspNetCore.App (framework reference)
+
+### Aero.CMS.Components
+- BlazorSortable
 
 ### Test Projects
 - xunit
