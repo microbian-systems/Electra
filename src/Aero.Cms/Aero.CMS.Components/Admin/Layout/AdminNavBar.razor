@@ -1,0 +1,9 @@
+<nav class="admin-topbar">
+    <span class="page-name">@PageName</span>
+    <a href="/" target="_blank" class="btn-secondary">View Site</a>
+</nav>
+
+@code {
+    [Parameter]
+    public string PageName { get; set; } = string.Empty;
+}

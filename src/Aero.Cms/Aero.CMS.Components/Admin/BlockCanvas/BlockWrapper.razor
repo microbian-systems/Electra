@@ -1,0 +1,70 @@
+@inject IBlockRegistry BlockRegistry
+
+<div class="block-item @(EditContext.IsBlockActive(Block.Id) ? "is-editing" : "")"
+     @onclick="Activate" @onclick:stopPropagation="true">
+
+    <div class="block-type-badge">@Block.Type</div>
+
+    <div class="block-preview">
+        <DynamicComponent Type="@BlockRegistry.Resolve(Block.Type)" Parameters="@PreviewParams()" />
+    </div>
+
+    @if (EditContext.IsBlockActive(Block.Id))
+    {
+        <div @onclick:stopPropagation="true">
+            <DynamicComponent Type="@ResolveEditor(Block.Type)" Parameters="@EditorParams()" />
+        </div>
+    }
+
+    @if (EditContext.IsBlockActive(Block.Id))
+    {
+        <div class="block-toolbar" @onclick:stopPropagation="true">
+            <button class="btn btn-ghost btn-sm" @onclick="MoveUp" title="Move up">Up</button>
+            <button class="btn btn-ghost btn-sm" @onclick="MoveDown" title="Move down">Down</button>
+            <button class="btn btn-danger btn-sm" @onclick="Delete" title="Delete block">Delete</button>
+        </div>
+    }
+</div>
+
+@code {
+    [CascadingParameter] public BlockEditContext EditContext { get; set; } = default!;
+    [Parameter] public ContentBlock Block { get; set; } = default!;
+    [Parameter] public Guid SectionId { get; set; }
+    [Parameter] public EventCallback OnChanged { get; set; }
+    [Parameter] public EventCallback<Guid> OnDelete { get; set; }
+    [Parameter] public EventCallback<int> OnMove { get; set; }
+
+    private void Activate() => EditContext.SetActiveBlock(Block.Id, SectionId);
+
+    private async Task Delete()
+    {
+        EditContext.ClearBlock();
+        await OnDelete.InvokeAsync(Block.Id);
+    }
+
+    private Task MoveUp() => OnMove.InvokeAsync(-1);
+    private Task MoveDown() => OnMove.InvokeAsync(1);
+
+    private Dictionary<string, object> PreviewParams() => new()
+    {
+        ["Block"] = Block,
+        ["IsEditing"] = false
+    };
+
+    private Dictionary<string, object> EditorParams() => new()
+    {
+        ["Block"] = Block,
+        ["OnChanged"] = EventCallback.Factory.Create(this, OnChanged)
+    };
+
+    private static Type ResolveEditor(string alias) => alias switch
+    {
+        "richTextBlock" => typeof(RichTextBlockEditor),
+        "heroBlock" => typeof(HeroBlockEditor),
+        "quoteBlock" => typeof(QuoteBlockEditor),
+        "markdownBlock" => typeof(MarkdownBlockEditor),
+        "htmlBlock" => typeof(HtmlBlockEditor),
+        "imageBlock" => typeof(ImageBlockEditor),
+        _ => typeof(FallbackBlockEditor)
+    };
+}

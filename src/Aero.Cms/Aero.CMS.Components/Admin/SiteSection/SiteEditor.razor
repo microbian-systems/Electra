@@ -1,0 +1,70 @@
+@page "/admin/site"
+@rendermode RenderMode.InteractiveServer
+@inject ISiteRepository SiteRepo
+
+<AdminNavBar PageName="Site Settings" />
+
+<h1>Site Settings</h1>
+
+@if (_site is null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="card">
+        <div class="form-field">
+            <label>Site Name</label>
+            <input @bind="_site.Name" />
+        </div>
+        <div class="form-field">
+            <label>Base URL</label>
+            <input @bind="_site.BaseUrl" />
+        </div>
+        <div class="form-field">
+            <label>Description</label>
+            <textarea @bind="_site.Description" rows="3"></textarea>
+        </div>
+        <div class="form-field">
+            <label>Footer Text</label>
+            <input @bind="_site.FooterText" />
+        </div>
+
+        @if (_saved) { <p class="saved-msg">Settings saved.</p> }
+        @if (!string.IsNullOrEmpty(_error)) { <p class="error-msg">@_error</p> }
+
+        <button class="btn btn-primary" @onclick="Save" disabled="@_saving">
+            @(_saving ? "Saving..." : "Save Settings")
+        </button>
+    </div>
+}
+
+@code {
+    private SiteDocument? _site;
+    private bool _saving;
+    private bool _saved;
+    private string _error = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+        => _site = await SiteRepo.GetDefaultAsync();
+
+    private async Task Save()
+    {
+        if (_site is null) return;
+        _saving = true;
+        _error = string.Empty;
+        var result = await SiteRepo.SaveAsync(_site);
+        _saving = false;
+        if (result.Success)
+        {
+            _saved = true;
+            await Task.Delay(2000);
+            _saved = false;
+        }
+        else
+        {
+            _error = string.Join(", ", result.Errors);
+        }
+        StateHasChanged();
+    }
+}

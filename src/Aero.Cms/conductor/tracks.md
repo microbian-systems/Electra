@@ -22,6 +22,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [x] Track 7: Tailwind Example Blazor Components
-*Link: [./conductor/tracks/tailwind-components_20260219/](./conductor/tracks/tailwind-components_20260219/)*
-- Create Tailwind example Blazor components for CMS component editor and published pages: login, register, forgot password, hero, 1-4 column rows, markdown renderer
+## [ ] **Track: MVP Core Implementation**
+*Link: [./conductor/tracks/mvp_core_20260221/](./conductor/tracks/mvp_core_20260221/)*
+- MVP Phases 1-7: Site/Page/Layout management, Admin UI, Drag & Drop, Public Rendering.
+
+

@@ -1,0 +1,40 @@
+<div style="position:relative;">
+    <button class="add-block-btn" @onclick="Toggle">+ Add Block</button>
+
+    @if (_open)
+    {
+        <div class="block-menu">
+            @foreach (var blockType in BlockTypes)
+            {
+                <button class="block-menu-item" @onclick='() => Select(blockType.Alias)'>
+                    @blockType.Label
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public EventCallback<string> OnAdd { get; set; }
+
+    private bool _open;
+    private void Toggle() => _open = !_open;
+
+    private async Task Select(string alias)
+    {
+        _open = false;
+        await OnAdd.InvokeAsync(alias);
+    }
+
+    private record BlockTypeOption(string Alias, string Label);
+
+    private static readonly List<BlockTypeOption> BlockTypes =
+    [
+        new("richTextBlock", "Rich Text"),
+        new("heroBlock", "Hero"),
+        new("imageBlock", "Image"),
+        new("quoteBlock", "Quote"),
+        new("markdownBlock", "Markdown"),
+        new("htmlBlock", "HTML")
+    ];
+}

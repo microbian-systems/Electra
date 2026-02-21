@@ -1,0 +1,82 @@
+@page "/admin"
+@rendermode RenderMode.InteractiveServer
+
+@inject IPageService PageService
+@inject ISiteRepository SiteRepo
+@inject NavigationManager Nav
+
+<AdminNavBar PageName="Pages" />
+
+<div class="page-header">
+    <h1>Pages</h1>
+    <button class="btn btn-primary" @onclick="OpenNewPageDialog">+ New Page</button>
+</div>
+
+@if (_pages.Count == 0)
+{
+    <div class="card empty-state">
+        No pages yet. Create your first page to get started.
+    </div>
+}
+else
+{
+    @foreach (var p in _pages)
+    {
+        <div class="page-list-item">
+            <div>
+                <div class="page-name">@p.Name</div>
+                <div class="page-slug">@p.Slug</div>
+            </div>
+            <div class="actions">
+                <a href="@p.Slug" target="_blank" class="btn btn-ghost">View</a>
+                <button class="btn btn-secondary" @onclick="@(() => EditPage(p.Id))">Edit</button>
+                <button class="btn btn-danger" @onclick="@(() => OpenDeleteDialog(p))">Delete</button>
+            </div>
+        </div>
+    }
+}
+
+@if (_showNewPage)
+{
+    <NewPageDialog SiteId="_siteId"
+                   OnSaved="HandlePageCreated"
+                   OnCancelled="@(() => _showNewPage = false)" />
+}
+
+@if (_deletingPage is not null)
+{
+    <DeletePageDialog Page="_deletingPage"
+                      OnConfirmed="HandlePageDeleted"
+                      OnCancelled="@(() => _deletingPage = null)" />
+}
+
+@code {
+    private List<ContentDocument> _pages = [];
+    private Guid _siteId;
+    private bool _showNewPage;
+    private ContentDocument? _deletingPage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var site = await SiteRepo.GetDefaultAsync();
+        if (site is null) return;
+        _siteId = Guid.Parse(site.Id);
+        _pages = await PageService.GetPagesForSiteAsync(_siteId);
+    }
+
+    private void OpenNewPageDialog() => _showNewPage = true;
+    private void OpenDeleteDialog(ContentDocument doc) => _deletingPage = doc;
+    private void EditPage(string id) => Nav.NavigateTo($"/admin/page/{id}");
+
+    private void HandlePageCreated(string pageId)
+    {
+        _showNewPage = false;
+        Nav.NavigateTo($"/admin/page/{pageId}");
+    }
+
+    private async Task HandlePageDeleted()
+    {
+        _deletingPage = null;
+        _pages = await PageService.GetPagesForSiteAsync(_siteId);
+    }
+}

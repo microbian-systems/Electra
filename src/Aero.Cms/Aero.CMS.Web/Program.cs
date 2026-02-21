@@ -1,27 +1,55 @@
+using Aero.CMS.Core.Content.Data;
+using Aero.CMS.Core.Content.Models.Blocks;
+using Aero.CMS.Core.Content.Services;
+using Aero.CMS.Core.Extensions;
+using Aero.CMS.Core.Plugins.Interfaces;
+using Aero.CMS.Core.Site.Data;
+using Aero.CMS.Core.Site.Services;
 using Aero.CMS.Web.Components;
+using Aero.CMS.Web.Components.Blocks;
+using Aero.CMS.Components.Admin.PageSection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddAeroCmsCore(builder.Configuration);
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddScoped<IPageService, PageService>();
+builder.Services.AddScoped<ISiteRepository, SiteRepository>();
+builder.Services.AddScoped<SectionService>();
+builder.Services.AddHostedService<SiteBootstrapService>();
+
+builder.Services.AddSingleton(sp =>
+{
+    var registry = sp.GetRequiredService<IBlockRegistry>();
+    registry.Register<RichTextBlock, RichTextBlockView>();
+    registry.Register<ImageBlock, ImageBlockView>();
+    registry.Register<HeroBlock, HeroBlockView>();
+    registry.Register<QuoteBlock, QuoteBlockView>();
+    registry.Register<MarkdownBlock, MarkdownBlockView>();
+    registry.Register<HtmlBlock, HtmlBlockView>();
+    registry.Register<SectionBlock, SectionBlockView>();
+    registry.Register<ColumnBlock, ColumnBlockView>();
+    return registry;
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
-
 app.UseAntiforgery();
-
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+    .AddInteractiveServerRenderMode()
+    .AddAdditionalAssemblies(typeof(PageList).Assembly);
 
 app.Run();

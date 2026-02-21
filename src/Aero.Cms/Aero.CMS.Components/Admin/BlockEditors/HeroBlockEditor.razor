@@ -1,0 +1,21 @@
+@{
+    var hero = (HeroBlock)Block;
+}
+<div class="block-edit-panel">
+    <div class="form-field">
+        <label>Heading</label>
+        <input value="@hero.Heading"
+               @oninput='e => { hero.Heading = e.Value?.ToString() ?? ""; NotifyChanged(); }' />
+    </div>
+    <div class="form-field">
+        <label>Subtext</label>
+        <input value="@hero.Subtext"
+               @oninput='e => { hero.Subtext = e.Value?.ToString() ?? ""; NotifyChanged(); }' />
+    </div>
+</div>
+
+@code {
+    [Parameter] public ContentBlock Block { get; set; } = default!;
+    [Parameter] public EventCallback OnChanged { get; set; }
+    private void NotifyChanged() => OnChanged.InvokeAsync();
+}

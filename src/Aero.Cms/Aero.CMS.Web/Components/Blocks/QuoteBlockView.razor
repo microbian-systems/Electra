@@ -1,0 +1,23 @@
+@{
+    var quote = (QuoteBlock)Block;
+}
+
+<figure class="quote border-l-4 border-gray-400 pl-6 py-4 my-6">
+    <blockquote class="text-lg italic text-gray-700">
+        @quote.Quote
+    </blockquote>
+    @if (!string.IsNullOrEmpty(quote.Attribution))
+    {
+        <figcaption class="text-sm text-gray-500 mt-2">
+            — @quote.Attribution
+        </figcaption>
+    }
+</figure>
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+}

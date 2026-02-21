@@ -46,7 +46,7 @@ public static class ServiceExtensions
         services.AddScoped<IBeforeSaveHook<ContentDocument>>(sp => 
             sp.GetRequiredService<ContentSearchIndexerHook>());
 
-        services.AddSingleton<SaveHookPipeline<ContentDocument>>(sp =>
+        services.AddScoped<SaveHookPipeline<ContentDocument>>(sp =>
             new SaveHookPipeline<ContentDocument>(
                 sp.GetServices<IBeforeSaveHook<ContentDocument>>(),
                 sp.GetServices<IAfterSaveHook<ContentDocument>>()));

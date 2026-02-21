@@ -1,0 +1,15 @@
+@{
+    var hb = (HtmlBlock)Block;
+}
+
+<div class="html-block">
+    @((MarkupString)hb.Html)
+</div>
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+}

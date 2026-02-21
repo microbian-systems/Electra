@@ -1,6 +1,7 @@
 using Aero.CMS.Core.Settings;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Operations.Revisions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Aero.CMS.Core.Data;
 
@@ -24,6 +25,13 @@ public static class DocumentStoreFactory
                 IdentityPartsSeparator = '/'
             }
         };
+
+        if (!string.IsNullOrEmpty(settings.CertificatePath) && File.Exists(settings.CertificatePath))
+        {
+            store.Certificate = new X509Certificate2(
+                settings.CertificatePath,
+                settings.CertificatePassword);
+        }
 
         store.Initialize();
 

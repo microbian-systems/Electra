@@ -1,0 +1,8 @@
+{
+  "track_id": "mvp_core_20260221",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-02-21T08:22:00Z",
+  "updated_at": "2026-02-21T08:22:00Z",
+  "description": "Create phases and tracks from AeroCMS-MVP-Spec-2.md (MVP Core Implementation)"
+}

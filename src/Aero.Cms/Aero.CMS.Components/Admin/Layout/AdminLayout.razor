@@ -1,0 +1,24 @@
+@inherits LayoutComponentBase
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aero CMS Admin</title>
+    <link rel="stylesheet" href="/css/admin.css" />
+</head>
+<body class="admin-shell">
+    <nav class="admin-nav">
+        <a href="/admin" class="admin-logo">Aero CMS</a>
+        <div class="admin-nav-links">
+            <a href="/admin">Pages</a>
+            <a href="/admin/site">Site Settings</a>
+            <a href="/" target="_blank">View Site</a>
+        </div>
+    </nav>
+    <main class="admin-main">
+        @Body
+    </main>
+</body>
+</html>

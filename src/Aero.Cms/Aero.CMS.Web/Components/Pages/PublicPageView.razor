@@ -1,0 +1,29 @@
+@inject IBlockRegistry BlockRegistry
+@inject MarkdownRendererService MarkdownRenderer
+
+<PageTitle>@(Page?.Properties.GetValueOrDefault("title")?.ToString() ?? "Aero CMS")</PageTitle>
+
+<div class="page-content">
+    @if (Page?.Blocks != null)
+    {
+        @foreach (var block in Page.Blocks.OrderBy(b => b.SortOrder))
+        {
+            var blockType = BlockRegistry.Resolve(block.Type);
+            if (blockType != null)
+            {
+                <DynamicComponent Type="@blockType" Parameters="@BuildParams(block)" />
+            }
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public ContentDocument? Page { get; set; }
+
+    private Dictionary<string, object> BuildParams(ContentBlock block) => new()
+    {
+        ["Block"] = block,
+        ["IsEditing"] = false
+    };
+}

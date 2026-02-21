@@ -1,0 +1,29 @@
+@inject IPageService PageService
+
+<div class="modal-backdrop">
+    <div class="modal">
+        <h2>Delete Page</h2>
+        <p>Are you sure you want to delete <strong>@Page.Name</strong>? This cannot be undone.</p>
+        <div class="modal-actions">
+            <button class="btn btn-ghost" @onclick="OnCancelled">Cancel</button>
+            <button class="btn btn-danger" @onclick="Confirm" disabled="@_deleting">
+                @(_deleting ? "Deleting..." : "Delete Page")
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public ContentDocument Page { get; set; } = default!;
+    [Parameter] public EventCallback OnConfirmed { get; set; }
+    [Parameter] public EventCallback OnCancelled { get; set; }
+
+    private bool _deleting;
+
+    private async Task Confirm()
+    {
+        _deleting = true;
+        await PageService.DeletePageAsync(Guid.Parse(Page.Id), "admin");
+        await OnConfirmed.InvokeAsync();
+    }
+}

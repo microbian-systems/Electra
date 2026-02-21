@@ -1,0 +1,131 @@
+@inject SectionService SectionSvc
+@inject IBlockRegistry BlockRegistry
+
+<CascadingValue Value="_editContext">
+<div class="canvas" @onclick="() => _editContext.ClearAll()">
+
+    @{
+        var sections = Page.Blocks
+            .OfType<SectionBlock>()
+            .OrderBy(s => s.SortOrder)
+            .ToList();
+    }
+
+    @foreach (var sectionBlock in sections)
+    {
+        var gridClass = sectionBlock.Layout switch
+        {
+            SectionLayout.Full        => "cols-1",
+            SectionLayout.TwoColumn   => "cols-2",
+            SectionLayout.ThreeColumn => "cols-3",
+            SectionLayout.Sidebar     => "cols-sidebar",
+            _ => "cols-1"
+        };
+
+        <div class="section-block @(_editContext.IsSectionActive(sectionBlock.Id) ? "is-active" : "")"
+             @onclick:stopPropagation="true">
+
+            <div class="section-toolbar">
+                <button @onclick="@(() => MoveSection(sectionBlock.Id, -1))" title="Move up">Up</button>
+                <button @onclick="@(() => MoveSection(sectionBlock.Id, 1))" title="Move down">Down</button>
+                <button @onclick="@(() => DeleteSection(sectionBlock.Id))" title="Delete section">Delete Section</button>
+            </div>
+
+            <div class="section-grid @gridClass">
+                @{
+                    var columns = sectionBlock.Children
+                        .OfType<ColumnBlock>()
+                        .OrderBy(c => c.ColIndex)
+                        .ToList();
+                }
+                @foreach (var column in columns)
+                {
+                    <div class="column-drop-target">
+                        @{
+                            var blocks = column.Children
+                                .OrderBy(b => b.SortOrder)
+                                .ToList();
+                        }
+                        @foreach (var block in blocks)
+                        {
+                             <BlockWrapper Block="block"
+                                           SectionId="sectionBlock.Id"
+                                           OnChanged="SavePage"
+                                           OnDelete="@((Guid id) => DeleteBlock(sectionBlock.Id, id))"
+                                           OnMove="@((int dir) => MoveBlock(column, block, dir))" />
+                        }
+
+                         <AddBlockButton OnAdd="@((string alias) => AddBlock(sectionBlock.Id, column.ColIndex, alias))" />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <AddSectionButton OnAdd="AddSection" />
+</div>
+</CascadingValue>
+
+@code {
+    [Parameter] public ContentDocument Page { get; set; } = default!;
+    [Parameter] public EventCallback OnChanged { get; set; }
+
+    private readonly BlockEditContext _editContext = new();
+
+    private async Task AddSection(SectionLayout layout)
+    {
+        SectionSvc.AddSection(Page, layout);
+        await SavePage();
+    }
+
+    private async Task DeleteSection(Guid sectionId)
+    {
+        _editContext.ClearAll();
+        SectionSvc.RemoveSection(Page, sectionId);
+        await SavePage();
+    }
+
+    private async Task MoveSection(Guid sectionId, int direction)
+    {
+        SectionSvc.MoveSection(Page, sectionId, direction);
+        await SavePage();
+    }
+
+    private async Task AddBlock(Guid sectionId, int colIndex, string blockAlias)
+    {
+        var block = CreateBlock(blockAlias);
+        SectionSvc.AddBlock(Page, sectionId, colIndex, block);
+        _editContext.SetActiveBlock(block.Id, sectionId);
+        await SavePage();
+    }
+
+    private async Task DeleteBlock(Guid sectionId, Guid blockId)
+    {
+        SectionSvc.RemoveBlock(Page, sectionId, blockId);
+        await SavePage();
+    }
+
+    private async Task MoveBlock(ColumnBlock column, ContentBlock block, int direction)
+    {
+        var ordered = column.Children.OrderBy(b => b.SortOrder).ToList();
+        var idx = ordered.IndexOf(block);
+        var targetIdx = idx + direction;
+        if (targetIdx < 0 || targetIdx >= ordered.Count) return;
+        (ordered[idx].SortOrder, ordered[targetIdx].SortOrder) =
+            (ordered[targetIdx].SortOrder, ordered[idx].SortOrder);
+        await SavePage();
+    }
+
+    private Task SavePage() => OnChanged.InvokeAsync();
+
+    private static ContentBlock CreateBlock(string alias) => alias switch
+    {
+        "richTextBlock" => new RichTextBlock(),
+        "heroBlock" => new HeroBlock(),
+        "quoteBlock" => new QuoteBlock(),
+        "markdownBlock" => new MarkdownBlock(),
+        "htmlBlock" => new HtmlBlock(),
+        "imageBlock" => new ImageBlock(),
+        _ => throw new InvalidOperationException($"Unknown block type: {alias}")
+    };
+}

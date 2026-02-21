@@ -1,0 +1,30 @@
+@inject IBlockRegistry BlockRegistry
+
+@{
+    var column = (ColumnBlock)Block;
+}
+
+<div class="column">
+    @foreach (var child in column.Children.OrderBy(b => b.SortOrder))
+    {
+        var blockType = BlockRegistry.Resolve(child.Type);
+        if (blockType != null)
+        {
+            <DynamicComponent Type="@blockType" Parameters="@BuildParams(child)" />
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+
+    private Dictionary<string, object> BuildParams(ContentBlock b) => new()
+    {
+        ["Block"] = b,
+        ["IsEditing"] = IsEditing
+    };
+}

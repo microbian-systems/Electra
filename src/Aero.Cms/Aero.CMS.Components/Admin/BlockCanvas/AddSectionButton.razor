@@ -1,0 +1,41 @@
+@if (!_picking)
+{
+    <button class="add-section-btn" @onclick="() => _picking = true">
+        + Add Section
+    </button>
+}
+else
+{
+    <div class="card">
+        <p class="layout-label">Choose a layout:</p>
+        <div class="layout-grid">
+            @foreach (var layoutOpt in Layouts)
+            {
+                 <button class="btn btn-ghost layout-btn" @onclick="@(() => Select(layoutOpt.Value))">
+                    @layoutOpt.Label
+                </button>
+            }
+        </div>
+        <button class="btn btn-ghost" @onclick="() => _picking = false">Cancel</button>
+    </div>
+}
+
+@code {
+    [Parameter] public EventCallback<SectionLayout> OnAdd { get; set; }
+    private bool _picking;
+
+    private async Task Select(SectionLayout layout)
+    {
+        _picking = false;
+        await OnAdd.InvokeAsync(layout);
+    }
+
+    private record LayoutOption(string Label, SectionLayout Value);
+    private static readonly List<LayoutOption> Layouts =
+    [
+        new("Full Width", SectionLayout.Full),
+        new("Two Column", SectionLayout.TwoColumn),
+        new("Three Column", SectionLayout.ThreeColumn),
+        new("Sidebar", SectionLayout.Sidebar)
+    ];
+}

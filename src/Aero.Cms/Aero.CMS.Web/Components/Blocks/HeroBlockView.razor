@@ -1,0 +1,19 @@
+@{
+    var hero = (HeroBlock)Block;
+}
+
+<div class="hero text-center py-16 px-4">
+    <h1 class="hero-heading text-4xl font-bold mb-4">@hero.Heading</h1>
+    @if (!string.IsNullOrEmpty(hero.Subtext))
+    {
+        <p class="hero-subtext text-xl text-gray-600">@hero.Subtext</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+}

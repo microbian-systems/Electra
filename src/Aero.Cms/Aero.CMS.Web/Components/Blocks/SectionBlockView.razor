@@ -1,0 +1,47 @@
+@inject IBlockRegistry BlockRegistry
+
+@{
+    var sectionBlock = (SectionBlock)Block;
+    var columns = sectionBlock.Children
+        .OfType<ColumnBlock>()
+        .OrderBy(c => c.ColIndex)
+        .ToList();
+
+    var gridClass = sectionBlock.Layout switch
+    {
+        SectionLayout.Full        => "grid-cols-1",
+        SectionLayout.TwoColumn   => "grid-cols-2",
+        SectionLayout.ThreeColumn => "grid-cols-3",
+        SectionLayout.Sidebar     => "grid-cols-[2fr_1fr]",
+        _ => "grid-cols-1"
+    };
+    
+    var style = sectionBlock.BackgroundColor != null ? $"background:{sectionBlock.BackgroundColor}" : "";
+}
+
+<div class="section-wrapper py-12 @sectionBlock.CssClass" style="@style">
+    <div class="grid @gridClass gap-6 max-w-7xl mx-auto px-4">
+        @foreach (var column in columns)
+        {
+            var columnType = BlockRegistry.Resolve(column.Type);
+            if (columnType != null)
+            {
+                <DynamicComponent Type="@columnType" Parameters="@ColumnParams(column)" />
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+
+    private Dictionary<string, object> ColumnParams(ColumnBlock col) => new()
+    {
+        ["Block"] = col,
+        ["IsEditing"] = IsEditing
+    };
+}

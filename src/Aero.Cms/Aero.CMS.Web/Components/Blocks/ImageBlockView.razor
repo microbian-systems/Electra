@@ -1,0 +1,22 @@
+@{
+    var img = (ImageBlock)Block;
+}
+
+@if (img.MediaId.HasValue)
+{
+    <figure class="image-block">
+        <img src="/media/@img.MediaId" alt="@img.Alt" loading="lazy" class="max-w-full h-auto rounded" />
+        @if (!string.IsNullOrEmpty(img.Alt))
+        {
+            <figcaption class="text-sm text-gray-500 mt-2">@img.Alt</figcaption>
+        }
+    </figure>
+}
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+}

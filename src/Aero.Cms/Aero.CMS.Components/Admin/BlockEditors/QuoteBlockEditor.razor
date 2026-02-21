@@ -1,0 +1,22 @@
+@{
+    var q = (QuoteBlock)Block;
+}
+<div class="block-edit-panel">
+    <div class="form-field">
+        <label>Quote</label>
+        <textarea value="@q.Quote"
+                  @oninput='e => { q.Quote = e.Value?.ToString() ?? ""; NotifyChanged(); }'
+                  rows="3"></textarea>
+    </div>
+    <div class="form-field">
+        <label>Attribution</label>
+        <input value="@q.Attribution"
+               @oninput='e => { q.Attribution = e.Value?.ToString() ?? ""; NotifyChanged(); }' />
+    </div>
+</div>
+
+@code {
+    [Parameter] public ContentBlock Block { get; set; } = default!;
+    [Parameter] public EventCallback OnChanged { get; set; }
+    private void NotifyChanged() => OnChanged.InvokeAsync();
+}

@@ -1,0 +1,15 @@
+@{
+    var rtb = (RichTextBlock)Block;
+}
+
+<div class="rich-text prose max-w-none">
+    @((MarkupString)rtb.Html)
+</div>
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+}

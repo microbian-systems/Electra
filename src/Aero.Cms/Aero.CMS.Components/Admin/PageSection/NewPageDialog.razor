@@ -1,0 +1,68 @@
+@inject IPageService PageService
+
+<div class="modal-backdrop">
+    <div class="modal">
+        <h2>New Page</h2>
+
+        <div class="form-field">
+            <label>Page Name *</label>
+             <input value="@_name" @oninput="HandleNameInput" placeholder="e.g. About Us" />
+        </div>
+        <div class="form-field">
+            <label>Slug</label>
+            <input @bind="_slug" placeholder="/about-us" />
+        </div>
+
+        @if (!string.IsNullOrEmpty(_error))
+        {
+            <p class="error-msg">@_error</p>
+        }
+
+        <div class="modal-actions">
+            <button class="btn btn-ghost" @onclick="OnCancelled">Cancel</button>
+            <button class="btn btn-primary" @onclick="Save" disabled="@_saving">
+                @(_saving ? "Creating..." : "Create Page")
+            </button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Guid SiteId { get; set; }
+    [Parameter] public EventCallback<string> OnSaved { get; set; }
+    [Parameter] public EventCallback OnCancelled { get; set; }
+
+    private string _name = string.Empty;
+    private string _slug = string.Empty;
+    private string _error = string.Empty;
+    private bool _saving;
+
+    private void HandleNameInput(ChangeEventArgs e)
+    {
+        _name = e.Value?.ToString() ?? "";
+        _slug = "/" + SlugHelper.Generate(_name);
+    }
+
+    private async Task Save()
+    {
+        _error = string.Empty;
+        if (string.IsNullOrWhiteSpace(_name))
+        {
+            _error = "Page name is required.";
+            return;
+        }
+
+        _saving = true;
+        var result = await PageService.CreatePageAsync(SiteId, _name, _slug, "admin");
+
+        _saving = false;
+        if (!result.Success)
+        {
+            _error = string.Join(", ", result.Errors);
+            return;
+        }
+
+        var pageId = result.Value!.Id;
+        await OnSaved.InvokeAsync(pageId);
+    }
+}

@@ -1,0 +1,18 @@
+@inject MarkdownRendererService Renderer
+
+@{
+    var mb = (MarkdownBlock)Block;
+    var html = Renderer.ToHtml(mb.Markdown);
+}
+
+<div class="markdown-content prose max-w-none">
+    @((MarkupString)html)
+</div>
+
+@code {
+    [Parameter]
+    public ContentBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool IsEditing { get; set; }
+}

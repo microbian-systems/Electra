@@ -1,0 +1,8 @@
+<div class="block-edit-panel">
+    <p class="hint">No editor available for block type: <code>@Block.Type</code></p>
+</div>
+
+@code {
+    [Parameter] public ContentBlock Block { get; set; } = default!;
+    [Parameter] public EventCallback OnChanged { get; set; }
+}
