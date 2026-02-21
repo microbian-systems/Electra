@@ -6,7 +6,7 @@
 @if (_content is not null)
 {
     <DynamicComponent Type="@ResolveView(_content.ContentTypeAlias)"
-                      Parameters="@new Dictionary<string, object> { ["Page"] = _content }" />
+                      Parameters="@(new Dictionary<string, object> { ["Page"] = _content })" />
 }
 else
 {

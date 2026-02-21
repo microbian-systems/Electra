@@ -21,6 +21,14 @@ public class AeroRouteValueTransformer : DynamicRouteValueTransformer
         
         // Extract slug: trim leading and trailing slashes
         var slug = path?.Trim('/') ?? string.Empty;
+        if (string.IsNullOrEmpty(slug))
+        {
+            slug = "/";
+        }
+        else
+        {
+            slug = "/" + slug;
+        }
 
         var context = new ContentFinderContext
         {
