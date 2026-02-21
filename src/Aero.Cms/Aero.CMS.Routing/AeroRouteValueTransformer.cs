@@ -6,29 +6,26 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Aero.CMS.Routing;
 
-public class AeroRouteValueTransformer : DynamicRouteValueTransformer
+public class AeroRouteValueTransformer(ContentFinderPipeline pipeline) : DynamicRouteValueTransformer
 {
-    private readonly ContentFinderPipeline _pipeline;
-
-    public AeroRouteValueTransformer(ContentFinderPipeline pipeline)
-    {
-        _pipeline = pipeline;
-    }
-
     public override async ValueTask<RouteValueDictionary> TransformAsync(HttpContext httpContext, RouteValueDictionary values)
     {
-        var path = httpContext.Request.Path.Value;
+        var path = httpContext.Request.Path.Value ?? string.Empty;
         
+        // Skip system, static, and admin routes
+        if (path.StartsWith("/admin", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/_framework", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/_content", StringComparison.OrdinalIgnoreCase) ||
+            path.StartsWith("/_blazor", StringComparison.OrdinalIgnoreCase) ||
+            path.Contains(".") || // Likely a static file
+            path.StartsWith("/favicon.ico", StringComparison.OrdinalIgnoreCase))
+        {
+            return values;
+        }
+
         // Extract slug: trim leading and trailing slashes
-        var slug = path?.Trim('/') ?? string.Empty;
-        if (string.IsNullOrEmpty(slug))
-        {
-            slug = "/";
-        }
-        else
-        {
-            slug = "/" + slug;
-        }
+        var slug = path.Trim('/') ?? string.Empty;
+        slug = string.IsNullOrEmpty(slug) ? "/" : $"/{slug}";
 
         var context = new ContentFinderContext
         {
@@ -38,7 +35,7 @@ public class AeroRouteValueTransformer : DynamicRouteValueTransformer
             IsPreview = httpContext.Request.Query.ContainsKey("preview")
         };
 
-        var content = await _pipeline.ExecuteAsync(context);
+        var content = await pipeline.ExecuteAsync(context);
 
         if (content == null)
         {

@@ -20,7 +20,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddControllersWithViews();
 builder.Services.AddAeroCmsCore(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton<AeroRouteValueTransformer>();
+builder.Services.AddScoped<AeroRouteValueTransformer>();
 
 builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddScoped<ISiteRepository, SiteRepository>();
@@ -56,6 +56,8 @@ app.MapStaticAssets();
 app.UseAntiforgery();
 
 app.MapDynamicControllerRoute<AeroRouteValueTransformer>("{**slug}");
+
+app.MapControllers();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()

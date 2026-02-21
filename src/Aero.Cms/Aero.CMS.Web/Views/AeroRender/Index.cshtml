@@ -1,0 +1,9 @@
+@using Aero.CMS.Core.Content.Models
+@using Aero.CMS.Web.Components.Pages
+@model ContentDocument
+
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(PublicPageView)" render-mode="ServerPrerendered" param-Page="Model" />
