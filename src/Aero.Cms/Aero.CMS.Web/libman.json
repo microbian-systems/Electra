@@ -1,0 +1,14 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "Sortable@1.15.6",
+      "destination": "wwwroot/lib/Sortable/"
+    },
+    {
+      "library": "alpinejs@3.15.0",
+      "destination": "wwwroot/alpinejs/"
+    }
+  ]
+}

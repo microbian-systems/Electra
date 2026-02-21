@@ -8,11 +8,13 @@ using Aero.CMS.Core.Site.Services;
 using Aero.CMS.Web.Components;
 using Aero.CMS.Web.Components.Blocks;
 using Aero.CMS.Components.Admin.PageSection;
+using Aero.CMS.Core.Plugins;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents()
+    ;
 
 builder.Services.AddAeroCmsCore(builder.Configuration);
 builder.Services.AddHttpContextAccessor();
@@ -46,8 +48,9 @@ if (!app.Environment.IsDevelopment())
 
 app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
 app.UseHttpsRedirection();
-app.UseAntiforgery();
+app.UseStaticFiles();
 app.MapStaticAssets();
+app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddAdditionalAssemblies(typeof(PageList).Assembly);

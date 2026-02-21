@@ -66,10 +66,19 @@ else
         _debounce?.Cancel();
         _debounce = new CancellationTokenSource();
         var token = _debounce.Token;
-        _ = Task.Delay(800, token).ContinueWith(async t =>
-        {
-            if (!t.IsCanceled) await SaveNow();
-        }, TaskScheduler.Current);
+        
+        // Execute on thread pool to avoid blocking UI
+        Task.Run(async () => {
+            try 
+            {
+                await Task.Delay(800, token);
+                if (!token.IsCancellationRequested)
+                {
+                    await InvokeAsync(SaveNow);
+                }
+            }
+            catch (TaskCanceledException) { }
+        });
     }
 
     private async Task SaveNow()

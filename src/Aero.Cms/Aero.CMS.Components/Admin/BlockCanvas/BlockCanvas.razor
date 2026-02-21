@@ -1,33 +1,27 @@
+@using BlazorSortable
 @inject SectionService SectionSvc
 @inject IBlockRegistry BlockRegistry
 
 <CascadingValue Value="_editContext">
 <div class="canvas" @onclick="() => _editContext.ClearAll()">
 
-    @{
-        var sections = Page.Blocks
-            .OfType<SectionBlock>()
-            .OrderBy(s => s.SortOrder)
-            .ToList();
-    }
-
-    @foreach (var sectionBlock in sections)
-    {
-        var gridClass = sectionBlock.Layout switch
-        {
-            SectionLayout.Full        => "cols-1",
-            SectionLayout.TwoColumn   => "cols-2",
-            SectionLayout.ThreeColumn => "cols-3",
-            SectionLayout.Sidebar     => "cols-sidebar",
-            _ => "cols-1"
-        };
+    <Sortable TItem="ContentBlock" Items="_sections" OnUpdate="SortSections" Context="block" Group="sections">
+        @{
+            var sectionBlock = (SectionBlock)block;
+            var gridClass = sectionBlock.Layout switch
+            {
+                SectionLayout.Full        => "cols-1",
+                SectionLayout.TwoColumn   => "cols-2",
+                SectionLayout.ThreeColumn => "cols-3",
+                SectionLayout.Sidebar     => "cols-sidebar",
+                _ => "cols-1"
+            };
+        }
 
         <div class="section-block @(_editContext.IsSectionActive(sectionBlock.Id) ? "is-active" : "")"
              @onclick:stopPropagation="true">
 
             <div class="section-toolbar">
-                <button @onclick="@(() => MoveSection(sectionBlock.Id, -1))" title="Move up">Up</button>
-                <button @onclick="@(() => MoveSection(sectionBlock.Id, 1))" title="Move down">Down</button>
                 <button @onclick="@(() => DeleteSection(sectionBlock.Id))" title="Delete section">Delete Section</button>
             </div>
 
@@ -41,26 +35,19 @@
                 @foreach (var column in columns)
                 {
                     <div class="column-drop-target">
-                        @{
-                            var blocks = column.Children
-                                .OrderBy(b => b.SortOrder)
-                                .ToList();
-                        }
-                        @foreach (var block in blocks)
-                        {
-                             <BlockWrapper Block="block"
+                        <Sortable TItem="ContentBlock" Items="column.Children" OnUpdate="@(args => SortBlocks(column, args))" Context="childBlock" Group="blocks">
+                             <BlockWrapper Block="childBlock"
                                            SectionId="sectionBlock.Id"
                                            OnChanged="SavePage"
-                                           OnDelete="@((Guid id) => DeleteBlock(sectionBlock.Id, id))"
-                                           OnMove="@((int dir) => MoveBlock(column, block, dir))" />
-                        }
+                                           OnDelete="@((Guid id) => DeleteBlock(sectionBlock.Id, id))" />
+                        </Sortable>
 
                          <AddBlockButton OnAdd="@((string alias) => AddBlock(sectionBlock.Id, column.ColIndex, alias))" />
                     </div>
                 }
             </div>
         </div>
-    }
+    </Sortable>
 
     <AddSectionButton OnAdd="AddSection" />
 </div>
@@ -70,11 +57,18 @@
     [Parameter] public ContentDocument Page { get; set; } = default!;
     [Parameter] public EventCallback OnChanged { get; set; }
 
+    private List<ContentBlock> _sections = [];
     private readonly BlockEditContext _editContext = new();
+
+    protected override void OnParametersSet()
+    {
+        _sections = Page.Blocks.ToList();
+    }
 
     private async Task AddSection(SectionLayout layout)
     {
         SectionSvc.AddSection(Page, layout);
+        _sections = Page.Blocks.ToList();
         await SavePage();
     }
 
@@ -82,13 +76,44 @@
     {
         _editContext.ClearAll();
         SectionSvc.RemoveSection(Page, sectionId);
+        _sections = Page.Blocks.ToList();
         await SavePage();
     }
 
-    private async Task MoveSection(Guid sectionId, int direction)
+    private void SortSections(SortableEventArgs<ContentBlock> args)
     {
-        SectionSvc.MoveSection(Page, sectionId, direction);
-        await SavePage();
+        if (args.OldIndex == args.NewIndex) return;
+        
+        var item = Page.Blocks[args.OldIndex];
+        Page.Blocks.RemoveAt(args.OldIndex);
+        Page.Blocks.Insert(args.NewIndex, item);
+        
+        // Update SortOrder
+        for (int i = 0; i < Page.Blocks.Count; i++)
+        {
+            Page.Blocks[i].SortOrder = i;
+        }
+        
+        _sections = Page.Blocks.ToList();
+        SavePage();
+    }
+
+    private void SortBlocks(ColumnBlock column, SortableEventArgs<ContentBlock> args)
+    {
+        // Simple reordering within the same column
+        if (args.OldIndex == args.NewIndex) return;
+        
+        var item = column.Children[args.OldIndex];
+        column.Children.RemoveAt(args.OldIndex);
+        column.Children.Insert(args.NewIndex, item);
+        
+        // Update SortOrder
+        for (int i = 0; i < column.Children.Count; i++)
+        {
+            column.Children[i].SortOrder = i;
+        }
+        
+        SavePage();
     }
 
     private async Task AddBlock(Guid sectionId, int colIndex, string blockAlias)
@@ -102,17 +127,6 @@
     private async Task DeleteBlock(Guid sectionId, Guid blockId)
     {
         SectionSvc.RemoveBlock(Page, sectionId, blockId);
-        await SavePage();
-    }
-
-    private async Task MoveBlock(ColumnBlock column, ContentBlock block, int direction)
-    {
-        var ordered = column.Children.OrderBy(b => b.SortOrder).ToList();
-        var idx = ordered.IndexOf(block);
-        var targetIdx = idx + direction;
-        if (targetIdx < 0 || targetIdx >= ordered.Count) return;
-        (ordered[idx].SortOrder, ordered[targetIdx].SortOrder) =
-            (ordered[targetIdx].SortOrder, ordered[idx].SortOrder);
         await SavePage();
     }
 

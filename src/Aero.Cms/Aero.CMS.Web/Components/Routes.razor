@@ -2,7 +2,14 @@
         AdditionalAssemblies="@(new[] { typeof(Aero.CMS.Components.Admin.PageSection.PageList).Assembly })"
         NotFoundPage="typeof(Pages.NotFound)">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.PublicLayout)" />
+        @if (routeData.PageType.Namespace?.Contains("Admin") == true)
+        {
+            <RouteView RouteData="routeData" DefaultLayout="typeof(Aero.CMS.Components.Admin.Layout.AdminLayout)" />
+        }
+        else
+        {
+            <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.PublicLayout)" />
+        }
         <FocusOnNavigate RouteData="routeData" Selector="h1" />
     </Found>
 </Router>
