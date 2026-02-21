@@ -1,9 +1,12 @@
 @using Aero.CMS.Core.Content.Models
 @using Aero.CMS.Web.Components.Pages
+@using Microsoft.AspNetCore.Components.Web
+@using RenderMode = Microsoft.AspNetCore.Mvc.Rendering.RenderMode
 @model ContentDocument
 
 @{
     Layout = "_Layout";
 }
 
-<component type="typeof(PublicPageView)" render-mode="ServerPrerendered" param-Page="Model" />
+<component type="typeof(PublicPageView)" render-mode="@RenderMode.Server" param-Page="Model" />
+/m

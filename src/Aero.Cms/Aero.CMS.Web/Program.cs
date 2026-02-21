@@ -23,6 +23,8 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
 
+var log = Log.Logger;
+
 builder.Host.UseSerilog();
 
 builder.Services.AddRazorComponents()
@@ -76,4 +78,18 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddAdditionalAssemblies(typeof(PageList).Assembly);
 
-app.Run();
+
+try
+{
+    log.Information("Starting web host");
+    app.Run();
+}
+catch (Exception ex)
+{
+    log.Error(ex, ex.Message);
+}
+finally
+{
+    log.Information("Stopping web host");
+    await Log.CloseAndFlushAsync();
+}

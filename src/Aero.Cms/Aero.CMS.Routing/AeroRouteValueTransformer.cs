@@ -3,10 +3,11 @@ using Aero.CMS.Core.Content.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 
 namespace Aero.CMS.Routing;
 
-public class AeroRouteValueTransformer(ContentFinderPipeline pipeline) : DynamicRouteValueTransformer
+public class AeroRouteValueTransformer(ContentFinderPipeline pipeline, ILogger<AeroRouteValueTransformer> logger) : DynamicRouteValueTransformer
 {
     private static readonly string[] ReservedPrefixes = 
     [
@@ -61,6 +62,7 @@ public class AeroRouteValueTransformer(ContentFinderPipeline pipeline) : Dynamic
         }
 
         // 5. Claim the route
+        logger.LogInformation("AeroRouteValueTransformer: Claiming route for slug {Slug}. Mapping to AeroRender/Index.", slug);
         httpContext.Items["AeroContent"] = content;
 
         return new RouteValueDictionary
