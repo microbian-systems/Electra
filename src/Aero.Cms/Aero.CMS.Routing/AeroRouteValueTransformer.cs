@@ -12,20 +12,14 @@ public class AeroRouteValueTransformer(ContentFinderPipeline pipeline) : Dynamic
     {
         var path = httpContext.Request.Path.Value ?? string.Empty;
         
-        // Skip system, static, and admin routes
-        if (path.StartsWith("/admin", StringComparison.OrdinalIgnoreCase) ||
-            path.StartsWith("/_framework", StringComparison.OrdinalIgnoreCase) ||
-            path.StartsWith("/_content", StringComparison.OrdinalIgnoreCase) ||
-            path.StartsWith("/_blazor", StringComparison.OrdinalIgnoreCase) ||
-            path.Contains(".") || // Likely a static file
-            path.StartsWith("/favicon.ico", StringComparison.OrdinalIgnoreCase))
+        // Skip static files
+        if (path.Contains(".") || path.EndsWith("favicon.ico", StringComparison.OrdinalIgnoreCase))
         {
             return values;
         }
 
-        // Extract slug: trim leading and trailing slashes
-        var slug = path.Trim('/') ?? string.Empty;
-        slug = string.IsNullOrEmpty(slug) ? "/" : $"/{slug}";
+        // Normalize slug to absolute path format: e.g. "/", "/hello-world"
+        var slug = "/" + path.Trim('/');
 
         var context = new ContentFinderContext
         {

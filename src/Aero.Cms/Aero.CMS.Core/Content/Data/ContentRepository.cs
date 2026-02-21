@@ -45,6 +45,7 @@ public class ContentRepository : BaseRepository<ContentDocument>, IContentReposi
     {
         using var session = Store.OpenAsyncSession();
         return await session.Query<ContentDocument>()
+            .Customize(x => x.WaitForNonStaleResults())
             .FirstOrDefaultAsync(x => x.Slug == slug, ct);
     }
 
