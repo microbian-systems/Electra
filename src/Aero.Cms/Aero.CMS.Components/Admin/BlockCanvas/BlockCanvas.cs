@@ -1,3 +1,5 @@
+using Aero.CMS.Web.Draggable;
+
 namespace Aero.CMS.Components.Admin.BlockCanvas;
 
 public partial class BlockCanvas

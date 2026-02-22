@@ -1,0 +1,29 @@
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+<CascadingValue Value="this">
+    @ChildContent
+</CascadingValue>
+
+@code {
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback OnDataChanged { get; set; }
+    public Func<Task>? OnRefresh { get; set; }
+
+    public async Task NotifyDropZoneRendered<TItem>(Sortable<TItem> sortable)
+    {
+        await JSRuntime.InvokeVoidAsync("initializeSortable", sortable._dropZoneContainer, DotNetObjectReference.Create(sortable), sortable.Items, sortable.Options, sortable.Id);
+    }
+
+    public async Task DestroySortableAsync<TItem>(Sortable<TItem> dropZone)
+    {
+        await JSRuntime.InvokeVoidAsync("destroySortable", dropZone._dropZoneContainer);
+    }
+
+    public async Task RefreshAsync()
+    {
+        if (OnRefresh != null)
+            await OnRefresh.Invoke();
+        await InvokeAsync(StateHasChanged);
+    }
+}

@@ -1,4 +1,4 @@
-namespace Aero.CMS.Components.Admin.BlockCanvas;
+﻿namespace Aero.CMS.Web.Draggable;
 
 public class NestedModel
 {

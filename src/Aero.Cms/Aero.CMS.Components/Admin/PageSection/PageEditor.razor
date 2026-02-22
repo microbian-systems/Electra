@@ -31,11 +31,11 @@ else
     </div>
 
     <div class="card page-metadata">
-        <div class="form-row">
+        <div class="form-row">                <label>Page Title</label>
+            <input value="@_page.Properties.GetValueOrDefault("title")?.ToString()"
+                   @oninput='e => { _page.Properties["title"] = e.Value ?? ""; ScheduleSave(); }' />
             <div class="form-field">
-                <label>Page Title</label>
-                <input value="@_page.Properties.GetValueOrDefault("title")?.ToString()"
-                       @oninput='e => { _page.Properties["title"] = e.Value ?? ""; ScheduleSave(); }' />
+
             </div>
             <div class="form-field">
                 <label>Meta Description</label>
@@ -45,7 +45,7 @@ else
         </div>
     </div>
 
-    <BlockCanvas />
+    @* <BlockCanvas /> *@
 
     <MyComponent Data="Hi!" />
 

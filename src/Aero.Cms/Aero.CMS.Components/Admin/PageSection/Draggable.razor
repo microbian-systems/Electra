@@ -1,0 +1,44 @@
+@page "/draggable"
+
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@inject IPageService PageService
+@inject NavigationManager Nav
+@using Aero.CMS.Components.Admin.Draggable
+@using Aero.CMS.Web.Draggable
+@using Microsoft.Extensions.Logging
+    
+
+<AdminNavBar PageName="Draggable" />
+
+<p>Welcome to the draggable demo</p>
+
+<NestedRecursive Items="items" Depth="1"></NestedRecursive>
+
+@code
+{
+    private List<NestedModel> items = new List<NestedModel>
+    {
+        new NestedModel{ Data = "Item 1.1"},
+        new NestedModel{ Data = "Item 1.2", Children = new List<NestedModel>()
+        {
+            new NestedModel{ Data = "Item 1.2-1"},
+            new NestedModel{ Data = "Item 1.2-2", Children = new List<NestedModel>(){
+                new NestedModel{ Data = "Item 1.2-2.1"},
+                new NestedModel{ Data = "Item 1.2-2.2"},
+                new NestedModel{ Data = "Item 1.2-2.3"},
+                new NestedModel{ Data = "Item 1.2-2.4"},
+            }},
+            new NestedModel{ Data = "Item 1.2.3"},
+            new NestedModel{ Data = "Item 1.2.4"},
+        }},
+        new NestedModel{ Data = "Item 1.3"},
+        new NestedModel{ Data = "Item 1.4", Children = new List<NestedModel>()
+        {
+            new NestedModel{ Data = "Item 1.4.1"},
+            new NestedModel{ Data = "Item 1.4.2"},
+            new NestedModel{ Data = "Item 1.4.3"},
+            new NestedModel{ Data = "Item 1.4.4"},
+        }},
+        new NestedModel{ Data = "Item 1.5"},
+    };
+}

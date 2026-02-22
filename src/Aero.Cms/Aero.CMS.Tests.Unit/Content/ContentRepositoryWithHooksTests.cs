@@ -2,6 +2,7 @@ using Aero.CMS.Core.Content.Data;
 using Aero.CMS.Core.Content.Models;
 using Aero.CMS.Core.Shared.Interfaces;
 using Aero.CMS.Core.Shared.Services;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
@@ -17,9 +18,12 @@ public class ContentRepositoryWithHooksTests
     private readonly ContentRepository _repo;
     private readonly IBeforeSaveHook<ContentDocument> _beforeHook;
     private readonly IAfterSaveHook<ContentDocument> _afterHook;
+    private readonly ILogger<ContentRepository> _log;
 
     public ContentRepositoryWithHooksTests()
     {
+        _log = Substitute.For<ILogger<ContentRepository>>();
+        
         _store = Substitute.For<IDocumentStore>();
         _session = Substitute.For<IAsyncDocumentSession>();
         _store.OpenAsyncSession().Returns(_session);
@@ -32,7 +36,7 @@ public class ContentRepositoryWithHooksTests
             new[] { _beforeHook }, 
             new[] { _afterHook });
             
-        _repo = new ContentRepository(_store, _clock, pipeline);
+        _repo = new ContentRepository(_store, _clock, _log, pipeline);
     }
 
     [Fact]

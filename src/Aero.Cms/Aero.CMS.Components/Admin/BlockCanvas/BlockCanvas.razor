@@ -1,5 +1,6 @@
 @using System.Text.Json
-@using BlazorSortableJS
+@using Aero.CMS.Components.Admin.Draggable
+
 @inject SectionService SectionSvc
 @inject IBlockRegistry BlockRegistry
 @inject ILogger<BlockCanvas> log;
@@ -9,7 +10,7 @@
         <div class="col-6">
             <h6 class="text-center fw-bold">Sortable</h6>
             <SortableWrapper OnDataChanged="@(() => InvokeAsync(StateHasChanged))">
-                @* <NestedRecursive Items="items" Depth="1" /> *@
+                <NestedRecursive Items="items" Depth="1" />
             </SortableWrapper>
         </div>ls
         <div class="col-6">

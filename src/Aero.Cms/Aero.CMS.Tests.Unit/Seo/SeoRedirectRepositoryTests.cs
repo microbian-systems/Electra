@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Aero.CMS.Core.Seo.Data;
 using Aero.CMS.Core.Seo.Models;
 using Aero.CMS.Core.Shared.Interfaces;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Linq;
@@ -17,15 +18,17 @@ public class SeoRedirectRepositoryTests
     private readonly IAsyncDocumentSession _session;
     private readonly ISeoRedirectRepository _repository;
     private readonly ISystemClock _clock;
+    private readonly ILogger<SeoRedirectRepository> _log;
 
     public SeoRedirectRepositoryTests()
     {
+        _log = Substitute.For<ILogger<SeoRedirectRepository>>();
         _store = Substitute.For<IDocumentStore>();
         _session = Substitute.For<IAsyncDocumentSession>();
         _clock = Substitute.For<ISystemClock>();
         _store.OpenAsyncSession().Returns(_session);
         
-        _repository = new SeoRedirectRepository(_store, _clock);
+        _repository = new SeoRedirectRepository(_store, _clock, _log);
     }
 
     [Fact]
