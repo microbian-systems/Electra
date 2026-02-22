@@ -1,6 +1,4 @@
-﻿@using Aero.CMS.Web.Draggable
-
-<Sortable TItem="NestedModel" Items="Items" Class="list-group" Options="_options">
+﻿<Sortable TItem="NestedModel" Items="Items" Class="list-group" Options="_options">
     <Template Context="item">
         <div class="list-group-item nested-@Depth">
             @item.Data

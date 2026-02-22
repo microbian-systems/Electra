@@ -1,4 +1,4 @@
-﻿namespace Aero.CMS.Web.Draggable;
+﻿namespace Aero.CMS.Components.Admin.Draggable;
 
 public class NestedModel
 {

@@ -1,6 +1,6 @@
 using Microsoft.JSInterop;
 
-namespace Aero.CMS.Components;
+namespace Aero.CMS.Components.Admin.Draggable;
 
 public partial class Sortable<TItem> : IAsyncDisposable
 {

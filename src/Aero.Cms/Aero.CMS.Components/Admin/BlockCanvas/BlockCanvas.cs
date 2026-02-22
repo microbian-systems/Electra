@@ -1,4 +1,4 @@
-using Aero.CMS.Web.Draggable;
+using Aero.CMS.Components.Admin.Draggable;
 
 namespace Aero.CMS.Components.Admin.BlockCanvas;
 

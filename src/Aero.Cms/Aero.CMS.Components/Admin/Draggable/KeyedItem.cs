@@ -1,4 +1,4 @@
-﻿namespace Aero.CMS.Components;
+﻿namespace Aero.CMS.Components.Admin.Draggable;
 
 internal sealed class KeyedItem<T>
 {
