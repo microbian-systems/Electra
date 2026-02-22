@@ -1,5 +1,5 @@
 @page "/admin/page/edit/{PageId}"
-@rendermode RenderMode.InteractiveServer
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 @inject IPageService PageService
 @inject NavigationManager Nav
 @using Microsoft.Extensions.Logging
@@ -45,8 +45,8 @@ else
         </div>
     </div>
 
-@* <BlockCanvas Page="_page" OnChanged="ScheduleSave" /> *@
-    
+    <BlockCanvas />
+
     <MyComponent Data="Hi!" />
 
 }

@@ -1,165 +1,26 @@
-@using BlazorSortable
+@using System.Text.Json
+@using BlazorSortableJS
 @inject SectionService SectionSvc
 @inject IBlockRegistry BlockRegistry
 @inject ILogger<BlockCanvas> log;
 
-<CascadingValue Value="_editContext">
-<div class="canvas" @onclick="() => _editContext.ClearAll()">
-    @if (_sections.Count == 0)
-    {
-        <div class="p-8 text-center border-2 border-dashed border-gray-300 rounded-lg mb-4">
-            <p class="text-gray-500">No sections added yet. Start by adding a section.</p>
-        </div>
-    }
-
-    <Sortable TItem="ContentBlock" Items="_sections" OnUpdate="SortSections" Context="block" Group="sections">
-        @{
-            var sectionBlock = block as SectionBlock;
-        }
-        @if (sectionBlock is not null)
-        {
-            var gridClass = sectionBlock.Layout switch
+@* <CascadingValue Value="new object()"> *@
+    <div class="row" style="padding: 5em; background-color: black; color: white;">
+        <div class="col-6">
+            <h6 class="text-center fw-bold">Sortable</h6>
+            <SortableWrapper OnDataChanged="@(() => InvokeAsync(StateHasChanged))">
+                @* <NestedRecursive Items="items" Depth="1" /> *@
+            </SortableWrapper>
+        </div>ls
+        <div class="col-6">
+            <h6 class="text-center fw-bold">Result</h6>
+            <pre class="bg-info">
+            @System.Text.Json.JsonSerializer.Serialize(items, new JsonSerializerOptions
             {
-                SectionLayout.Full        => "cols-1",
-                SectionLayout.TwoColumn   => "cols-2",
-                SectionLayout.ThreeColumn => "cols-3",
-                SectionLayout.Sidebar     => "cols-sidebar",
-                _ => "cols-1"
-            };
-
-            <div class="section-block @(_editContext.IsSectionActive(sectionBlock.Id) ? "is-active" : "")"
-                 @onclick:stopPropagation="true">
-
-            <div class="section-toolbar">
-                <button @onclick="@(() => DeleteSection(sectionBlock.Id))" title="Delete section">Delete Section</button>
-            </div>
-
-            <div class="section-grid @gridClass">
-                @{
-                    var columns = sectionBlock.Children
-                        .OfType<ColumnBlock>()
-                        .OrderBy(c => c.ColIndex)
-                        .ToList();
-                }
-                @foreach (var column in columns)
-                {
-                    <div class="column-drop-target">
-                        <Sortable TItem="ContentBlock" Items="column.Children" OnUpdate="@(args => SortBlocks(column, args))" Context="childBlock" Group="blocks">
-                             <BlockWrapper Block="childBlock"
-                                           SectionId="sectionBlock.Id"
-                                           OnChanged="SavePage"
-                                           OnDelete="@((Guid id) => DeleteBlock(sectionBlock.Id, id))" />
-                        </Sortable>
-
-                         <AddBlockButton OnAdd="@((string alias) => AddBlock(sectionBlock.Id, column.ColIndex, alias))" />
-                    </div>
-                }
-            </div>
+                WriteIndented = true,
+            });
+        </pre>
         </div>
-        }
-    </Sortable>
-
-    <AddSectionButton OnAdd="AddSection" />
-</div>
-</CascadingValue>
-
-@code {
-    [Parameter] public ContentDocument Page { get; set; } = default!;
-    [Parameter] public EventCallback OnChanged { get; set; }
-
-    private List<ContentBlock> _sections = [];
-    private readonly BlockEditContext _editContext = new();
-
-    protected override async Task OnInitializedAsync()
-    {
-        log.LogInformation("Initializing BlockCanvas for page {id}", Page.Id);
-        await base.OnInitializedAsync();
-    }
-
-    protected override void OnParametersSet()
-    {
-        log.LogDebug("OnParametersSet: {a} sections loaded for page {b}", Page.Blocks.Count, Page.Id);
-        _sections = Page.Blocks.ToList();
-    }
-
-    private async Task AddSection(SectionLayout layout)
-    {
-        log.LogInformation("Adding new section with layout {a} to page {b}", layout, Page.Id);
-        SectionSvc.AddSection(Page, layout);
-        _sections = Page.Blocks.ToList();
-        await SavePage();
-    }
-
-    private async Task DeleteSection(Guid sectionId)
-    {
-        log.LogInformation("Deleting section {a} from page {b}", sectionId, Page.Id);
-        _editContext.ClearAll();
-        SectionSvc.RemoveSection(Page, sectionId);
-        _sections = Page.Blocks.ToList();
-        await SavePage();
-    }
-
-    private void SortSections(SortableEventArgs<ContentBlock> args)
-    {
-        log.LogInformation("Sorting sections: moving from index {a} to {b} on page {c}", args.OldIndex, args.NewIndex, Page.Id);
-        if (args.OldIndex == args.NewIndex) return;
-        
-        var item = Page.Blocks[args.OldIndex];
-        Page.Blocks.RemoveAt(args.OldIndex);
-        Page.Blocks.Insert(args.NewIndex, item);
-        
-        // Update SortOrder
-        for (int i = 0; i < Page.Blocks.Count; i++)
-        {
-            Page.Blocks[i].SortOrder = i;
-        }
-        
-        _sections = Page.Blocks.ToList();
-        SavePage();
-    }
-
-    private void SortBlocks(ColumnBlock column, SortableEventArgs<ContentBlock> args)
-    {
-        // Simple reordering within the same column
-        if (args.OldIndex == args.NewIndex) return;
-        
-        var item = column.Children[args.OldIndex];
-        column.Children.RemoveAt(args.OldIndex);
-        column.Children.Insert(args.NewIndex, item);
-        
-        // Update SortOrder
-        for (int i = 0; i < column.Children.Count; i++)
-        {
-            column.Children[i].SortOrder = i;
-        }
-        
-        SavePage();
-    }
-
-    private async Task AddBlock(Guid sectionId, int colIndex, string blockAlias)
-    {
-        var block = CreateBlock(blockAlias);
-        SectionSvc.AddBlock(Page, sectionId, colIndex, block);
-        _editContext.SetActiveBlock(block.Id, sectionId);
-        await SavePage();
-    }
-
-    private async Task DeleteBlock(Guid sectionId, Guid blockId)
-    {
-        SectionSvc.RemoveBlock(Page, sectionId, blockId);
-        await SavePage();
-    }
-
-    private Task SavePage() => OnChanged.InvokeAsync();
-
-    private static ContentBlock CreateBlock(string alias) => alias switch
-    {
-        "richTextBlock" => new RichTextBlock(),
-        "heroBlock" => new HeroBlock(),
-        "quoteBlock" => new QuoteBlock(),
-        "markdownBlock" => new MarkdownBlock(),
-        "htmlBlock" => new HtmlBlock(),
-        "imageBlock" => new ImageBlock(),
-        _ => throw new InvalidOperationException($"Unknown block type: {alias}")
-    };
-}
+    </div>
+@* *@
+@* </CascadingValue> *@
