@@ -7,6 +7,7 @@ using Aero.CMS.Tests.Integration.Infrastructure;
 using NSubstitute;
 using Shouldly;
 using Xunit;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Aero.CMS.Tests.Integration.Content;
 
@@ -25,7 +26,7 @@ public class ContentRepositoryTests : RavenTestBase
             Array.Empty<IBeforeSaveHook<ContentDocument>>(),
             Array.Empty<IAfterSaveHook<ContentDocument>>());
             
-        _sut = new ContentRepository(Store, _clock, pipeline);
+        _sut = new ContentRepository(Store, _clock, NullLogger<ContentRepository>.Instance, pipeline);
     }
 
     [Fact]

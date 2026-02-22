@@ -4,6 +4,7 @@ using Aero.CMS.Tests.Integration.Infrastructure;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
 using Shouldly;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Aero.CMS.Tests.Integration.Site;
 
@@ -17,7 +18,7 @@ public class SiteRepositoryTests : RavenTestBase
     private SiteRepository CreateRepo()
     {
         var clock = new Core.Shared.Services.SystemClock();
-        return new SiteRepository(Store, clock);
+        return new SiteRepository(Store, clock, NullLogger<SiteRepository>.Instance);
     }
 
     [Fact]

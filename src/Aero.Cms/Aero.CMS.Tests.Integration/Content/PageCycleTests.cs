@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NSubstitute;
 using Shouldly;
 using Xunit;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Aero.CMS.Tests.Integration.Content;
 
@@ -31,7 +32,7 @@ public class PageCycleTests : RavenTestBase
             new List<IBeforeSaveHook<ContentDocument>>(),
             new List<IAfterSaveHook<ContentDocument>>());
 
-        _contentRepo = new ContentRepository(Store, _clock, hookPipeline);
+        _contentRepo = new ContentRepository(Store, _clock, NullLogger<ContentRepository>.Instance, hookPipeline);
         _pageService = new PageService(_contentRepo, _clock);
     }
 
@@ -51,7 +52,7 @@ public class PageCycleTests : RavenTestBase
         var loadedPage = await _pageService.GetBySlugAsync(pageSlug);
         loadedPage.ShouldNotBeNull();
         loadedPage!.Name.ShouldBe(pageName);
-        loadedPage.Properties["siteId"].ToString().ShouldBe(siteId.ToString());
+        loadedPage!.Properties["siteId"]?.ToString().ShouldBe(siteId.ToString());
 
         // 3. Add Sections and Blocks
         var sectionSvc = new SectionService();

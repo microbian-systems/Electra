@@ -2,6 +2,8 @@ using Aero.CMS.Core.Content.Data;
 using Aero.CMS.Core.Site.Data;
 using Aero.CMS.Core.Site.Models;
 using Aero.CMS.Core.Site.Services;
+using Aero.CMS.Core.Content.Models;
+using Aero.CMS.Core.Shared.Services;
 using Aero.CMS.Tests.Integration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,20 +11,26 @@ using NSubstitute;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Indexes;
 using Shouldly;
-
+using Microsoft.Extensions.Logging.Abstractions;
 namespace Aero.CMS.Tests.Integration.Site;
 
 public class SiteBootstrapServiceTests : RavenTestBase
 {
     private readonly ISiteRepository _siteRepo;
     private readonly IContentTypeRepository _contentTypeRepo;
+    private readonly IContentRepository _contentRepo;
 
     public SiteBootstrapServiceTests()
     {
         IndexCreation.CreateIndexes(typeof(SiteBootstrapServiceTests).Assembly, Store);
         var clock = new Core.Shared.Services.SystemClock();
-        _siteRepo = new SiteRepository(Store, clock);
-        _contentTypeRepo = new ContentTypeRepository(Store, clock);
+        _siteRepo = new SiteRepository(Store, clock, NullLogger<SiteRepository>.Instance);
+        _contentTypeRepo = new ContentTypeRepository(Store, clock, NullLogger<ContentTypeRepository>.Instance);
+        
+        var pipeline = new SaveHookPipeline<ContentDocument>(
+            Enumerable.Empty<Aero.CMS.Core.Shared.Interfaces.IBeforeSaveHook<ContentDocument>>(),
+            Enumerable.Empty<Aero.CMS.Core.Shared.Interfaces.IAfterSaveHook<ContentDocument>>());
+        _contentRepo = new ContentRepository(Store, clock, NullLogger<ContentRepository>.Instance, pipeline);
     }
 
     private IServiceScopeFactory CreateScopeFactory()
@@ -30,6 +38,7 @@ public class SiteBootstrapServiceTests : RavenTestBase
         var serviceProvider = Substitute.For<IServiceProvider>();
         serviceProvider.GetService(typeof(ISiteRepository)).Returns(_siteRepo);
         serviceProvider.GetService(typeof(IContentTypeRepository)).Returns(_contentTypeRepo);
+        serviceProvider.GetService(typeof(IContentRepository)).Returns(_contentRepo);
 
         var scope = Substitute.For<IServiceScope>();
         scope.ServiceProvider.Returns(serviceProvider);

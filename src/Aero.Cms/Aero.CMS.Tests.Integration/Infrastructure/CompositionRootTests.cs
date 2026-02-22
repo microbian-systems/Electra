@@ -59,6 +59,7 @@ public class CompositionRootTests : RavenTestBase
     {
         // Arrange
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddSingleton<IConfiguration>(_configuration);
         services.AddSingleton(_mockEnvironment);
         services.AddAeroCmsCore(_configuration);
@@ -125,6 +126,7 @@ public class CompositionRootTests : RavenTestBase
     {
         // Arrange
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddSingleton<IConfiguration>(_configuration);
         services.AddSingleton(_mockEnvironment);
         services.AddAeroCmsCore(_configuration);
@@ -150,6 +152,7 @@ public class CompositionRootTests : RavenTestBase
     {
         // Arrange
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddSingleton<IConfiguration>(_configuration);
         services.AddSingleton(_mockEnvironment);
         services.AddAeroCmsCore(_configuration);
@@ -168,6 +171,7 @@ public class CompositionRootTests : RavenTestBase
     {
         // Arrange
         var services = new ServiceCollection();
+        services.AddLogging();
         services.AddSingleton<IConfiguration>(_configuration);
         services.AddSingleton(_mockEnvironment);
         services.AddAeroCmsCore(_configuration);

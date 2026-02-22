@@ -1,12 +1,27 @@
-window.initializeSortable = (container, blazorComponent, items, options, sortableId) => {
-    blazorComponent.items = items;
+window.initializeSortable = (container, blazorComponent, options, sortableId) => {
+    // Ensure cleanup of previous instance if it exists to prevent duplicate event listeners
+    if (container.__sortable_instance) {
+        container.__sortable_instance.destroy();
+    }
+
     blazorComponent.sortableId = sortableId || '';
 
     const common = {
         onUpdate: function (evt) {
+            // Restore DOM state to what Blazor expects
+            evt.item.parentNode.removeChild(evt.item);
+            const referenceNode = evt.from.childNodes[evt.oldIndex] || null;
+            evt.from.insertBefore(evt.item, referenceNode);
+
             blazorComponent.invokeMethodAsync('UpdateItemOrder', evt.oldIndex, evt.newIndex);
-            const movedItem = items.splice(evt.oldIndex, 1)[0];
-            blazorComponent.items.splice(evt.newIndex, 0, movedItem);
+        },
+        onRemove: function (evt) {
+            // Restore the item to the original list so Blazor DOM diffing doesn't crash
+            if (evt.item.parentNode) {
+                evt.item.parentNode.removeChild(evt.item);
+            }
+            const referenceNode = evt.from.childNodes[evt.oldIndex] || null;
+            evt.from.insertBefore(evt.item, referenceNode);
         },
         onAdd: function (evt) {
             const oldIndex = evt.oldIndex;
@@ -15,39 +30,33 @@ window.initializeSortable = (container, blazorComponent, items, options, sortabl
             const toComponent = evt.to.__blazor_component;
             const sourceSortableId = fromComponent.sortableId || null;
 
-            if (evt.pullMode === 'clone') {
-                // Sortable.js inserts a cloned DOM element, but Blazor will render its own
-                // Remove the Sortable clone to prevent duplicates
-                evt.item.remove();
+            // Remove the dropped element from the target DOM, letting Blazor re-render it naturally
+            if (evt.item.parentNode) {
+                evt.item.parentNode.removeChild(evt.item);
+            }
 
-                const movedItem = fromComponent.items[oldIndex];
-                toComponent.items.splice(newIndex, 0, movedItem);
-                toComponent.invokeMethodAsync('AddItem', newIndex, movedItem, sourceSortableId, oldIndex);
-            }
-            else {
-                const movedItem = fromComponent.items.splice(oldIndex, 1)[0];
-                fromComponent.invokeMethodAsync('RemoveItem', oldIndex);
-                toComponent.items.splice(newIndex, 0, movedItem);
-                toComponent.invokeMethodAsync('AddItem', newIndex, movedItem, sourceSortableId, oldIndex);
-            }
+            // Call Blazor to move the item over using the parent sortable wrapper context
+            toComponent.invokeMethodAsync('MoveItemFromList', sourceSortableId, oldIndex, newIndex);
         }
     };
 
     const init = Object.assign({}, options, common);
-    Sortable.create(container, init);
+    const instance = Sortable.create(container, init);
+    container.__sortable_instance = instance;
     container.__blazor_component = blazorComponent;
 };
 
 window.destroySortable = (element) => {
-    // Causes bug but probably not needed according to issues on github
-    //try {
-    //    console.log(element);
-    //    var sortable = Sortable.get(element);
-    //    if (sortable) {
-    //        sortable.destroy();
-    //        sortable = null;
-    //    }
-    //} catch (e) {
-    //    console.error(e);
-    //}
+    try {
+        if (element && element.__sortable_instance) {
+            element.__sortable_instance.destroy();
+            element.__sortable_instance = null;
+        }
+    } catch (e) {
+        console.error("Error destroying Sortable:", e);
+    }
+};
+
+window.updateSortableItems = (container) => {
+    // No-op, we no longer need to track the actual items in JS
 };

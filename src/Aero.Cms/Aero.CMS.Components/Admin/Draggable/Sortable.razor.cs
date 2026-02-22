@@ -1,16 +1,30 @@
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace Aero.CMS.Components.Admin.Draggable;
 
 public partial class Sortable<TItem> : IAsyncDisposable
 {
+    /// <summary>
+    /// Gets or sets the JavaScript runtime.
+    /// </summary>
+    [Inject]
+    public IJSRuntime JsRuntime { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets the parent SortableWrapper, if this Sortable is nested.
+    /// </summary>
     [CascadingParameter]
     public SortableWrapper? ParentSortable { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the list of items managed by this sortable instance.
+    /// </summary>
     [Parameter]
-    public List<TItem> Items { get; set; } = new List<TItem> { };
+    public List<TItem> Items { get; set; } = new List<TItem>();
+    
     private List<KeyedItem<TItem>> _keyedItems = new();
-    private List<TItem> _lastItems = new();
-    private List<TItem>? _lastItemsReference;
+    
     [Parameter]
     public RenderFragment<TItem> Template { get; set; } = null!;
 
@@ -34,204 +48,190 @@ public partial class Sortable<TItem> : IAsyncDisposable
 
     [Parameter]
     public string Class { get; set; } = string.Empty;
+    
     [Parameter]
     public object? Options { get; set; } 
 
     internal ElementReference _dropZoneContainer;
-    private bool _shouldRender = true;
-    private bool _hasPreRendered;
+    private DotNetObjectReference<Sortable<TItem>>? _objRef;
+    private bool _hasInitializedJs = false;
 
+    /// <summary>
+    /// Handles updates to parameters and rebuilds keyed items if needed.
+    /// </summary>
     protected override void OnParametersSet()
     {
-        // Check if the list REFERENCE changed (not just contents)
-        // This is critical because JS holds a reference to the list
-        if (!ReferenceEquals(_lastItemsReference, Items))
+        // Rebuild keyed items if needed, preserving existing keys where possible to prevent DOM churn
+        var newKeyedItems = new List<KeyedItem<TItem>>();
+        foreach (var item in Items)
         {
-            _lastItemsReference = Items;
-            _shouldRender = true; // Force re-render to re-initialize JS with new list
+            var existing = _keyedItems.FirstOrDefault(k => EqualityComparer<TItem>.Default.Equals(k.Item, item));
+            if (existing != null)
+            {
+                newKeyedItems.Add(existing);
+            }
+            else
+            {
+                newKeyedItems.Add(new KeyedItem<TItem> { Key = Guid.NewGuid().ToString(), Item = item });
+            }
         }
+        _keyedItems = newKeyedItems;
+    }
 
-        if (!_lastItems.SequenceEqual(Items))
+    /// <summary>
+    /// Initializes or syncs the sortable JS instance after rendering.
+    /// </summary>
+    /// <param name="firstRender">Indicates whether this is the first render.</param>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !_hasInitializedJs)
         {
-            _lastItems = Items.Select(x => x).ToList();
-            _keyedItems = Items.Select((item, index) => new KeyedItem<TItem> { Key = Guid.NewGuid().ToString(), Item = item }).ToList();
+            _hasInitializedJs = true;
+            _objRef = DotNetObjectReference.Create(this);
+            await JsRuntime.InvokeVoidAsync("initializeSortable", _dropZoneContainer, _objRef, Options, Id);
+        }
+        else if (_hasInitializedJs)
+        {
+            await JsRuntime.InvokeVoidAsync("updateSortableItems", _dropZoneContainer);
         }
     }
 
     protected override void OnInitialized()
     {
-        if(ParentSortable != null)
-            ParentSortable.OnRefresh += ParentSortable_OnRefresh;
-    }
-
-    private async Task ParentSortable_OnRefresh()
-    {
-        _shouldRender = true;
-        if (ParentSortable != null)
-            await ParentSortable.DestroySortableAsync<TItem>(this);
-
-        if (!_lastItems.SequenceEqual(Items))
+        base.OnInitialized();
+        if (ParentSortable != null && !string.IsNullOrEmpty(Id))
         {
-            _lastItems = Items.Select(x => x).ToList();
-            _keyedItems = Items.Select((item, index) => new KeyedItem<TItem> { Key = Guid.NewGuid().ToString(), Item = item }).ToList();
-
-        }
-        await InvokeAsync(StateHasChanged);
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _hasPreRendered = true;
-        }
-        if (_hasPreRendered && _shouldRender)
-        {
-            if (ParentSortable != null)
-            {
-                // Destroy existing sortable before re-initializing (important for list reference changes)
-                if (!firstRender)
-                {
-                    await ParentSortable.DestroySortableAsync<TItem>(this);
-                }
-                await Task.Delay(100);
-                await ParentSortable.NotifyDropZoneRendered<TItem>(this);
-            }
-            _shouldRender = false;
+            ParentSortable.RegisterSortable(Id, this);
         }
     }
 
+    /// <summary>
+    /// Disposes the JS instance when the component is removed.
+    /// </summary>
     public async ValueTask DisposeAsync()
     {
-        if (ParentSortable != null && _hasPreRendered)
+        if (ParentSortable != null && !string.IsNullOrEmpty(Id))
+        {
+            ParentSortable.UnregisterSortable(Id);
+        }
+
+        if (_hasInitializedJs)
         {
             try
             {
-                await JSRuntime.InvokeVoidAsync("destroySortable", _dropZoneContainer);
+                await JsRuntime.InvokeVoidAsync("destroySortable", _dropZoneContainer);
             }
             catch { }
-            if(ParentSortable.OnRefresh != null)
-                ParentSortable.OnRefresh -= ParentSortable_OnRefresh;
+            
+            _objRef?.Dispose();
+            _objRef = null;
         }
     }
 
-    protected override bool ShouldRender()
-    {
-        return _shouldRender;
-    }
-
+    /// <summary>
+    /// Updates the order of an item within the list. Invoked by JS.
+    /// </summary>
+    /// <param name="oldIndex">The original index of the item.</param>
+    /// <param name="newIndex">The new index of the item.</param>
     [JSInvokable]
     public async Task UpdateItemOrder(int oldIndex, int newIndex)
     {
+        if (oldIndex < 0 || oldIndex >= Items.Count) return;
         var item = Items[oldIndex];
         Items.RemoveAt(oldIndex);
         Items.Insert(newIndex, item);
 
-        // Fire OnItemDropped for same-list reorder
         if (OnItemDropped is not null)
         {
             var args = new SortableDroppedEventArgs<TItem>
             {
                 Item = item,
                 TargetSortableId = Id,
-                SourceSortableId = Id, // Same list
+                SourceSortableId = Id,
                 NewIndex = newIndex,
                 OldIndex = oldIndex,
                 ItemBefore = newIndex > 0 ? Items[newIndex - 1] : default,
                 ItemAfter = newIndex < Items.Count - 1 ? Items[newIndex + 1] : default
             };
             await OnItemDropped.Invoke(args);
-            // When OnItemDropped is used, consumer handles updates - skip refresh
             return;
         }
 
-        if (ParentSortable != null)
-        {
-            if (ParentSortable.OnDataChanged.HasDelegate)
-                await ParentSortable.OnDataChanged.InvokeAsync();
-            await ParentSortable.RefreshAsync();
-        }
-        if(OnDataChanged is not null)
-        {
-            await OnDataChanged.Invoke();
-        }
+        await NotifyChangedAsync();
     }
 
+    /// <summary>
+    /// Moves an item from another sortable list to this one. Invoked by JS.
+    /// </summary>
+    /// <param name="sourceId">The source sortable identifier.</param>
+    /// <param name="oldIndex">The index in the source.</param>
+    /// <param name="newIndex">The index in the destination.</param>
     [JSInvokable]
-    public async Task RemoveItem(int index)
+    public async Task MoveItemFromList(string sourceId, int oldIndex, int newIndex)
     {
-        Items.RemoveAt(index);
-        // Note: RemoveItem is called on source list during cross-list moves
-        // OnItemDropped will be called on the target list's AddItem
-        // Only trigger refresh/callbacks if not using OnItemDropped pattern
-        if (OnItemDropped is not null)
-        {
-            // Consumer is handling via OnItemDropped on target - skip refresh
-            return;
-        }
+        if (ParentSortable == null) return;
+        
+        var sourceSortable = ParentSortable.GetSortable(sourceId) as Sortable<TItem>;
+        if (sourceSortable == null) return;
 
-        if (ParentSortable != null)
-        {
-            if (ParentSortable.OnDataChanged.HasDelegate)
-                await ParentSortable.OnDataChanged.InvokeAsync();
-            await ParentSortable.RefreshAsync();
-        }
-        if (OnDataChanged is not null)
-        {
-            await OnDataChanged.Invoke();
-        }
-    }
+        if (oldIndex < 0 || oldIndex >= sourceSortable.Items.Count) return;
+        
+        var item = sourceSortable.Items[oldIndex];
+        sourceSortable.Items.RemoveAt(oldIndex);
 
-    [JSInvokable]
-    public async Task AddItem(int index, TItem item, string? sourceSortableId = null, int oldIndex = -1)
-    {
-        Items.Insert(index, item);
+        if (newIndex < 0) newIndex = 0;
+        if (newIndex > Items.Count) newIndex = Items.Count;
+        Items.Insert(newIndex, item);
 
-        // Fire OnItemDropped for cross-list drop
         if (OnItemDropped is not null)
         {
             var args = new SortableDroppedEventArgs<TItem>
             {
                 Item = item,
                 TargetSortableId = Id,
-                SourceSortableId = sourceSortableId,
-                NewIndex = index,
+                SourceSortableId = sourceId,
+                NewIndex = newIndex,
                 OldIndex = oldIndex,
-                ItemBefore = index > 0 ? Items[index - 1] : default,
-                ItemAfter = index < Items.Count - 1 ? Items[index + 1] : default
+                ItemBefore = newIndex > 0 ? Items[newIndex - 1] : default,
+                ItemAfter = newIndex < Items.Count - 1 ? Items[newIndex + 1] : default
             };
             await OnItemDropped.Invoke(args);
-            // When OnItemDropped is used, consumer handles updates - skip refresh
             return;
         }
 
+        await NotifyChangedAsync();
+    }
+
+    private async Task NotifyChangedAsync()
+    {
         if (ParentSortable != null)
         {
             if (ParentSortable.OnDataChanged.HasDelegate)
                 await ParentSortable.OnDataChanged.InvokeAsync();
             await ParentSortable.RefreshAsync();
         }
-        if (OnDataChanged is not null)
+        else if (OnDataChanged is not null)
         {
             await OnDataChanged.Invoke();
         }
+        
+        StateHasChanged();
     }
 
     /// <summary>
-    /// Moves an item to a specific index, removing it from its current position if found.
-    /// Useful for syncing state from external updates (e.g., dispatcher messages).
+    /// Moves an item within the list or inserts it if it's new.
     /// </summary>
-    /// <param name="item">The item to move</param>
-    /// <param name="newIndex">The target index</param>
-    /// <returns>True if the item was found and moved, false if inserted as new</returns>
+    /// <param name="item">The item to move or insert.</param>
+    /// <param name="newIndex">The index location.</param>
+    /// <returns>True if the item was already in the list.</returns>
     public bool MoveOrInsertItem(TItem item, int newIndex)
     {
         var existingIndex = Items.IndexOf(item);
         if (existingIndex >= 0)
         {
-            if (existingIndex == newIndex) return true; // Already in position
+            if (existingIndex == newIndex) return true;
             Items.RemoveAt(existingIndex);
-            if (newIndex > existingIndex) newIndex--; // Adjust for removal
+            if (newIndex > existingIndex) newIndex--;
         }
 
         if (newIndex < 0) newIndex = 0;
@@ -242,20 +242,19 @@ public partial class Sortable<TItem> : IAsyncDisposable
     }
 
     /// <summary>
-    /// Removes an item from the list if found.
+    /// Removes the specified item if it exists in the list.
     /// </summary>
-    /// <param name="item">The item to remove</param>
-    /// <returns>True if the item was found and removed</returns>
+    /// <param name="item">The item to remove.</param>
+    /// <returns>True if the item was found and removed.</returns>
     public bool RemoveItemIfExists(TItem item)
     {
         return Items.Remove(item);
     }
 
     /// <summary>
-    /// Syncs the items list to match the provided order.
-    /// Items not in the new order are removed, new items are added.
+    /// Synchronizes the current items with a provided ordered list.
     /// </summary>
-    /// <param name="orderedItems">The new ordered list of items</param>
+    /// <param name="orderedItems">The canonical order of items.</param>
     public void SyncItems(List<TItem> orderedItems)
     {
         Items.Clear();

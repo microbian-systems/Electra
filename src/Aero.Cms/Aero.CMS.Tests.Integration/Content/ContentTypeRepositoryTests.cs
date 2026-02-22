@@ -5,6 +5,7 @@ using Aero.CMS.Tests.Integration.Infrastructure;
 using NSubstitute;
 using Shouldly;
 using Xunit;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Aero.CMS.Tests.Integration.Content;
 
@@ -18,7 +19,7 @@ public class ContentTypeRepositoryTests : RavenTestBase
     {
         _clock = Substitute.For<ISystemClock>();
         _clock.UtcNow.Returns(_now);
-        _sut = new ContentTypeRepository(Store, _clock);
+        _sut = new ContentTypeRepository(Store, _clock, NullLogger<ContentTypeRepository>.Instance);
     }
 
     [Fact]
